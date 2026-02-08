@@ -18,7 +18,7 @@
   },
   "devDependencies": {
     "@bhms/typescript-config": "workspace:*",
-    "@types/bcryptjs": "^2.4.6",
+    "@types/bcryptjs": "^3.0.0",
     "eslint": "^8.57.1",
     "typescript": "^5.6.3"
   }
