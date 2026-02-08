@@ -12,7 +12,7 @@
     "@auth/core": "^0.34.0",
     "@bhms/database": "workspace:*",
     "@trpc/server": "^11.0.0-rc.297",
-    "bcryptjs": "^2.4.3",
+    "bcryptjs": "^3.0.3",
     "next-auth": "5.0.0-beta.30",
     "zod": "^3.22.4"
   },
