@@ -14,7 +14,7 @@
     "@trpc/server": "^11.0.0-rc.297",
     "bcryptjs": "^2.4.3",
     "next-auth": "5.0.0-beta.30",
-    "zod": "^3.22.4"
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@bhms/typescript-config": "workspace:*",
