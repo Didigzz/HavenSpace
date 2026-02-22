@@ -15,7 +15,7 @@
     "db:seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
-    "@prisma/client": "^5.22.0",
+    "@prisma/client": "^7.4.1",
     "@prisma/extension-accelerate": "^3.0.1"
   },
   "devDependencies": {
