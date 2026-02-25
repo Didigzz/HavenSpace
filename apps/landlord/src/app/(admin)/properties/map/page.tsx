@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import {
   MapPin,
   List,
@@ -13,9 +14,10 @@ import {
   Building2,
   Users,
   DollarSign,
-  ExternalLink,
-  ZoomIn,
-  ZoomOut,
+  Save,
+  X,
+  AlertTriangle,
+  CheckCircle2,
 } from "lucide-react";
 import { Button } from "@bhms/ui";
 import { Input } from "@bhms/ui";
@@ -34,17 +36,27 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@bhms/ui";
+import { Label } from "@bhms/ui";
 import { cn } from "@/lib/utils";
+import { MALAYBALAY_BOUNDS } from "@/components/map/map-picker";
+
+// Dynamic import for Leaflet-based components (no SSR)
+const MapPicker = dynamic(() => import("@/components/map/map-picker"), {
+  ssr: false,
+  loading: () => (
+    <div className="h-full w-full bg-muted animate-pulse flex items-center justify-center rounded-lg">
+      <div className="text-muted-foreground text-sm">Loading map...</div>
+    </div>
+  ),
+});
 
 interface Property {
   id: string;
   name: string;
   address: string;
   city: string;
-  coordinates: {
-    lat: number;
-    lng: number;
-  };
+  latitude: number | null;
+  longitude: number | null;
   rooms: {
     total: number;
     occupied: number;
@@ -54,99 +66,164 @@ interface Property {
     max: number;
   };
   status: "active" | "inactive" | "maintenance";
-  image?: string;
+  isPublished: boolean;
 }
 
-// Mock data with coordinates (Metro Manila area)
+// Mock data with Malaybalay City, Bukidnon coordinates
 const mockProperties: Property[] = [
   {
     id: "1",
     name: "Sunrise Residences",
-    address: "123 Rizal Street, Brgy. San Antonio",
-    city: "Makati City",
-    coordinates: { lat: 14.5547, lng: 121.0244 },
+    address: "Purok 5, Brgy. Casisang",
+    city: "Malaybalay City",
+    latitude: 8.1575,
+    longitude: 125.1276,
     rooms: { total: 20, occupied: 17 },
-    priceRange: { min: 4500, max: 6000 },
+    priceRange: { min: 2500, max: 4500 },
     status: "active",
+    isPublished: true,
   },
   {
     id: "2",
     name: "Green Valley BH",
-    address: "45 Mabini Avenue, Brgy. Poblacion",
-    city: "Quezon City",
-    coordinates: { lat: 14.6488, lng: 121.0509 },
+    address: "Sayre Highway, Brgy. Sumpong",
+    city: "Malaybalay City",
+    latitude: 8.1610,
+    longitude: 125.1310,
     rooms: { total: 12, occupied: 11 },
-    priceRange: { min: 5000, max: 7000 },
+    priceRange: { min: 3500, max: 5500 },
     status: "active",
+    isPublished: true,
   },
   {
     id: "3",
-    name: "Metro Living Spaces",
-    address: "78 Commonwealth Ave",
-    city: "Quezon City",
-    coordinates: { lat: 14.6761, lng: 121.0562 },
+    name: "Hilltop Living Spaces",
+    address: "Brgy. Bangcud, Near Capitol",
+    city: "Malaybalay City",
+    latitude: 8.1520,
+    longitude: 125.1340,
     rooms: { total: 15, occupied: 12 },
-    priceRange: { min: 5500, max: 8000 },
+    priceRange: { min: 3000, max: 5000 },
     status: "active",
+    isPublished: true,
   },
   {
     id: "4",
-    name: "University Heights",
-    address: "21 P. Noval Street",
-    city: "Manila",
-    coordinates: { lat: 14.6091, lng: 120.9882 },
+    name: "Student Haven",
+    address: "Brgy. Sumpong, Near BSU Gate",
+    city: "Malaybalay City",
+    latitude: 8.1635,
+    longitude: 125.1290,
     rooms: { total: 25, occupied: 20 },
-    priceRange: { min: 4000, max: 5500 },
+    priceRange: { min: 2000, max: 3500 },
     status: "active",
+    isPublished: true,
   },
   {
     id: "5",
-    name: "Taft Residences",
-    address: "567 Taft Avenue",
-    city: "Manila",
-    coordinates: { lat: 14.5636, lng: 120.9946 },
+    name: "Pine View Lodge",
+    address: "Brgy. Dalwangan",
+    city: "Malaybalay City",
+    latitude: null,
+    longitude: null,
     rooms: { total: 18, occupied: 0 },
-    priceRange: { min: 4500, max: 6500 },
+    priceRange: { min: 3000, max: 5000 },
     status: "maintenance",
+    isPublished: false,
   },
 ];
 
 const statusConfig = {
   active: { label: "Active", color: "bg-green-100 text-green-800" },
   inactive: { label: "Inactive", color: "bg-gray-100 text-gray-800" },
-  maintenance: { label: "Maintenance", color: "bg-yellow-100 text-yellow-800" },
+  maintenance: {
+    label: "Maintenance",
+    color: "bg-yellow-100 text-yellow-800",
+  },
 };
 
-function PropertyCard({ property, isSelected, onClick }: { property: Property; isSelected: boolean; onClick: () => void }) {
-  const occupancyRate = Math.round((property.rooms.occupied / property.rooms.total) * 100);
+// Toast helper component
+function Toast({
+  message,
+  type,
+  onClose,
+}: {
+  message: string;
+  type: "success" | "error";
+  onClose: () => void;
+}) {
+  React.useEffect(() => {
+    const timer = setTimeout(onClose, 4000);
+    return () => clearTimeout(timer);
+  }, [onClose]);
+
+  return (
+    <div
+      className={cn(
+        "fixed bottom-4 right-4 z-[2000] flex items-center gap-2 rounded-lg px-4 py-3 shadow-lg text-sm font-medium animate-in slide-in-from-bottom-5",
+        type === "success"
+          ? "bg-green-600 text-white"
+          : "bg-red-600 text-white"
+      )}
+    >
+      {type === "success" ? (
+        <CheckCircle2 className="h-4 w-4" />
+      ) : (
+        <AlertTriangle className="h-4 w-4" />
+      )}
+      {message}
+      <button onClick={onClose} className="ml-2">
+        <X className="h-3 w-3" />
+      </button>
+    </div>
+  );
+}
+
+function PropertyCard({
+  property,
+  isSelected,
+  isEditing,
+  onClick,
+  onEdit,
+}: {
+  property: Property;
+  isSelected: boolean;
+  isEditing: boolean;
+  onClick: () => void;
+  onEdit: () => void;
+}) {
+  const occupancyRate = Math.round(
+    (property.rooms.occupied / property.rooms.total) * 100
+  );
   const status = statusConfig[property.status];
+  const hasLocation =
+    property.latitude !== null && property.longitude !== null;
 
   return (
     <Card
       className={cn(
         "cursor-pointer transition-all hover:shadow-md",
-        isSelected && "ring-2 ring-primary"
+        isSelected && "ring-2 ring-primary",
+        isEditing && "ring-2 ring-orange-400"
       )}
       onClick={onClick}
     >
       <CardContent className="p-4">
         <div className="flex items-start justify-between">
-          <div className="space-y-1">
-            <div className="flex items-center gap-2">
-              <h4 className="font-semibold">{property.name}</h4>
-              <Badge className={cn("text-xs", status.color)}>
+          <div className="space-y-1 flex-1 min-w-0">
+            <div className="flex items-center gap-2 flex-wrap">
+              <h4 className="font-semibold truncate">{property.name}</h4>
+              <Badge className={cn("text-xs shrink-0", status.color)}>
                 {status.label}
               </Badge>
             </div>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-muted-foreground truncate">
               {property.address}
             </p>
-            <p className="text-xs text-muted-foreground">
-              {property.city}
-            </p>
+            <p className="text-xs text-muted-foreground">{property.city}</p>
           </div>
         </div>
-        
+
         <div className="mt-3 grid grid-cols-3 gap-2 text-sm">
           <div className="flex items-center gap-1">
             <Building2 className="h-3 w-3 text-muted-foreground" />
@@ -161,18 +238,40 @@ function PropertyCard({ property, isSelected, onClick }: { property: Property; i
             <span>₱{property.priceRange.min.toLocaleString()}</span>
           </div>
         </div>
-        
+
+        {/* Location status */}
+        <div className="mt-3 flex items-center gap-2">
+          {hasLocation ? (
+            <span className="flex items-center gap-1 text-xs text-green-600">
+              <MapPin className="h-3 w-3" />
+              Location pinned ({property.latitude?.toFixed(4)},{" "}
+              {property.longitude?.toFixed(4)})
+            </span>
+          ) : (
+            <span className="flex items-center gap-1 text-xs text-orange-600">
+              <AlertTriangle className="h-3 w-3" />
+              No location set
+            </span>
+          )}
+        </div>
+
         <div className="mt-3 flex gap-2">
+          <Button
+            size="sm"
+            variant={isEditing ? "default" : "outline"}
+            className="flex-1"
+            onClick={(e) => {
+              e.stopPropagation();
+              onEdit();
+            }}
+          >
+            <MapPin className="mr-1 h-3 w-3" />
+            {isEditing ? "Pinning..." : hasLocation ? "Move Pin" : "Set Pin"}
+          </Button>
           <Button size="sm" variant="outline" className="flex-1" asChild>
             <Link href={`/properties/${property.id}`}>
               <Eye className="mr-1 h-3 w-3" />
               View
-            </Link>
-          </Button>
-          <Button size="sm" variant="outline" className="flex-1" asChild>
-            <Link href={`/properties/${property.id}/edit`}>
-              <Edit className="mr-1 h-3 w-3" />
-              Edit
             </Link>
           </Button>
         </div>
@@ -181,140 +280,148 @@ function PropertyCard({ property, isSelected, onClick }: { property: Property; i
   );
 }
 
-// Interactive Map Component using OpenStreetMap embed
-function InteractiveMap({ 
-  properties, 
-  selectedProperty, 
-  onSelectProperty 
-}: { 
-  properties: Property[]; 
-  selectedProperty: string | null; 
-  onSelectProperty: (id: string) => void;
-}) {
-  const defaultCenter = { lat: 14.5995, lng: 120.9842 }; // Metro Manila
-  
-  const selectedPropertyData = selectedProperty 
-    ? properties.find(p => p.id === selectedProperty)
-    : null;
-
-  const center = selectedPropertyData?.coordinates ?? defaultCenter;
-  
-  // Generate OpenStreetMap embed URL with markers
-  const mapUrl = `https://www.openstreetmap.org/export/embed.html?bbox=${center.lng - 0.05},${center.lat - 0.03},${center.lng + 0.05},${center.lat + 0.03}&layer=mapnik&marker=${center.lat},${center.lng}`;
-  
-  return (
-    <div className="relative h-full w-full">
-      {/* Map iframe */}
-      <iframe
-        src={mapUrl}
-        className="h-full w-full border-0"
-        loading="lazy"
-        title="Property Map"
-      />
-      
-      {/* Property markers overlay */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="relative h-full w-full">
-          {properties.map((property) => {
-            // Calculate approximate position
-            const xOffset = ((property.coordinates.lng - center.lng) / 0.1) * 50;
-            const yOffset = ((center.lat - property.coordinates.lat) / 0.06) * 50;
-            
-            return (
-              <button
-                key={property.id}
-                className={cn(
-                  "absolute transform -translate-x-1/2 -translate-y-full pointer-events-auto",
-                  "flex flex-col items-center transition-transform hover:scale-110",
-                  selectedProperty === property.id && "z-10"
-                )}
-                style={{
-                  left: `calc(50% + ${xOffset}%)`,
-                  top: `calc(50% + ${yOffset}%)`,
-                }}
-                onClick={() => onSelectProperty(property.id)}
-              >
-                <div className={cn(
-                  "rounded-full p-2 shadow-lg",
-                  selectedProperty === property.id 
-                    ? "bg-primary text-primary-foreground scale-125" 
-                    : "bg-white text-primary border-2 border-primary"
-                )}>
-                  <MapPin className="h-4 w-4" />
-                </div>
-                {selectedProperty === property.id && (
-                  <div className="mt-1 bg-white rounded px-2 py-1 shadow-lg text-xs font-medium whitespace-nowrap">
-                    {property.name}
-                  </div>
-                )}
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* Selected property info */}
-      {selectedPropertyData && (
-        <div className="absolute bottom-4 left-4 max-w-xs">
-          <Card className="shadow-lg">
-            <CardContent className="p-3">
-              <div className="flex items-start gap-2">
-                <div className="rounded-full bg-primary/10 p-2">
-                  <MapPin className="h-4 w-4 text-primary" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h4 className="font-semibold text-sm">{selectedPropertyData.name}</h4>
-                  <p className="text-xs text-muted-foreground truncate">{selectedPropertyData.address}</p>
-                  <div className="flex items-center gap-2 mt-2">
-                    <Badge className={cn("text-xs", statusConfig[selectedPropertyData.status].color)}>
-                      {statusConfig[selectedPropertyData.status].label}
-                    </Badge>
-                    <span className="text-xs text-muted-foreground">
-                      {selectedPropertyData.rooms.occupied}/{selectedPropertyData.rooms.total} occupied
-                    </span>
-                  </div>
-                  <div className="mt-2 flex gap-2">
-                    <Button size="sm" variant="outline" className="h-7 text-xs" asChild>
-                      <Link href={`/properties/${selectedPropertyData.id}`}>
-                        View Details
-                      </Link>
-                    </Button>
-                    <Button size="sm" variant="outline" className="h-7 text-xs" asChild>
-                      <a 
-                        href={`https://www.google.com/maps?q=${selectedPropertyData.coordinates.lat},${selectedPropertyData.coordinates.lng}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <ExternalLink className="mr-1 h-3 w-3" />
-                        Maps
-                      </a>
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      )}
-    </div>
-  );
-}
-
 export default function MapViewPage() {
-  const [selectedProperty, setSelectedProperty] = React.useState<string | null>(null);
+  const [properties, setProperties] = React.useState(mockProperties);
+  const [selectedPropertyId, setSelectedPropertyId] = React.useState<
+    string | null
+  >(null);
+  const [editingPropertyId, setEditingPropertyId] = React.useState<
+    string | null
+  >(null);
   const [searchQuery, setSearchQuery] = React.useState("");
   const [statusFilter, setStatusFilter] = React.useState("all");
+  const [pendingLat, setPendingLat] = React.useState<number | null>(null);
+  const [pendingLng, setPendingLng] = React.useState<number | null>(null);
+  const [toast, setToast] = React.useState<{
+    message: string;
+    type: "success" | "error";
+  } | null>(null);
 
-  const filteredProperties = mockProperties.filter((property) => {
+  const editingProperty = editingPropertyId
+    ? properties.find((p) => p.id === editingPropertyId)
+    : null;
+
+  const selectedProperty = selectedPropertyId
+    ? properties.find((p) => p.id === selectedPropertyId)
+    : null;
+
+  const filteredProperties = properties.filter((property) => {
     const matchesSearch =
       property.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       property.address.toLowerCase().includes(searchQuery.toLowerCase()) ||
       property.city.toLowerCase().includes(searchQuery.toLowerCase());
 
-    const matchesStatus = statusFilter === "all" || property.status === statusFilter;
+    const matchesStatus =
+      statusFilter === "all" || property.status === statusFilter;
 
     return matchesSearch && matchesStatus;
   });
+
+  // Get the lat/lng to show on the map
+  const displayLat = editingProperty
+    ? pendingLat ?? editingProperty.latitude
+    : selectedProperty
+      ? selectedProperty.latitude
+      : null;
+
+  const displayLng = editingProperty
+    ? pendingLng ?? editingProperty.longitude
+    : selectedProperty
+      ? selectedProperty.longitude
+      : null;
+
+  const handleStartEdit = (propertyId: string) => {
+    const prop = properties.find((p) => p.id === propertyId);
+    if (!prop) return;
+
+    setEditingPropertyId(propertyId);
+    setSelectedPropertyId(propertyId);
+    setPendingLat(prop.latitude);
+    setPendingLng(prop.longitude);
+  };
+
+  const handleMapClick = (lat: number, lng: number) => {
+    if (!editingPropertyId) return;
+    setPendingLat(lat);
+    setPendingLng(lng);
+  };
+
+  const handleSaveLocation = async () => {
+    if (!editingPropertyId || pendingLat === null || pendingLng === null) {
+      setToast({
+        message: "Please click on the map to place a pin first.",
+        type: "error",
+      });
+      return;
+    }
+
+    // Validate within Malaybalay bounds
+    if (
+      pendingLat < MALAYBALAY_BOUNDS.south ||
+      pendingLat > MALAYBALAY_BOUNDS.north ||
+      pendingLng < MALAYBALAY_BOUNDS.west ||
+      pendingLng > MALAYBALAY_BOUNDS.east
+    ) {
+      setToast({
+        message:
+          "Location must be within Malaybalay City, Bukidnon service area.",
+        type: "error",
+      });
+      return;
+    }
+
+    // Check for duplicate coordinates
+    const duplicate = properties.find(
+      (p) =>
+        p.id !== editingPropertyId &&
+        p.latitude !== null &&
+        p.longitude !== null &&
+        Math.abs(p.latitude - pendingLat) < 0.0001 &&
+        Math.abs(p.longitude - pendingLng) < 0.0001
+    );
+
+    if (duplicate) {
+      setToast({
+        message: `Location too close to "${duplicate.name}". Please choose a different spot.`,
+        type: "error",
+      });
+      return;
+    }
+
+    try {
+      // TODO: Replace with actual API call
+      // await updatePropertyLocation({ id: editingPropertyId, latitude: pendingLat, longitude: pendingLng });
+
+      // Update local state (simulating API save)
+      setProperties((prev) =>
+        prev.map((p) =>
+          p.id === editingPropertyId
+            ? { ...p, latitude: pendingLat, longitude: pendingLng }
+            : p
+        )
+      );
+
+      setToast({
+        message: `Location saved for "${editingProperty?.name}"! It will appear on the tenant map.`,
+        type: "success",
+      });
+
+      setEditingPropertyId(null);
+      setPendingLat(null);
+      setPendingLng(null);
+    } catch (error) {
+      setToast({
+        message: "Failed to save location. Please try again.",
+        type: "error",
+      });
+    }
+  };
+
+  const handleCancelEdit = () => {
+    setEditingPropertyId(null);
+    setPendingLat(null);
+    setPendingLng(null);
+  };
 
   return (
     <div className="space-y-6">
@@ -323,7 +430,7 @@ export default function MapViewPage() {
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Property Map</h1>
           <p className="text-muted-foreground">
-            View all your properties on an interactive map
+            Pin and manage boarding house locations in Malaybalay City, Bukidnon
           </p>
         </div>
         <div className="flex items-center gap-2">
@@ -341,6 +448,41 @@ export default function MapViewPage() {
           </Button>
         </div>
       </div>
+
+      {/* Editing Banner */}
+      {editingProperty && (
+        <div className="flex items-center gap-3 rounded-lg border border-orange-200 bg-orange-50 p-4">
+          <MapPin className="h-5 w-5 text-orange-600 shrink-0" />
+          <div className="flex-1">
+            <p className="font-medium text-orange-800">
+              Pinning location for: {editingProperty.name}
+            </p>
+            <p className="text-sm text-orange-600">
+              Click on the map to place the pin. Drag it to adjust. Location
+              must be within the Malaybalay City service area (blue dashed
+              rectangle).
+            </p>
+            {pendingLat !== null && pendingLng !== null && (
+              <p className="text-xs text-orange-500 mt-1">
+                Coordinates: {pendingLat.toFixed(6)}, {pendingLng.toFixed(6)}
+              </p>
+            )}
+          </div>
+          <div className="flex gap-2 shrink-0">
+            <Button
+              size="sm"
+              onClick={handleSaveLocation}
+              disabled={pendingLat === null || pendingLng === null}
+            >
+              <Save className="mr-1 h-3 w-3" />
+              Save Location
+            </Button>
+            <Button size="sm" variant="outline" onClick={handleCancelEdit}>
+              Cancel
+            </Button>
+          </div>
+        </div>
+      )}
 
       {/* Filters */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
@@ -372,21 +514,31 @@ export default function MapViewPage() {
         {/* Property List */}
         <div className="lg:col-span-1 space-y-4 max-h-[calc(100vh-300px)] overflow-y-auto">
           <p className="text-sm text-muted-foreground">
-            {filteredProperties.length} {filteredProperties.length === 1 ? "property" : "properties"} found
+            {filteredProperties.length}{" "}
+            {filteredProperties.length === 1 ? "property" : "properties"} found
           </p>
           {filteredProperties.map((property) => (
             <PropertyCard
               key={property.id}
               property={property}
-              isSelected={selectedProperty === property.id}
-              onClick={() => setSelectedProperty(property.id)}
+              isSelected={selectedPropertyId === property.id}
+              isEditing={editingPropertyId === property.id}
+              onClick={() => {
+                setSelectedPropertyId(property.id);
+                if (!editingPropertyId) {
+                  // If not in editing mode, just select
+                }
+              }}
+              onEdit={() => handleStartEdit(property.id)}
             />
           ))}
           {filteredProperties.length === 0 && (
             <Card>
               <CardContent className="flex flex-col items-center justify-center py-12">
                 <MapPin className="h-12 w-12 text-muted-foreground" />
-                <h3 className="mt-4 text-lg font-semibold">No properties found</h3>
+                <h3 className="mt-4 text-lg font-semibold">
+                  No properties found
+                </h3>
                 <p className="text-sm text-muted-foreground">
                   Try adjusting your search or filters
                 </p>
@@ -398,14 +550,26 @@ export default function MapViewPage() {
         {/* Map */}
         <Card className="lg:col-span-2 overflow-hidden">
           <CardContent className="p-0 h-[calc(100vh-300px)] min-h-[400px]">
-            <InteractiveMap
-              properties={filteredProperties}
-              selectedProperty={selectedProperty}
-              onSelectProperty={setSelectedProperty}
+            <MapPicker
+              latitude={displayLat}
+              longitude={displayLng}
+              onChange={handleMapClick}
+              readOnly={!editingPropertyId}
+              height="100%"
+              className="rounded-none border-0"
             />
           </CardContent>
         </Card>
       </div>
+
+      {/* Toast */}
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={() => setToast(null)}
+        />
+      )}
     </div>
   );
 }

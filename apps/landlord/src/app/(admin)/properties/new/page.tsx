@@ -3,6 +3,7 @@
 import * as React from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import {
   ArrowLeft,
   Building2,
@@ -21,6 +22,7 @@ import {
   Utensils,
   Shield,
   Loader2,
+  AlertTriangle,
 } from "lucide-react";
 import { Button } from "@bhms/ui";
 import { Input } from "@bhms/ui";
@@ -42,6 +44,17 @@ import {
 } from "@bhms/ui";
 import { Separator } from "@bhms/ui";
 import { cn } from "@/lib/utils";
+import { MALAYBALAY_BOUNDS } from "@/components/map/map-picker";
+
+// Dynamic import for map picker (no SSR)
+const MapPicker = dynamic(() => import("@/components/map/map-picker"), {
+  ssr: false,
+  loading: () => (
+    <div className="h-[300px] w-full bg-muted animate-pulse flex items-center justify-center rounded-lg border">
+      <div className="text-muted-foreground text-sm">Loading map...</div>
+    </div>
+  ),
+});
 
 const AMENITIES = [
   { id: "wifi", label: "WiFi", icon: Wifi },
@@ -106,6 +119,20 @@ export default function NewPropertyPage() {
     setIsSubmitting(true);
 
     try {
+      // Validate location is within Malaybalay City bounds
+      if (formData.latitude && formData.longitude) {
+        const lat = parseFloat(formData.latitude);
+        const lng = parseFloat(formData.longitude);
+        if (
+          lat < MALAYBALAY_BOUNDS.south || lat > MALAYBALAY_BOUNDS.north ||
+          lng < MALAYBALAY_BOUNDS.west || lng > MALAYBALAY_BOUNDS.east
+        ) {
+          alert("Property location must be within Malaybalay City, Bukidnon service area.");
+          setIsSubmitting(false);
+          return;
+        }
+      }
+
       // TODO: Call API to create property
       // await createProperty({ ...formData, images, amenities: selectedAmenities });
       
@@ -254,32 +281,47 @@ export default function NewPropertyPage() {
                   </div>
                 </div>
                 
-                {/* Map placeholder */}
+                {/* Map picker */}
                 <div className="space-y-2">
-                  <Label>Pin Location on Map</Label>
-                  <div className="relative h-[300px] rounded-lg border bg-muted/30 overflow-hidden">
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="text-center space-y-2">
-                        <MapPin className="h-12 w-12 mx-auto text-muted-foreground" />
-                        <p className="text-sm text-muted-foreground">
-                          Click to pin your property location
-                        </p>
-                        <p className="text-xs text-muted-foreground">
-                          Or enter coordinates manually below
-                        </p>
-                      </div>
+                  <Label>Pin Location on Map *</Label>
+                  <p className="text-xs text-muted-foreground mb-2">
+                    Click on the map to pin your property location within Malaybalay City, Bukidnon.
+                    You can also drag the pin to adjust.
+                  </p>
+                  <MapPicker
+                    latitude={formData.latitude ? parseFloat(formData.latitude) : null}
+                    longitude={formData.longitude ? parseFloat(formData.longitude) : null}
+                    onChange={(lat, lng) => {
+                      setFormData(prev => ({
+                        ...prev,
+                        latitude: lat.toFixed(6),
+                        longitude: lng.toFixed(6),
+                      }));
+                    }}
+                    height="300px"
+                  />
+                  {formData.latitude && formData.longitude && (
+                    <div className="flex items-center gap-1 text-xs text-green-600">
+                      <MapPin className="h-3 w-3" />
+                      Location pinned: {parseFloat(formData.latitude).toFixed(6)}, {parseFloat(formData.longitude).toFixed(6)}
                     </div>
-                    {/* In production, integrate with Leaflet/Google Maps */}
-                  </div>
+                  )}
+                  {!formData.latitude && !formData.longitude && (
+                    <div className="flex items-center gap-1 text-xs text-orange-600">
+                      <AlertTriangle className="h-3 w-3" />
+                      Click the map to set your property location
+                    </div>
+                  )}
                   <div className="grid gap-4 sm:grid-cols-2">
                     <div className="space-y-2">
                       <Label htmlFor="latitude">Latitude</Label>
                       <Input
                         id="latitude"
                         name="latitude"
-                        placeholder="e.g., 14.6760"
+                        placeholder="e.g., 8.1575"
                         value={formData.latitude}
-                        onChange={handleInputChange}
+                        readOnly
+                        className="bg-muted/50"
                       />
                     </div>
                     <div className="space-y-2">
@@ -287,9 +329,10 @@ export default function NewPropertyPage() {
                       <Input
                         id="longitude"
                         name="longitude"
-                        placeholder="e.g., 121.0437"
+                        placeholder="e.g., 125.1276"
                         value={formData.longitude}
-                        onChange={handleInputChange}
+                        readOnly
+                        className="bg-muted/50"
                       />
                     </div>
                   </div>

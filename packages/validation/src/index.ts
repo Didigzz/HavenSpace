@@ -3,6 +3,7 @@
 
 export * from './boarder.schemas';
 export * from './payment.schemas';
+export * from './property.schemas';
 export * from './room.schemas';
 export * from './user.schemas';
 export * from './utility.schemas';

@@ -1,6 +1,11 @@
 /* Leaflet CSS styles for map components */
 @import "leaflet/dist/leaflet.css";
 
+/* Ensure Leaflet map doesn't overlap UI elements like dropdowns/modals */
+.leaflet-container {
+  z-index: 0;
+}
+
 /* Custom overrides for leaflet popups */
 .leaflet-popup-content-wrapper {
   border-radius: 8px;

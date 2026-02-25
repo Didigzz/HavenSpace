@@ -50,6 +50,7 @@
     "zustand": "^4.4.7"
   },
   "devDependencies": {
+    "@bhms/eslint-config": "workspace:*",
     "@bhms/typescript-config": "workspace:*",
     "@types/node": "^20.10.4",
     "@types/react": "^18.2.42",
