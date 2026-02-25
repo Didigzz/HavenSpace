@@ -68,7 +68,7 @@
     "superjson": "^2.2.1",
     "whatwg-fetch": "^3.6.20",
     "ws": "^8.19.0",
-    "zustand": "^4.4.7"
+    "zustand": "^5.0.11"
   },
   "devDependencies": {
     "@babel/core": "^7.24.0",
