@@ -7,8 +7,22 @@ export interface Boarder {
   phone: string;
   roomId?: string;
   status: "ACTIVE" | "INACTIVE" | "PENDING";
+  moveInDate?: Date;
   createdAt: Date;
   updatedAt: Date;
+}
+
+export interface BoarderWithRoom extends Boarder {
+  room?: {
+    id: string;
+    roomNumber: string;
+  } | null;
+}
+
+export interface BoarderStats {
+  total: number;
+  active: number;
+  inactive: number;
 }
 
 export interface CreateBoarderInput {

@@ -110,10 +110,11 @@ export function sortRoomsByNumber(rooms: Room[]): Room[] {
  */
 export function groupRoomsByFloor(rooms: Room[]): Record<number, Room[]> {
   return rooms.reduce((groups, room) => {
-    if (!groups[room.floor]) {
-      groups[room.floor] = [];
+    const floorKey = room.floor;
+    if (!groups[floorKey]) {
+      groups[floorKey] = [];
     }
-    groups[room.floor].push(room);
+    groups[floorKey].push(room);
     return groups;
   }, {} as Record<number, Room[]>);
 }

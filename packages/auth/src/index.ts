@@ -2,6 +2,18 @@
 
 export * from './config';
 export * from './config.edge';
-export * from './guards';
+export { 
+    isLandlord, 
+    isBoarder, 
+    isAdmin, 
+    hasRole, 
+    isPending, 
+    isApproved, 
+    isSuspended,
+    canAccessLandlordDashboard,
+    canAccessBoarderDashboard,
+    canAccessAdminDashboard,
+    getRedirectUrl,
+} from './guards';
+export type { UserRole, UserStatus } from './types';
 export * from './middleware';
-export * from './types';

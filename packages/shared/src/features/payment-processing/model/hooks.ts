@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { calculateTotalPayment, calculateDaysOverdue } from './calculator';
-import type { Payment, PaymentStats } from '../../entities/payment';
+import type { Payment, PaymentStats } from '@/entities/payment';
 
 /**
  * Hook to calculate payment summary statistics

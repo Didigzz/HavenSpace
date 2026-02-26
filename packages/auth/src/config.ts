@@ -4,6 +4,7 @@ import Credentials from 'next-auth/providers/credentials';
 import bcrypt from 'bcryptjs';
 import { db } from '@bhms/database';
 import { authConfigEdge } from './config.edge';
+import type { DefaultSession } from 'next-auth';
 
 /**
  * Full auth config with providers (requires Node.js runtime)
@@ -55,4 +56,9 @@ export const authConfig: NextAuthConfig = {
 /**
  * NextAuth instance with handlers and utilities
  */
-export const { handlers, auth, signIn, signOut } = NextAuth(authConfig);
+const authResult = NextAuth(authConfig);
+
+export const { handlers, signIn, signOut } = authResult;
+
+// Explicit type annotation to avoid type inference issues with Next.js
+export const auth: () => Promise<DefaultSession | null> = authResult.auth;

@@ -1,6 +1,6 @@
 // Boarder management feature types
 
-import type { Boarder } from "../../entities/boarder";
+import type { Boarder } from "@/entities/boarder";
 
 export interface BoarderManagementState {
   boarders: Boarder[];

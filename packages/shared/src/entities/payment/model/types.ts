@@ -1,6 +1,30 @@
-import type { Payment as PrismaPayment, PaymentStatus, PaymentType, Boarder } from "@bhms/database";
+// Payment entity types
 
-export type Payment = PrismaPayment;
+export type PaymentStatus = 'PENDING' | 'PAID' | 'OVERDUE' | 'CANCELLED';
+export type PaymentType = 'RENT' | 'UTILITY' | 'DEPOSIT' | 'OTHER';
+
+export interface Boarder {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone?: string | null;
+}
+
+export interface Payment {
+  id: string;
+  amount: number | { toNumber(): number };
+  type: PaymentType;
+  status: PaymentStatus;
+  dueDate: Date;
+  paidDate?: Date | null;
+  description?: string | null;
+  receiptNumber?: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+  boarderId: string;
+  boarder?: Boarder;
+}
 
 export type PaymentWithBoarder = Payment & {
   boarder: {
@@ -10,8 +34,6 @@ export type PaymentWithBoarder = Payment & {
     room?: { roomNumber: string } | null;
   };
 };
-
-export { PaymentStatus, PaymentType };
 
 export interface PaymentFilters {
   status?: PaymentStatus;

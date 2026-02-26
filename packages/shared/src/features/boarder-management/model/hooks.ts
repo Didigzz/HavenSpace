@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
-import type { BoarderWithRoom, BoarderStats } from '../../entities/boarder';
-import { getBoarderFullName, isBoarderActive, filterBoarders } from '../../entities/boarder';
+import type { BoarderWithRoom, BoarderStats } from '@/entities/boarder';
+import { getBoarderFullName, isBoarderActive, filterBoarders } from '@/entities/boarder';
 
 /**
  * Hook to calculate boarder statistics
@@ -59,11 +59,15 @@ export function useRecentBoarders(boarders: BoarderWithRoom[], daysBack: number 
     cutoffDate.setDate(cutoffDate.getDate() - daysBack);
 
     return boarders
-      .filter(boarder => 
-        boarder.moveInDate >= cutoffDate && 
+      .filter(boarder =>
+        boarder.moveInDate !== undefined &&
+        boarder.moveInDate >= cutoffDate &&
         isBoarderActive(boarder)
       )
-      .sort((a, b) => b.moveInDate.getTime() - a.moveInDate.getTime());
+      .sort((a, b) => {
+        if (a.moveInDate === undefined || b.moveInDate === undefined) return 0;
+        return b.moveInDate.getTime() - a.moveInDate.getTime();
+      });
   }, [boarders, daysBack]);
 }
 

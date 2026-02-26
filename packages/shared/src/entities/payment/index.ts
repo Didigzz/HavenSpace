@@ -1,1 +1,10 @@
-export * from './model';
+export type { 
+  Payment, 
+  PaymentWithBoarder, 
+  PaymentStatus, 
+  PaymentType, 
+  PaymentFilters, 
+  PaymentStats, 
+  MonthlyRevenue,
+  Boarder
+} from './model';
