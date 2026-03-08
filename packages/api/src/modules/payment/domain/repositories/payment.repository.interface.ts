@@ -1,5 +1,6 @@
 import { Payment } from '../entities/payment.entity';
-import { PaymentStatus, PaymentType } from '../entities/payment.entity';
+import { PaymentStatus } from '../value-objects/payment-status.vo';
+import { PaymentType } from '../value-objects/payment-type.vo';
 
 export interface PaymentFilters {
   status?: PaymentStatus;

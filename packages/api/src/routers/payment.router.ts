@@ -22,7 +22,7 @@ export const createPaymentRouter = (protectedProcedure: any) => {
           })
           .optional()
       )
-      .query(async ({ ctx, input }) => {
+      .query(async ({ ctx, input }: any) => {
         return ctx.db.payment.findMany({
           where: {
             status: input?.status,
@@ -49,7 +49,7 @@ export const createPaymentRouter = (protectedProcedure: any) => {
 
     getById: protectedProcedure
       .input(z.object({ id: z.string() }))
-      .query(async ({ ctx, input }) => {
+      .query(async ({ ctx, input }: any) => {
         return ctx.db.payment.findUnique({
           where: { id: input.id },
           include: {
@@ -62,7 +62,7 @@ export const createPaymentRouter = (protectedProcedure: any) => {
 
     create: protectedProcedure
       .input(createPaymentSchema)
-      .mutation(async ({ ctx, input }) => {
+      .mutation(async ({ ctx, input }: any) => {
         return ctx.db.payment.create({
           data: input,
         });
@@ -70,7 +70,7 @@ export const createPaymentRouter = (protectedProcedure: any) => {
 
     update: protectedProcedure
       .input(updatePaymentSchema)
-      .mutation(async ({ ctx, input }) => {
+      .mutation(async ({ ctx, input }: any) => {
         const { id, ...data } = input;
         return ctx.db.payment.update({
           where: { id },
@@ -80,7 +80,7 @@ export const createPaymentRouter = (protectedProcedure: any) => {
 
     markAsPaid: protectedProcedure
       .input(z.object({ id: z.string() }))
-      .mutation(async ({ ctx, input }) => {
+      .mutation(async ({ ctx, input }: any) => {
         const receiptNumber = `RCP-${new Date().getFullYear()}-${Date.now().toString(36).toUpperCase()}`;
         
         return ctx.db.payment.update({
@@ -95,13 +95,13 @@ export const createPaymentRouter = (protectedProcedure: any) => {
 
     delete: protectedProcedure
       .input(z.object({ id: z.string() }))
-      .mutation(async ({ ctx, input }) => {
+      .mutation(async ({ ctx, input }: any) => {
         return ctx.db.payment.delete({
           where: { id: input.id },
         });
       }),
 
-    getStats: protectedProcedure.query(async ({ ctx }) => {
+    getStats: protectedProcedure.query(async ({ ctx }: any) => {
       const [totalPending, totalPaid, totalOverdue] = await Promise.all([
         ctx.db.payment.aggregate({
           where: { status: "PENDING" },
@@ -138,7 +138,7 @@ export const createPaymentRouter = (protectedProcedure: any) => {
 
     getMonthlyRevenue: protectedProcedure
       .input(z.object({ year: z.number().optional() }))
-      .query(async ({ ctx, input }) => {
+      .query(async ({ ctx, input }: any) => {
         const year = input?.year ?? new Date().getFullYear();
         const payments = await ctx.db.payment.findMany({
           where: {
@@ -159,10 +159,13 @@ export const createPaymentRouter = (protectedProcedure: any) => {
           revenue: 0,
         }));
 
-        payments.forEach((payment) => {
+        payments.forEach((payment: any) => {
           if (payment.paidDate) {
             const month = payment.paidDate.getMonth();
-            monthlyData[month].revenue += payment.amount.toNumber();
+            const monthData = monthlyData[month];
+            if (monthData) {
+              monthData.revenue += payment.amount.toNumber();
+            }
           }
         });
 

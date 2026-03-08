@@ -1,12 +1,12 @@
 import { z } from 'zod';
-import { PrismaPaymentRepository } from '../../infrastructure/persistence/prisma-payment.repository';
-import { PaymentService } from '../../domain/services/payment.service';
-import { CreatePaymentHandler } from '../../application/handlers/create-payment.handler';
-import { MarkPaymentPaidHandler } from '../../application/handlers/mark-payment-paid.handler';
-import { GetPaymentHandler } from '../../application/handlers/get-payment.handler';
-import { ListPaymentsHandler } from '../../application/handlers/list-payments.handler';
-import { GetPaymentStatsHandler } from '../../application/handlers/get-payment-stats.handler';
-import { GetMonthlyRevenueHandler } from '../../application/handlers/get-monthly-revenue.handler';
+import { PrismaPaymentRepository } from '../infrastructure/persistence/prisma-payment.repository';
+import { PaymentService } from '../domain/services/payment.service';
+import { CreatePaymentHandler } from '../application/handlers/create-payment.handler';
+import { MarkPaymentPaidHandler } from '../application/handlers/mark-payment-paid.handler';
+import { GetPaymentHandler } from '../application/handlers/get-payment.handler';
+import { ListPaymentsHandler } from '../application/handlers/list-payments.handler';
+import { GetPaymentStatsHandler } from '../application/handlers/get-payment-stats.handler';
+import { GetMonthlyRevenueHandler } from '../application/handlers/get-monthly-revenue.handler';
 
 type ProtectedProcedure = any;
 
@@ -33,7 +33,7 @@ export const createPaymentRouter = (protectedProcedure: ProtectedProcedure) => {
         const payments = await listPaymentsHandler.handle(input);
 
         // Convert to DTO format
-        return payments.map(payment => ({
+        return payments.map((payment: any) => ({
           id: payment.id,
           boarderId: payment.boarderId,
           amount: payment.amount,
@@ -114,15 +114,15 @@ export const createPaymentRouter = (protectedProcedure: ProtectedProcedure) => {
       }),
 
     markAsPaid: protectedProcedure
-      .input(z.object({ id: z.string() }))
-      .handler(async ({ context, input }: { context: any; input: { id: string } }) => {
+      .input(z.object({ id: z.string(), paidDate: z.date().optional() }))
+      .handler(async ({ context, input }: { context: any; input: { id: string; paidDate?: Date } }) => {
         // Initialize dependencies
         const paymentRepository = new PrismaPaymentRepository(context.db);
         const paymentService = new PaymentService(paymentRepository);
         const markPaymentPaidHandler = new MarkPaymentPaidHandler(paymentRepository, paymentService);
 
         // Execute command
-        const payment = await markPaymentPaidHandler.handle(input);
+        const payment = await markPaymentPaidHandler.handle({ ...input, paidDate: input.paidDate ?? new Date() });
 
         // Convert to DTO format
         return {

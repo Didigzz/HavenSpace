@@ -4,63 +4,63 @@ import { ValueObject } from '../../../../shared/kernel/domain/value-object';
  * Payment Status Value Object
  */
 export class PaymentStatus extends ValueObject<'PENDING' | 'PAID' | 'OVERDUE' | 'CANCELLED'> {
-  private static readonly PENDING = 'PENDING' as const;
-  private static readonly PAID = 'PAID' as const;
-  private static readonly OVERDUE = 'OVERDUE' as const;
-  private static readonly CANCELLED = 'CANCELLED' as const;
+  public static readonly PENDING = 'PENDING' as const;
+  public static readonly PAID = 'PAID' as const;
+  public static readonly OVERDUE = 'OVERDUE' as const;
+  public static readonly CANCELLED = 'CANCELLED' as const;
 
   private constructor(value: 'PENDING' | 'PAID' | 'OVERDUE' | 'CANCELLED') {
     super(value);
   }
 
-  static get Pending(): PaymentStatus {
-    return new PaymentStatus(this.PENDING);
+  public static get Pending(): PaymentStatus {
+    return new PaymentStatus(PaymentStatus.PENDING);
   }
 
-  static get Paid(): PaymentStatus {
-    return new PaymentStatus(this.PAID);
+  public static get Paid(): PaymentStatus {
+    return new PaymentStatus(PaymentStatus.PAID);
   }
 
-  static get Overdue(): PaymentStatus {
-    return new PaymentStatus(this.OVERDUE);
+  public static get Overdue(): PaymentStatus {
+    return new PaymentStatus(PaymentStatus.OVERDUE);
   }
 
-  static get Cancelled(): PaymentStatus {
-    return new PaymentStatus(this.CANCELLED);
+  public static get Cancelled(): PaymentStatus {
+    return new PaymentStatus(PaymentStatus.CANCELLED);
   }
 
-  static fromString(value: string): PaymentStatus {
+  public static fromString(value: string): PaymentStatus {
     switch (value) {
-      case this.PENDING:
-        return this.Pending;
-      case this.PAID:
-        return this.Paid;
-      case this.OVERDUE:
-        return this.Overdue;
-      case this.CANCELLED:
-        return this.Cancelled;
+      case PaymentStatus.PENDING:
+        return PaymentStatus.Pending;
+      case PaymentStatus.PAID:
+        return PaymentStatus.Paid;
+      case PaymentStatus.OVERDUE:
+        return PaymentStatus.Overdue;
+      case PaymentStatus.CANCELLED:
+        return PaymentStatus.Cancelled;
       default:
         throw new Error(`Invalid payment status: ${value}`);
     }
   }
 
-  isPending(): boolean {
-    return this.value === this.PENDING;
+  public isPending(): boolean {
+    return this.value === PaymentStatus.PENDING;
   }
 
-  isPaid(): boolean {
-    return this.value === this.PAID;
+  public isPaid(): boolean {
+    return this.value === PaymentStatus.PAID;
   }
 
-  isOverdue(): boolean {
-    return this.value === this.OVERDUE;
+  public isOverdue(): boolean {
+    return this.value === PaymentStatus.OVERDUE;
   }
 
-  isCancelled(): boolean {
-    return this.value === this.CANCELLED;
+  public isCancelled(): boolean {
+    return this.value === PaymentStatus.CANCELLED;
   }
 
-  toString(): string {
+  public toString(): string {
     return this.value;
   }
 }

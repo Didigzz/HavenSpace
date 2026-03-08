@@ -1,10 +1,11 @@
 import { Payment } from '../../domain/entities/payment.entity';
-import { PaymentStatus, PaymentType } from '../../domain/entities/payment.entity';
+import { PaymentStatus } from '../../domain/value-objects/payment-status.vo';
+import { PaymentType } from '../../domain/value-objects/payment-type.vo';
 import { IPaymentRepository, PaymentFilters, PaymentStats, MonthlyRevenue } from '../../domain/repositories/payment.repository.interface';
-import { PrismaClient } from '@bhms/database';
+import { PrismaClientType } from '@bhms/database';
 
 export class PrismaPaymentRepository implements IPaymentRepository {
-  constructor(private prisma: PrismaClient) {}
+  constructor(private prisma: PrismaClientType) {}
 
   async findById(id: string): Promise<Payment | null> {
     const paymentData = await this.prisma.payment.findUnique({
@@ -42,7 +43,7 @@ export class PrismaPaymentRepository implements IPaymentRepository {
       orderBy: { dueDate: 'desc' },
     });
 
-    return paymentsData.map(payment => this.mapToDomain(payment));
+    return paymentsData.map((payment: any) => this.mapToDomain(payment));
   }
 
   async save(payment: Payment): Promise<Payment> {

@@ -1,6 +1,6 @@
 import { AggregateRoot } from '../../../../shared/kernel/domain/aggregate-root';
-import { PaymentStatus } from './payment-status.vo';
-import { PaymentType } from './payment-type.vo';
+import { PaymentStatus } from '../value-objects/payment-status.vo';
+import { PaymentType } from '../value-objects/payment-type.vo';
 
 export interface PaymentProps {
   id: string;
@@ -22,8 +22,7 @@ export interface PaymentProps {
  */
 export class Payment extends AggregateRoot<PaymentProps> {
   constructor(props: PaymentProps) {
-    super(props.id);
-    this.props = props;
+    super(props.id, props);
   }
 
   get boarderId(): string {

@@ -4,63 +4,63 @@ import { ValueObject } from '../../../../shared/kernel/domain/value-object';
  * Payment Type Value Object
  */
 export class PaymentType extends ValueObject<'RENT' | 'UTILITY' | 'DEPOSIT' | 'OTHER'> {
-  private static readonly RENT = 'RENT' as const;
-  private static readonly UTILITY = 'UTILITY' as const;
-  private static readonly DEPOSIT = 'DEPOSIT' as const;
-  private static readonly OTHER = 'OTHER' as const;
+  public static readonly RENT = 'RENT' as const;
+  public static readonly UTILITY = 'UTILITY' as const;
+  public static readonly DEPOSIT = 'DEPOSIT' as const;
+  public static readonly OTHER = 'OTHER' as const;
 
   private constructor(value: 'RENT' | 'UTILITY' | 'DEPOSIT' | 'OTHER') {
     super(value);
   }
 
-  static get Rent(): PaymentType {
-    return new PaymentType(this.RENT);
+  public static get Rent(): PaymentType {
+    return new PaymentType(PaymentType.RENT);
   }
 
-  static get Utility(): PaymentType {
-    return new PaymentType(this.UTILITY);
+  public static get Utility(): PaymentType {
+    return new PaymentType(PaymentType.UTILITY);
   }
 
-  static get Deposit(): PaymentType {
-    return new PaymentType(this.DEPOSIT);
+  public static get Deposit(): PaymentType {
+    return new PaymentType(PaymentType.DEPOSIT);
   }
 
-  static get Other(): PaymentType {
-    return new PaymentType(this.OTHER);
+  public static get Other(): PaymentType {
+    return new PaymentType(PaymentType.OTHER);
   }
 
-  static fromString(value: string): PaymentType {
+  public static fromString(value: string): PaymentType {
     switch (value) {
-      case this.RENT:
-        return this.Rent;
-      case this.UTILITY:
-        return this.Utility;
-      case this.DEPOSIT:
-        return this.Deposit;
-      case this.OTHER:
-        return this.Other;
+      case PaymentType.RENT:
+        return PaymentType.Rent;
+      case PaymentType.UTILITY:
+        return PaymentType.Utility;
+      case PaymentType.DEPOSIT:
+        return PaymentType.Deposit;
+      case PaymentType.OTHER:
+        return PaymentType.Other;
       default:
         throw new Error(`Invalid payment type: ${value}`);
     }
   }
 
-  isRent(): boolean {
-    return this.value === this.RENT;
+  public isRent(): boolean {
+    return this.value === PaymentType.RENT;
   }
 
-  isUtility(): boolean {
-    return this.value === this.UTILITY;
+  public isUtility(): boolean {
+    return this.value === PaymentType.UTILITY;
   }
 
-  isDeposit(): boolean {
-    return this.value === this.DEPOSIT;
+  public isDeposit(): boolean {
+    return this.value === PaymentType.DEPOSIT;
   }
 
-  isOther(): boolean {
-    return this.value === this.OTHER;
+  public isOther(): boolean {
+    return this.value === PaymentType.OTHER;
   }
 
-  toString(): string {
+  public toString(): string {
     return this.value;
   }
 }

@@ -1,6 +1,7 @@
 import { ListPaymentsQuery } from '../queries/list-payments.query';
 import { Payment } from '../../domain/entities/payment.entity';
-import { PaymentStatus, PaymentType } from '../../domain/entities/payment.entity';
+import { PaymentStatus } from '../../domain/value-objects/payment-status.vo';
+import { PaymentType } from '../../domain/value-objects/payment-type.vo';
 import { IPaymentRepository, PaymentFilters } from '../../domain/repositories/payment.repository.interface';
 
 export class ListPaymentsHandler {
