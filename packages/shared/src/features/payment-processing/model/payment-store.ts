@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import type { PaymentStatus, PaymentType } from "@/entities/payment";
+import type { PaymentStatus, PaymentType } from "../../../entities/payment";
 
 interface PaymentFilters {
   status: PaymentStatus | "ALL";

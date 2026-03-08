@@ -40,8 +40,8 @@ const tenantSchema = z.object({
   moveInDate: z.string().min(1, "Move-in date is required"),
   leaseStartDate: z.string().min(1, "Lease start date is required"),
   leaseEndDate: z.string().optional(),
-  monthlyRent: z.coerce.number().min(0, "Monthly rent must be positive"),
-  depositAmount: z.coerce.number().min(0, "Deposit must be positive"),
+  monthlyRent: z.number().min(0, "Monthly rent must be positive"),
+  depositAmount: z.number().min(0, "Deposit must be positive"),
 });
 
 type TenantFormData = z.infer<typeof tenantSchema>;
@@ -83,17 +83,24 @@ export default function NewTenantPage() {
 
   const onSubmit = async (data: TenantFormData) => {
     setIsSubmitting(true);
-    
+
+    // Convert string values to numbers if needed
+    const formattedData = {
+      ...data,
+      monthlyRent: Number(data.monthlyRent),
+      depositAmount: Number(data.depositAmount),
+    };
+
     // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 1000));
-    
-    console.log("Creating tenant:", data);
-    
+
+    console.log("Creating tenant:", formattedData);
+
     toast({
       title: "Tenant created",
       description: `${data.firstName} ${data.lastName} has been added successfully.`,
     });
-    
+
     setIsSubmitting(false);
     router.push("/tenants");
   };
@@ -292,7 +299,7 @@ export default function NewTenantPage() {
                 <Input
                   id="monthlyRent"
                   type="number"
-                  {...register("monthlyRent")}
+                  {...register("monthlyRent", { valueAsNumber: true })}
                   min={0}
                 />
                 {errors.monthlyRent && (
@@ -304,7 +311,7 @@ export default function NewTenantPage() {
                 <Input
                   id="depositAmount"
                   type="number"
-                  {...register("depositAmount")}
+                  {...register("depositAmount", { valueAsNumber: true })}
                   min={0}
                 />
                 {errors.depositAmount && (
