@@ -20,7 +20,7 @@
     "@react-native-community/cli-platform-android": "^20.1.0",
     "@react-native-community/cli-platform-ios": "^20.1.0",
     "@react-native/assets-registry": "^0.83.1",
-    "@react-native/normalize-colors": "^0.83.1",
+    "@react-native/normalize-colors": "^0.84.1",
     "@react-native/polyfills": "^2.0.0",
     "@react-navigation/bottom-tabs": "^7.9.1",
     "@react-navigation/core": "^7.13.7",
