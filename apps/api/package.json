@@ -2,8 +2,13 @@
   "name": "@bhms/api-server",
   "version": "0.1.0",
   "private": true,
+  "main": "dist/api/index.js",
+  "exports": {
+    ".": "./dist/api/index.js"
+  },
   "scripts": {
     "build": "next build",
+    "build:serverless": "tsc -p tsconfig.serverless.json",
     "dev": "next dev --port 3006",
     "lint": "eslint src --no-error-on-unmatched-pattern",
     "start": "next start --port 3006",

@@ -2,6 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   transpilePackages: ["@bhms/api", "@bhms/shared", "@bhms/validation", "@bhms/auth", "@bhms/database"],
+  output: 'standalone',
   // API-only app, no pages needed
   async headers() {
     return [
