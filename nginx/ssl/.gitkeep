@@ -1,0 +1,9 @@
+# SSL Certificates
+# This directory should contain your SSL certificates
+# 
+# Files needed:
+# - cert.pem (full certificate chain)
+# - key.pem (private key)
+#
+# NEVER commit actual certificates to version control
+# Use environment variables or secrets management for production
