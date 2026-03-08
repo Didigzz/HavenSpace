@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState, useCallback, useEffect } from "react";
+import React, { createContext, useContext, useState, useCallback, useRef, useLayoutEffect } from "react";
 
 // Types for multitenancy
 export interface Property {
@@ -61,16 +61,16 @@ function getInitialProperty(): Property | null {
 
 export function PropertyProvider({ children }: { children: React.ReactNode }) {
   const [properties] = useState<Property[]>(mockProperties);
-  const [currentProperty, setCurrentPropertyState] = useState<Property | null>(null);
+  const [currentProperty, setCurrentPropertyState] = useState<Property | null>(getInitialProperty);
+  const isLoadingRef = useRef(true);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    // Load saved property from localStorage on mount
-    const initialProperty = getInitialProperty();
-    if (initialProperty) {
-      setCurrentPropertyState(initialProperty);
+  useLayoutEffect(() => {
+    // Mark loading as complete after initial render using layout effect
+    if (isLoadingRef.current) {
+      isLoadingRef.current = false;
+      setIsLoading(false);
     }
-    setIsLoading(false);
   }, []);
 
   const setCurrentProperty = useCallback((property: Property) => {

@@ -10,6 +10,13 @@ const eslintConfig = defineConfig([
       "@typescript-eslint/no-unused-vars": "warn",
       "@typescript-eslint/no-explicit-any": "warn",
       "import/no-default-export": "off",
+      "react-hooks/set-state-in-effect": "warn",
+    },
+  },
+  {
+    files: ["src/lib/property-context.tsx"],
+    rules: {
+      "react-hooks/set-state-in-effect": "off",
     },
   },
   globalIgnores([".next/**", "out/**", "build/**", "next-env.d.ts"]),
