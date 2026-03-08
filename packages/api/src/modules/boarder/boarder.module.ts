@@ -28,7 +28,7 @@ export class BoarderModule {
     this.handlers = {
       createBoarder: new CreateBoarderHandler(this.repository, this.service),
       updateBoarder: new UpdateBoarderHandler(this.repository, this.service),
-      deleteBoarder: new DeleteBoarderHandler(this.repository, this.service),
+      deleteBoarder: new DeleteBoarderHandler(this.repository),
       assignRoom: new AssignRoomHandler(this.repository, this.service),
       getBoarder: new GetBoarderHandler(this.repository),
       listBoarders: new ListBoardersHandler(this.repository),

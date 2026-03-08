@@ -26,7 +26,7 @@ export class RoomModule {
     this.handlers = {
       createRoom: new CreateRoomHandler(this.repository, this.service),
       updateRoom: new UpdateRoomHandler(this.repository, this.service),
-      deleteRoom: new DeleteRoomHandler(this.repository, this.service),
+      deleteRoom: new DeleteRoomHandler(this.repository),
       getRoom: new GetRoomHandler(this.repository),
       listRooms: new ListRoomsHandler(this.repository),
       getRoomStats: new GetRoomStatsHandler(this.repository),
