@@ -22,11 +22,8 @@ export interface BoarderProps {
  * Represents a boarder in the boarding house
  */
 export class Boarder extends AggregateRoot<BoarderProps> {
-  protected props: BoarderProps;
-
   constructor(props: BoarderProps) {
-    super(props.id);
-    this.props = props;
+    super(props.id, props);
   }
 
   get firstName(): string {

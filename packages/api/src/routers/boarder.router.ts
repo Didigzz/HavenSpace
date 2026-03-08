@@ -1,15 +1,54 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure, createProtectedProcedure } from "../trpc";
-import { 
-  createBoarderSchema, 
+import {
+  createBoarderSchema,
   updateBoarderSchema,
-  searchSchema 
+  searchSchema
 } from "@bhms/validation";
+import { TRPCError } from "@trpc/server";
 
 // This will be provided by the platform-specific implementation
 // For Next.js, this will include NextAuth session middleware
 export const createBoarderRouter = (protectedProcedure: any) => {
   return createTRPCRouter({
+    getCurrent: protectedProcedure.query(async ({ ctx }: any) => {
+      if (!ctx.session?.user?.id) {
+        throw new TRPCError({
+          code: "UNAUTHORIZED",
+          message: "User not authenticated",
+        });
+      }
+
+      const boarder = await ctx.db.boarder.findUnique({
+        where: { userId: ctx.session.user.id },
+        include: {
+          room: {
+            select: { 
+              id: true, 
+              roomNumber: true, 
+              monthlyRate: true,
+              floor: true,
+              amenities: true,
+              status: true,
+            },
+          },
+          payments: {
+            orderBy: { dueDate: "desc" },
+            take: 1,
+          },
+        },
+      });
+
+      if (!boarder) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Boarder profile not found",
+        });
+      }
+
+      return boarder;
+    }),
+
     getAll: protectedProcedure
       .input(
         z
@@ -20,7 +59,7 @@ export const createBoarderRouter = (protectedProcedure: any) => {
           })
           .optional()
       )
-      .query(async ({ ctx, input }) => {
+      .query(async ({ ctx, input }: any) => {
         return ctx.db.boarder.findMany({
           where: {
             isActive: input?.isActive,
@@ -47,7 +86,7 @@ export const createBoarderRouter = (protectedProcedure: any) => {
 
     getById: protectedProcedure
       .input(z.object({ id: z.string() }))
-      .query(async ({ ctx, input }) => {
+      .query(async ({ ctx, input }: any) => {
         return ctx.db.boarder.findUnique({
           where: { id: input.id },
           include: {
@@ -62,7 +101,7 @@ export const createBoarderRouter = (protectedProcedure: any) => {
 
     create: protectedProcedure
       .input(createBoarderSchema)
-      .mutation(async ({ ctx, input }) => {
+      .mutation(async ({ ctx, input }: any) => {
         const accessCode = `${input.firstName.charAt(0)}${input.lastName.charAt(0)}${Date.now().toString(36)}`.toUpperCase();
         
         const boarder = await ctx.db.boarder.create({
@@ -92,7 +131,7 @@ export const createBoarderRouter = (protectedProcedure: any) => {
 
     update: protectedProcedure
       .input(updateBoarderSchema)
-      .mutation(async ({ ctx, input }) => {
+      .mutation(async ({ ctx, input }: any) => {
         const { id, ...data } = input;
         return ctx.db.boarder.update({
           where: { id },
@@ -102,7 +141,7 @@ export const createBoarderRouter = (protectedProcedure: any) => {
 
     delete: protectedProcedure
       .input(z.object({ id: z.string() }))
-      .mutation(async ({ ctx, input }) => {
+      .mutation(async ({ ctx, input }: any) => {
         return ctx.db.boarder.delete({
           where: { id: input.id },
         });
@@ -115,7 +154,7 @@ export const createBoarderRouter = (protectedProcedure: any) => {
           roomId: z.string().nullable(),
         })
       )
-      .mutation(async ({ ctx, input }) => {
+      .mutation(async ({ ctx, input }: any) => {
         const boarder = await ctx.db.boarder.update({
           where: { id: input.boarderId },
           data: { roomId: input.roomId },
@@ -139,7 +178,7 @@ export const createBoarderRouter = (protectedProcedure: any) => {
         return boarder;
       }),
 
-    getStats: protectedProcedure.query(async ({ ctx }) => {
+    getStats: protectedProcedure.query(async ({ ctx }: any) => {
       const [total, active, inactive] = await Promise.all([
         ctx.db.boarder.count(),
         ctx.db.boarder.count({ where: { isActive: true } }),

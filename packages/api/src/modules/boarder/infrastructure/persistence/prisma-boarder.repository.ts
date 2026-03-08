@@ -1,9 +1,9 @@
 import { Boarder } from '../../domain/entities/boarder.entity';
 import { IBoarderRepository, BoarderFilters, BoarderStats } from '../../domain/repositories/boarder.repository.interface';
-import { PrismaClient } from '@bhms/database';
+import { PrismaClientType } from '@bhms/database';
 
 export class PrismaBoarderRepository implements IBoarderRepository {
-  constructor(private prisma: PrismaClient) {}
+  constructor(private prisma: PrismaClientType) {}
 
   async findById(id: string): Promise<Boarder | null> {
     const boarderData = await this.prisma.boarder.findUnique({
@@ -53,7 +53,7 @@ export class PrismaBoarderRepository implements IBoarderRepository {
       orderBy: { lastName: 'asc' },
     });
 
-    return boardersData.map(boarder => this.mapToDomain(boarder));
+    return boardersData.map((boarder: any) => this.mapToDomain(boarder));
   }
 
   async save(boarder: Boarder): Promise<Boarder> {

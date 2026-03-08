@@ -1,61 +1,61 @@
 import { DomainEvent } from '../../../../shared/kernel/events/domain-event';
 
-export class BoarderCreatedEvent extends DomainEvent {
-  constructor(public readonly boarderId: string) {
-    super();
+export class BoarderCreatedEvent extends DomainEvent<{ boarderId: string }> {
+  constructor(boarderId: string) {
+    super('BoarderCreatedEvent', { boarderId });
   }
 }
 
-export class BoarderUpdatedEvent extends DomainEvent {
+export class BoarderUpdatedEvent extends DomainEvent<{ boarderId: string; changes: string[] }> {
   constructor(
-    public readonly boarderId: string,
-    public readonly changes: string[]
+    boarderId: string,
+    changes: string[]
   ) {
-    super();
+    super('BoarderUpdatedEvent', { boarderId, changes });
   }
 }
 
-export class BoarderDeletedEvent extends DomainEvent {
-  constructor(public readonly boarderId: string) {
-    super();
+export class BoarderDeletedEvent extends DomainEvent<{ boarderId: string }> {
+  constructor(boarderId: string) {
+    super('BoarderDeletedEvent', { boarderId });
   }
 }
 
-export class BoarderDeactivatedEvent extends DomainEvent {
+export class BoarderDeactivatedEvent extends DomainEvent<{ boarderId: string; moveOutDate: Date }> {
   constructor(
-    public readonly boarderId: string,
-    public readonly moveOutDate: Date
+    boarderId: string,
+    moveOutDate: Date
   ) {
-    super();
+    super('BoarderDeactivatedEvent', { boarderId, moveOutDate });
   }
 }
 
-export class BoarderReactivatedEvent extends DomainEvent {
-  constructor(public readonly boarderId: string) {
-    super();
+export class BoarderReactivatedEvent extends DomainEvent<{ boarderId: string }> {
+  constructor(boarderId: string) {
+    super('BoarderReactivatedEvent', { boarderId });
   }
 }
 
-export class RoomAssignedEvent extends DomainEvent {
+export class RoomAssignedEvent extends DomainEvent<{ boarderId: string; roomId: string }> {
   constructor(
-    public readonly boarderId: string,
-    public readonly roomId: string
+    boarderId: string,
+    roomId: string
   ) {
-    super();
+    super('RoomAssignedEvent', { boarderId, roomId });
   }
 }
 
-export class RoomRemovedEvent extends DomainEvent {
-  constructor(public readonly boarderId: string) {
-    super();
+export class RoomRemovedEvent extends DomainEvent<{ boarderId: string }> {
+  constructor(boarderId: string) {
+    super('RoomRemovedEvent', { boarderId });
   }
 }
 
-export class AccessCodeRegeneratedEvent extends DomainEvent {
+export class AccessCodeRegeneratedEvent extends DomainEvent<{ boarderId: string; newAccessCode: string }> {
   constructor(
-    public readonly boarderId: string,
-    public readonly newAccessCode: string
+    boarderId: string,
+    newAccessCode: string
   ) {
-    super();
+    super('AccessCodeRegeneratedEvent', { boarderId, newAccessCode });
   }
 }

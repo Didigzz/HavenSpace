@@ -1,7 +1,7 @@
 import { IBoarderApi } from './boarder-api.interface';
 import { BoarderModule } from '../boarder.module';
 import { Boarder } from '../domain/entities/boarder.entity';
-import { BoarderStats } from '../../../shared/src/features/boarder-management/model/types';
+import { BoarderStats } from '../domain/repositories/boarder.repository.interface';
 
 export class BoarderApiFacade implements IBoarderApi {
   private static instance: BoarderApiFacade;

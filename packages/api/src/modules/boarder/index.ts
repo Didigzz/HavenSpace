@@ -1,16 +1,22 @@
 // Domain Layer
 export { Boarder } from './domain/entities/boarder.entity';
-export { IBoarderRepository, BoarderFilters, BoarderStats } from './domain/repositories/boarder.repository.interface';
+export type { IBoarderRepository, BoarderFilters, BoarderStats } from './domain/repositories/boarder.repository.interface';
 export { BoarderService } from './domain/services/boarder.service';
 
 // Application Layer
-export { CreateBoarderCommand, CreateBoarderCommandSchema } from './application/commands/create-boarder.command';
-export { UpdateBoarderCommand, UpdateBoarderCommandSchema } from './application/commands/update-boarder.command';
-export { DeleteBoarderCommand, DeleteBoarderCommandSchema } from './application/commands/delete-boarder.command';
-export { AssignRoomCommand, AssignRoomCommandSchema } from './application/commands/assign-room.command';
-export { GetBoarderQuery, GetBoarderQuerySchema } from './application/queries/get-boarder.query';
-export { ListBoardersQuery, ListBoardersQuerySchema } from './application/queries/list-boarders.query';
-export { GetBoarderStatsQuery } from './application/queries/get-boarder-stats.query';
+export type { CreateBoarderCommand } from './application/commands/create-boarder.command';
+export { CreateBoarderCommandSchema } from './application/commands/create-boarder.command';
+export type { UpdateBoarderCommand } from './application/commands/update-boarder.command';
+export { UpdateBoarderCommandSchema } from './application/commands/update-boarder.command';
+export type { DeleteBoarderCommand } from './application/commands/delete-boarder.command';
+export { DeleteBoarderCommandSchema } from './application/commands/delete-boarder.command';
+export type { AssignRoomCommand } from './application/commands/assign-room.command';
+export { AssignRoomCommandSchema } from './application/commands/assign-room.command';
+export type { GetBoarderQuery } from './application/queries/get-boarder.query';
+export { GetBoarderQuerySchema } from './application/queries/get-boarder.query';
+export type { ListBoardersQuery } from './application/queries/list-boarders.query';
+export { ListBoardersQuerySchema } from './application/queries/list-boarders.query';
+export type { GetBoarderStatsQuery } from './application/queries/get-boarder-stats.query';
 export { CreateBoarderHandler } from './application/handlers/create-boarder.handler';
 export { UpdateBoarderHandler } from './application/handlers/update-boarder.handler';
 export { DeleteBoarderHandler } from './application/handlers/delete-boarder.handler';
@@ -38,4 +44,3 @@ export { BoarderModule } from './boarder.module';
 export * from './domain/events';
 export * from './integration-events';
 export * from './api';
-export * from './config';

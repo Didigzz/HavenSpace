@@ -1,5 +1,5 @@
 import { Boarder } from '../domain/entities/boarder.entity';
-import { BoarderStats } from '../../../shared/src/features/boarder-management/model/types';
+import { BoarderStats } from '../domain/repositories/boarder.repository.interface';
 
 export interface IBoarderApi {
   createBoarder(data: any): Promise<Boarder>;

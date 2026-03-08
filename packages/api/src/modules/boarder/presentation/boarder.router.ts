@@ -1,13 +1,13 @@
 import { z } from 'zod';
-import { PrismaBoarderRepository } from '../../infrastructure/persistence/prisma-boarder.repository';
-import { BoarderService } from '../../domain/services/boarder.service';
-import { CreateBoarderHandler } from '../../application/handlers/create-boarder.handler';
-import { UpdateBoarderHandler } from '../../application/handlers/update-boarder.handler';
-import { DeleteBoarderHandler } from '../../application/handlers/delete-boarder.handler';
-import { AssignRoomHandler } from '../../application/handlers/assign-room.handler';
-import { GetBoarderHandler } from '../../application/handlers/get-boarder.handler';
-import { ListBoardersHandler } from '../../application/handlers/list-boarders.handler';
-import { GetBoarderStatsHandler } from '../../application/handlers/get-boarder-stats.handler';
+import { PrismaBoarderRepository } from '../infrastructure/persistence/prisma-boarder.repository';
+import { BoarderService } from '../domain/services/boarder.service';
+import { CreateBoarderHandler } from '../application/handlers/create-boarder.handler';
+import { UpdateBoarderHandler } from '../application/handlers/update-boarder.handler';
+import { DeleteBoarderHandler } from '../application/handlers/delete-boarder.handler';
+import { AssignRoomHandler } from '../application/handlers/assign-room.handler';
+import { GetBoarderHandler } from '../application/handlers/get-boarder.handler';
+import { ListBoardersHandler } from '../application/handlers/list-boarders.handler';
+import { GetBoarderStatsHandler } from '../application/handlers/get-boarder-stats.handler';
 
 type ProtectedProcedure = any;
 
@@ -32,7 +32,7 @@ export const createBoarderRouter = (protectedProcedure: ProtectedProcedure) => {
         const boarders = await listBoardersHandler.handle(input);
 
         // Convert to DTO format for response
-        return boarders.map(boarder => ({
+        return boarders.map((boarder: any) => ({
           id: boarder.id,
           firstName: boarder.firstName,
           lastName: boarder.lastName,
