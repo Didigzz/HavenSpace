@@ -1,6 +1,6 @@
 # Boarding House Management System (BHMS)
 
-A comprehensive multi-tenant platform for managing boarding houses, connecting landlords with boarders through a modern web and mobile experience.
+A comprehensive multi-tenant platform for managing boarding houses, connecting landlords with boarders through a modern web experience.
 
 ## 🏠 Overview
 
@@ -10,7 +10,6 @@ BHMS is a full-stack monorepo application that provides:
 - **Boarder Dashboard**: Manage bookings, payments, and communications
 - **Landlord Portal**: Property management and tenant interactions
 - **Admin Panel**: Platform oversight and user management
-- **Mobile App**: Native mobile experience for boarders
 
 ## 🏗️ Architecture
 
@@ -24,10 +23,9 @@ BHMS is a full-stack monorepo application that provides:
 ### Technology Stack
 
 - **Frontend**: Next.js 16, React 18, TypeScript
-- **Backend**: tRPC, Express.js, Node.js
+- **Backend**: tRPC, Next.js API Routes
 - **Database**: PostgreSQL with Prisma ORM
 - **Authentication**: NextAuth.js with role-based access
-- **Mobile**: React Native with Expo
 - **Styling**: Tailwind CSS, Radix UI
 - **Monorepo**: Turborepo with Bun package manager
 
@@ -35,29 +33,27 @@ BHMS is a full-stack monorepo application that provides:
 
 ```
 ├── apps/
-│   ├── (public)/        # Public marketplace
-│   ├── admin/           # Platform admin dashboard
-│   ├── api/             # Backend API server (tRPC + Auth)
-│   ├── boarder/         # Boarder dashboard
-│   ├── landlord/        # Landlord management portal
-│   └── mobile/          # React Native mobile app
+│   ├── (public)/        # Public marketplace (:3000)
+│   ├── server/          # Backend API server (tRPC + Auth) (:3006)
+│   ├── admin/           # Platform admin dashboard (:3002)
+│   ├── boarder/         # Boarder dashboard (:3004)
+│   └── landlord/        # Landlord management portal (:3005)
 ├── packages/
 │   ├── api/             # API route definitions
 │   ├── auth/            # Authentication logic (NextAuth.js)
 │   ├── database/        # Prisma schema and migrations
-│   ├── shared/          # Shared utilities
+│   ├── shared/          # Shared utilities, layouts, providers
 │   ├── ui/              # Shared UI components
 │   └── validation/      # Zod schemas
 └── docs/
     ├── PLAN.md          # System specification
-    ├── flow.md          # Architecture diagrams
-    └── DEVELOPMENT.md   # Development guidelines
+    └── APPS.md          # Application documentation
 ```
 ## 🚀 Quick Start
 
 ### Prerequisites
 
-- Node.js 18+ 
+- Node.js 18+
 - Bun 1.1+
 - PostgreSQL 14+
 - Git
@@ -87,23 +83,29 @@ bun run dev
 ### Development Servers
 
 - **Public Platform**: http://localhost:3000
+- **API Server**: http://localhost:3006
 - **Admin Dashboard**: http://localhost:3002
-- **API Server**: http://localhost:3001
-- **Mobile App**: Expo development server
+- **Boarder Dashboard**: http://localhost:3004
+- **Landlord Portal**: http://localhost:3005
 
 ## 🔧 Available Scripts
 
 ```bash
 # Development
 bun run dev              # Start all development servers
-bun run web:dev          # Start web app only
 bun run api:dev          # Start API server only
-bun run mobile:dev       # Start mobile app only
+bun run public:dev       # Start public platform only
+bun run admin:dev        # Start admin dashboard only
+bun run boarder:dev      # Start boarder dashboard only
+bun run landlord:dev     # Start landlord portal only
 
 # Building
 bun run build            # Build all applications
-bun run web:build        # Build web app only
 bun run api:build        # Build API server only
+bun run public:build     # Build public platform only
+bun run admin:build      # Build admin dashboard only
+bun run boarder:build    # Build boarder dashboard only
+bun run landlord:build   # Build landlord portal only
 
 # Database
 bun run db:push          # Push schema changes
@@ -193,7 +195,7 @@ The system uses a comprehensive database schema supporting:
 - **Reviews**: Property rating and feedback system
 - **Applications**: Landlord approval workflow
 
-See [flow.md](flow.md) for detailed ER diagrams.
+See [docs/PLAN.md](docs/PLAN.md) for detailed ER diagrams.
 
 ## 🔄 CI/CD & Auto-merge
 
@@ -205,13 +207,12 @@ The project includes comprehensive GitHub Actions workflows:
 - **Security Scanning**: Vulnerability detection
 - **Auto-labeling**: PR categorization based on changed files
 
-See [DEVELOPMENT.md](DEVELOPMENT.md) for detailed guidelines.
+See [apps/README.md](apps/README.md) for detailed development guidelines.
 
 ## 📚 Documentation
 
-- [**PLAN.md**](PLAN.md) - Complete system specification
-- [**flow.md**](flow.md) - Architecture diagrams and ER models
-- [**DEVELOPMENT.md**](DEVELOPMENT.md) - Development guidelines
+- [**PLAN.md**](docs/PLAN.md) - Complete system specification
+- [**APPS.md**](docs/APPS.md) - Application documentation
 - [**apps/README.md**](apps/README.md) - Application-specific documentation
 - [**packages/README.md**](packages/README.md) - Package documentation
 

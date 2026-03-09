@@ -30,7 +30,7 @@ packages/
 - Rate limiting middleware
 - Redis caching utilities
 - Audit logging
-- Used by: apps/api, apps/web, apps/mobile
+- Used by: apps/api, apps/web
 
 ### 💾 Database (`packages/database/`)
 - Prisma client and schema
@@ -45,7 +45,7 @@ packages/
 ### 🎨 UI (`packages/ui/`)
 - Shared React components
 - Design system components
-- Used by: apps/web, apps/mobile
+- Used by: All frontend apps
 
 ### ✅ Validation (`packages/validation/`)
 - Zod schemas for validation
@@ -130,7 +130,6 @@ import { DashboardLayout } from "@bhms/shared/layouts";
 ```
 apps/web → @bhms/ui, @bhms/api, @bhms/auth, @bhms/shared, @bhms/validation
 apps/api → @bhms/api, @bhms/database, @bhms/auth, @bhms/shared, @bhms/validation
-apps/mobile → @bhms/ui, @bhms/api, @bhms/shared, @bhms/validation
 
 packages/api → @bhms/database, @bhms/validation, @bhms/shared
 packages/auth → @bhms/database

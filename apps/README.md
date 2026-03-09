@@ -9,12 +9,11 @@ The BHMS follows a multi-application architecture where each user type gets a de
 ```
 apps/
 ├── (auth)/          # Centralized authentication
-├── (public)/        # Public marketplace  
+├── (public)/        # Public marketplace
 ├── admin/           # Platform administration
 ├── api/             # Backend API server
 ├── boarder/         # Boarder dashboard
-├── landlord/        # Landlord management
-└── mobile/          # Mobile application
+└── landlord/        # Landlord management
 ```
 
 ## 📱 Applications
@@ -99,7 +98,7 @@ apps/
 ---
 
 ### 🔌 API Server (`api/`)
-**Port**: 3001  
+**Port**: 3001
 **Purpose**: Backend API serving all applications
 
 **Features**:
@@ -112,20 +111,6 @@ apps/
 
 **Tech Stack**: Next.js API Routes, tRPC, Prisma, NextAuth.js
 
----
-
-### 📱 Mobile App (`mobile/`)
-**Purpose**: Native mobile experience for boarders
-
-**Features**:
-- Native mobile UI for boarders
-- Property browsing and booking
-- Push notifications
-- Offline capability
-- Camera integration for profile photos
-
-**Tech Stack**: React Native, Expo, tRPC Client
-
 ## 🚀 Development
 
 ### Starting Individual Apps
@@ -133,16 +118,14 @@ apps/
 ```bash
 # Start specific application
 bun --filter @bhms/public dev          # Public platform
-bun --filter @bhms/boarder dev         # Boarder dashboard  
+bun --filter @bhms/boarder dev         # Boarder dashboard
 bun --filter @bhms/landlord dev        # Landlord portal
 bun --filter @bhms/admin dev           # Admin dashboard
 bun --filter @bhms/api-server dev      # API server
-bun --filter @bhms/mobile dev          # Mobile app
 
 # Or use convenience scripts
 bun run web:dev                        # Public platform
 bun run api:dev                        # API server
-bun run mobile:dev                     # Mobile app
 ```
 
 ### Building Applications

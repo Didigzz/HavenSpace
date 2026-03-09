@@ -11,7 +11,6 @@ Complete reference for all applications in the Boarding House Management System.
 | **Admin** | 3002 | `http://localhost:3002` | Platform administration | `apps/admin/src/app/dashboard/page.tsx` |
 | **Boarder** | 3004 | `http://localhost:3004` | Boarder (renter) dashboard | `apps/boarder/src/app/dashboard/page.tsx` |
 | **Landlord** | 3005 | `http://localhost:3005` | Landlord property management | `apps/landlord/src/app/dashboard/page.tsx` |
-| **Mobile** | N/A | Expo Dev Server | Native mobile app | `apps/mobile/App.tsx` |
 
 ---
 
@@ -35,7 +34,6 @@ bun run api:dev         # API server
 bun run boarder:dev     # Boarder dashboard
 bun run landlord:dev    # Landlord portal
 bun run admin:dev       # Admin dashboard
-bun run mobile:dev      # Mobile app (Expo)
 ```
 
 ### Building
@@ -252,21 +250,6 @@ src/
 
 ---
 
-### Mobile App (`@bhms/mobile`)
-**Expo** - Native mobile experience for boarders
-
-**Features:**
-- Native mobile UI
-- Property browsing
-- Booking management
-- Push notifications
-- Offline capability
-- Camera integration
-
-**Tech Stack:** React Native, Expo, tRPC Client
-
----
-
 ## 🔐 Authentication Flow
 
 ```
@@ -393,7 +376,6 @@ LANDLORD_URL="http://localhost:3005"       # Landlord portal
 @bhms/boarder   → @bhms/ui, @bhms/api, @bhms/shared, @bhms/auth
 @bhms/landlord  → @bhms/ui, @bhms/api, @bhms/shared, @bhms/auth
 @bhms/admin     → @bhms/ui, @bhms/api, @bhms/shared, @bhms/auth
-@bhms/mobile    → @bhms/ui, @bhms/api, @bhms/shared
 ```
 
 ---

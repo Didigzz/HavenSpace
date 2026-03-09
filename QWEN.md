@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-BHMS is a comprehensive **multi-tenant monorepo platform** for managing boarding houses, connecting landlords with boarders through modern web and mobile interfaces. Built with **Next.js 16**, **React 18**, **TypeScript**, **tRPC**, **Prisma**, and **PostgreSQL**, the platform follows a phased architecture serving multiple user roles.
+BHMS is a comprehensive **multi-tenant monorepo platform** for managing boarding houses, connecting landlords with boarders through modern web interfaces. Built with **Next.js 16**, **React 18**, **TypeScript**, **tRPC**, **Prisma**, and **PostgreSQL**, the platform follows a phased architecture serving multiple user roles.
 
 ### Core User Roles
 | Role | Access Level | Status Required |
@@ -16,7 +16,6 @@ BHMS is a comprehensive **multi-tenant monorepo platform** for managing boarding
 - **Backend**: tRPC, Express.js, Next.js API Routes
 - **Database**: PostgreSQL 15 with Prisma ORM
 - **Authentication**: NextAuth.js with role-based access control
-- **Mobile**: React Native with Expo
 - **Monorepo**: Turborepo with Bun package manager
 - **Containerization**: Docker & Docker Compose
 
@@ -28,15 +27,13 @@ BHMS is a comprehensive **multi-tenant monorepo platform** for managing boarding
 BoardingHouseSystem/
 ├── apps/                          # Application layer
 │   ├── (public)/        :3000     # Public marketplace (landing)
+│   ├── server/          :3006     # Backend API server (tRPC + Auth)
 │   ├── admin/           :3002     # Platform admin dashboard
-│   ├── api/             :3001     # Backend API server (tRPC + Auth)
 │   ├── boarder/         :3004     # Boarder dashboard
-│   ├── landlord/        :3005     # Landlord management portal
-│   └── mobile/                    # React Native mobile app
+│   └── landlord/        :3005     # Landlord management portal
 │
 ├── packages/                      # Shared packages
 │   ├── api/                       # tRPC routers & procedures
-│   ├── api-client/                # API client utilities
 │   ├── auth/                      # NextAuth.js configuration
 │   ├── config/                    # Shared configurations
 │   ├── database/                  # Prisma schema & client
@@ -44,15 +41,13 @@ BoardingHouseSystem/
 │   ├── layouts/                   # Shared layout components
 │   ├── providers/                 # React context providers
 │   ├── shared/                    # Business logic & utilities
-│   ├── types/                     # TypeScript type definitions
 │   ├── typescript-config/         # Shared TS configurations
 │   ├── ui/                        # Shared React components
-│   ├── utils/                     # Utility functions
 │   └── validation/                # Zod validation schemas
 │
 ├── docs/                          # Documentation
 │   ├── PLAN.md                    # System specification
-│   └── IFLOW.md                   # Architecture diagrams
+│   └── APPS.md                    # Application documentation
 │
 ├── nginx/                         # Nginx configuration
 ├── .github/workflows/             # CI/CD pipelines
@@ -117,12 +112,11 @@ bun run dev
 
 ```bash
 # Start specific app
-bun --filter @bhms/public dev      # Public platform (:3000)
-bun --filter @bhms/api-server dev  # API server (:3001)
-bun --filter @bhms/admin dev       # Admin dashboard (:3002)
-bun --filter @bhms/boarder dev     # Boarder dashboard (:3004)
-bun --filter @bhms/landlord dev    # Landlord portal (:3005)
-bun --filter @bhms/mobile dev      # Mobile app (Expo)
+bun --filter @bhms/public dev       # Public platform (:3000)
+bun --filter @bhms/api-server dev   # API server (:3006)
+bun --filter @bhms/admin dev        # Admin dashboard (:3002)
+bun --filter @bhms/boarder dev      # Boarder dashboard (:3004)
+bun --filter @bhms/landlord dev     # Landlord portal (:3005)
 
 # Build specific app
 bun --filter @bhms/public build
@@ -221,7 +215,7 @@ Security scanning for vulnerabilities.
 ### Dependabot
 Automated dependency updates for:
 - Root npm dependencies
-- Individual apps (admin, api, mobile)
+- Individual apps (admin, api)
 - Packages (database, auth, ui)
 - GitHub Actions
 
@@ -240,7 +234,7 @@ Automated dependency updates for:
 
 ### Authentication Flow
 1. Authentication handled via `packages/auth/` (NextAuth.js configuration)
-2. Auth endpoints served through `apps/api/` serverless functions
+2. Auth endpoints served through `apps/server/` API routes
 3. Role-based redirect to appropriate dashboard after login
 4. Session managed via NextAuth.js with JWT
 5. API enforces role-based access control via tRPC middleware
@@ -249,7 +243,7 @@ Automated dependency updates for:
 - All apps communicate with API server via tRPC
 - Type-safe end-to-end communication
 - Routers defined in `packages/api/`
-- API server runs on port 3001
+- API server runs on port 3006
 
 ### Database Schema
 Key entities: Users, Boarding Houses, Bookings, Payments, Messages, Reviews, Applications. See `packages/database/schema.prisma` for full schema.
@@ -278,7 +272,7 @@ Key entities: Users, Boarding Houses, Bookings, Payments, Messages, Reviews, App
 | Document | Location |
 |----------|----------|
 | System Specification | `docs/PLAN.md` |
-| Architecture Diagrams | `docs/IFLOW.md` |
+| Application Documentation | `docs/APPS.md` |
 | Apps Documentation | `apps/README.md` |
 | Packages Documentation | `packages/README.md` |
 
