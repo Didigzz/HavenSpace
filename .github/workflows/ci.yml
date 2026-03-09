@@ -115,7 +115,7 @@ jobs:
         with:
           name: build-${{ matrix.app }}
           path: |
-            apps/api/.next
+            apps/server/.next
             apps/\(public\)/.next
             apps/boarder/.next
             apps/landlord/.next
@@ -131,8 +131,8 @@ jobs:
         app: [api, public, boarder, landlord, admin]
         include:
           - app: api
-            port: 3001
-            dockerfile: apps/api/Dockerfile
+            port: 3006
+            dockerfile: apps/server/Dockerfile
             context: .
           - app: public
             port: 3000

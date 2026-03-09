@@ -40,16 +40,6 @@ updates:
       - "api-app"
       - "auto-merge"
 
-  - package-ecosystem: "npm"
-    directory: "/apps/mobile"
-    schedule:
-      interval: "weekly"
-    open-pull-requests-limit: 5
-    labels:
-      - "dependencies"
-      - "mobile-app"
-      - "auto-merge"
-
   # Enable version updates for packages
   - package-ecosystem: "npm"
     directory: "/packages/database"
