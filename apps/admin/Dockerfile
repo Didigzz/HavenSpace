@@ -35,7 +35,7 @@ COPY --from=deps /app/apps/admin/node_modules ./apps/admin/node_modules
 COPY . .
 
 # Build the app
-RUN bun run build --filter=@bhms/platform-admin
+RUN bun run build --filter=@bhms/admin
 
 # Production image
 FROM base AS runner
