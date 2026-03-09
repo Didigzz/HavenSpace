@@ -40,8 +40,8 @@
       "cache": false
     },
     "typecheck": {
-      "dependsOn": ["^build"],
-      "outputs": []
+      "dependsOn": ["^typecheck"],
+      "cache": false
     },
     "test": {
       "dependsOn": ["^build"],

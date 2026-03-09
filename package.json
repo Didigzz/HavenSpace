@@ -30,8 +30,6 @@
     "prepare": "husky",
     "api:dev": "bun --filter @bhms/api-server dev",
     "api:build": "bun --filter @bhms/api-server build",
-    "mobile:dev": "bun --filter @bhms/mobile dev",
-    "mobile:build": "bun --filter @bhms/mobile build",
     "public:dev": "bun --filter @bhms/public dev",
     "public:build": "bun --filter @bhms/public build",
     "admin:dev": "bun --filter @bhms/admin dev",
@@ -45,7 +43,7 @@
     "docker:dev": "docker-compose -f docker-compose.dev.yml up -d",
     "docker:down": "docker-compose down",
     "docker:logs": "docker-compose logs -f",
-    "docker:build:api": "docker build -f apps/api/Dockerfile -t bhms-api .",
+    "docker:build:api": "docker build -f apps/server/Dockerfile -t bhms-api .",
     "docker:clean": "docker system prune -f"
   },
   "devDependencies": {
