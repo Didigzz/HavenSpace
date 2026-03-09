@@ -5,6 +5,7 @@
   "main": "./src/index.ts",
   "types": "./src/index.ts",
   "exports": {
+    ".": "./src/index.ts",
     "./eslint": "./eslint/base.js",
     "./eslint/next": "./eslint/next.js",
     "./eslint/react": "./eslint/react.js",
@@ -13,6 +14,11 @@
     "./typescript/react-native": "./typescript/react-native.json",
     "./tailwind": "./tailwind/base.js",
     "./tailwind/web": "./tailwind/web.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src/ --no-error-on-unmatched-pattern"
   },
   "dependencies": {
     "@vercel/style-guide": "^5.2.0",
@@ -23,7 +29,13 @@
     "@typescript-eslint/eslint-plugin": "^7.1.0",
     "tailwindcss": "^3.4.1",
     "autoprefixer": "^10.4.17",
-    "postcss": "^8.4.35"
+    "postcss": "^8.4.35",
+    "zod": "^3.22.4",
+    "@types/node": "^20.10.0"
+  },
+  "devDependencies": {
+    "@bhms/typescript-config": "workspace:*",
+    "typescript": "^5.6.3"
   },
   "publishConfig": {
     "access": "public"
