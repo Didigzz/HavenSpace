@@ -35,16 +35,15 @@ BHMS is a full-stack monorepo application that provides:
 
 ```
 ├── apps/
-│   ├── (auth)/          # Authentication app
 │   ├── (public)/        # Public marketplace
 │   ├── admin/           # Platform admin dashboard
-│   ├── api/             # Backend API server
+│   ├── api/             # Backend API server (tRPC + Auth)
 │   ├── boarder/         # Boarder dashboard
 │   ├── landlord/        # Landlord management portal
 │   └── mobile/          # React Native mobile app
 ├── packages/
 │   ├── api/             # API route definitions
-│   ├── auth/            # Authentication logic
+│   ├── auth/            # Authentication logic (NextAuth.js)
 │   ├── database/        # Prisma schema and migrations
 │   ├── shared/          # Shared utilities
 │   ├── ui/              # Shared UI components

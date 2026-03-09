@@ -27,9 +27,10 @@ BHMS is a comprehensive **multi-tenant monorepo platform** for managing boarding
 ```
 BoardingHouseSystem/
 ├── apps/                          # Application layer
+│   ├── (auth)/          :3003     # Authentication & onboarding
 │   ├── (public)/        :3000     # Public marketplace (landing)
 │   ├── admin/           :3002     # Platform admin dashboard
-│   ├── api/             :3001     # Backend API server (tRPC + Auth)
+│   ├── api/             :3001     # Backend API server (tRPC)
 │   ├── boarder/         :3004     # Boarder dashboard
 │   ├── landlord/        :3005     # Landlord management portal
 │   └── mobile/                    # React Native mobile app
@@ -239,11 +240,10 @@ Automated dependency updates for:
 | **Phase 4** | Admin Dashboard (Platform Management) | Core |
 
 ### Authentication Flow
-1. Authentication handled via `packages/auth/` (NextAuth.js configuration)
-2. Auth endpoints served through `apps/api/` serverless functions
-3. Role-based redirect to appropriate dashboard after login
-4. Session managed via NextAuth.js with JWT
-5. API enforces role-based access control via tRPC middleware
+1. Users authenticate through `(auth)` app (port 3003)
+2. Role-based redirect to appropriate dashboard
+3. Session managed via NextAuth.js with JWT
+4. API enforces role-based access control
 
 ### tRPC API Architecture
 - All apps communicate with API server via tRPC

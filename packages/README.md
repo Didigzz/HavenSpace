@@ -12,7 +12,9 @@ packages/
 ├── config/           # Shared configurations
 ├── database/         # Prisma database client
 ├── eslint-config/    # ESLint configurations
-├── shared/           # Shared business logic and utilities
+├── layouts/          # ⚠️ DEPRECATED - consolidated into @bhms/shared
+├── providers/        # ⚠️ DEPRECATED - consolidated into @bhms/shared
+├── shared/           # Shared business logic, utilities, layouts, providers
 ├── types/            # TypeScript type definitions
 ├── typescript-config/# TypeScript configurations
 ├── ui/               # Shared UI components
@@ -25,6 +27,9 @@ packages/
 ### 🔧 API (`packages/api/`)
 - tRPC routers and procedures
 - API endpoint definitions
+- Rate limiting middleware
+- Redis caching utilities
+- Audit logging
 - Used by: apps/api, apps/web, apps/mobile
 
 ### 💾 Database (`packages/database/`)
@@ -48,9 +53,49 @@ packages/
 - Used by: All apps and packages
 
 ### 🔄 Shared (`packages/shared/`)
-- Business logic utilities
+**Consolidated package** containing:
+- Business logic utilities (entities, features)
 - Common types and constants
+- Layout components (`DashboardLayout`, `AuthLayout`, `PublicLayout`)
+- Provider components (`AppProviders`, `PublicProviders`)
+- Formatters, validators, and general utilities
 - Used by: All apps
+
+## Package Consolidation (March 2026)
+
+The following packages have been **consolidated** into `@bhms/shared`:
+
+- `@bhms/layouts` → Use `@bhms/shared/layouts` instead
+- `@bhms/providers` → Use `@bhms/shared/providers` instead
+
+### Migration
+
+```json
+// package.json - Before
+{
+  "dependencies": {
+    "@bhms/layouts": "workspace:*",
+    "@bhms/providers": "workspace:*"
+  }
+}
+
+// package.json - After
+{
+  "dependencies": {
+    "@bhms/shared": "workspace:*"
+  }
+}
+```
+
+```typescript
+// Imports - Before
+import { AppProviders } from "@bhms/providers";
+import { DashboardLayout } from "@bhms/layouts";
+
+// Imports - After
+import { AppProviders } from "@bhms/shared/providers";
+import { DashboardLayout } from "@bhms/shared/layouts";
+```
 
 ## Configuration Packages
 
@@ -90,29 +135,40 @@ apps/mobile → @bhms/ui, @bhms/api, @bhms/shared, @bhms/validation
 packages/api → @bhms/database, @bhms/validation, @bhms/shared
 packages/auth → @bhms/database
 packages/ui → @bhms/shared
+packages/shared → @bhms/database, @bhms/ui, @bhms/validation
 ```
 
 ## Development
 
+### Install Dependencies
+```bash
+bun install
+```
+
 ### Build All Packages
 ```bash
-pnpm build
+bun run build
 ```
 
 ### Type Check All Packages
 ```bash
-pnpm typecheck
+bun run typecheck
 ```
 
 ### Lint All Packages
 ```bash
-pnpm lint
+bun run lint
+```
+
+### Test All Packages
+```bash
+bun run test
 ```
 
 ## Adding New Packages
 
 1. Create directory in `packages/`
 2. Add `package.json` with workspace dependencies
-3. Add to `pnpm-workspace.yaml` (automatic with `packages/*`)
+3. Ensure root `package.json` workspaces includes `packages/*`
 4. Update `turbo.json` if needed
 5. Add to relevant app dependencies
