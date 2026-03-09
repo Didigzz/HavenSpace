@@ -1,4 +1,5 @@
 // Role-based guards for authorization
+import { APP_URLS, getFullDashboardUrl } from '@bhms/config';
 
 export type UserRole = 'LANDLORD' | 'BOARDER' | 'ADMIN';
 export type UserStatus = 'PENDING' | 'APPROVED' | 'SUSPENDED';
@@ -46,14 +47,15 @@ export function canAccessAdminDashboard(role?: string): boolean {
 
 /**
  * Get the redirect URL based on user role and status
+ * Uses centralized URL configuration from @bhms/config
  */
 export function getRedirectUrl(role?: string, status?: string): string {
     if (!role) return '/login';
-    
+
     if (isAdmin(role)) {
-        return 'http://localhost:3003/dashboard';
+        return getFullDashboardUrl('ADMIN');
     }
-    
+
     if (isLandlord(role)) {
         if (isPending(status)) {
             return '/pending-approval';
@@ -61,15 +63,15 @@ export function getRedirectUrl(role?: string, status?: string): string {
         if (isSuspended(status)) {
             return '/account-suspended';
         }
-        return 'http://localhost:3002/dashboard';
+        return getFullDashboardUrl('LANDLORD');
     }
-    
+
     if (isBoarder(role)) {
         if (isSuspended(status)) {
             return '/account-suspended';
         }
-        return 'http://localhost:3001/dashboard';
+        return getFullDashboardUrl('BOARDER');
     }
-    
-    return '/';
+
+    return APP_URLS.public;
 }

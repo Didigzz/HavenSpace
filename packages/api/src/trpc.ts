@@ -2,6 +2,7 @@ import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
 import { db } from "@bhms/database";
+import { createRateLimitMiddleware, rateLimits } from "./middleware/rate-limit";
 
 export const createTRPCContext = async (opts: { headers: Headers }) => {
   // This will be provided by the platform-specific adapter
@@ -31,6 +32,11 @@ const t = initTRPC.context<typeof createTRPCContext>().create({
 export const createCallerFactory = t.createCallerFactory;
 export const createTRPCRouter = t.router;
 
+// Rate limiting middleware
+const rateLimitMiddleware = createRateLimitMiddleware(rateLimits.standard);
+const authRateLimitMiddleware = createRateLimitMiddleware(rateLimits.auth);
+const writeRateLimitMiddleware = createRateLimitMiddleware(rateLimits.write);
+
 const timingMiddleware = t.middleware(async ({ next, path }) => {
   const start = Date.now();
 
@@ -47,9 +53,22 @@ const timingMiddleware = t.middleware(async ({ next, path }) => {
   return result;
 });
 
-export const publicProcedure = t.procedure.use(timingMiddleware);
+// Public procedure with rate limiting
+export const publicProcedure = t.procedure.use(rateLimitMiddleware).use(timingMiddleware);
 
-// Base protected procedure - platforms can extend this with their auth
+// Protected procedure with rate limiting (platforms should add auth middleware)
 export const createProtectedProcedure = (authMiddleware: any) => {
-  return t.procedure.use(timingMiddleware).use(authMiddleware);
+  return t.procedure
+    .use(rateLimitMiddleware)
+    .use(writeRateLimitMiddleware)
+    .use(timingMiddleware)
+    .use(authMiddleware);
+};
+
+// Auth-specific procedure with strict rate limiting
+export const createAuthProcedure = (authMiddleware: any) => {
+  return t.procedure
+    .use(authRateLimitMiddleware)
+    .use(timingMiddleware)
+    .use(authMiddleware);
 };
