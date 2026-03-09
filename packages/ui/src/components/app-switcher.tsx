@@ -1,5 +1,7 @@
 'use client';
 
+/// <reference types="next" />
+
 import * as React from 'react';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
@@ -29,7 +31,7 @@ import { APP_URLS, type AppKey } from '@bhms/config';
  */
 export function AppSwitcher() {
   const { data: session } = useSession();
-  const role = session?.user?.role as string | undefined;
+  const role = (session?.user as { role?: string })?.role;
 
   const apps = React.useMemo(() => {
     const availableApps: Array<{

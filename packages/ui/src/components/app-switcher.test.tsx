@@ -1,3 +1,5 @@
+/// <reference types="@testing-library/jest-dom" />
+
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { AppSwitcher, AppLink, getAppUrl } from '../components/app-switcher';
