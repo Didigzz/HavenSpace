@@ -249,7 +249,6 @@ The boarder dashboard is fully responsive:
 - [`@bhms/public`](../(public)) - Public marketplace
 - [`@bhms/landlord`](../landlord) - Landlord portal
 - [`@bhms/admin`](../admin) - Admin dashboard
-- [`@bhms/mobile`](../mobile) - Mobile app
 
 ## 📚 Documentation
 

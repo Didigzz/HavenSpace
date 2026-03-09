@@ -1,17 +1,21 @@
 import { NextResponse } from 'next/server';
-import { PrismaClient } from '@prisma/client';
+import { db } from '@bhms/database';
 
 export const dynamic = 'force-dynamic';
-
-const prisma = new PrismaClient();
 
 /**
  * Health check endpoint for the API server
  * Includes database connectivity check
  */
 export async function GET() {
-  const healthStatus = {
-    status: 'healthy' as const,
+  const healthStatus: {
+    status: string;
+    timestamp: string;
+    app: { name: string; version: string; environment: string };
+    urls: { api: string };
+    database: { status: string; error: string | null };
+  } = {
+    status: 'healthy',
     timestamp: new Date().toISOString(),
     app: {
       name: '@bhms/api-server',
@@ -22,21 +26,19 @@ export async function GET() {
       api: process.env.API_URL || 'http://localhost:3001',
     },
     database: {
-      status: 'unknown' as const,
-      error: null as string | null,
+      status: 'unknown',
+      error: null,
     },
   };
 
   // Check database connectivity
   try {
-    await prisma.$connect();
+    await db.$queryRaw`SELECT 1`;
     healthStatus.database.status = 'connected';
   } catch (error) {
     healthStatus.status = 'unhealthy';
     healthStatus.database.status = 'disconnected';
     healthStatus.database.error = error instanceof Error ? error.message : 'Unknown error';
-  } finally {
-    await prisma.$disconnect();
   }
 
   return NextResponse.json(healthStatus);

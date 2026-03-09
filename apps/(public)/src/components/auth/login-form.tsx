@@ -49,7 +49,7 @@ export function LoginForm() {
       }
 
       // Fetch session to get user role and status
-      const sessionRes = await fetch("/api/auth/session");
+      const sessionRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3006"}/api/auth/session`);
       const session = await sessionRes.json();
 
       if (session?.user) {

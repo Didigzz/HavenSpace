@@ -51,8 +51,8 @@ export function RegisterForm() {
     setError(null);
 
     try {
-      // Call the register API
-      const response = await fetch("/api/register", {
+      // Call the register API on the server
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3006"}/api/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -88,7 +88,7 @@ export function RegisterForm() {
       }
 
       // Fetch session to get user role and status
-      const sessionRes = await fetch("/api/auth/session");
+      const sessionRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3006"}/api/auth/session`);
       const session = await sessionRes.json();
 
       if (session?.user) {
