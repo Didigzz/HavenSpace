@@ -8,6 +8,7 @@ import { createDashboardRouter } from "./dashboard.router";
 import { createAdminRouter } from "./admin.router";
 import { createPropertyRouter } from "./property.router";
 import { createBookingRouter } from "./booking.router";
+import { createAuditLogRouter } from "./audit-log.router";
 
 export const createAppRouter = (
     protectedProcedure: any,
@@ -25,6 +26,7 @@ export const createAppRouter = (
         admin: createAdminRouter(protectedProcedure, adminProcedure || protectedProcedure),
         property: createPropertyRouter(protectedProcedure, landlordProcedure),
         booking: createBookingRouter(protectedProcedure, boarderProcedure, landlordProcedure),
+        auditLog: createAuditLogRouter(protectedProcedure, adminProcedure || protectedProcedure),
     });
 };
 
@@ -39,3 +41,4 @@ export { createDashboardRouter } from './dashboard.router';
 export { createAdminRouter } from './admin.router';
 export { createPropertyRouter } from './property.router';
 export { createBookingRouter } from './booking.router';
+export { createAuditLogRouter } from './audit-log.router';

@@ -54,8 +54,8 @@ model User {
   email         String     @unique
   name          String?
   password      String
-  role          UserRole   @default(BOARDER)
-  status        UserStatus @default(APPROVED)
+  role          UserRole   @default(BOARDER) @index
+  status        UserStatus @default(APPROVED) @index
   phone         String?
   image         String?
   emailVerified DateTime?
@@ -87,6 +87,7 @@ model LandlordProfile {
   user              User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   properties        Property[]
 
+  @@index([userId])
   @@map("landlord_profiles")
 }
 
@@ -120,6 +121,9 @@ model Property {
 
   @@index([city])
   @@index([isPublished])
+  @@index([isFeatured])
+  @@index([landlordId])
+  @@index([monthlyRent])
   @@map("properties")
 }
 
@@ -230,11 +234,13 @@ model Boarder {
   room   Room?   @relation(fields: [roomId], references: [id])
 
   userId String? @unique @map("user_id")
-  user   User?   @relation(fields: [userId], references: [id])
+  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   payments Payment[]
   bookings Booking[]
 
+  @@index([email])
+  @@index([isActive])
   @@map("boarders")
 }
 
@@ -287,4 +293,21 @@ model Setting {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("settings")
+}
+
+// Audit logging for tracking admin actions and sensitive operations
+model AuditLog {
+  id          String   @id @default(cuid())
+  userId      String   @map("user_id")
+  action      String   @index
+  entity      String   @index
+  entityId    String?  @map("entity_id")
+  changes     Json?
+  ipAddress   String?  @map("ip_address")
+  userAgent   String?  @map("user_agent")
+  timestamp   DateTime @default(now()) @index
+
+  @@index([userId])
+  @@index([entity, entityId])
+  @@map("audit_logs")
 }

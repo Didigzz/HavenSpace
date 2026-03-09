@@ -6,22 +6,29 @@
   "types": "./src/index.ts",
   "scripts": {
     "typecheck": "tsc --noEmit",
-    "lint": "eslint src/ --no-error-on-unmatched-pattern"
+    "lint": "eslint src/ --no-error-on-unmatched-pattern",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
     "@bhms/database": "workspace:*",
     "@bhms/validation": "workspace:*",
     "@orpc/server": "^1.8.0",
-    "@trpc/server": "^11.0.0-rc.297",
+    "@trpc/server": "^10.45.2",
     "@types/node": "^22.0.0",
     "bcryptjs": "^3.0.3",
+    "ioredis": "^5.3.2",
     "superjson": "^2.2.6",
     "zod": "^4.3.6"
   },
   "devDependencies": {
     "@bhms/typescript-config": "workspace:*",
     "@types/bcryptjs": "^2.4.6",
+    "@types/ioredis": "^5.0.0",
+    "@vitest/coverage-v8": "^1.0.0",
     "eslint": "^8.57.1",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "vitest": "^1.0.0"
   }
 }
