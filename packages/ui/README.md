@@ -1,6 +1,6 @@
 # @bhms/ui
 
-Shared React UI component library for the Boarding House Management System (BHMS).
+Shared React UI component library for the Haven Space platform.
 
 ## Overview
 

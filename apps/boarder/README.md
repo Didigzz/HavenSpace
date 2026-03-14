@@ -270,4 +270,4 @@ When adding features to the boarder app:
 
 ---
 
-**Part of the Boarding House Management System (BHMS)**
+**Part of the Haven Space platform**

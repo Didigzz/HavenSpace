@@ -1,6 +1,6 @@
 # @bhms/api - tRPC API Server
 
-Backend API server for the Boarding House Management System (BHMS) using tRPC and Express.js.
+Backend API server for the Haven Space platform using tRPC and Express.js.
 
 ## Overview
 

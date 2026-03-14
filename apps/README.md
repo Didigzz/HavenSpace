@@ -1,6 +1,6 @@
 # Applications
 
-This directory contains all the applications that make up the Boarding House Management System. Each application serves a specific user role and provides a tailored experience.
+This directory contains all the applications that make up the Haven Space platform. Each application serves a specific user role and provides a tailored experience.
 
 ## 🏗️ Architecture Overview
 

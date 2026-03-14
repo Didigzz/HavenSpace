@@ -1,6 +1,6 @@
 # Modular Monolith Architecture
 
-This directory contains the modular monolith implementation for the Boarding House Management System.
+This directory contains the modular monolith implementation for the Haven Space platform.
 
 ## Architecture Overview
 

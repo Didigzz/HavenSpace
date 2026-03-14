@@ -1,6 +1,6 @@
 # API Server (@bhms/api-server)
 
-Backend API server for the Boarding House Management System (BHMS) built with **Next.js 16**, **tRPC**, and **NextAuth.js**.
+Backend API server for the Haven Space platform built with **Next.js 16**, **tRPC**, and **NextAuth.js**.
 
 ## Overview
 

@@ -1,6 +1,6 @@
 # Public Platform
 
-The public-facing marketplace for the Boarding House Management System. This application serves as the discovery layer where visitors can browse, search, and view boarding house listings, and includes integrated authentication.
+The public-facing marketplace for the Haven Space platform. This application serves as the discovery layer where visitors can browse, search, and view boarding house listings, and includes integrated authentication.
 
 ## 🌐 Overview
 

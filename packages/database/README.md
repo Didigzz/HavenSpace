@@ -1,6 +1,6 @@
 # @bhms/database
 
-Database layer for the Boarding House Management System (BHMS) using Prisma ORM.
+Database layer for the Haven Space platform using Prisma ORM.
 
 ## Overview
 

@@ -1,0 +1,1416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Haven Space - Pitch Deck</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    /* === VIEWPORT BASE CSS (Required - fits 100vh, no scrolling) === */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    html, body {
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      background: #0D0D0D;
+    }
+    
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      color: #FFFFFF;
+    }
+    
+    /* Slide container - each slide fills viewport exactly */
+    .slide {
+      height: 100vh;
+      height: 100dvh;
+      width: 100vw;
+      overflow: hidden;
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(2rem, 5vw, 4rem);
+    }
+    
+    .slide.active {
+      display: flex;
+    }
+    
+    /* Responsive typography */
+    .title {
+      font-size: clamp(2rem, 6vw, 4rem);
+      line-height: 1.1;
+      font-weight: 700;
+    }
+    
+    .subtitle {
+      font-size: clamp(1rem, 2.5vw, 1.5rem);
+      line-height: 1.6;
+    }
+    
+    .small {
+      font-size: clamp(0.875rem, 2vw, 1.125rem);
+    }
+    
+    /* === ELECTRIC STUDIO THEME === */
+    :root {
+      --bg-primary: #0D0D0D;
+      --bg-gradient: #1A1A2E;
+      --accent-blue: #00D4FF;
+      --accent-purple: #7B2CFF;
+      --accent-pink: #FF2D92;
+      --text-primary: #FFFFFF;
+      --text-secondary: #A0A0B0;
+      --card-bg: rgba(255, 255, 255, 0.05);
+      --card-border: rgba(255, 255, 255, 0.1);
+    }
+    
+    .slide {
+      background: radial-gradient(ellipse at top left, var(--bg-gradient) 0%, var(--bg-primary) 70%);
+    }
+    
+    /* Animated gradient orb */
+    .gradient-orb {
+      position: absolute;
+      width: clamp(300px, 50vw, 600px);
+      height: clamp(300px, 50vw, 600px);
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0, 212, 255, 0.12) 0%, rgba(123, 44, 255, 0.08) 50%, transparent 70%);
+      top: -10%;
+      right: -10%;
+      animation: orbFloat 10s ease-in-out infinite;
+      pointer-events: none;
+    }
+    
+    @keyframes orbFloat {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(-30px, 30px) scale(1.05); }
+      66% { transform: translate(20px, -20px) scale(0.95); }
+    }
+    
+    /* Grid pattern */
+    .grid-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      background-size: 80px 80px;
+      pointer-events: none;
+    }
+    
+    /* Content container */
+    .content {
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    
+    /* Header with logo */
+    .header {
+      display: flex;
+      align-items: center;
+      gap: clamp(0.75rem, 2vw, 1.25rem);
+      margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+    }
+    
+    .logo-mark {
+      width: clamp(40px, 8vw, 56px);
+      height: clamp(40px, 8vw, 56px);
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: clamp(1.25rem, 3vw, 1.75rem);
+      font-weight: 700;
+      color: var(--bg-primary);
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    
+    .logo-text {
+      font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+      font-weight: 600;
+      color: var(--text-primary);
+      font-family: 'Space Grotesk', sans-serif;
+      letter-spacing: -0.02em;
+    }
+    
+    /* Slide number */
+    .slide-number {
+      position: absolute;
+      top: clamp(1.5rem, 3vw, 2rem);
+      right: clamp(1.5rem, 3vw, 2rem);
+      font-size: clamp(0.75rem, 1.5vw, 0.875rem);
+      color: var(--text-secondary);
+      z-index: 10;
+    }
+    
+    /* === SLIDE SPECIFIC STYLES === */
+    
+    /* Title Slide */
+    .title-slide .main-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.5rem, 7vw, 5rem);
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-blue) 50%, var(--accent-purple) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: clamp(1rem, 2vw, 1.5rem);
+      line-height: 1.1;
+    }
+    
+    .title-slide .tagline {
+      display: inline-flex;
+      align-items: center;
+      padding: clamp(0.5rem, 1.5vw, 0.75rem) clamp(1rem, 2.5vw, 1.5rem);
+      background: rgba(0, 212, 255, 0.1);
+      border: 1px solid rgba(0, 212, 255, 0.3);
+      border-radius: 100px;
+      font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+      color: var(--accent-blue);
+      font-weight: 500;
+      margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+    }
+    
+    .title-slide .description {
+      color: var(--text-secondary);
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      max-width: clamp(280px, 50vw, 550px);
+      line-height: 1.7;
+    }
+    
+    /* Section header slide */
+    .section-slide {
+      text-align: center;
+      align-items: center;
+    }
+    
+    .section-slide .section-label {
+      font-size: clamp(0.875rem, 2vw, 1rem);
+      color: var(--accent-blue);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      margin-bottom: clamp(1rem, 2vw, 2rem);
+    }
+    
+    .section-slide .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--text-primary), var(--accent-blue));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    /* Content slides */
+    .slide-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 700;
+      margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+      color: var(--text-primary);
+    }
+    
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: clamp(1rem, 2vw, 1.5rem);
+    }
+    
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: clamp(1rem, 2vw, 1.5rem);
+    }
+    
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: clamp(1rem, 2vw, 1.5rem);
+    }
+    
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: clamp(12px, 2vw, 16px);
+      padding: clamp(1rem, 2vw, 1.5rem);
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+    
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(0, 212, 255, 0.3);
+    }
+    
+    .card-icon {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      margin-bottom: clamp(0.75rem, 1.5vw, 1rem);
+    }
+    
+    .card-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      font-weight: 600;
+      margin-bottom: clamp(0.5rem, 1vw, 0.75rem);
+      color: var(--text-primary);
+    }
+    
+    .card-text {
+      font-size: clamp(0.875rem, 1.75vw, 1rem);
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    
+    .card-value {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: clamp(0.25rem, 0.5vw, 0.5rem);
+    }
+    
+    /* List styles */
+    .bullet-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: clamp(0.75rem, 1.5vw, 1rem);
+    }
+    
+    .bullet-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: clamp(0.75rem, 1.5vw, 1rem);
+      font-size: clamp(0.9rem, 2vw, 1.125rem);
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+    
+    .bullet-list li::before {
+      content: '→';
+      color: var(--accent-blue);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    
+    /* Table */
+    .table-container {
+      overflow-x: auto;
+      max-height: clamp(200px, 40vh, 350px);
+      overflow-y: auto;
+    }
+    
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: clamp(0.875rem, 1.75vw, 1rem);
+    }
+    
+    .data-table th,
+    .data-table td {
+      padding: clamp(0.75rem, 1.5vw, 1rem);
+      text-align: left;
+      border-bottom: 1px solid var(--card-border);
+    }
+    
+    .data-table th {
+      color: var(--accent-blue);
+      font-weight: 600;
+      font-family: 'Space Grotesk', sans-serif;
+      position: sticky;
+      top: 0;
+      background: var(--bg-primary);
+    }
+    
+    .data-table td {
+      color: var(--text-secondary);
+    }
+    
+    .data-table tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+    
+    /* Highlight text */
+    .highlight {
+      color: var(--accent-blue);
+      font-weight: 600;
+    }
+    
+    .gradient-text {
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    /* Quote */
+    .quote-block {
+      border-left: 3px solid var(--accent-blue);
+      padding-left: clamp(1rem, 2vw, 2rem);
+      margin: clamp(1.5rem, 3vw, 2.5rem) 0;
+    }
+    
+    .quote-text {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.25rem, 3vw, 1.75rem);
+      font-style: italic;
+      color: var(--text-primary);
+      line-height: 1.6;
+      margin-bottom: clamp(0.75rem, 1.5vw, 1rem);
+    }
+    
+    .quote-author {
+      color: var(--text-secondary);
+      font-size: clamp(0.875rem, 1.75vw, 1rem);
+    }
+    
+    /* CTA Box */
+    .cta-box {
+      background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(123, 44, 255, 0.1));
+      border: 1px solid rgba(0, 212, 255, 0.3);
+      border-radius: clamp(16px, 3vw, 24px);
+      padding: clamp(1.5rem, 3vw, 2.5rem);
+      text-align: center;
+    }
+    
+    .cta-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.25rem, 3vw, 1.75rem);
+      font-weight: 700;
+      margin-bottom: clamp(0.75rem, 1.5vw, 1rem);
+      color: var(--text-primary);
+    }
+    
+    .cta-text {
+      color: var(--text-secondary);
+      font-size: clamp(0.9rem, 2vw, 1.125rem);
+      line-height: 1.6;
+      margin-bottom: clamp(1rem, 2vw, 1.5rem);
+    }
+    
+    .cta-contact {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      color: var(--accent-blue);
+      font-weight: 600;
+    }
+    
+    /* Stats row */
+    .stats-row {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: clamp(1.5rem, 3vw, 3rem);
+      margin: clamp(1.5rem, 3vw, 2.5rem) 0;
+    }
+    
+    .stat-item {
+      text-align: center;
+    }
+    
+    .stat-value {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      margin-bottom: clamp(0.5rem, 1vw, 0.75rem);
+    }
+    
+    .stat-label {
+      color: var(--text-secondary);
+      font-size: clamp(0.875rem, 1.75vw, 1rem);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    
+    /* === NAVIGATION === */
+    .nav-dots {
+      position: fixed;
+      right: clamp(1rem, 2vw, 2rem);
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: clamp(0.5rem, 1vw, 0.75rem);
+      z-index: 100;
+    }
+    
+    .nav-dot {
+      width: clamp(8px, 1.5vw, 12px);
+      height: clamp(8px, 1.5vw, 12px);
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .nav-dot.active {
+      background: var(--accent-blue);
+      transform: scale(1.2);
+    }
+    
+    .nav-dot:hover {
+      background: rgba(0, 212, 255, 0.6);
+    }
+    
+    /* Progress bar */
+    .progress-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+      transition: width 0.3s ease;
+      z-index: 100;
+    }
+    
+    /* === EDIT MODE STYLES === */
+    .edit-mode-indicator {
+      position: fixed;
+      top: clamp(0.75rem, 2vw, 1rem);
+      left: clamp(0.75rem, 2vw, 1rem);
+      background: rgba(0, 212, 255, 0.2);
+      border: 1px solid var(--accent-blue);
+      border-radius: 8px;
+      padding: clamp(0.5rem, 1vw, 0.75rem) clamp(0.75rem, 1.5vw, 1rem);
+      font-size: clamp(0.75rem, 1.5vw, 0.875rem);
+      color: var(--accent-blue);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      gap: clamp(0.5rem, 1vw, 0.75rem);
+    }
+    
+    .edit-mode-indicator.active {
+      display: flex;
+    }
+    
+    .editable {
+      border: 1px dashed transparent;
+      transition: border-color 0.2s ease;
+    }
+    
+    .edit-mode .editable {
+      border-color: rgba(0, 212, 255, 0.5);
+      cursor: text;
+    }
+    
+    .edit-mode .editable:hover {
+      border-color: var(--accent-blue);
+      background: rgba(0, 212, 255, 0.05);
+    }
+    
+    .edit-mode .editable:focus {
+      outline: none;
+      border-color: var(--accent-blue);
+      background: rgba(0, 212, 255, 0.1);
+      border-radius: 4px;
+      padding: 2px 4px;
+    }
+    
+    .save-notification {
+      position: fixed;
+      bottom: clamp(1rem, 3vw, 2rem);
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--accent-blue);
+      color: var(--bg-primary);
+      padding: clamp(0.75rem, 1.5vw, 1rem) clamp(1.5rem, 3vw, 2rem);
+      border-radius: 100px;
+      font-weight: 600;
+      font-size: clamp(0.875rem, 1.75vw, 1rem);
+      box-shadow: 0 10px 40px rgba(0, 212, 255, 0.3);
+      z-index: 1000;
+      transition: transform 0.3s ease;
+    }
+    
+    .save-notification.show {
+      transform: translateX(-50%) translateY(0);
+    }
+    
+    /* === ANIMATIONS === */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+    
+    /* Accent dots */
+    .accent-dots {
+      position: absolute;
+      bottom: clamp(1.5rem, 3vw, 2.5rem);
+      left: clamp(1.5rem, 3vw, 2.5rem);
+      display: flex;
+      gap: 8px;
+    }
+    
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-blue);
+      animation: dotPulse 2s ease-in-out infinite;
+    }
+    
+    .dot:nth-child(2) { animation-delay: 0.2s; background: var(--accent-purple); }
+    .dot:nth-child(3) { animation-delay: 0.4s; background: var(--accent-pink); }
+    
+    @keyframes dotPulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.3); opacity: 0.7; }
+    }
+    
+    /* === RESPONSIVE === */
+    @media (max-width: 768px) {
+      .grid-2,
+      .grid-3,
+      .grid-4 {
+        grid-template-columns: 1fr;
+      }
+      
+      .nav-dots {
+        display: none;
+      }
+      
+      .stats-row {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+    
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      .gradient-orb,
+      .dot,
+      .reveal {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Background elements (shared across slides) -->
+  <div class="gradient-orb"></div>
+  <div class="grid-overlay"></div>
+  
+  <!-- Navigation -->
+  <div class="nav-dots" id="navDots"></div>
+  <div class="progress-bar" id="progressBar"></div>
+  
+  <!-- Edit Mode -->
+  <div class="edit-mode-indicator" id="editIndicator">
+    <span>✏️ Edit Mode</span>
+    <span style="opacity: 0.7;">Press E to toggle</span>
+  </div>
+  <div class="save-notification" id="saveNotification">✓ Saved to browser</div>
+  
+  <!-- === SLIDE 1: TITLE === -->
+  <div class="slide active title-slide" data-slide="1">
+    <div class="content">
+      <div class="header reveal">
+        <div class="logo-mark">H</div>
+        <span class="logo-text">Haven Space</span>
+      </div>
+      
+      <h1 class="main-title reveal reveal-delay-1">Find Your Space.<br>Feel at Home.</h1>
+      
+      <div class="tagline reveal reveal-delay-2">
+        ✨ Boarding Made Better
+      </div>
+      
+      <p class="description reveal reveal-delay-3">
+        The comprehensive multi-tenant platform transforming how boarding houses are discovered, managed, and experienced.
+      </p>
+    </div>
+    
+    <div class="accent-dots">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+  </div>
+  
+  <!-- === SLIDE 2: PROBLEM === -->
+  <div class="slide" data-slide="2">
+    <div class="content">
+      <h2 class="slide-title reveal">The Problem</h2>
+      
+      <div class="grid-2">
+        <div class="card reveal reveal-delay-1">
+          <div class="card-icon">🏠</div>
+          <h3 class="card-title">Fragmented Market</h3>
+          <p class="card-text">Boarding house listings scattered across multiple platforms with no centralized marketplace</p>
+        </div>
+        
+        <div class="card reveal reveal-delay-2">
+          <div class="card-icon">📋</div>
+          <h3 class="card-title">No Standard Process</h3>
+          <p class="card-text">Booking processes vary wildly, creating confusion and inefficiency for both parties</p>
+        </div>
+        
+        <div class="card reveal reveal-delay-3">
+          <div class="card-icon">🔒</div>
+          <h3 class="card-title">Payment Concerns</h3>
+          <p class="card-text">No escrow-style protection creates trust issues and financial risk</p>
+        </div>
+        
+        <div class="card reveal reveal-delay-4">
+          <div class="card-icon">💬</div>
+          <h3 class="card-title">Poor Communication</h3>
+          <p class="card-text">Landlord-tenant communication relies on disconnected channels</p>
+        </div>
+      </div>
+      
+      <div class="quote-block reveal reveal-delay-4" style="margin-top: clamp(2rem, 4vw, 3rem);">
+        <p class="quote-text">"The boarding house market is underserved and ready for disruption"</p>
+      </div>
+    </div>
+    
+    <div class="slide-number">2 / 11</div>
+    <div class="accent-dots">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+  </div>
+  
+  <!-- === SLIDE 3: SOLUTION === -->
+  <div class="slide" data-slide="3">
+    <div class="content">
+      <h2 class="slide-title reveal">The Solution</h2>
+      
+      <div class="stats-row reveal reveal-delay-1">
+        <div class="stat-item">
+          <div class="stat-value">1</div>
+          <div class="stat-label">Platform</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">3</div>
+          <div class="stat-label">User Roles</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">∞</div>
+          <div class="stat-label">Possibilities</div>
+        </div>
+      </div>
+      
+      <div class="grid-3" style="margin-top: clamp(2rem, 4vw, 3rem);">
+        <div class="card reveal reveal-delay-2">
+          <div class="card-value">Boarders</div>
+          <p class="card-text">Browse, book, message, and pay securely—all in one place</p>
+        </div>
+        
+        <div class="card reveal reveal-delay-3">
+          <div class="card-value">Landlords</div>
+          <p class="card-text">Manage properties, screen tenants, track income effortlessly</p>
+        </div>
+        
+        <div class="card reveal reveal-delay-4">
+          <div class="card-value">Platform</div>
+          <p class="card-text">Scalable SaaS with multiple revenue streams</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="slide-number">3 / 11</div>
+    <div class="accent-dots">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+  </div>
+  
+  <!-- === SLIDE 4: FEATURES === -->
+  <div class="slide" data-slide="4">
+    <div class="content">
+      <h2 class="slide-title reveal">Platform Features</h2>
+      
+      <div class="grid-2">
+        <div class="card reveal reveal-delay-1">
+          <div class="card-icon">🎯</div>
+          <h3 class="card-title">Public Marketplace</h3>
+          <ul class="bullet-list" style="margin-top: 0.75rem;">
+            <li>Advanced search with filters</li>
+            <li>Interactive map view</li>
+            <li>Photo galleries & descriptions</li>
+          </ul>
+        </div>
+        
+        <div class="card reveal reveal-delay-2">
+          <div class="card-icon">👤</div>
+          <h3 class="card-title">Boarder Dashboard</h3>
+          <ul class="bullet-list" style="margin-top: 0.75rem;">
+            <li>Booking history & favorites</li>
+            <li>In-platform messaging</li>
+            <li>Secure payments & receipts</li>
+          </ul>
+        </div>
+        
+        <div class="card reveal reveal-delay-3">
+          <div class="card-icon">🏢</div>
+          <h3 class="card-title">Landlord Portal</h3>
+          <ul class="bullet-list" style="margin-top: 0.75rem;">
+            <li>Multi-property management</li>
+            <li>Booking approval workflow</li>
+            <li>Revenue analytics</li>
+          </ul>
+        </div>
+        
+        <div class="card reveal reveal-delay-4">
+          <div class="card-icon">⚙️</div>
+          <h3 class="card-title">Admin Dashboard</h3>
+          <ul class="bullet-list" style="margin-top: 0.75rem;">
+            <li>User management</li>
+            <li>Content moderation</li>
+            <li>Platform analytics</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <div class="slide-number">4 / 11</div>
+    <div class="accent-dots">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+  </div>
+  
+  <!-- === SLIDE 5: MARKET === -->
+  <div class="slide" data-slide="5">
+    <div class="content">
+      <h2 class="slide-title reveal">Market Opportunity</h2>
+      
+      <div class="grid-4" style="margin-bottom: clamp(2rem, 3vw, 3rem);">
+        <div class="card reveal reveal-delay-1" style="text-align: center;">
+          <div class="card-icon">🎓</div>
+          <div class="card-value" style="font-size: clamp(1.5rem, 4vw, 2.5rem);">200M+</div>
+          <p class="card-text">Students globally</p>
+        </div>
+        
+        <div class="card reveal reveal-delay-2" style="text-align: center;">
+          <div class="card-icon">💼</div>
+          <div class="card-value" style="font-size: clamp(1.5rem, 4vw, 2.5rem);">Growing</div>
+          <p class="card-text">Young professionals</p>
+        </div>
+        
+        <div class="card reveal reveal-delay-3" style="text-align: center;">
+          <div class="card-icon">👷</div>
+          <div class="card-value" style="font-size: clamp(1.5rem, 4vw, 2.5rem);">Significant</div>
+          <p class="card-text">Migrant workers</p>
+        </div>
+        
+        <div class="card reveal reveal-delay-4" style="text-align: center;">
+          <div class="card-icon">🏥</div>
+          <div class="card-value" style="font-size: clamp(1.5rem, 4vw, 2.5rem);">High-income</div>
+          <p class="card-text">Travel nurses</p>
+        </div>
+      </div>
+      
+      <div class="card reveal reveal-delay-4">
+        <h3 class="card-title" style="margin-bottom: 1rem;">Geographic Rollout</h3>
+        <div style="display: flex; gap: clamp(1rem, 2vw, 2rem); align-items: center; flex-wrap: wrap;">
+          <span class="highlight">Phase 1: Philippines</span>
+          <span style="color: var(--text-secondary);">→</span>
+          <span class="highlight">Phase 2: Southeast Asia</span>
+          <span style="color: var(--text-secondary);">→</span>
+          <span class="highlight">Phase 3: Global</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="slide-number">5 / 11</div>
+    <div class="accent-dots">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+  </div>
+  
+  <!-- === SLIDE 6: BUSINESS MODEL === -->
+  <div class="slide" data-slide="6">
+    <div class="content">
+      <h2 class="slide-title reveal">Business Model</h2>
+      
+      <div class="table-container reveal reveal-delay-1">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Revenue Stream</th>
+              <th>Pricing</th>
+              <th>Margin</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="highlight">Landlord Subscriptions</span></td>
+              <td>₱499-₱1,499/month</td>
+              <td>80%+</td>
+            </tr>
+            <tr>
+              <td><span class="highlight">Transaction Fees</span></td>
+              <td>2-3% per booking</td>
+              <td>95%+</td>
+            </tr>
+            <tr>
+              <td><span class="highlight">Featured Listings</span></td>
+              <td>₱100-₱500/listing</td>
+              <td>90%+</td>
+            </tr>
+            <tr>
+              <td><span class="highlight">Verification Services</span></td>
+              <td>₱200-₱500 one-time</td>
+              <td>85%+</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <div class="grid-3" style="margin-top: clamp(1.5rem, 3vw, 2.5rem);">
+        <div class="card reveal reveal-delay-2">
+          <div class="card-text" style="font-size: clamp(0.75rem, 1.5vw, 0.875rem);">LTV:CAC Ratio</div>
+          <div class="card-value">15:1</div>
+        </div>
+        
+        <div class="card reveal reveal-delay-3">
+          <div class="card-text" style="font-size: clamp(0.75rem, 1.5vw, 0.875rem);">Gross Margin</div>
+          <div class="card-value">80%+</div>
+        </div>
+        
+        <div class="card reveal reveal-delay-4">
+          <div class="card-text" style="font-size: clamp(0.75rem, 1.5vw, 0.875rem);">Target MRR</div>
+          <div class="card-value">$50K</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="slide-number">6 / 11</div>
+    <div class="accent-dots">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+  </div>
+  
+  <!-- === SLIDE 7: SUBSCRIPTION TIERS === -->
+  <div class="slide" data-slide="7">
+    <div class="content">
+      <h2 class="slide-title reveal">Subscription Tiers</h2>
+      
+      <div class="grid-4">
+        <div class="card reveal reveal-delay-1">
+          <div class="card-title" style="color: var(--text-secondary);">Free</div>
+          <div class="card-value" style="font-size: clamp(1.5rem, 3vw, 2rem);">₱0</div>
+          <ul class="bullet-list" style="margin-top: 1rem; font-size: clamp(0.75rem, 1.5vw, 0.875rem);">
+            <li>1 property</li>
+            <li>Basic listing</li>
+            <li>5% transaction fee</li>
+          </ul>
+        </div>
+        
+        <div class="card reveal reveal-delay-2" style="border-color: var(--accent-blue);">
+          <div class="card-title highlight">Starter</div>
+          <div class="card-value" style="font-size: clamp(1.5rem, 3vw, 2rem);">₱499<span style="font-size: 0.75em; color: var(--text-secondary);">/mo</span></div>
+          <ul class="bullet-list" style="margin-top: 1rem; font-size: clamp(0.75rem, 1.5vw, 0.875rem);">
+            <li>5 properties</li>
+            <li>Analytics</li>
+            <li>3% transaction fee</li>
+          </ul>
+        </div>
+        
+        <div class="card reveal reveal-delay-3" style="border-color: var(--accent-purple);">
+          <div class="card-title gradient-text">Professional</div>
+          <div class="card-value" style="font-size: clamp(1.5rem, 3vw, 2rem);">₱999<span style="font-size: 0.75em; color: var(--text-secondary);">/mo</span></div>
+          <ul class="bullet-list" style="margin-top: 1rem; font-size: clamp(0.75rem, 1.5vw, 0.875rem);">
+            <li>20 properties</li>
+            <li>Priority support</li>
+            <li>2% transaction fee</li>
+          </ul>
+        </div>
+        
+        <div class="card reveal reveal-delay-4" style="border-color: var(--accent-pink);">
+          <div class="card-title" style="color: var(--accent-pink);">Enterprise</div>
+          <div class="card-value" style="font-size: clamp(1.5rem, 3vw, 2rem);">₱1,499<span style="font-size: 0.75em; color: var(--text-secondary);">/mo</span></div>
+          <ul class="bullet-list" style="margin-top: 1rem; font-size: clamp(0.75rem, 1.5vw, 0.875rem);">
+            <li>Unlimited properties</li>
+            <li>API access</li>
+            <li>1.5% transaction fee</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <div class="slide-number">7 / 11</div>
+    <div class="accent-dots">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+  </div>
+  
+  <!-- === SLIDE 8: TECHNOLOGY === -->
+  <div class="slide" data-slide="8">
+    <div class="content">
+      <h2 class="slide-title reveal">Technology Stack</h2>
+      
+      <div class="grid-2">
+        <div class="card reveal reveal-delay-1">
+          <h3 class="card-title">Frontend</h3>
+          <ul class="bullet-list" style="margin-top: 0.75rem;">
+            <li>Next.js 16</li>
+            <li>React 18</li>
+            <li>TypeScript</li>
+            <li>Tailwind CSS + Radix UI</li>
+          </ul>
+        </div>
+        
+        <div class="card reveal reveal-delay-2">
+          <h3 class="card-title">Backend</h3>
+          <ul class="bullet-list" style="margin-top: 0.75rem;">
+            <li>tRPC (type-safe APIs)</li>
+            <li>Express.js</li>
+            <li>NextAuth.js</li>
+            <li>Role-based access control</li>
+          </ul>
+        </div>
+        
+        <div class="card reveal reveal-delay-3">
+          <h3 class="card-title">Database</h3>
+          <ul class="bullet-list" style="margin-top: 0.75rem;">
+            <li>PostgreSQL 15</li>
+            <li>Prisma ORM</li>
+            <li>Redis caching</li>
+          </ul>
+        </div>
+        
+        <div class="card reveal reveal-delay-4">
+          <h3 class="card-title">Infrastructure</h3>
+          <ul class="bullet-list" style="margin-top: 0.75rem;">
+            <li>Turborepo monorepo</li>
+            <li>Docker containerization</li>
+            <li>Nginx reverse proxy</li>
+            <li>GitHub Actions CI/CD</li>
+          </ul>
+        </div>
+      </div>
+      
+      <p class="reveal reveal-delay-4" style="margin-top: clamp(1.5rem, 3vw, 2.5rem); color: var(--text-secondary); text-align: center;">
+        <span class="highlight">Production-ready</span> • <span class="highlight">Scalable architecture</span> • <span class="highlight">Docker-ready deployment</span>
+      </p>
+    </div>
+    
+    <div class="slide-number">8 / 11</div>
+    <div class="accent-dots">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+  </div>
+  
+  <!-- === SLIDE 9: ROADMAP === -->
+  <div class="slide" data-slide="9">
+    <div class="content">
+      <h2 class="slide-title reveal">12-Month Roadmap</h2>
+      
+      <div style="position: relative; padding: clamp(1rem, 2vw, 2rem) 0;">
+        <!-- Timeline line -->
+        <div style="position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; background: linear-gradient(180deg, var(--accent-blue), var(--accent-purple)); transform: translateX(-50%);"></div>
+        
+        <div class="card reveal reveal-delay-1" style="position: relative; left: -52%; width: 48%; margin-bottom: clamp(1rem, 2vw, 2rem);">
+          <div class="card-title highlight">Q1 - Beta Launch</div>
+          <p class="card-text">100 landlords, 500 boarders</p>
+        </div>
+        
+        <div class="card reveal reveal-delay-2" style="position: relative; left: 2%; width: 48%; margin-bottom: clamp(1rem, 2vw, 2rem);">
+          <div class="card-title highlight">Q2 - Market Entry</div>
+          <p class="card-text">500 landlords, 2,500 boarders</p>
+        </div>
+        
+        <div class="card reveal reveal-delay-3" style="position: relative; left: -52%; width: 48%; margin-bottom: clamp(1rem, 2vw, 2rem);">
+          <div class="card-title highlight">Q3 - Scale & Optimize</div>
+          <p class="card-text">2,000 landlords, 10,000 boarders</p>
+        </div>
+        
+        <div class="card reveal reveal-delay-4" style="position: relative; left: 2%; width: 48%;">
+          <div class="card-title highlight">Q4 - Expansion</div>
+          <p class="card-text">5,000 landlords, 25,000 boarders</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="slide-number">9 / 11</div>
+    <div class="accent-dots">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+  </div>
+  
+  <!-- === SLIDE 10: METRICS === -->
+  <div class="slide" data-slide="10">
+    <div class="content">
+      <h2 class="slide-title reveal">Key Performance Indicators</h2>
+      
+      <div class="grid-2" style="margin-top: clamp(2rem, 3vw, 3rem);">
+        <div class="card reveal reveal-delay-1">
+          <div class="card-text">Monthly Active Users</div>
+          <div class="card-value">10,000+</div>
+          <p class="card-text" style="margin-top: 0.5rem;">Target by Year 1</p>
+        </div>
+        
+        <div class="card reveal reveal-delay-2">
+          <div class="card-text">Booking Conversion Rate</div>
+          <div class="card-value">15%+</div>
+          <p class="card-text" style="margin-top: 0.5rem;">Engagement metric</p>
+        </div>
+        
+        <div class="card reveal reveal-delay-3">
+          <div class="card-text">Monthly Recurring Revenue</div>
+          <div class="card-value">$50K+</div>
+          <p class="card-text" style="margin-top: 0.5rem;">Target by Year 1</p>
+        </div>
+        
+        <div class="card reveal reveal-delay-4">
+          <div class="card-text">Landlord Retention</div>
+          <div class="card-value">85%+</div>
+          <p class="card-text" style="margin-top: 0.5rem;">Retention metric</p>
+        </div>
+      </div>
+      
+      <div class="card reveal reveal-delay-4" style="margin-top: clamp(1.5rem, 3vw, 2.5rem);">
+        <div class="card-text">Net Promoter Score</div>
+        <div class="card-value" style="font-size: clamp(2rem, 5vw, 3rem);">50+</div>
+      </div>
+    </div>
+    
+    <div class="slide-number">10 / 11</div>
+    <div class="accent-dots">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+  </div>
+  
+  <!-- === SLIDE 11: CTA === -->
+  <div class="slide" data-slide="11">
+    <div class="content" style="text-align: center;">
+      <div class="header reveal" style="justify-content: center;">
+        <div class="logo-mark">H</div>
+        <span class="logo-text">Haven Space</span>
+      </div>
+      
+      <h2 class="slide-title reveal reveal-delay-1" style="margin-top: clamp(1rem, 2vw, 2rem);">Let's Build the Future<br>of Flexible Housing</h2>
+      
+      <div class="cta-box reveal reveal-delay-2" style="margin-top: clamp(2rem, 4vw, 3rem);">
+        <h3 class="cta-title">For Investors</h3>
+        <p class="cta-text">
+          The boarding house market is underserved and ready for disruption.<br>
+          Let's talk about how Haven Space can deliver 10x returns while solving a real problem for millions.
+        </p>
+        <div class="cta-contact">📧 investors@havenspace.com</div>
+      </div>
+      
+      <div class="grid-3" style="margin-top: clamp(2rem, 4vw, 3rem);">
+        <div class="card reveal reveal-delay-3">
+          <div class="card-title">Landlords</div>
+          <p class="card-text">First 100 get 6 months FREE Professional plan</p>
+        </div>
+        
+        <div class="card reveal reveal-delay-3">
+          <div class="card-title">Boarders</div>
+          <p class="card-text">Join waitlist - get ₱500 off first booking</p>
+        </div>
+        
+        <div class="card reveal reveal-delay-3">
+          <div class="card-title">Partners</div>
+          <p class="card-text">Universities & payment providers welcome</p>
+        </div>
+      </div>
+      
+      <p class="reveal reveal-delay-4" style="margin-top: clamp(2rem, 4vw, 3rem); color: var(--text-secondary);">
+        Where Landlords Meet Boarders—Seamlessly.
+      </p>
+    </div>
+    
+    <div class="slide-number">11 / 11</div>
+    <div class="accent-dots">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+  </div>
+  
+  <!-- === JAVASCRIPT === -->
+  <script>
+    // === NAVIGATION STATE ===
+    let currentSlide = 1;
+    const totalSlides = 11;
+    let editMode = false;
+    
+    // === INITIALIZATION ===
+    document.addEventListener('DOMContentLoaded', () => {
+      initNavDots();
+      updateNavigation();
+      loadSavedContent();
+      initKeyboardNavigation();
+      initTouchNavigation();
+      
+      // Trigger initial animations
+      setTimeout(() => {
+        document.querySelectorAll('.slide.active .reveal').forEach(el => {
+          el.classList.add('active');
+        });
+      }, 100);
+    });
+    
+    // === NAVIGATION DOTS ===
+    function initNavDots() {
+      const navDots = document.getElementById('navDots');
+      for (let i = 1; i <= totalSlides; i++) {
+        const dot = document.createElement('button');
+        dot.className = 'nav-dot' + (i === 1 ? ' active' : '');
+        dot.setAttribute('aria-label', 'Go to slide ' + i);
+        dot.addEventListener('click', () => goToSlide(i));
+        navDots.appendChild(dot);
+      }
+    }
+    
+    // === SLIDE NAVIGATION ===
+    function goToSlide(slideNum) {
+      if (slideNum < 1 || slideNum > totalSlides) return;
+      
+      // Remove active class from current slide
+      document.querySelector('.slide.active').classList.remove('active');
+      document.querySelector('.nav-dot.active').classList.remove('active');
+      
+      // Add active class to new slide
+      currentSlide = slideNum;
+      document.querySelector('.slide[data-slide="' + slideNum + '"]').classList.add('active');
+      document.querySelectorAll('.nav-dot')[slideNum - 1].classList.add('active');
+      
+      // Trigger animations
+      setTimeout(() => {
+        document.querySelectorAll('.slide[data-slide="' + slideNum + '"] .reveal').forEach(el => {
+          el.classList.add('active');
+        });
+      }, 50);
+      
+      updateNavigation();
+      saveProgress();
+    }
+    
+    function nextSlide() {
+      if (currentSlide < totalSlides) {
+        goToSlide(currentSlide + 1);
+      }
+    }
+    
+    function prevSlide() {
+      if (currentSlide > 1) {
+        goToSlide(currentSlide - 1);
+      }
+    }
+    
+    // === PROGRESS BAR ===
+    function updateNavigation() {
+      const progressBar = document.getElementById('progressBar');
+      const progress = ((currentSlide - 1) / (totalSlides - 1)) * 100;
+      progressBar.style.width = progress + '%';
+    }
+    
+    // === KEYBOARD NAVIGATION ===
+    function initKeyboardNavigation() {
+      document.addEventListener('keydown', (e) => {
+        // Edit mode toggle
+        if (e.key === 'e' || e.key === 'E') {
+          if (!e.ctrlKey && !e.metaKey) {
+            toggleEditMode();
+            return;
+          }
+        }
+        
+        // Save in edit mode
+        if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+          if (editMode) {
+            e.preventDefault();
+            saveContent();
+          }
+          return;
+        }
+        
+        // Don't navigate while editing
+        if (editMode && document.activeElement.isContentEditable) return;
+        
+        switch(e.key) {
+          case 'ArrowRight':
+          case 'ArrowDown':
+          case ' ':
+          case 'PageDown':
+            e.preventDefault();
+            nextSlide();
+            break;
+          case 'ArrowLeft':
+          case 'ArrowUp':
+          case 'PageUp':
+            e.preventDefault();
+            prevSlide();
+            break;
+          case 'Home':
+            e.preventDefault();
+            goToSlide(1);
+            break;
+          case 'End':
+            e.preventDefault();
+            goToSlide(totalSlides);
+            break;
+        }
+      });
+    }
+    
+    // === TOUCH NAVIGATION ===
+    function initTouchNavigation() {
+      let touchStartX = 0;
+      let touchStartY = 0;
+      
+      document.addEventListener('touchstart', (e) => {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+      }, { passive: true });
+      
+      document.addEventListener('touchend', (e) => {
+        if (!touchStartX || !touchStartY) return;
+        
+        const touchEndX = e.changedTouches[0].clientX;
+        const touchEndY = e.changedTouches[0].clientY;
+        
+        const diffX = touchStartX - touchEndX;
+        const diffY = touchStartY - touchEndY;
+        
+        // Horizontal swipe
+        if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
+          if (diffX > 0) {
+            nextSlide();
+          } else {
+            prevSlide();
+          }
+        }
+        
+        touchStartX = 0;
+        touchStartY = 0;
+      }, { passive: true });
+    }
+    
+    // === EDIT MODE ===
+    function toggleEditMode() {
+      editMode = !editMode;
+      document.body.classList.toggle('edit-mode', editMode);
+      document.getElementById('editIndicator').classList.toggle('active', editMode);
+      
+      if (editMode) {
+        // Make all text elements editable
+        document.querySelectorAll('.editable, .slide-title, .card-title, .card-text, .cta-text, .quote-text, .stat-label, .bullet-list li').forEach(el => {
+          el.setAttribute('contenteditable', 'true');
+        });
+      } else {
+        // Remove editability
+        document.querySelectorAll('[contenteditable]').forEach(el => {
+          el.setAttribute('contenteditable', 'false');
+        });
+        saveContent();
+      }
+    }
+    
+    function saveContent() {
+      const content = {};
+      document.querySelectorAll('.slide').forEach(slide => {
+        const slideNum = slide.getAttribute('data-slide');
+        content[slideNum] = slide.innerHTML;
+      });
+      localStorage.setItem('haven-space-pitch-content', JSON.stringify(content));
+      
+      // Show save notification
+      const notification = document.getElementById('saveNotification');
+      notification.classList.add('show');
+      setTimeout(() => notification.classList.remove('show'), 2000);
+    }
+    
+    function loadSavedContent() {
+      const saved = localStorage.getItem('haven-space-pitch-content');
+      if (saved) {
+        try {
+          const content = JSON.parse(saved);
+          Object.keys(content).forEach(slideNum => {
+            const slide = document.querySelector('.slide[data-slide="' + slideNum + '"]');
+            if (slide) {
+              slide.innerHTML = content[slideNum];
+            }
+          });
+        } catch (e) {
+          console.error('Failed to load saved content:', e);
+        }
+      }
+    }
+    
+    function saveProgress() {
+      localStorage.setItem('haven-space-pitch-slide', currentSlide.toString());
+    }
+    
+    // === MOUSE WHEEL NAVIGATION ===
+    let wheelTimeout = null;
+    document.addEventListener('wheel', (e) => {
+      if (editMode) return;
+      
+      clearTimeout(wheelTimeout);
+      wheelTimeout = setTimeout(() => {
+        if (e.deltaY > 0) {
+          nextSlide();
+        } else if (e.deltaY < 0) {
+          prevSlide();
+        }
+      }, 50);
+    }, { passive: true });
+  </script>
+</body>
+</html>

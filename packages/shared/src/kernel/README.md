@@ -1,6 +1,6 @@
 # @bhms/shared/kernel - Domain-Driven Design Base Classes
 
-This package provides the foundational building blocks for implementing Domain-Driven Design (DDD) patterns in the Boarding House Management System (BHMS).
+This package provides the foundational building blocks for implementing Domain-Driven Design (DDD) patterns in the Haven Space platform.
 
 ## Overview
 

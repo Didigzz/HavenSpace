@@ -1,10 +1,10 @@
-# Boarding House Management System (BHMS)
+# Haven Space
 
 A comprehensive multi-tenant platform for managing boarding houses, connecting landlords with boarders through a modern web experience.
 
 ## 🏠 Overview
 
-BHMS is a full-stack monorepo application that provides:
+Haven Space is a full-stack monorepo application that provides:
 
 - **Public Marketplace**: Browse and discover boarding houses
 - **Boarder Dashboard**: Manage bookings, payments, and communications
