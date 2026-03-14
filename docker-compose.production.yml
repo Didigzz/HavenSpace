@@ -21,7 +21,7 @@ services:
       timeout: 5s
       retries: 5
     networks:
-      - bhms-network
+      - havenspace-network
 
   redis:
     image: redis:7-alpine
@@ -37,13 +37,13 @@ services:
       timeout: 5s
       retries: 5
     networks:
-      - bhms-network
+      - havenspace-network
 
   # ============================================
   # APPLICATION SERVICES
   # ============================================
   api:
-    image: didigzz/bhms-api:latest
+    image: didigzz/havenspace-api:latest
     restart: always
     depends_on:
       postgres:
@@ -71,7 +71,7 @@ services:
     ports:
       - "3001:3001"
     networks:
-      - bhms-network
+      - havenspace-network
     healthcheck:
       test: ["CMD", "node", "-e", "require('http').get('http://localhost:3001/api/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"]
       interval: 30s
@@ -80,7 +80,7 @@ services:
       start_period: 40s
 
   public:
-    image: didigzz/bhms-public:latest
+    image: didigzz/havenspace-public:latest
     restart: always
     depends_on:
       - api
@@ -95,7 +95,7 @@ services:
     ports:
       - "3000:3000"
     networks:
-      - bhms-network
+      - havenspace-network
     healthcheck:
       test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"]
       interval: 30s
@@ -104,7 +104,7 @@ services:
       start_period: 40s
 
   boarder:
-    image: didigzz/bhms-boarder:latest
+    image: didigzz/havenspace-boarder:latest
     restart: always
     depends_on:
       - api
@@ -118,7 +118,7 @@ services:
     ports:
       - "3004:3004"
     networks:
-      - bhms-network
+      - havenspace-network
     healthcheck:
       test: ["CMD", "node", "-e", "require('http').get('http://localhost:3004', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"]
       interval: 30s
@@ -127,7 +127,7 @@ services:
       start_period: 40s
 
   landlord:
-    image: didigzz/bhms-landlord:latest
+    image: didigzz/havenspace-landlord:latest
     restart: always
     depends_on:
       - api
@@ -142,7 +142,7 @@ services:
     ports:
       - "3005:3005"
     networks:
-      - bhms-network
+      - havenspace-network
     healthcheck:
       test: ["CMD", "node", "-e", "require('http').get('http://localhost:3005', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"]
       interval: 30s
@@ -151,7 +151,7 @@ services:
       start_period: 40s
 
   admin:
-    image: didigzz/bhms-admin:latest
+    image: didigzz/havenspace-admin:latest
     restart: always
     depends_on:
       - api
@@ -165,7 +165,7 @@ services:
     ports:
       - "3002:3002"
     networks:
-      - bhms-network
+      - havenspace-network
     healthcheck:
       test: ["CMD", "node", "-e", "require('http').get('http://localhost:3002', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"]
       interval: 30s
@@ -193,7 +193,7 @@ services:
       - ./nginx/ssl:/etc/nginx/ssl:ro
       - nginx_logs:/var/log/nginx
     networks:
-      - bhms-network
+      - havenspace-network
     healthcheck:
       test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/health"]
       interval: 30s
@@ -212,7 +212,7 @@ services:
     ports:
       - "9090:9090"
     networks:
-      - bhms-network
+      - havenspace-network
 
   grafana:
     image: grafana/grafana:latest
@@ -229,13 +229,13 @@ services:
     ports:
       - "3003:3000"
     networks:
-      - bhms-network
+      - havenspace-network
 
 # ============================================
 # NETWORKS
 # ============================================
 networks:
-  bhms-network:
+  havenspace-network:
     driver: bridge
 
 # ============================================

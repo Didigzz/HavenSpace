@@ -1,6 +1,6 @@
 # Admin Dashboard
 
-The platform administration interface for the Boarding House Management System. This application provides system administrators with comprehensive tools to manage users, review landlord applications, moderate content, and oversee platform operations.
+The platform administration interface for the Haven Space platform. This application provides system administrators with comprehensive tools to manage users, review landlord applications, moderate content, and oversee platform operations.
 
 ## ⚙️ Overview
 

@@ -1,6 +1,6 @@
-# Nginx Configuration for BHMS Production
+# Nginx Configuration for Haven Space Production
 
-This directory contains the Nginx configuration files for running the Boarding House Management System in production.
+This directory contains the Nginx configuration files for running the Haven Space platform in production.
 
 ## Setup Instructions
 
@@ -132,10 +132,10 @@ docker-compose -f docker-compose.production.yml exec nginx wget -O- http://publi
 cat > /etc/cron.weekly/renew-ssl.sh << 'EOF'
 #!/bin/bash
 certbot renew --quiet
-cp /etc/letsencrypt/live/yourdomain.com/fullchain.pem /path/to/bhms/nginx/ssl/cert.pem
-cp /etc/letsencrypt/live/yourdomain.com/privkey.pem /path/to/bhms/nginx/ssl/key.pem
-chmod 600 /path/to/bhms/nginx/ssl/*.pem
-docker-compose -f /path/to/bhms/docker-compose.production.yml restart nginx
+cp /etc/letsencrypt/live/yourdomain.com/fullchain.pem /path/to/havenspace/nginx/ssl/cert.pem
+cp /etc/letsencrypt/live/yourdomain.com/privkey.pem /path/to/havenspace/nginx/ssl/key.pem
+chmod 600 /path/to/havenspace/nginx/ssl/*.pem
+docker-compose -f /path/to/havenspace/docker-compose.production.yml restart nginx
 EOF
 
 chmod +x /etc/cron.weekly/renew-ssl.sh

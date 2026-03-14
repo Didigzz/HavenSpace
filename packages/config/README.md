@@ -1,6 +1,6 @@
 # @bhms/config
 
-Shared configuration for the Boarding House Management System (BHMS).
+Shared configuration for the Haven Space platform.
 
 ## Overview
 

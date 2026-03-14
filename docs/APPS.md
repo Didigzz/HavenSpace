@@ -1,6 +1,6 @@
-# BHMS Applications Quick Reference
+# Haven Space Applications Quick Reference
 
-Complete reference for all applications in the Boarding House Management System.
+Complete reference for all applications in the Haven Space platform.
 
 ## 📊 Application Overview
 
@@ -83,7 +83,7 @@ Each application exposes a `/api/health` endpoint for monitoring:
   "status": "healthy",
   "timestamp": "2026-03-09T12:00:00.000Z",
   "app": {
-    "name": "@bhms/boarder",
+    "name": "@havenspace/boarder",
     "version": "1.0.0",
     "environment": "development"
   },
@@ -98,7 +98,7 @@ Each application exposes a `/api/health` endpoint for monitoring:
 
 ## 🗺️ Application Architecture
 
-### Public Platform (`@bhms/public`)
+### Public Platform (`@havenspace/public`)
 **Port 3000** - First point of contact for all users
 
 **Features:**
@@ -123,7 +123,7 @@ Each application exposes a `/api/health` endpoint for monitoring:
 
 ---
 
-### API Server (`@bhms/api-server`)
+### API Server (`@havenspace/api-server`)
 **Port 3001** - Backend API for all applications
 
 **Features:**
@@ -146,7 +146,7 @@ src/
 
 ---
 
-### Admin Dashboard (`@bhms/admin`)
+### Admin Dashboard (`@havenspace/admin`)
 **Port 3002** - Platform administration
 
 **Features:**
@@ -171,7 +171,7 @@ src/
 
 ---
 
-### Auth App (`@bhms/auth-app`)
+### Auth App (`@havenspace/auth-app`)
 **Port 3003** - Centralized authentication
 
 **Features:**
@@ -194,7 +194,7 @@ src/
 
 ---
 
-### Boarder Dashboard (`@bhms/boarder`)
+### Boarder Dashboard (`@havenspace/boarder`)
 **Port 3004** - Authenticated boarder experience
 
 **Features:**
@@ -222,7 +222,7 @@ src/
 
 ---
 
-### Landlord Portal (`@bhms/landlord`)
+### Landlord Portal (`@havenspace/landlord`)
 **Port 3005** - Property management for landlords
 
 **Features:**
@@ -276,7 +276,7 @@ src/
 ### Using AppSwitcher Component
 
 ```tsx
-import { AppSwitcher } from '@bhms/ui';
+import { AppSwitcher } from '@havenspace/ui';
 
 function Header() {
   return (
@@ -290,7 +290,7 @@ function Header() {
 ### Using AppLink Component
 
 ```tsx
-import { AppLink } from '@bhms/ui';
+import { AppLink } from '@havenspace/ui';
 
 function Navigation() {
   return (
@@ -309,7 +309,7 @@ function Navigation() {
 ### Server-Side Redirects
 
 ```typescript
-import { getAppUrl } from '@bhms/ui';
+import { getAppUrl } from '@havenspace/ui';
 
 export async function GET() {
   const userRole = await getUserRole();
@@ -360,22 +360,22 @@ LANDLORD_URL="http://localhost:3005"       # Landlord portal
 
 | Package | Description | Used By |
 |---------|-------------|---------|
-| `@bhms/api` | tRPC routers | All apps |
-| `@bhms/auth` | Auth utilities | All apps |
-| `@bhms/config` | Shared config | All apps |
-| `@bhms/database` | Prisma client | API, server-side |
-| `@bhms/shared` | Business logic | All apps |
-| `@bhms/ui` | UI components | All frontend apps |
-| `@bhms/validation` | Zod schemas | All apps |
+| `@havenspace/api` | tRPC routers | All apps |
+| `@havenspace/auth` | Auth utilities | All apps |
+| `@havenspace/config` | Shared config | All apps |
+| `@havenspace/database` | Prisma client | API, server-side |
+| `@havenspace/shared` | Business logic | All apps |
+| `@havenspace/ui` | UI components | All frontend apps |
+| `@havenspace/validation` | Zod schemas | All apps |
 
 ### App Dependencies
 
 ```
-@bhms/public    → @bhms/ui, @bhms/auth, @bhms/shared, @bhms/api
-@bhms/api-server → @bhms/api, @bhms/database, @bhms/auth
-@bhms/boarder   → @bhms/ui, @bhms/api, @bhms/shared, @bhms/auth
-@bhms/landlord  → @bhms/ui, @bhms/api, @bhms/shared, @bhms/auth
-@bhms/admin     → @bhms/ui, @bhms/api, @bhms/shared, @bhms/auth
+@havenspace/public    → @havenspace/ui, @havenspace/auth, @havenspace/shared, @havenspace/api
+@havenspace/api-server → @havenspace/api, @havenspace/database, @havenspace/auth
+@havenspace/boarder   → @havenspace/ui, @havenspace/api, @havenspace/shared, @havenspace/auth
+@havenspace/landlord  → @havenspace/ui, @havenspace/api, @havenspace/shared, @havenspace/auth
+@havenspace/admin     → @havenspace/ui, @havenspace/api, @havenspace/shared, @havenspace/auth
 ```
 
 ---
@@ -386,19 +386,19 @@ LANDLORD_URL="http://localhost:3005"       # Landlord portal
 
 ```bash
 # Public platform
-docker build -t bhms-public -f apps/\(public\)/Dockerfile .
+docker build -t havenspace-public -f apps/\(public\)/Dockerfile .
 
 # API server
-docker build -t bhms-api -f apps/api/Dockerfile .
+docker build -t havenspace-api -f apps/api/Dockerfile .
 
 # Boarder dashboard
-docker build -t bhms-boarder -f apps/boarder/Dockerfile .
+docker build -t havenspace-boarder -f apps/boarder/Dockerfile .
 
 # Landlord portal
-docker build -t bhms-landlord -f apps/landlord/Dockerfile .
+docker build -t havenspace-landlord -f apps/landlord/Dockerfile .
 
 # Admin dashboard
-docker build -t bhms-admin -f apps/admin/Dockerfile .
+docker build -t havenspace-admin -f apps/admin/Dockerfile .
 ```
 
 ### Docker Compose

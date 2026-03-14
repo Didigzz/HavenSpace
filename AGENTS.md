@@ -1,8 +1,8 @@
-# Boarding House Management System (BHMS) - Project Context
+# Haven Space - Project Context
 
 ## Project Overview
 
-BHMS is a comprehensive **multi-tenant monorepo platform** for managing boarding houses, connecting landlords with boarders through modern web interfaces. Built with **Next.js 16**, **React 18**, **TypeScript**, **tRPC**, **Prisma**, and **PostgreSQL**, the platform follows a phased architecture serving multiple user roles.
+Haven Space is a comprehensive **multi-tenant monorepo platform** for managing boarding houses, connecting landlords with boarders through modern web interfaces. Built with **Next.js 16**, **React 18**, **TypeScript**, **tRPC**, **Prisma**, and **PostgreSQL**, the platform follows a phased architecture serving multiple user roles.
 
 ### Core User Roles
 | Role | Access Level | Status Required |
@@ -24,7 +24,7 @@ BHMS is a comprehensive **multi-tenant monorepo platform** for managing boarding
 ## Project Structure
 
 ```
-BoardingHouseSystem/
+HavenSpace/
 ├── apps/                          # Application layer
 │   ├── (public)/        :3000     # Public marketplace (landing)
 │   ├── server/          :3006     # Backend API server (tRPC)
@@ -112,15 +112,15 @@ bun run dev
 
 ```bash
 # Start specific app
-bun --filter @bhms/public dev       # Public platform (:3000)
-bun --filter @bhms/api-server dev   # API server (:3006)
-bun --filter @bhms/admin dev        # Admin dashboard (:3002)
-bun --filter @bhms/boarder dev      # Boarder dashboard (:3004)
-bun --filter @bhms/landlord dev     # Landlord portal (:3005)
+bun --filter @havenspace/public dev       # Public platform (:3000)
+bun --filter @havenspace/api-server dev   # API server (:3006)
+bun --filter @havenspace/admin dev        # Admin dashboard (:3002)
+bun --filter @havenspace/boarder dev      # Boarder dashboard (:3004)
+bun --filter @havenspace/landlord dev     # Landlord portal (:3005)
 
 # Build specific app
-bun --filter @bhms/public build
-bun --filter @bhms/api-server build
+bun --filter @havenspace/public build
+bun --filter @havenspace/api-server build
 # ... etc
 ```
 
@@ -191,7 +191,7 @@ Pre-commit hooks automatically run on staged files:
 - **Strict mode**: Enabled
 - **Module resolution**: `bundler`
 - **JSX**: `preserve` (Next.js)
-- **Path aliases**: `@bhms/*` mapped to packages
+- **Path aliases**: `@havenspace/*` mapped to packages
 
 ---
 

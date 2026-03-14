@@ -1,6 +1,6 @@
 # @bhms/shared
 
-Shared business logic, utilities, and type definitions for the Boarding House Management System (BHMS).
+Shared business logic, utilities, and type definitions for the Haven Space platform.
 
 ## Overview
 

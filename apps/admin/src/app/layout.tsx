@@ -6,7 +6,7 @@ import { Providers } from "@/providers";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "BHMS Platform Admin - Boarding House Management System",
+  title: "Haven Space Platform Admin",
   description: "Platform administration dashboard for BHMS",
 };
 

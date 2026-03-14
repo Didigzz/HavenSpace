@@ -1,6 +1,6 @@
 # @bhms/validation
 
-Zod validation schemas for the Boarding House Management System (BHMS).
+Zod validation schemas for the Haven Space platform.
 
 ## Overview
 

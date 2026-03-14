@@ -21,7 +21,7 @@ export default function LoginPage() {
           </p>
         </div>
         <p className="text-primary-foreground/60 text-sm">
-          © 2024 Boarding House Management System. All rights reserved.
+          © 2024 Haven Space. All rights reserved.
         </p>
       </div>
 

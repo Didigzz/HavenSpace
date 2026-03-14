@@ -1,6 +1,6 @@
 # @bhms/auth
 
-Authentication and authorization utilities for the Boarding House Management System (BHMS) using NextAuth.js.
+Authentication and authorization utilities for the Haven Space platform using NextAuth.js.
 
 ## Overview
 

@@ -1,6 +1,6 @@
 # Landlord Portal
 
-The landlord management interface for the Boarding House Management System. This application provides approved landlords with comprehensive tools to manage their properties, handle bookings, communicate with boarders, and track earnings.
+The landlord management interface for the Haven Space platform. This application provides approved landlords with comprehensive tools to manage their properties, handle bookings, communicate with boarders, and track earnings.
 
 ## 🏢 Overview
 
