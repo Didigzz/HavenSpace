@@ -51,6 +51,18 @@ export const authConfig: NextAuthConfig = {
             },
         }),
     ],
+    callbacks: {
+        ...authConfigEdge.callbacks,
+        async jwt({ token, user, trigger, session }) {
+            // Call base callback
+            const baseCallback = authConfigEdge.callbacks?.jwt;
+            const baseResult = baseCallback 
+                ? await baseCallback({ token, user, trigger, session })
+                : token;
+
+            return baseResult;
+        },
+    },
 };
 
 /**
