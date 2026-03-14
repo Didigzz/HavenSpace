@@ -1,6 +1,0 @@
-{
-  "name": "@bhms/layouts",
-  "version": "0.0.0",
-  "private": true,
-  "deprecated": "Package consolidated into @bhms/shared - use @bhms/shared/layouts instead"
-}
