@@ -4,13 +4,15 @@ import { ZodError } from "zod";
 import { db } from "@havenspace/database";
 import { auth } from "@havenspace/auth/config";
 import { createAppRouter } from "@havenspace/api";
+import type { HavenSession, UserRole, UserStatus } from "@havenspace/api";
 
 /**
  * Create tRPC context with authentication
  */
 export const createTRPCContext = async (opts: { headers: Headers }) => {
-  const session = await auth();
-  
+  const sessionResult = await auth();
+  const session = sessionResult as HavenSession | null;
+
   return {
     db,
     session,
@@ -98,7 +100,8 @@ export const adminProcedure = t.procedure
         });
       }
 
-      if (ctx.session.user.role !== "ADMIN") {
+      const user = ctx.session.user as { role: UserRole };
+      if (user.role !== "ADMIN") {
         throw new TRPCError({
           code: "FORBIDDEN",
           message: "Only administrators can access this resource",
@@ -128,14 +131,15 @@ export const landlordProcedure = t.procedure
         });
       }
 
-      if (ctx.session.user.role !== "LANDLORD") {
+      const user = ctx.session.user as { role: UserRole; status: UserStatus };
+      if (user.role !== "LANDLORD") {
         throw new TRPCError({
           code: "FORBIDDEN",
           message: "Only landlords can access this resource",
         });
       }
 
-      if (ctx.session.user.status !== "APPROVED") {
+      if (user.status !== "APPROVED") {
         throw new TRPCError({
           code: "FORBIDDEN",
           message: "Your landlord account is pending approval",
@@ -165,14 +169,15 @@ export const boarderProcedure = t.procedure
         });
       }
 
-      if (ctx.session.user.role !== "BOARDER") {
+      const user = ctx.session.user as { role: UserRole; status: UserStatus };
+      if (user.role !== "BOARDER") {
         throw new TRPCError({
           code: "FORBIDDEN",
           message: "Only boarders can access this resource",
         });
       }
 
-      if (ctx.session.user.status === "SUSPENDED") {
+      if (user.status === "SUSPENDED") {
         throw new TRPCError({
           code: "FORBIDDEN",
           message: "Your account has been suspended",
