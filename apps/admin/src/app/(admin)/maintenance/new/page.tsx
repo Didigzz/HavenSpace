@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import * as React from "react";
 import { useState, Suspense } from "react";
@@ -16,27 +16,27 @@ import {
   AlertTriangle,
   Camera,
 } from "lucide-react";
-import { Button } from "@bhms/ui";
-import { Input } from "@bhms/ui";
-import { Label } from "@bhms/ui";
-import { Badge } from "@bhms/ui";
+import { Button } from "@havenspace/ui";
+import { Input } from "@havenspace/ui";
+import { Label } from "@havenspace/ui";
+import { Badge } from "@havenspace/ui";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@bhms/ui";
+} from "@havenspace/ui";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@bhms/ui";
+} from "@havenspace/ui";
 import { useProperty } from "@/lib/property-context";
 import { mockRooms, getRoomsByProperty } from "@/lib/mock-data";
-import { useToast } from "@bhms/ui";
+import { useToast } from "@havenspace/ui";
 
 const maintenanceSchema = z.object({
   roomId: z.string().min(1, "Please select a room"),

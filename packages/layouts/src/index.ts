@@ -1,4 +1,4 @@
-// @bhms/layouts - Shared layout components for BHMS
+// @havenspace/layouts - Shared layout components for BHMS
 
 export { DashboardLayout } from "./dashboard-layout";
 export { AuthLayout } from "./auth-layout";

@@ -1,6 +1,6 @@
 {
-  "name": "@bhms/providers",
+  "name": "@havenspace/providers",
   "version": "0.0.0",
   "private": true,
-  "deprecated": "Package consolidated into @bhms/shared - use @bhms/shared/providers instead"
+  "deprecated": "Package consolidated into @havenspace/shared - use @havenspace/shared/providers instead"
 }

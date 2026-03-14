@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Button } from "@bhms/ui";
+import { Button } from "@havenspace/ui";
 import { Phone, Mail, MessageCircle, Calendar, User } from "lucide-react";
 import { BoardingHouse } from "@/lib/types";
 

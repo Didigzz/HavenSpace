@@ -1,14 +1,14 @@
-# Admin Dashboard
+﻿# Admin Dashboard
 
 The platform administration interface for the Haven Space platform. This application provides system administrators with comprehensive tools to manage users, review landlord applications, moderate content, and oversee platform operations.
 
-## ⚙️ Overview
+## âš™ï¸ Overview
 
 **Port**: 3002  
 **URL**: http://localhost:3002  
 **Purpose**: Platform administration and oversight
 
-## ✨ Features
+## âœ¨ Features
 
 ### User Management
 - **User Overview**: View all platform users
@@ -40,41 +40,41 @@ The platform administration interface for the Haven Space platform. This applica
 - **Backup Management**: Data backup and recovery
 - **Maintenance Tools**: System maintenance utilities
 
-## 🏗️ Architecture
+## ðŸ—ï¸ Architecture
 
 ### Pages Structure
 ```
 src/app/
-├── page.tsx                           # Dashboard redirect
-└── dashboard/
-    ├── layout.tsx                     # Admin layout
-    ├── page.tsx                       # Main dashboard
-    ├── users/page.tsx                 # User management
-    ├── applications/page.tsx          # Landlord applications
-    ├── listings/page.tsx              # Property listings moderation
-    ├── bookings/page.tsx              # Booking oversight
-    ├── payments/page.tsx              # Payment monitoring
-    ├── reports/page.tsx               # Analytics and reports
-    └── settings/page.tsx              # System settings
+â”œâ”€â”€ page.tsx                           # Dashboard redirect
+â””â”€â”€ dashboard/
+    â”œâ”€â”€ layout.tsx                     # Admin layout
+    â”œâ”€â”€ page.tsx                       # Main dashboard
+    â”œâ”€â”€ users/page.tsx                 # User management
+    â”œâ”€â”€ applications/page.tsx          # Landlord applications
+    â”œâ”€â”€ listings/page.tsx              # Property listings moderation
+    â”œâ”€â”€ bookings/page.tsx              # Booking oversight
+    â”œâ”€â”€ payments/page.tsx              # Payment monitoring
+    â”œâ”€â”€ reports/page.tsx               # Analytics and reports
+    â””â”€â”€ settings/page.tsx              # System settings
 ```
 
 ### Components Structure
 ```
 src/components/
-├── layout/
-│   ├── dashboard-layout.tsx           # Admin layout
-│   ├── header.tsx                     # Admin header
-│   ├── sidebar.tsx                    # Navigation sidebar
-│   └── index.ts                       # Layout exports
-└── ui/
-    ├── avatar.tsx                     # User avatar
-    ├── collapsible.tsx                # Collapsible sections
-    ├── dropdown-menu.tsx              # Dropdown menus
-    ├── scroll-area.tsx                # Scrollable areas
-    └── index.ts                       # UI exports
+â”œâ”€â”€ layout/
+â”‚   â”œâ”€â”€ dashboard-layout.tsx           # Admin layout
+â”‚   â”œâ”€â”€ header.tsx                     # Admin header
+â”‚   â”œâ”€â”€ sidebar.tsx                    # Navigation sidebar
+â”‚   â””â”€â”€ index.ts                       # Layout exports
+â””â”€â”€ ui/
+    â”œâ”€â”€ avatar.tsx                     # User avatar
+    â”œâ”€â”€ collapsible.tsx                # Collapsible sections
+    â”œâ”€â”€ dropdown-menu.tsx              # Dropdown menus
+    â”œâ”€â”€ scroll-area.tsx                # Scrollable areas
+    â””â”€â”€ index.ts                       # UI exports
 ```
 
-## 🚀 Getting Started
+## ðŸš€ Getting Started
 
 ### Prerequisites
 - Node.js 18+
@@ -86,7 +86,7 @@ src/components/
 
 ```bash
 # Start development server
-bun --filter @bhms/admin dev
+bun --filter @havenspace/admin dev
 
 # Or from app directory
 cd apps/admin
@@ -118,7 +118,7 @@ NEXT_PUBLIC_ANALYTICS_ID=your-analytics-id
 SENTRY_DSN=your-sentry-dsn
 ```
 
-## 🔐 Authentication & Authorization
+## ðŸ” Authentication & Authorization
 
 ### Access Control
 - **Role Requirement**: User must have `admin` role
@@ -163,7 +163,7 @@ interface AdminPermissions {
 }
 ```
 
-## 👥 User Management
+## ðŸ‘¥ User Management
 
 ### User Overview
 - **User List**: Paginated list of all users
@@ -208,7 +208,7 @@ const UserManagement = () => {
 }
 ```
 
-## 🏠 Landlord Application Review
+## ðŸ  Landlord Application Review
 
 ### Application Process
 1. **Application Submission**: Landlord submits application
@@ -263,7 +263,7 @@ const ApplicationReview = ({ application }: { application: LandlordApplication }
 }
 ```
 
-## 📊 Platform Analytics
+## ðŸ“Š Platform Analytics
 
 ### Dashboard Metrics
 - **User Growth**: Registration and activation trends
@@ -311,7 +311,7 @@ const AnalyticsDashboard = () => {
 }
 ```
 
-## 🛡️ Content Moderation
+## ðŸ›¡ï¸ Content Moderation
 
 ### Moderation Features
 - **Automated Flagging**: AI-powered content detection
@@ -347,7 +347,7 @@ const ModerationQueue = () => {
 }
 ```
 
-## 💰 Financial Oversight
+## ðŸ’° Financial Oversight
 
 ### Financial Monitoring
 - **Transaction Tracking**: Monitor all platform transactions
@@ -384,7 +384,7 @@ const FinancialOverview = () => {
 }
 ```
 
-## 🔧 System Configuration
+## ðŸ”§ System Configuration
 
 ### Configuration Management
 - **Platform Settings**: Core platform configuration
@@ -435,7 +435,7 @@ const SystemSettings = () => {
 }
 ```
 
-## 📈 Reporting System
+## ðŸ“ˆ Reporting System
 
 ### Report Types
 - **User Reports**: User activity and engagement
@@ -468,22 +468,22 @@ const ReportGenerator = () => {
 }
 ```
 
-## 🧪 Testing
+## ðŸ§ª Testing
 
 ### Test Structure
 ```
 src/__tests__/
-├── components/
-│   ├── user-table.test.tsx
-│   ├── application-review.test.tsx
-│   └── moderation-queue.test.tsx
-├── pages/
-│   ├── dashboard.test.tsx
-│   ├── users.test.tsx
-│   └── applications.test.tsx
-└── utils/
-    ├── admin-helpers.test.tsx
-    └── report-generators.test.tsx
+â”œâ”€â”€ components/
+â”‚   â”œâ”€â”€ user-table.test.tsx
+â”‚   â”œâ”€â”€ application-review.test.tsx
+â”‚   â””â”€â”€ moderation-queue.test.tsx
+â”œâ”€â”€ pages/
+â”‚   â”œâ”€â”€ dashboard.test.tsx
+â”‚   â”œâ”€â”€ users.test.tsx
+â”‚   â””â”€â”€ applications.test.tsx
+â””â”€â”€ utils/
+    â”œâ”€â”€ admin-helpers.test.tsx
+    â””â”€â”€ report-generators.test.tsx
 ```
 
 ### Running Tests
@@ -501,7 +501,7 @@ bun run test:e2e
 bun run test:coverage
 ```
 
-## 🚀 Deployment
+## ðŸš€ Deployment
 
 ### Build Process
 ```bash
@@ -527,7 +527,7 @@ SENTRY_DSN=production-sentry-dsn
 NEXT_PUBLIC_ANALYTICS_ID=production-analytics-id
 ```
 
-## 🔒 Security Considerations
+## ðŸ”’ Security Considerations
 
 ### Security Features
 - **Multi-factor Authentication**: Required for admin accounts
@@ -551,7 +551,7 @@ const auditLog = {
 }
 ```
 
-## 📊 Performance
+## ðŸ“Š Performance
 
 ### Optimization Strategies
 - **Data Pagination**: Efficient data loading
@@ -559,7 +559,7 @@ const auditLog = {
 - **Background Jobs**: Async processing for heavy operations
 - **Database Optimization**: Optimized queries and indexes
 
-## 🤝 Contributing
+## ðŸ¤ Contributing
 
 1. Follow the component structure in `src/components/`
 2. Use TypeScript for all new code
@@ -567,9 +567,10 @@ const auditLog = {
 4. Follow security best practices
 5. Document all admin operations
 
-## 📚 Related Documentation
+## ðŸ“š Related Documentation
 
 - [Main README](../../README.md)
 - [API Documentation](../api/README.md)
 - [Security Guidelines](../../docs/SECURITY.md)
 - [Development Guidelines](../../docs/DEVELOPMENT.md)
+

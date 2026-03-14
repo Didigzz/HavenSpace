@@ -1,6 +1,6 @@
-# ⚠️ DEPRECATED - Package Consolidated
+﻿# âš ï¸ DEPRECATED - Package Consolidated
 
-This package has been **deprecated** and its contents have been moved to `@bhms/shared`.
+This package has been **deprecated** and its contents have been moved to `@havenspace/shared`.
 
 ## Migration
 
@@ -8,12 +8,12 @@ Replace imports:
 
 ```typescript
 // Before
-import { AppProviders } from "@bhms/providers";
-import { DashboardLayout } from "@bhms/layouts";
+import { AppProviders } from "@havenspace/providers";
+import { DashboardLayout } from "@havenspace/layouts";
 
 // After
-import { AppProviders } from "@bhms/shared/providers";
-import { DashboardLayout } from "@bhms/shared/layouts";
+import { AppProviders } from "@havenspace/shared/providers";
+import { DashboardLayout } from "@havenspace/shared/layouts";
 ```
 
 ## Update package.json
@@ -21,15 +21,16 @@ import { DashboardLayout } from "@bhms/shared/layouts";
 ```json
 {
   "dependencies": {
-    "@bhms/shared": "workspace:*"
+    "@havenspace/shared": "workspace:*"
   }
 }
 ```
 
 Remove:
-- `@bhms/providers`
-- `@bhms/layouts`
+- `@havenspace/providers`
+- `@havenspace/layouts`
 
 ## Reason
 
 As part of architecture improvements (March 2026), we consolidated small packages to reduce complexity and dependency chains.
+

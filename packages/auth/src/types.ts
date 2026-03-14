@@ -1,19 +1,14 @@
-import { DefaultSession } from "next-auth";
+// Re-export centralized types from @havenspace/api
+// This file is kept for backwards compatibility
+export type {
+  UserRole,
+  UserStatus,
+  HavenSession as Session,
+} from "@havenspace/api";
 
-export type UserRole = "LANDLORD" | "BOARDER" | "ADMIN";
-export type UserStatus = "PENDING" | "APPROVED" | "SUSPENDED";
+// Extend NextAuth types
+import type { HavenSession } from "@havenspace/api";
 
 declare module "next-auth" {
-  interface Session {
-    user: {
-      id: string;
-      role: UserRole;
-      status: UserStatus;
-    } & DefaultSession["user"];
-  }
-
-  interface User {
-    role: UserRole;
-    status: UserStatus;
-  }
+  interface Session extends HavenSession {}
 }

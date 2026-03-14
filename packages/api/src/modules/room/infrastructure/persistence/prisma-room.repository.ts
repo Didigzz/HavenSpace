@@ -1,7 +1,7 @@
 import { Room } from '../../domain/entities/room.entity';
 import { RoomStatus } from '../../domain/value-objects/room-status.vo';
 import { IRoomRepository, RoomFilters, RoomStats } from '../../domain/repositories/room.repository.interface';
-import { PrismaClientType } from '@bhms/database';
+import { PrismaClientType } from '@havenspace/database';
 
 export class PrismaRoomRepository implements IRoomRepository {
   constructor(private prisma: PrismaClientType) {}

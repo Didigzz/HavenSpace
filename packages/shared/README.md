@@ -1,4 +1,4 @@
-# @bhms/shared
+﻿# @havenspace/shared
 
 Shared business logic, utilities, and type definitions for the Haven Space platform.
 
@@ -16,7 +16,7 @@ This package contains reusable code shared across all applications in the monore
 
 ```bash
 # Already available as workspace dependency
-import { ... } from '@bhms/shared';
+import { ... } from '@havenspace/shared';
 ```
 
 ## Usage
@@ -24,7 +24,7 @@ import { ... } from '@bhms/shared';
 ### Utilities
 
 ```typescript
-import { cn, debounce, throttle, formatDate, formatCurrency } from '@bhms/shared';
+import { cn, debounce, throttle, formatDate, formatCurrency } from '@havenspace/shared';
 
 // Class name merging (Tailwind)
 const className = cn('base-class', isActive && 'active-class');
@@ -47,7 +47,7 @@ const formattedCurrency = formatCurrency(1000, 'PHP');
 ### Types
 
 ```typescript
-import { PaginationParams, ApiResponse, UserRole } from '@bhms/shared';
+import { PaginationParams, ApiResponse, UserRole } from '@havenspace/shared';
 
 const params: PaginationParams = {
   page: 1,
@@ -63,34 +63,34 @@ const response: ApiResponse<User[]> = {
 ### Domain Entities
 
 ```typescript
-import { User, Boarder, Room, Payment } from '@bhms/shared/entities';
+import { User, Boarder, Room, Payment } from '@havenspace/shared/entities';
 ```
 
 ### DDD Base Classes
 
 ```typescript
-import { Entity, ValueObject, AggregateRoot, DomainEvent } from '@bhms/shared/kernel';
+import { Entity, ValueObject, AggregateRoot, DomainEvent } from '@havenspace/shared/kernel';
 ```
 
 ## Package Structure
 
 ```
 shared/
-├── src/
-│   ├── entities/       # Domain entity types
-│   ├── features/       # Feature utilities
-│   ├── lib/            # Utility functions
-│   ├── types/          # TypeScript types
-│   ├── kernel/         # DDD base classes
-│   └── index.ts        # Main exports
-├── package.json
-└── README.md
+â”œâ”€â”€ src/
+â”‚   â”œâ”€â”€ entities/       # Domain entity types
+â”‚   â”œâ”€â”€ features/       # Feature utilities
+â”‚   â”œâ”€â”€ lib/            # Utility functions
+â”‚   â”œâ”€â”€ types/          # TypeScript types
+â”‚   â”œâ”€â”€ kernel/         # DDD base classes
+â”‚   â””â”€â”€ index.ts        # Main exports
+â”œâ”€â”€ package.json
+â””â”€â”€ README.md
 ```
 
 ## Dependencies
 
-- `@bhms/database` - Database client and types
-- `@bhms/validation` - Zod validation schemas
+- `@havenspace/database` - Database client and types
+- `@havenspace/validation` - Zod validation schemas
 - `clsx` + `tailwind-merge` - Class name utilities
 - `zustand` - State management utilities
 
@@ -104,7 +104,8 @@ shared/
 
 ## Related Packages
 
-- `@bhms/ui` - Uses shared utilities for components
-- `@bhms/api` - Uses shared types and entities
-- `@bhms/validation` - Used for input validation
-- `@bhms/database` - Used for database types
+- `@havenspace/ui` - Uses shared utilities for components
+- `@havenspace/api` - Uses shared types and entities
+- `@havenspace/validation` - Used for input validation
+- `@havenspace/database` - Used for database types
+

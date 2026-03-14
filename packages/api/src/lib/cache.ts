@@ -60,7 +60,7 @@ export interface CacheOptions {
  */
 const defaultOptions: CacheOptions = {
   ttl: 3600, // 1 hour
-  prefix: "bhms",
+  prefix: "havenspace",
   namespace: "cache",
 };
 

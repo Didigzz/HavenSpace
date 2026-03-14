@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Button, Input, Label } from "@bhms/ui";
+import { Button, Input, Label } from "@havenspace/ui";
 import { Search, SlidersHorizontal, X, MapPin } from "lucide-react";
 
 const AMENITIES = [

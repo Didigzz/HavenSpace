@@ -14,9 +14,9 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@bhms/ui/dropdown-menu';
-import { Button } from '@bhms/ui/button';
-import { APP_URLS, type AppKey } from '@bhms/config';
+} from '@havenspace/ui/dropdown-menu';
+import { Button } from '@havenspace/ui/button';
+import { APP_URLS, type AppKey } from '@havenspace/config';
 
 /**
  * AppSwitcher - Cross-application navigation component

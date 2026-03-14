@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
-import { db } from "@bhms/database";
+import { db } from "@havenspace/database";
 import { z } from "zod";
 
 const registerSchema = z.object({

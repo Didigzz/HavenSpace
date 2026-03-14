@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import * as React from "react";
 import {
@@ -49,7 +49,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@bhms/ui";
+} from "@havenspace/ui";
 import {
   DropdownMenu,
   DropdownMenuContent,

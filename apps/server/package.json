@@ -1,5 +1,5 @@
 {
-  "name": "@bhms/api-server",
+  "name": "@havenspace/api-server",
   "version": "0.1.0",
   "private": true,
   "main": "dist/api/index.js",
@@ -15,11 +15,11 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@bhms/api": "workspace:*",
-    "@bhms/auth": "workspace:*",
-    "@bhms/database": "workspace:*",
-    "@bhms/shared": "workspace:*",
-    "@bhms/validation": "workspace:*",
+    "@havenspace/api": "workspace:*",
+    "@havenspace/auth": "workspace:*",
+    "@havenspace/database": "workspace:*",
+    "@havenspace/shared": "workspace:*",
+    "@havenspace/validation": "workspace:*",
     "@trpc/server": "^10.45.2",
     "bcryptjs": "^3.0.3",
     "next": "16.1.5",
@@ -30,8 +30,8 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "@bhms/eslint-config": "workspace:*",
-    "@bhms/typescript-config": "workspace:*",
+    "@havenspace/eslint-config": "workspace:*",
+    "@havenspace/typescript-config": "workspace:*",
     "@types/bcryptjs": "^3.0.0",
     "@types/node": "^20.10.0",
     "@types/react": "^18.3.0",

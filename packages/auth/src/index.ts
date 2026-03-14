@@ -1,4 +1,4 @@
-// @bhms/auth - Authentication and authorization utilities
+// @havenspace/auth - Authentication and authorization utilities
 
 // Client-safe exports
 export {

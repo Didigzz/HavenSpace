@@ -1,5 +1,5 @@
 {
-  "name": "@bhms/landlord",
+  "name": "@havenspace/landlord",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,9 +10,9 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@bhms/shared": "workspace:*",
-    "@bhms/ui": "workspace:*",
-    "@bhms/validation": "workspace:*",
+    "@havenspace/shared": "workspace:*",
+    "@havenspace/ui": "workspace:*",
+    "@havenspace/validation": "workspace:*",
     "@hookform/resolvers": "^5.2.2",
     "@orpc/client": "^1.13.4",
     "@orpc/react": "^1.13.4",

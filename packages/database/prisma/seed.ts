@@ -12,20 +12,29 @@ const prisma = new PrismaClient();
 async function main() {
   console.log("🌱 Starting seed...");
 
+  // Use environment variables for credentials (with secure defaults for development)
+  const seedEmail = process.env.SEED_USER_EMAIL || "landlord@havenspace.com";
+  const seedPassword = process.env.SEED_USER_PASSWORD || "HavenSpace2024!Secure";
+  const seedName = process.env.SEED_USER_NAME || "John Landlord";
+
   // Create landlord user
-  const hashedPassword = await bcrypt.hash("kenjigwapo12", 12);
+  const hashedPassword = await bcrypt.hash(seedPassword, 12);
 
   const landlord = await prisma.user.upsert({
-    where: { email: "floresaybaez574@gmail.com" },
+    where: { email: seedEmail },
     update: {},
     create: {
-      email: "floresaybaez574@gmail.com",
-      name: "John Landlord",
+      email: seedEmail,
+      name: seedName,
       password: hashedPassword,
       role: "LANDLORD",
     },
   });
   console.log("✅ Created landlord:", landlord.email);
+  console.log("📝 Login credentials:");
+  console.log(`   Email: ${seedEmail}`);
+  console.log(`   Password: ${seedPassword}`);
+  console.log("⚠️  Change these in production! Set SEED_USER_EMAIL and SEED_USER_PASSWORD environment variables.");
 
   // Create rooms
   const rooms = await Promise.all([

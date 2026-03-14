@@ -7,24 +7,24 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { ArrowLeft, Loader2 } from "lucide-react";
 import Link from "next/link";
-import { Button } from "@bhms/ui";
-import { Input } from "@bhms/ui";
-import { Label } from "@bhms/ui";
+import { Button } from "@havenspace/ui";
+import { Input } from "@havenspace/ui";
+import { Label } from "@havenspace/ui";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@bhms/ui";
+} from "@havenspace/ui";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@bhms/ui";
-import { useToast } from "@bhms/ui";
+} from "@havenspace/ui";
+import { useToast } from "@havenspace/ui";
 import { useProperty } from "@/lib/property-context";
 import { getRoomsByProperty, mockRooms } from "@/lib/mock-data";
 import { formatCurrency } from "@/lib/utils";

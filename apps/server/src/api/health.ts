@@ -12,7 +12,7 @@ export const GET = async (): Promise<Response> => {
     JSON.stringify({
       status: "ok",
       timestamp: new Date().toISOString(),
-      service: "bhms-api",
+      service: "havenspace-api",
       version: "0.1.0",
     }),
     {

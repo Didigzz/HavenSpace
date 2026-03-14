@@ -6,9 +6,9 @@ import { signIn } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Button, Input, Label } from "@bhms/ui";
+import { Button, Input, Label } from "@havenspace/ui";
 import { Eye, EyeOff, Loader2, AlertCircle, User, Building } from "lucide-react";
-import { getRedirectUrl } from "@bhms/auth";
+import { getRedirectUrl } from "@havenspace/auth";
 
 const registerSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),

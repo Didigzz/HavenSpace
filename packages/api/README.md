@@ -1,10 +1,10 @@
-# @bhms/api - tRPC API Server
+﻿# @havenspace/api - tRPC API Server
 
 Backend API server for the Haven Space platform using tRPC and Express.js.
 
 ## Overview
 
-This package provides the complete tRPC API implementation for BHMS, following Domain-Driven Design (DDD) and Clean Architecture principles.
+This package provides the complete tRPC API implementation for Haven Space, following Domain-Driven Design (DDD) and Clean Architecture principles.
 
 ## Architecture
 
@@ -12,20 +12,20 @@ The API is organized using a **modular monolith** architecture with Clear Archit
 
 ```
 api/
-├── src/
-│   ├── modules/           # Domain modules (modular monolith)
-│   │   └── room/
-│   │       ├── domain/    # Entities, value objects, domain events
-│   │       ├── application/  # Services, handlers, DTOs
-│   │       ├── infrastructure/ # Repositories, event handlers
-│   │       └── presentation/  # tRPC routers, controllers
-│   ├── routers/           # Legacy router structure
-│   │   ├── user.router.ts
-│   │   ├── property.router.ts
-│   │   └── ...
-│   ├── trpc.ts           # tRPC initialization
-│   ├── orpc.ts           # oRPC initialization (alternative)
-│   └── routers.ts        # Router composition
+â”œâ”€â”€ src/
+â”‚   â”œâ”€â”€ modules/           # Domain modules (modular monolith)
+â”‚   â”‚   â””â”€â”€ room/
+â”‚   â”‚       â”œâ”€â”€ domain/    # Entities, value objects, domain events
+â”‚   â”‚       â”œâ”€â”€ application/  # Services, handlers, DTOs
+â”‚   â”‚       â”œâ”€â”€ infrastructure/ # Repositories, event handlers
+â”‚   â”‚       â””â”€â”€ presentation/  # tRPC routers, controllers
+â”‚   â”œâ”€â”€ routers/           # Legacy router structure
+â”‚   â”‚   â”œâ”€â”€ user.router.ts
+â”‚   â”‚   â”œâ”€â”€ property.router.ts
+â”‚   â”‚   â””â”€â”€ ...
+â”‚   â”œâ”€â”€ trpc.ts           # tRPC initialization
+â”‚   â”œâ”€â”€ orpc.ts           # oRPC initialization (alternative)
+â”‚   â””â”€â”€ routers.ts        # Router composition
 ```
 
 ## Usage
@@ -34,17 +34,17 @@ api/
 
 ```bash
 # Development
-bun --filter @bhms/api dev
+bun --filter @havenspace/api dev
 
 # Production
-bun --filter @bhms/api build
-bun --filter @bhms/api start
+bun --filter @havenspace/api build
+bun --filter @havenspace/api start
 ```
 
 ### Calling API from Client
 
 ```typescript
-import { api } from '@bhms/api-client';
+import { api } from '@havenspace/api-client';
 
 // Query
 const rooms = await api.room.getAll.useQuery({ propertyId: '123' });
@@ -121,7 +121,8 @@ interface Context {
 
 ## Related Packages
 
-- `@bhms/database` - Prisma client and schema
-- `@bhms/validation` - Zod schemas
-- `@bhms/shared` - Shared types and utilities
-- `@bhms/auth` - Authentication configuration
+- `@havenspace/database` - Prisma client and schema
+- `@havenspace/validation` - Zod schemas
+- `@havenspace/shared` - Shared types and utilities
+- `@havenspace/auth` - Authentication configuration
+

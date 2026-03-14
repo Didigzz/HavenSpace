@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import * as React from "react";
 import {
@@ -13,7 +13,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import Link from "next/link";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, Button } from "@bhms/ui";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, Button } from "@havenspace/ui";
 import { cn, formatNumber, formatCurrency, getRelativeTime } from "@/lib/utils";
 import {
   AreaChart,

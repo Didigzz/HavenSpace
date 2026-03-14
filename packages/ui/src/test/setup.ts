@@ -24,9 +24,9 @@ vi.mock('next/navigation', () => ({
   useSearchParams: () => new URLSearchParams(),
 }));
 
-// Mock @bhms/config
-vi.mock('@bhms/config', async () => {
-  const actual = await vi.importActual('@bhms/config');
+// Mock @havenspace/config
+vi.mock('@havenspace/config', async () => {
+  const actual = await vi.importActual('@havenspace/config');
   return {
     ...actual,
     APP_URLS: {

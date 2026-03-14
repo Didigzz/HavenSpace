@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import * as React from "react";
 import Link from "next/link";
@@ -27,7 +27,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Button } from "@bhms/ui";
+import { Button } from "@havenspace/ui";
 import { useSession, signOut } from "next-auth/react";
 import { getInitials } from "@/lib/utils";
 

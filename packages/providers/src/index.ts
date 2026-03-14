@@ -1,4 +1,4 @@
-// @bhms/providers - Centralized provider components for BHMS
+// @havenspace/providers - Centralized provider components for BHMS
 
 export { AppProviders } from "./app-providers";
 export { PublicProviders } from "./public-providers";

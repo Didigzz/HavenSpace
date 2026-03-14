@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { ThemeProvider } from "next-themes";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Toaster } from "@bhms/ui";
+import { Toaster } from "@havenspace/ui";
 
 export interface PublicProvidersProps {
   children: React.ReactNode;

@@ -1,4 +1,4 @@
-# @bhms/database
+﻿# @havenspace/database
 
 Database layer for the Haven Space platform using Prisma ORM.
 
@@ -13,7 +13,7 @@ This package provides:
 
 ```bash
 # Already available as workspace dependency
-import { prisma } from '@bhms/database';
+import { prisma } from '@havenspace/database';
 ```
 
 ## Usage
@@ -21,7 +21,7 @@ import { prisma } from '@bhms/database';
 ### Prisma Client
 
 ```typescript
-import { prisma } from '@bhms/database';
+import { prisma } from '@havenspace/database';
 
 // Query database
 const users = await prisma.user.findMany({
@@ -125,6 +125,7 @@ DIRECT_URL="postgresql://postgres:password@localhost:5432/boarding_house_db?sche
 
 ## Related Packages
 
-- `@bhms/api` - Uses Prisma client in repositories
-- `@bhms/shared` - Uses Prisma types
-- `@bhms/validation` - Validation schemas for entities
+- `@havenspace/api` - Uses Prisma client in repositories
+- `@havenspace/shared` - Uses Prisma types
+- `@havenspace/validation` - Validation schemas for entities
+

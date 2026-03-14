@@ -18,20 +18,20 @@ import {
   AlertTriangle,
   CheckCircle2,
 } from "lucide-react";
-import { Button } from "@bhms/ui";
-import { Input } from "@bhms/ui";
-import { Badge } from "@bhms/ui";
+import { Button } from "@havenspace/ui";
+import { Input } from "@havenspace/ui";
+import { Badge } from "@havenspace/ui";
 import {
   Card,
   CardContent,
-} from "@bhms/ui";
+} from "@havenspace/ui";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@bhms/ui";
+} from "@havenspace/ui";
 import { cn } from "@/lib/utils";
 import { MALAYBALAY_BOUNDS } from "@/components/map/map-picker";
 

@@ -1,4 +1,4 @@
-// Shared type definitions for BHMS Admin
+﻿// Shared type definitions for BHMS Admin
 
 export interface PropertyImage {
   id: string;

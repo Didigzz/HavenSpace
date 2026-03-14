@@ -1,6 +1,6 @@
 import { os, ORPCError } from "@orpc/server";
 import { ZodError } from "zod";
-import { db } from "@bhms/database";
+import { db } from "@havenspace/database";
 
 export const createORPCContext = async (opts: { headers: Headers }) => {
   // This will be provided by the platform-specific adapter

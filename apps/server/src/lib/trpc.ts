@@ -1,9 +1,9 @@
 import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
-import { db } from "@bhms/database";
-import { auth } from "@bhms/auth/config";
-import { createAppRouter } from "@bhms/api";
+import { db } from "@havenspace/database";
+import { auth } from "@havenspace/auth/config";
+import { createAppRouter } from "@havenspace/api";
 
 /**
  * Create tRPC context with authentication

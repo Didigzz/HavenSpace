@@ -7,8 +7,8 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@bhms/ui";
-import { Badge } from "@bhms/ui";
+} from "@havenspace/ui";
+import { Badge } from "@havenspace/ui";
 import { AlertTriangle, Clock } from "lucide-react";
 import { mockTenants } from "@/lib/mock-data";
 import { formatDate } from "@/lib/utils";

@@ -1,4 +1,4 @@
-import { db } from "@bhms/database";
+import { db } from "@havenspace/database";
 
 export interface AuditLogData {
   userId: string;

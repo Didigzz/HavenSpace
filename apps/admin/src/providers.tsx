@@ -1,3 +1,3 @@
-"use client";
+﻿"use client";
 
-export { AppProviders as Providers } from "@bhms/shared/providers";
+export { AppProviders as Providers } from "@havenspace/shared/providers";

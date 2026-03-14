@@ -3,7 +3,7 @@ import {
   createUtilityReadingSchema,
   updateUtilityReadingSchema,
   UtilityTypeEnum
-} from "@bhms/validation";
+} from "@havenspace/validation";
 import { PrismaUtilityRepository } from "../infrastructure/persistence/prisma-utility.repository";
 import { UtilityService } from "../domain/services/utility.service";
 import { CreateUtilityReadingHandler } from "../application/handlers/create-utility-reading.handler";

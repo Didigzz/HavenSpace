@@ -1,4 +1,4 @@
-// @bhms/api - Backend API package
+// @havenspace/api - Backend API package
 // This package contains tRPC routers and procedures
 
 export * from './trpc';

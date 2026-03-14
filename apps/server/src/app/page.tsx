@@ -1,7 +1,7 @@
 export default function APIHome() {
   return (
     <div style={{ fontFamily: "system-ui, sans-serif", padding: "2rem" }}>
-      <h1>BHMS API Server</h1>
+      <h1>Haven Space API Server</h1>
       <p>This is the API server for the Haven Space platform.</p>
       <h2>Available Endpoints:</h2>
       <ul>

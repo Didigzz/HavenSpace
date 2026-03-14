@@ -14,16 +14,16 @@ import {
   Trash2,
   Eye,
 } from "lucide-react";
-import { Button } from "@bhms/ui";
-import { Input } from "@bhms/ui";
-import { Badge } from "@bhms/ui";
+import { Button } from "@havenspace/ui";
+import { Input } from "@havenspace/ui";
+import { Badge } from "@havenspace/ui";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@bhms/ui";
+} from "@havenspace/ui";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -32,7 +32,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Tabs, TabsList, TabsTrigger } from "@bhms/ui";
+import { Tabs, TabsList, TabsTrigger } from "@havenspace/ui";
 import { useProperty } from "@/lib/property-context";
 import { getRoomsByProperty, mockRooms } from "@/lib/mock-data";
 import { formatCurrency, cn, getStatusColor } from "@/lib/utils";

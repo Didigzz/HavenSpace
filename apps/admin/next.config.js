@@ -1,9 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  transpilePackages: ["@bhms/ui", "@bhms/shared", "@bhms/validation", "@bhms/database"],
+  transpilePackages: ["@havenspace/ui", "@havenspace/shared", "@havenspace/validation", "@havenspace/database"],
   output: 'standalone',
   experimental: {
-    optimizePackageImports: ["@bhms/ui", "lucide-react"],
+    optimizePackageImports: ["@havenspace/ui", "lucide-react"],
   },
 };
 

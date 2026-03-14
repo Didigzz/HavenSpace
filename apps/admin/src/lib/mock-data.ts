@@ -1,4 +1,4 @@
-// Mock data types
+﻿// Mock data types
 import type { PropertyImage, PropertyAmenity, PropertyRule } from "@/types";
 
 export interface MockProperty {

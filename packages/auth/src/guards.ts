@@ -1,5 +1,5 @@
 // Role-based guards for authorization
-import { APP_URLS, getFullDashboardUrl } from '@bhms/config';
+import { APP_URLS, getFullDashboardUrl } from '@havenspace/config';
 
 export type UserRole = 'LANDLORD' | 'BOARDER' | 'ADMIN';
 export type UserStatus = 'PENDING' | 'APPROVED' | 'SUSPENDED';
@@ -47,7 +47,7 @@ export function canAccessAdminDashboard(role?: string): boolean {
 
 /**
  * Get the redirect URL based on user role and status
- * Uses centralized URL configuration from @bhms/config
+ * Uses centralized URL configuration from @havenspace/config
  */
 export function getRedirectUrl(role?: string, status?: string): string {
     if (!role) return '/login';

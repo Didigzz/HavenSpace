@@ -24,18 +24,18 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@bhms/ui";
-import { Button } from "@bhms/ui";
-import { Input } from "@bhms/ui";
-import { Label } from "@bhms/ui";
-import { Separator } from "@bhms/ui";
+} from "@havenspace/ui";
+import { Button } from "@havenspace/ui";
+import { Input } from "@havenspace/ui";
+import { Label } from "@havenspace/ui";
+import { Separator } from "@havenspace/ui";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@bhms/ui";
+} from "@havenspace/ui";
 import {
   Dialog,
   DialogContent,
@@ -43,7 +43,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@bhms/ui";
+} from "@havenspace/ui";
 import { useTheme } from "next-themes";
 
 export default function SettingsPage() {
@@ -487,7 +487,7 @@ export default function SettingsPage() {
   );
 }
 
-// Add Badge component inline since it might not be in @bhms/ui
+// Add Badge component inline since it might not be in @havenspace/ui
 function Badge({
   children,
   className,

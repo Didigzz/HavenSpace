@@ -1,10 +1,10 @@
-# API Server (@bhms/api-server)
+# API Server (@havenspace/api-server)
 
 Backend API server for the Haven Space platform built with **Next.js 16**, **tRPC**, and **NextAuth.js**.
 
 ## Overview
 
-This app serves as the central backend API for all BHMS applications (Public, Boarder, Landlord, Admin). It provides type-safe API endpoints using tRPC with role-based access control.
+This app serves as the central backend API for all Haven Space applications (Public, Boarder, Landlord, Admin). It provides type-safe API endpoints using tRPC with role-based access control.
 
 - **Port**: `3006`
 - **Framework**: Next.js 16 (App Router)
@@ -73,7 +73,7 @@ NEXTAUTH_URL="http://localhost:3006"
 
 ```bash
 # Start the API server
-bun --filter @bhms/api-server dev
+bun --filter @havenspace/api-server dev
 
 # Or from the app directory
 cd apps/api
@@ -86,22 +86,22 @@ The server will start at `http://localhost:3006`
 
 ```bash
 # Production build
-bun --filter @bhms/api-server build
+bun --filter @havenspace/api-server build
 
 # Serverless build
-bun --filter @bhms/api-server build:serverless
+bun --filter @havenspace/api-server build:serverless
 ```
 
 ### Type Check
 
 ```bash
-bun --filter @bhms/api-server typecheck
+bun --filter @havenspace/api-server typecheck
 ```
 
 ### Lint
 
 ```bash
-bun --filter @bhms/api-server lint
+bun --filter @havenspace/api-server lint
 ```
 
 ## API Endpoints
@@ -143,7 +143,7 @@ The API provides five types of procedures:
 ### Client-side tRPC Call
 
 ```typescript
-import { api } from '@bhms/api-client';
+import { api } from '@havenspace/api-client';
 
 // Public procedure
 const houses = await api.house.list.query();
@@ -162,7 +162,7 @@ const booking = await api.booking.create.mutate({
 
 ```typescript
 // packages/api/src/routers/example.ts
-import { createTRPCRouter, publicProcedure } from '@bhms/api';
+import { createTRPCRouter, publicProcedure } from '@havenspace/api';
 import { z } from 'zod';
 
 export const exampleRouter = createTRPCRouter({
@@ -207,7 +207,7 @@ The API is configured for serverless deployment:
 All database operations go through Prisma:
 
 ```typescript
-import { db } from '@bhms/database';
+import { db } from '@havenspace/database';
 
 const houses = await db.house.findMany();
 ```
@@ -216,7 +216,7 @@ const houses = await db.house.findMany();
 
 ```bash
 # Run tests (when implemented)
-bun --filter @bhms/api-server test
+bun --filter @havenspace/api-server test
 ```
 
 ## Deployment
@@ -257,12 +257,12 @@ The API is automatically deployed via GitHub Actions CI/CD pipeline when merged 
 
 ## Related Packages
 
-- [`@bhms/api`](../../packages/api/) - tRPC router definitions
-- [`@bhms/auth`](../../packages/auth/) - Authentication configuration
-- [`@bhms/database`](../../packages/database/) - Prisma schema & client
-- [`@bhms/validation`](../../packages/validation/) - Zod schemas
-- [`@bhms/shared`](../../packages/shared/) - Shared business logic
+- [`@havenspace/api`](../../packages/api/) - tRPC router definitions
+- [`@havenspace/auth`](../../packages/auth/) - Authentication configuration
+- [`@havenspace/database`](../../packages/database/) - Prisma schema & client
+- [`@havenspace/validation`](../../packages/validation/) - Zod schemas
+- [`@havenspace/shared`](../../packages/shared/) - Shared business logic
 
 ## License
 
-Private - BHMS Project
+Private - Haven Space Project

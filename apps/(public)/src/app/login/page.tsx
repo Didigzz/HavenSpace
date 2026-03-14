@@ -9,7 +9,7 @@ export default function LoginPage() {
       <div className="hidden lg:flex lg:w-1/2 bg-primary p-12 flex-col justify-between">
         <div className="flex items-center gap-2 text-primary-foreground">
           <Building2 className="h-8 w-8" />
-          <span className="text-2xl font-bold">BHMS</span>
+          <span className="text-2xl font-bold">Haven Space</span>
         </div>
         <div className="space-y-6">
           <h1 className="text-4xl font-bold text-primary-foreground">
@@ -31,7 +31,7 @@ export default function LoginPage() {
           {/* Mobile logo */}
           <div className="flex lg:hidden items-center justify-center gap-2 mb-8">
             <Building2 className="h-8 w-8 text-primary" />
-            <span className="text-2xl font-bold text-primary">BHMS</span>
+            <span className="text-2xl font-bold text-primary">Haven Space</span>
           </div>
 
           <div className="space-y-2 text-center lg:text-left">

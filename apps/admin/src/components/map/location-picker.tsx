@@ -1,17 +1,17 @@
-"use client";
+﻿"use client";
 
 import * as React from "react";
 import { useEffect, useState, useCallback } from "react";
 import { MapPin, Search, Crosshair, Loader2 } from "lucide-react";
-import { Button } from "@bhms/ui";
-import { Input } from "@bhms/ui";
+import { Button } from "@havenspace/ui";
+import { Input } from "@havenspace/ui";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@bhms/ui";
+} from "@havenspace/ui";
 import type { GeoLocation } from "@/types";
 
 interface LocationPickerProps {

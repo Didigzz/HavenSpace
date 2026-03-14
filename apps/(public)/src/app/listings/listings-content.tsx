@@ -2,7 +2,7 @@
 
 import { ListingCard } from "@/components/listings";
 import { getListings } from "@/lib/mock-data";
-import { Button } from "@bhms/ui";
+import { Button } from "@havenspace/ui";
 import { MapPin, LayoutGrid, List } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";

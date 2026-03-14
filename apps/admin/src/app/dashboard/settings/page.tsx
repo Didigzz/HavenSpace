@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import * as React from "react";
 import {
@@ -34,7 +34,7 @@ import {
   SelectTrigger,
   SelectValue,
   Separator,
-} from "@bhms/ui";
+} from "@havenspace/ui";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useSession } from "next-auth/react";
 import { getInitials } from "@/lib/utils";
@@ -357,7 +357,7 @@ export default function SettingsPage() {
                 <div className="grid gap-4 md:grid-cols-2">
                   <div className="space-y-2">
                     <Label htmlFor="platform-name">Platform Name</Label>
-                    <Input id="platform-name" defaultValue="BHMS" />
+                    <Input id="platform-name" defaultValue="Haven Space" />
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="support-email">Support Email</Label>

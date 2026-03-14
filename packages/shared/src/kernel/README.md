@@ -1,4 +1,4 @@
-# @bhms/shared/kernel - Domain-Driven Design Base Classes
+﻿# @havenspace/shared/kernel - Domain-Driven Design Base Classes
 
 This package provides the foundational building blocks for implementing Domain-Driven Design (DDD) patterns in the Haven Space platform.
 
@@ -15,7 +15,7 @@ The kernel package contains the core abstractions and base classes that all doma
 
 ```bash
 # Already available as workspace dependency
-import { ... } from '@bhms/shared/kernel';
+import { ... } from '@havenspace/shared/kernel';
 ```
 
 ## Usage
@@ -25,7 +25,7 @@ import { ... } from '@bhms/shared/kernel';
 Entities are objects with a distinct identity that persists through different states:
 
 ```typescript
-import { Entity } from '@bhms/shared/kernel';
+import { Entity } from '@havenspace/shared/kernel';
 
 interface UserProps {
   id: string;
@@ -58,7 +58,7 @@ export class User extends Entity<UserProps> {
 Value objects are immutable objects defined by their attributes, not identity:
 
 ```typescript
-import { ValueObject } from '@bhms/shared/kernel';
+import { ValueObject } from '@havenspace/shared/kernel';
 
 interface MoneyProps {
   amount: number;
@@ -95,7 +95,7 @@ export class Money extends ValueObject<MoneyProps> {
 Aggregate roots are entities that maintain consistency boundaries and collect domain events:
 
 ```typescript
-import { AggregateRoot } from '@bhms/shared/kernel';
+import { AggregateRoot } from '@havenspace/shared/kernel';
 import { OrderCreatedDomainEvent } from './events/order-created.domain-event';
 
 interface OrderProps {
@@ -144,7 +144,7 @@ export class Order extends AggregateRoot<OrderProps> {
 Domain events represent something meaningful that happened in the domain:
 
 ```typescript
-import { DomainEvent } from '@bhms/shared/kernel';
+import { DomainEvent } from '@havenspace/shared/kernel';
 
 interface PaymentProcessedEventData {
   paymentId: string;
@@ -168,13 +168,13 @@ export class PaymentProcessedDomainEvent extends DomainEvent<PaymentProcessedEve
 
 ```
 kernel/
-├── domain/
-│   ├── entity.ts          # Entity base class
-│   ├── value-object.ts    # ValueObject base class
-│   └── aggregate-root.ts  # AggregateRoot base class
-├── events/
-│   └── domain-event.ts    # DomainEvent base class
-└── index.ts               # Public exports
+â”œâ”€â”€ domain/
+â”‚   â”œâ”€â”€ entity.ts          # Entity base class
+â”‚   â”œâ”€â”€ value-object.ts    # ValueObject base class
+â”‚   â””â”€â”€ aggregate-root.ts  # AggregateRoot base class
+â”œâ”€â”€ events/
+â”‚   â””â”€â”€ domain-event.ts    # DomainEvent base class
+â””â”€â”€ index.ts               # Public exports
 ```
 
 ## Best Practices
@@ -187,6 +187,7 @@ kernel/
 
 ## Related Packages
 
-- `@bhms/api` - Uses kernel classes in domain modules
-- `@bhms/database` - Persistence layer for aggregates
-- `@bhms/validation` - Validation schemas for domain objects
+- `@havenspace/api` - Uses kernel classes in domain modules
+- `@havenspace/database` - Persistence layer for aggregates
+- `@havenspace/validation` - Validation schemas for domain objects
+

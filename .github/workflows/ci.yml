@@ -167,7 +167,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: didigzz/bhms-${{ matrix.app }}
+          images: didigzz/havenspace-${{ matrix.app }}
           tags: |
             type=ref,event=branch
             type=ref,event=pr
@@ -203,7 +203,7 @@ jobs:
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.DEPLOY_SSH_KEY }}
           script: |
-            cd /opt/bhms
+            cd /opt/havenspace
             docker-compose -f docker-compose.production.yml pull
             docker-compose -f docker-compose.production.yml up -d
             docker image prune -f
@@ -215,7 +215,7 @@ jobs:
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.DEPLOY_SSH_KEY }}
           script: |
-            cd /opt/bhms
+            cd /opt/havenspace
             docker-compose -f docker-compose.production.yml exec -T api bun run db:migrate
 
       - name: Notify deployment status

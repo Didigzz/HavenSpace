@@ -3,7 +3,7 @@
  * This file exports a handler that can be deployed to serverless platforms
  */
 
-import { handlers } from "@bhms/auth/config";
+import { handlers } from "@havenspace/auth/config";
 
 /**
  * Export handlers for serverless platforms

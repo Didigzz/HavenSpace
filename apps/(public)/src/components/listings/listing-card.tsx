@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Card, CardContent, CardFooter } from "@bhms/ui";
+import { Card, CardContent, CardFooter } from "@havenspace/ui";
 import { MapPin, Users, Wifi, Car, Utensils, Bath, Star } from "lucide-react";
-import { Badge } from "@bhms/ui";
+import { Badge } from "@havenspace/ui";
 import { BoardingHouse } from "@/lib/types";
 import { formatCurrency } from "@/lib/utils";
 

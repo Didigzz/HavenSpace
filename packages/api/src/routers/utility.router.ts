@@ -1,25 +1,57 @@
 import { z } from "zod";
 import { createTRPCRouter } from "../trpc";
-import { 
-  createUtilityReadingSchema, 
+import {
+  createUtilityReadingSchema,
   updateUtilityReadingSchema,
   UtilityTypeEnum
-} from "@bhms/validation";
+} from "@havenspace/validation";
+import type { TRPCContext, HavenSession, ProtectedTRPCContext } from "../types/index";
+
+// Type helpers
+interface AuthenticatedCtx<TInput = unknown> {
+  ctx: ProtectedTRPCContext;
+  input: TInput;
+}
+
+type GetAllInput = z.infer<typeof getAllUtilityReadingsSchema>;
+type GetByIdInput = z.infer<typeof getUtilityReadingByIdSchema>;
+type CreateUtilityReadingInput = z.infer<typeof createUtilityReadingSchema>;
+type UpdateUtilityReadingInput = z.infer<typeof updateUtilityReadingSchema>;
+type DeleteUtilityReadingInput = z.infer<typeof deleteUtilityReadingSchema>;
+type GetLatestByRoomInput = z.infer<typeof getLatestByRoomSchema>;
+type GetConsumptionSummaryInput = z.infer<typeof getConsumptionSummarySchema>;
+
+const getAllUtilityReadingsSchema = z.object({
+  type: UtilityTypeEnum.optional(),
+  roomId: z.string().optional(),
+  startDate: z.date().optional(),
+  endDate: z.date().optional(),
+});
+
+const getUtilityReadingByIdSchema = z.object({
+  id: z.string(),
+});
+
+const deleteUtilityReadingSchema = z.object({
+  id: z.string(),
+});
+
+const getLatestByRoomSchema = z.object({
+  roomId: z.string(),
+  type: UtilityTypeEnum,
+});
+
+const getConsumptionSummarySchema = z.object({
+  roomId: z.string().optional(),
+  type: UtilityTypeEnum.optional(),
+  months: z.number().default(6),
+});
 
 export const createUtilityRouter = (protectedProcedure: any) => {
   return createTRPCRouter({
     getAll: protectedProcedure
-      .input(
-        z
-          .object({
-            type: UtilityTypeEnum.optional(),
-            roomId: z.string().optional(),
-            startDate: z.date().optional(),
-            endDate: z.date().optional(),
-          })
-          .optional()
-      )
-      .query(async ({ ctx, input }: any) => {
+      .input(getAllUtilityReadingsSchema.optional())
+      .query(async ({ ctx, input }: AuthenticatedCtx<GetAllInput | undefined>) => {
         return ctx.db.utilityReading.findMany({
           where: {
             type: input?.type,
@@ -39,8 +71,8 @@ export const createUtilityRouter = (protectedProcedure: any) => {
       }),
 
     getById: protectedProcedure
-      .input(z.object({ id: z.string() }))
-      .query(async ({ ctx, input }: any) => {
+      .input(getUtilityReadingByIdSchema)
+      .query(async ({ ctx, input }: AuthenticatedCtx<GetByIdInput>) => {
         return ctx.db.utilityReading.findUnique({
           where: { id: input.id },
           include: { room: true },
@@ -49,7 +81,7 @@ export const createUtilityRouter = (protectedProcedure: any) => {
 
     create: protectedProcedure
       .input(createUtilityReadingSchema)
-      .mutation(async ({ ctx, input }: any) => {
+      .mutation(async ({ ctx, input }: AuthenticatedCtx<CreateUtilityReadingInput>) => {
         return ctx.db.utilityReading.create({
           data: input,
         });
@@ -57,7 +89,7 @@ export const createUtilityRouter = (protectedProcedure: any) => {
 
     update: protectedProcedure
       .input(updateUtilityReadingSchema)
-      .mutation(async ({ ctx, input }: any) => {
+      .mutation(async ({ ctx, input }: AuthenticatedCtx<UpdateUtilityReadingInput>) => {
         const { id, ...data } = input;
         return ctx.db.utilityReading.update({
           where: { id },
@@ -66,16 +98,16 @@ export const createUtilityRouter = (protectedProcedure: any) => {
       }),
 
     delete: protectedProcedure
-      .input(z.object({ id: z.string() }))
-      .mutation(async ({ ctx, input }: any) => {
+      .input(deleteUtilityReadingSchema)
+      .mutation(async ({ ctx, input }: AuthenticatedCtx<DeleteUtilityReadingInput>) => {
         return ctx.db.utilityReading.delete({
           where: { id: input.id },
         });
       }),
 
     getLatestByRoom: protectedProcedure
-      .input(z.object({ roomId: z.string(), type: UtilityTypeEnum }))
-      .query(async ({ ctx, input }: any) => {
+      .input(getLatestByRoomSchema)
+      .query(async ({ ctx, input }: AuthenticatedCtx<GetLatestByRoomInput>) => {
         return ctx.db.utilityReading.findFirst({
           where: {
             roomId: input.roomId,
@@ -86,14 +118,8 @@ export const createUtilityRouter = (protectedProcedure: any) => {
       }),
 
     getConsumptionSummary: protectedProcedure
-      .input(
-        z.object({
-          roomId: z.string().optional(),
-          type: UtilityTypeEnum.optional(),
-          months: z.number().default(6),
-        })
-      )
-      .query(async ({ ctx, input }: any) => {
+      .input(getConsumptionSummarySchema)
+      .query(async ({ ctx, input }: AuthenticatedCtx<GetConsumptionSummaryInput>) => {
         const startDate = new Date();
         startDate.setMonth(startDate.getMonth() - input.months);
 
@@ -107,7 +133,7 @@ export const createUtilityRouter = (protectedProcedure: any) => {
           orderBy: { readingDate: "asc" },
         });
 
-        return readings.map((reading: any) => ({
+        return readings.map((reading) => ({
           id: reading.id,
           room: reading.room.roomNumber,
           type: reading.type,

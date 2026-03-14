@@ -1,5 +1,5 @@
 {
-  "name": "@bhms/api",
+  "name": "@havenspace/api",
   "version": "0.0.1",
   "private": true,
   "main": "./src/index.ts",
@@ -12,8 +12,8 @@
     "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
-    "@bhms/database": "workspace:*",
-    "@bhms/validation": "workspace:*",
+    "@havenspace/database": "workspace:*",
+    "@havenspace/validation": "workspace:*",
     "@orpc/server": "^1.8.0",
     "@trpc/server": "^10.45.2",
     "@types/node": "^22.0.0",
@@ -23,7 +23,7 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "@bhms/typescript-config": "workspace:*",
+    "@havenspace/typescript-config": "workspace:*",
     "@types/bcryptjs": "^2.4.6",
     "@types/ioredis": "^5.0.0",
     "@vitest/coverage-v8": "^1.0.0",

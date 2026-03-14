@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import * as React from "react";
 import { useState } from "react";
@@ -17,28 +17,28 @@ import {
   Calendar,
   Receipt,
 } from "lucide-react";
-import { Button } from "@bhms/ui";
-import { Input } from "@bhms/ui";
-import { Label } from "@bhms/ui";
-import { Badge } from "@bhms/ui";
+import { Button } from "@havenspace/ui";
+import { Input } from "@havenspace/ui";
+import { Label } from "@havenspace/ui";
+import { Badge } from "@havenspace/ui";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@bhms/ui";
+} from "@havenspace/ui";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@bhms/ui";
+} from "@havenspace/ui";
 import { useProperty } from "@/lib/property-context";
 import { mockTenants, mockRooms, getTenantsByProperty, getRoomsByProperty } from "@/lib/mock-data";
 import { formatCurrency } from "@/lib/utils";
-import { useToast } from "@bhms/ui";
+import { useToast } from "@havenspace/ui";
 
 const paymentSchema = z.object({
   tenantId: z.string().min(1, "Please select a tenant"),
@@ -355,7 +355,7 @@ export default function NewPaymentPage() {
             <CardContent>
               <div className="rounded-lg border bg-muted/30 p-4 space-y-3">
                 <div className="text-center border-b pb-3">
-                  <h3 className="font-semibold">BHMS Payment Receipt</h3>
+                  <h3 className="font-semibold">Haven Space Payment Receipt</h3>
                   <p className="text-xs text-muted-foreground">{preview.date}</p>
                 </div>
                 <div className="space-y-2 text-sm">

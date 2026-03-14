@@ -1,6 +1,6 @@
 import { Boarder } from '../../domain/entities/boarder.entity';
 import { IBoarderRepository, BoarderFilters, BoarderStats } from '../../domain/repositories/boarder.repository.interface';
-import { PrismaClientType } from '@bhms/database';
+import { PrismaClientType } from '@havenspace/database';
 
 export class PrismaBoarderRepository implements IBoarderRepository {
   constructor(private prisma: PrismaClientType) {}

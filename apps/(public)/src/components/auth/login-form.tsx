@@ -6,9 +6,9 @@ import { signIn } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Button, Input, Label } from "@bhms/ui";
+import { Button, Input, Label } from "@havenspace/ui";
 import { Eye, EyeOff, Loader2, AlertCircle } from "lucide-react";
-import { getRedirectUrl } from "@bhms/auth";
+import { getRedirectUrl } from "@havenspace/auth";
 
 const loginSchema = z.object({
   email: z.string().email("Please enter a valid email address"),

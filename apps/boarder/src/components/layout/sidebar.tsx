@@ -20,7 +20,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Button } from "@bhms/ui";
+import { Button } from "@havenspace/ui";
 import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface NavItem {

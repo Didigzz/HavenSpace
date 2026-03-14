@@ -1,4 +1,4 @@
-# @bhms/auth
+﻿# @havenspace/auth
 
 Authentication and authorization utilities for the Haven Space platform using NextAuth.js.
 
@@ -14,7 +14,7 @@ This package provides:
 
 ```bash
 # Already available as workspace dependency
-import { guards, middleware } from '@bhms/auth';
+import { guards, middleware } from '@havenspace/auth';
 ```
 
 ## Usage
@@ -23,7 +23,7 @@ import { guards, middleware } from '@bhms/auth';
 
 ```typescript
 // apps/(auth)/api/auth/[...nextauth]/route.ts
-import { authConfig } from '@bhms/auth/config';
+import { authConfig } from '@havenspace/auth/config';
 import NextAuth from 'next-auth';
 
 const handler = NextAuth(authConfig);
@@ -35,7 +35,7 @@ export { handler as GET, handler as POST };
 For edge runtime (no database access):
 
 ```typescript
-import { authConfigEdge } from '@bhms/auth';
+import { authConfigEdge } from '@havenspace/auth';
 ```
 
 ### Authorization Guards
@@ -48,7 +48,7 @@ import {
   hasRole,
   canAccessLandlordDashboard,
   getRedirectUrl
-} from '@bhms/auth';
+} from '@havenspace/auth';
 
 // Check role
 if (isLandlord(user.role)) {
@@ -72,8 +72,8 @@ const redirectUrl = getRedirectUrl(user.role, user.status);
 ### tRPC Middleware
 
 ```typescript
-import { createAuthMiddleware } from '@bhms/auth/middleware';
-import { auth } from '@bhms/auth/config';
+import { createAuthMiddleware } from '@havenspace/auth/middleware';
+import { auth } from '@havenspace/auth/config';
 
 const authMiddleware = createAuthMiddleware();
 
@@ -141,12 +141,13 @@ LANDLORD_URL="http://localhost:3005"
 1. **Use guards** - Always check role and status before sensitive operations
 2. **Edge-compatible** - Use `authConfigEdge` for edge runtime
 3. **Type-safe sessions** - Extend session types properly
-4. **Centralized URLs** - Use `@bhms/config` for redirect URLs
+4. **Centralized URLs** - Use `@havenspace/config` for redirect URLs
 5. **Middleware protection** - Protect all tRPC routes with auth middleware
 
 ## Related Packages
 
-- `@bhms/config` - Centralized URL configuration
-- `@bhms/database` - User database operations
-- `@bhms/api` - tRPC authentication
-- `@bhms/shared` - Shared types and utilities
+- `@havenspace/config` - Centralized URL configuration
+- `@havenspace/database` - User database operations
+- `@havenspace/api` - tRPC authentication
+- `@havenspace/shared` - Shared types and utilities
+

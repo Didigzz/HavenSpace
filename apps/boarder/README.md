@@ -1,8 +1,8 @@
-# Boarder Dashboard (@bhms/boarder)
+﻿# Boarder Dashboard (@havenspace/boarder)
 
 The Boarder Dashboard is the authenticated user interface for boarders (renters) to manage their boarding house experience. Built with **Next.js 16**, **React 18**, **TypeScript**, and **Tailwind CSS**.
 
-## 🎯 Overview
+## ðŸŽ¯ Overview
 
 This application provides boarders with a comprehensive dashboard to:
 - Browse and search available boarding houses
@@ -12,13 +12,13 @@ This application provides boarders with a comprehensive dashboard to:
 - Save favorite properties
 - Manage profile settings
 
-## 🚀 Quick Start
+## ðŸš€ Quick Start
 
 ### Development
 
 ```bash
 # From the project root
-bun --filter @bhms/boarder dev
+bun --filter @havenspace/boarder dev
 
 # Or directly
 cd apps/boarder
@@ -30,52 +30,52 @@ The app runs on **http://localhost:3004**
 ### Building for Production
 
 ```bash
-bun --filter @bhms/boarder build
-bun --filter @bhms/boarder start
+bun --filter @havenspace/boarder build
+bun --filter @havenspace/boarder start
 ```
 
 ### Docker
 
 ```bash
 # Build the boarder app Docker image
-docker build -t bhms-boarder -f apps/boarder/Dockerfile .
+docker build -t havenspace-boarder -f apps/boarder/Dockerfile .
 
 # Run with docker-compose (included in root docker-compose.yml)
 ```
 
-## 📁 Project Structure
+## ðŸ“ Project Structure
 
 ```
 apps/boarder/
-├── src/
-│   ├── app/                      # Next.js 16 App Router
-│   │   ├── (dashboard)/          # Authenticated dashboard routes
-│   │   │   ├── bookings/         # Booking management
-│   │   │   ├── browse/           # Browse available properties
-│   │   │   ├── dashboard/        # Main dashboard overview
-│   │   │   ├── history/          # Booking history
-│   │   │   ├── messages/         # Messaging with landlords
-│   │   │   ├── payments/         # Payment processing & history
-│   │   │   ├── profile/          # User profile management
-│   │   │   ├── saved/            # Saved properties
-│   │   │   ├── settings/         # Account settings
-│   │   │   └── layout.tsx        # Dashboard layout wrapper
-│   │   ├── globals.css           # Global styles
-│   │   ├── layout.tsx            # Root layout
-│   │   └── page.tsx              # Root page (redirects to dashboard)
-│   ├── components/
-│   │   ├── layout/               # Layout components (navbar, sidebar, etc.)
-│   │   └── ui/                   # Reusable UI components
-│   ├── lib/                      # Utilities and helpers
-│   └── providers.tsx             # Context providers (theme, query, auth)
-├── Dockerfile                    # Docker configuration
-├── next.config.js                # Next.js configuration
-├── package.json                  # Dependencies and scripts
-├── tailwind.config.ts            # Tailwind CSS configuration
-└── tsconfig.json                 # TypeScript configuration
+â”œâ”€â”€ src/
+â”‚   â”œâ”€â”€ app/                      # Next.js 16 App Router
+â”‚   â”‚   â”œâ”€â”€ (dashboard)/          # Authenticated dashboard routes
+â”‚   â”‚   â”‚   â”œâ”€â”€ bookings/         # Booking management
+â”‚   â”‚   â”‚   â”œâ”€â”€ browse/           # Browse available properties
+â”‚   â”‚   â”‚   â”œâ”€â”€ dashboard/        # Main dashboard overview
+â”‚   â”‚   â”‚   â”œâ”€â”€ history/          # Booking history
+â”‚   â”‚   â”‚   â”œâ”€â”€ messages/         # Messaging with landlords
+â”‚   â”‚   â”‚   â”œâ”€â”€ payments/         # Payment processing & history
+â”‚   â”‚   â”‚   â”œâ”€â”€ profile/          # User profile management
+â”‚   â”‚   â”‚   â”œâ”€â”€ saved/            # Saved properties
+â”‚   â”‚   â”‚   â”œâ”€â”€ settings/         # Account settings
+â”‚   â”‚   â”‚   â””â”€â”€ layout.tsx        # Dashboard layout wrapper
+â”‚   â”‚   â”œâ”€â”€ globals.css           # Global styles
+â”‚   â”‚   â”œâ”€â”€ layout.tsx            # Root layout
+â”‚   â”‚   â””â”€â”€ page.tsx              # Root page (redirects to dashboard)
+â”‚   â”œâ”€â”€ components/
+â”‚   â”‚   â”œâ”€â”€ layout/               # Layout components (navbar, sidebar, etc.)
+â”‚   â”‚   â””â”€â”€ ui/                   # Reusable UI components
+â”‚   â”œâ”€â”€ lib/                      # Utilities and helpers
+â”‚   â””â”€â”€ providers.tsx             # Context providers (theme, query, auth)
+â”œâ”€â”€ Dockerfile                    # Docker configuration
+â”œâ”€â”€ next.config.js                # Next.js configuration
+â”œâ”€â”€ package.json                  # Dependencies and scripts
+â”œâ”€â”€ tailwind.config.ts            # Tailwind CSS configuration
+â””â”€â”€ tsconfig.json                 # TypeScript configuration
 ```
 
-## 🎨 Features
+## ðŸŽ¨ Features
 
 ### Dashboard Routes
 
@@ -102,7 +102,7 @@ apps/boarder/
 - **Theme Support**: Light/dark mode toggle via `next-themes`
 - **Responsive Design**: Mobile-friendly interface
 
-## 🛠️ Technology Stack
+## ðŸ› ï¸ Technology Stack
 
 ### Dependencies
 
@@ -125,21 +125,21 @@ apps/boarder/
 
 ### Workspace Dependencies
 
-- `@bhms/database` - Prisma client and types
-- `@bhms/shared` - Shared utilities
-- `@bhms/ui` - Shared UI components
-- `@bhms/validation` - Zod validation schemas
+- `@havenspace/database` - Prisma client and types
+- `@havenspace/shared` - Shared utilities
+- `@havenspace/ui` - Shared UI components
+- `@havenspace/validation` - Zod validation schemas
 
-## 🔐 Authentication
+## ðŸ” Authentication
 
-The boarder app integrates with the BHMS authentication system via **NextAuth.js**:
+The boarder app integrates with the Haven Space authentication system via **NextAuth.js**:
 
 - Session-based authentication
 - Role-based access control (Boarder role)
 - Protected routes via middleware
 - JWT token management
 
-## 🎨 UI Components
+## ðŸŽ¨ UI Components
 
 Built on **Radix UI** primitives with **Tailwind CSS**:
 
@@ -150,22 +150,22 @@ Built on **Radix UI** primitives with **Tailwind CSS**:
 - Scroll areas
 - Custom theme support
 
-## 📡 API Integration
+## ðŸ“¡ API Integration
 
-Communicates with the backend API server (`@bhms/api-server`) via **tRPC**:
+Communicates with the backend API server (`@havenspace/api-server`) via **tRPC**:
 
 - Type-safe API calls
 - Automatic type inference
 - React Query integration
 - Optimistic updates
 
-## 🔄 State Management
+## ðŸ”„ State Management
 
 - **Zustand**: Client-side state for UI preferences
 - **React Query**: Server state management
 - **React Hook Form**: Form state handling
 
-## 🧪 Development
+## ðŸ§ª Development
 
 ### Available Scripts
 
@@ -186,7 +186,7 @@ bun run typecheck    # TypeScript
 bun run format       # Prettier
 ```
 
-## 🐳 Docker
+## ðŸ³ Docker
 
 The boarder app includes a `Dockerfile` for containerized deployment:
 
@@ -200,7 +200,7 @@ The boarder app includes a `Dockerfile` for containerized deployment:
 ### Building the Image
 
 ```bash
-docker build -t bhms-boarder -f apps/boarder/Dockerfile .
+docker build -t havenspace-boarder -f apps/boarder/Dockerfile .
 ```
 
 ### Running the Container
@@ -211,10 +211,10 @@ docker run -p 3004:3004 \
   -e NEXTAUTH_SECRET=your_secret \
   -e NEXTAUTH_URL=http://localhost:3004 \
   -e API_URL=http://localhost:3001 \
-  bhms-boarder
+  havenspace-boarder
 ```
 
-## 🌐 Environment Variables
+## ðŸŒ Environment Variables
 
 Required environment variables (copy from root `.env`):
 
@@ -234,7 +234,7 @@ NEXT_PUBLIC_API_URL="http://localhost:3001"
 NEXT_PUBLIC_APP_URL="http://localhost:3004"
 ```
 
-## 📱 Responsive Design
+## ðŸ“± Responsive Design
 
 The boarder dashboard is fully responsive:
 
@@ -242,22 +242,22 @@ The boarder dashboard is fully responsive:
 - **Tablet**: Collapsible sidebar
 - **Mobile**: Hamburger menu with bottom navigation
 
-## 🔗 Related Packages
+## ðŸ”— Related Packages
 
-- [`@bhms/api-server`](../api) - Backend API
-- [`@bhms/auth-app`](../(auth)) - Authentication application
-- [`@bhms/public`](../(public)) - Public marketplace
-- [`@bhms/landlord`](../landlord) - Landlord portal
-- [`@bhms/admin`](../admin) - Admin dashboard
+- [`@havenspace/api-server`](../api) - Backend API
+- [`@havenspace/auth-app`](../(auth)) - Authentication application
+- [`@havenspace/public`](../(public)) - Public marketplace
+- [`@havenspace/landlord`](../landlord) - Landlord portal
+- [`@havenspace/admin`](../admin) - Admin dashboard
 
-## 📚 Documentation
+## ðŸ“š Documentation
 
 - [Main README](../../README.md) - Project overview
 - [QWEN.md](../../QWEN.md) - Development guidelines
 - [DEVELOPMENT.md](../../docs/DEVELOPMENT.md) - Development setup
 - [PLAN.md](../../docs/PLAN.md) - System specification
 
-## 🤝 Contributing
+## ðŸ¤ Contributing
 
 When adding features to the boarder app:
 
@@ -271,3 +271,4 @@ When adding features to the boarder app:
 ---
 
 **Part of the Haven Space platform**
+

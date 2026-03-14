@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import * as React from "react";
 import { useState } from "react";
@@ -14,23 +14,23 @@ import {
   DoorOpen,
   DollarSign,
 } from "lucide-react";
-import { Button } from "@bhms/ui";
-import { Badge } from "@bhms/ui";
+import { Button } from "@havenspace/ui";
+import { Badge } from "@havenspace/ui";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@bhms/ui";
+} from "@havenspace/ui";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@bhms/ui";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@bhms/ui";
+} from "@havenspace/ui";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@havenspace/ui";
 import {
   AreaChart,
   Area,
@@ -67,7 +67,7 @@ import {
   type MockRevenueData,
 } from "@/lib/mock-data";
 import { formatCurrency, cn } from "@/lib/utils";
-import { useToast } from "@bhms/ui";
+import { useToast } from "@havenspace/ui";
 
 const COLORS = [
   "hsl(var(--chart-1))",

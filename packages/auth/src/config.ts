@@ -2,7 +2,7 @@ import type { NextAuthConfig } from 'next-auth';
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import bcrypt from 'bcryptjs';
-import { db } from '@bhms/database';
+import { db } from '@havenspace/database';
 import { authConfigEdge } from './config.edge';
 import type { DefaultSession } from 'next-auth';
 

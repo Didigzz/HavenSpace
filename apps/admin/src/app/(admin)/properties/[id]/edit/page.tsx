@@ -20,30 +20,30 @@ import {
   Trash2,
   Loader2,
 } from "lucide-react";
-import { Button } from "@bhms/ui";
-import { Input } from "@bhms/ui";
-import { Label } from "@bhms/ui";
-import { Badge } from "@bhms/ui";
+import { Button } from "@havenspace/ui";
+import { Input } from "@havenspace/ui";
+import { Label } from "@havenspace/ui";
+import { Badge } from "@havenspace/ui";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@bhms/ui";
+} from "@havenspace/ui";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@bhms/ui";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@bhms/ui";
+} from "@havenspace/ui";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@havenspace/ui";
 import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
 import { LocationPicker } from "@/components/map";
 import { ImageUpload } from "@/components/property/image-upload";
-import { useToast } from "@bhms/ui";
+import { useToast } from "@havenspace/ui";
 import { mockProperties, propertyAmenities } from "@/lib/mock-data";
 import type { GeoLocation, PropertyImage, PropertyAmenity, PropertyRule } from "@/types";
 

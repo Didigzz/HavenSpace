@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { db } from "@bhms/database";
+import { db } from "@havenspace/database";
 
 // GET /api/properties - Fetch all published/available properties for the tenant map
 export async function GET(request: Request) {

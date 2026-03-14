@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import * as React from "react";
 import { useState } from "react";
@@ -17,21 +17,21 @@ import {
   Calendar,
   MapPin,
 } from "lucide-react";
-import { Button } from "@bhms/ui";
-import { Input } from "@bhms/ui";
-import { Label } from "@bhms/ui";
-import { Badge } from "@bhms/ui";
+import { Button } from "@havenspace/ui";
+import { Input } from "@havenspace/ui";
+import { Label } from "@havenspace/ui";
+import { Badge } from "@havenspace/ui";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@bhms/ui";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@bhms/ui";
-import { Separator } from "@bhms/ui";
-import { Avatar, AvatarFallback, AvatarImage } from "@bhms/ui";
-import { useToast } from "@bhms/ui";
+} from "@havenspace/ui";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@havenspace/ui";
+import { Separator } from "@havenspace/ui";
+import { Avatar, AvatarFallback, AvatarImage } from "@havenspace/ui";
+import { useToast } from "@havenspace/ui";
 
 const profileSchema = z.object({
   firstName: z.string().min(1, "First name is required"),

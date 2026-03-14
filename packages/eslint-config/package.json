@@ -1,5 +1,5 @@
 {
-  "name": "@bhms/eslint-config",
+  "name": "@havenspace/eslint-config",
   "version": "0.0.0",
   "private": true,
   "main": "next.js",

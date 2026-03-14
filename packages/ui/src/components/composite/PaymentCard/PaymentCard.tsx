@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "../../primitives/card";
 import { Badge } from "../../primitives/badge";
-import { formatCurrency, formatDate } from "@bhms/shared";
+import { formatCurrency, formatDate } from "@havenspace/shared";
 
 interface PaymentCardProps {
   payment: {

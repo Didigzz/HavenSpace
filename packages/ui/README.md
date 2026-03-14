@@ -1,4 +1,4 @@
-# @bhms/ui
+﻿# @havenspace/ui
 
 Shared React UI component library for the Haven Space platform.
 
@@ -10,7 +10,7 @@ A comprehensive component library built on Radix UI primitives with Tailwind CSS
 
 ```bash
 # Already available as workspace dependency
-import { Button, Card, ... } from '@bhms/ui';
+import { Button, Card, ... } from '@havenspace/ui';
 ```
 
 ## Components
@@ -65,7 +65,7 @@ Higher-level domain-specific components:
 ### Basic Components
 
 ```typescript
-import { Button, Card, Input, Label } from '@bhms/ui';
+import { Button, Card, Input, Label } from '@havenspace/ui';
 
 function MyComponent() {
   return (
@@ -81,7 +81,7 @@ function MyComponent() {
 ### Button Variants
 
 ```typescript
-import { Button } from '@bhms/ui';
+import { Button } from '@havenspace/ui';
 
 <Button variant="primary">Primary Action</Button>
 <Button variant="secondary">Secondary Action</Button>
@@ -94,7 +94,7 @@ import { Button } from '@bhms/ui';
 ### Composite Components
 
 ```typescript
-import { RoomCard, BoarderCard, PaymentCard } from '@bhms/ui';
+import { RoomCard, BoarderCard, PaymentCard } from '@havenspace/ui';
 
 <RoomCard
   roomNumber="101"
@@ -118,15 +118,15 @@ import { RoomCard, BoarderCard, PaymentCard } from '@bhms/ui';
 
 ```
 ui/
-├── src/
-│   ├── components/
-│   │   ├── primitives/    # Base components
-│   │   └── composite/     # Domain components
-│   ├── hooks/             # Custom React hooks
-│   ├── utils/             # Utility functions
-│   └── index.ts           # Main exports
-├── package.json
-└── README.md
+â”œâ”€â”€ src/
+â”‚   â”œâ”€â”€ components/
+â”‚   â”‚   â”œâ”€â”€ primitives/    # Base components
+â”‚   â”‚   â””â”€â”€ composite/     # Domain components
+â”‚   â”œâ”€â”€ hooks/             # Custom React hooks
+â”‚   â”œâ”€â”€ utils/             # Utility functions
+â”‚   â””â”€â”€ index.ts           # Main exports
+â”œâ”€â”€ package.json
+â””â”€â”€ README.md
 ```
 
 ## Styling
@@ -191,7 +191,8 @@ Components support light and dark themes via CSS variables:
 
 ## Related Packages
 
-- `@bhms/shared` - Utility functions (cn)
-- `@bhms/providers` - Theme and app providers
-- `@bhms/layouts` - Layout components
-- `@bhms/config` - Tailwind configuration
+- `@havenspace/shared` - Utility functions (cn)
+- `@havenspace/providers` - Theme and app providers
+- `@havenspace/layouts` - Layout components
+- `@havenspace/config` - Tailwind configuration
+

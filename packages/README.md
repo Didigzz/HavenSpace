@@ -1,30 +1,30 @@
-# Packages
+﻿# Packages
 
-This directory contains all shared packages used across the BHMS applications.
+This directory contains all shared packages used across the Haven Space applications.
 
 ## Structure
 
 ```
 packages/
-├── api/              # tRPC API definitions and routers
-├── api-client/       # API client utilities
-├── auth/             # Authentication logic
-├── config/           # Shared configurations
-├── database/         # Prisma database client
-├── eslint-config/    # ESLint configurations
-├── layouts/          # ⚠️ DEPRECATED - consolidated into @bhms/shared
-├── providers/        # ⚠️ DEPRECATED - consolidated into @bhms/shared
-├── shared/           # Shared business logic, utilities, layouts, providers
-├── types/            # TypeScript type definitions
-├── typescript-config/# TypeScript configurations
-├── ui/               # Shared UI components
-├── utils/            # Utility functions
-└── validation/       # Zod validation schemas
+â”œâ”€â”€ api/              # tRPC API definitions and routers
+â”œâ”€â”€ api-client/       # API client utilities
+â”œâ”€â”€ auth/             # Authentication logic
+â”œâ”€â”€ config/           # Shared configurations
+â”œâ”€â”€ database/         # Prisma database client
+â”œâ”€â”€ eslint-config/    # ESLint configurations
+â”œâ”€â”€ layouts/          # âš ï¸ DEPRECATED - consolidated into @havenspace/shared
+â”œâ”€â”€ providers/        # âš ï¸ DEPRECATED - consolidated into @havenspace/shared
+â”œâ”€â”€ shared/           # Shared business logic, utilities, layouts, providers
+â”œâ”€â”€ types/            # TypeScript type definitions
+â”œâ”€â”€ typescript-config/# TypeScript configurations
+â”œâ”€â”€ ui/               # Shared UI components
+â”œâ”€â”€ utils/            # Utility functions
+â””â”€â”€ validation/       # Zod validation schemas
 ```
 
 ## Core Packages
 
-### 🔧 API (`packages/api/`)
+### ðŸ”§ API (`packages/api/`)
 - tRPC routers and procedures
 - API endpoint definitions
 - Rate limiting middleware
@@ -32,27 +32,27 @@ packages/
 - Audit logging
 - Used by: apps/api, apps/web
 
-### 💾 Database (`packages/database/`)
+### ðŸ’¾ Database (`packages/database/`)
 - Prisma client and schema
 - Database types and utilities
 - Used by: apps/api, packages/api
 
-### 🔐 Auth (`packages/auth/`)
+### ðŸ” Auth (`packages/auth/`)
 - NextAuth.js configuration
 - Authentication middleware
 - Used by: apps/web, apps/api
 
-### 🎨 UI (`packages/ui/`)
+### ðŸŽ¨ UI (`packages/ui/`)
 - Shared React components
 - Design system components
 - Used by: All frontend apps
 
-### ✅ Validation (`packages/validation/`)
+### âœ… Validation (`packages/validation/`)
 - Zod schemas for validation
 - Input/output type validation
 - Used by: All apps and packages
 
-### 🔄 Shared (`packages/shared/`)
+### ðŸ”„ Shared (`packages/shared/`)
 **Consolidated package** containing:
 - Business logic utilities (entities, features)
 - Common types and constants
@@ -63,10 +63,10 @@ packages/
 
 ## Package Consolidation (March 2026)
 
-The following packages have been **consolidated** into `@bhms/shared`:
+The following packages have been **consolidated** into `@havenspace/shared`:
 
-- `@bhms/layouts` → Use `@bhms/shared/layouts` instead
-- `@bhms/providers` → Use `@bhms/shared/providers` instead
+- `@havenspace/layouts` â†’ Use `@havenspace/shared/layouts` instead
+- `@havenspace/providers` â†’ Use `@havenspace/shared/providers` instead
 
 ### Migration
 
@@ -74,67 +74,67 @@ The following packages have been **consolidated** into `@bhms/shared`:
 // package.json - Before
 {
   "dependencies": {
-    "@bhms/layouts": "workspace:*",
-    "@bhms/providers": "workspace:*"
+    "@havenspace/layouts": "workspace:*",
+    "@havenspace/providers": "workspace:*"
   }
 }
 
 // package.json - After
 {
   "dependencies": {
-    "@bhms/shared": "workspace:*"
+    "@havenspace/shared": "workspace:*"
   }
 }
 ```
 
 ```typescript
 // Imports - Before
-import { AppProviders } from "@bhms/providers";
-import { DashboardLayout } from "@bhms/layouts";
+import { AppProviders } from "@havenspace/providers";
+import { DashboardLayout } from "@havenspace/layouts";
 
 // Imports - After
-import { AppProviders } from "@bhms/shared/providers";
-import { DashboardLayout } from "@bhms/shared/layouts";
+import { AppProviders } from "@havenspace/shared/providers";
+import { DashboardLayout } from "@havenspace/shared/layouts";
 ```
 
 ## Configuration Packages
 
-### 📝 ESLint Config (`packages/eslint-config/`)
+### ðŸ“ ESLint Config (`packages/eslint-config/`)
 - Shared ESLint rules
 - Code quality standards
 
-### 📘 TypeScript Config (`packages/typescript-config/`)
+### ðŸ“˜ TypeScript Config (`packages/typescript-config/`)
 - Shared TypeScript configurations
 - Build settings
 
-### ⚙️ Config (`packages/config/`)
+### âš™ï¸ Config (`packages/config/`)
 - General shared configurations
 - Environment-specific settings
 
 ## Utility Packages
 
-### 🛠️ Utils (`packages/utils/`)
+### ðŸ› ï¸ Utils (`packages/utils/`)
 - General utility functions
 - Helper methods
 
-### 📋 Types (`packages/types/`)
+### ðŸ“‹ Types (`packages/types/`)
 - Shared TypeScript types
 - Common interfaces
 
-### 🌐 API Client (`packages/api-client/`)
+### ðŸŒ API Client (`packages/api-client/`)
 - API client utilities
 - HTTP request helpers
 
 ## Package Dependencies
 
 ```
-apps/web → @bhms/ui, @bhms/api, @bhms/auth, @bhms/shared, @bhms/validation
-apps/api → @bhms/api, @bhms/database, @bhms/auth, @bhms/shared, @bhms/validation
+apps/web â†’ @havenspace/ui, @havenspace/api, @havenspace/auth, @havenspace/shared, @havenspace/validation
+apps/api â†’ @havenspace/api, @havenspace/database, @havenspace/auth, @havenspace/shared, @havenspace/validation
 
-packages/api → @bhms/database, @bhms/validation, @bhms/shared
-packages/auth → @bhms/database
-packages/ui → @bhms/shared
-packages/shared → @bhms/database, @bhms/ui, @bhms/validation
+packages/api â†’ @havenspace/database, @havenspace/validation, @havenspace/shared
+packages/auth â†’ @havenspace/database
+packages/ui â†’ @havenspace/shared
+packages/shared â†’ @havenspace/database, @havenspace/ui, @havenspace/validation
 ```
 
 ## Development
@@ -171,3 +171,4 @@ bun run test
 3. Ensure root `package.json` workspaces includes `packages/*`
 4. Update `turbo.json` if needed
 5. Add to relevant app dependencies
+

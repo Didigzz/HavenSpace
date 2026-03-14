@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "../../primitives/card";
 import { Badge } from "../../primitives/badge";
 import { Users, DoorOpen } from "lucide-react";
-import { formatCurrency } from "@bhms/shared";
+import { formatCurrency } from "@havenspace/shared";
 
 interface RoomCardProps {
   room: {

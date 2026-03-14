@@ -1,4 +1,4 @@
-# @bhms/validation
+﻿# @havenspace/validation
 
 Zod validation schemas for the Haven Space platform.
 
@@ -10,7 +10,7 @@ Centralized validation schemas using Zod for type-safe input/output validation a
 
 ```bash
 # Already available as workspace dependency
-import { userSchemas, roomSchemas, ... } from '@bhms/validation';
+import { userSchemas, roomSchemas, ... } from '@havenspace/validation';
 ```
 
 ## Usage
@@ -18,7 +18,7 @@ import { userSchemas, roomSchemas, ... } from '@bhms/validation';
 ### Schema Validation
 
 ```typescript
-import { userSchemas } from '@bhms/validation';
+import { userSchemas } from '@havenspace/validation';
 
 // Parse and validate
 const user = userSchemas.create.parse(inputData);
@@ -36,7 +36,7 @@ type CreateUserInput = z.infer<typeof userSchemas.create>;
 ### Common Schemas
 
 ```typescript
-import { commonSchemas } from '@bhms/validation';
+import { commonSchemas } from '@havenspace/validation';
 
 // Email validation
 commonSchemas.email.parse('user@example.com');
@@ -56,7 +56,7 @@ commonSchemas.pagination.parse({ page: 1, limit: 10 });
 ### User Schemas
 
 ```typescript
-import { userSchemas } from '@bhms/validation';
+import { userSchemas } from '@havenspace/validation';
 
 userSchemas.create;      // Create new user
 userSchemas.update;      // Update existing user
@@ -68,7 +68,7 @@ userSchemas.changePassword;
 ### Property Schemas
 
 ```typescript
-import { propertySchemas } from '@bhms/validation';
+import { propertySchemas } from '@havenspace/validation';
 
 propertySchemas.create;
 propertySchemas.update;
@@ -79,7 +79,7 @@ propertySchemas.location;
 ### Room Schemas
 
 ```typescript
-import { roomSchemas } from '@bhms/validation';
+import { roomSchemas } from '@havenspace/validation';
 
 roomSchemas.create;
 roomSchemas.update;
@@ -90,7 +90,7 @@ roomSchemas.amenities;
 ### Booking Schemas
 
 ```typescript
-import { bookingSchemas } from '@bhms/validation';
+import { bookingSchemas } from '@havenspace/validation';
 
 bookingSchemas.create;
 bookingSchemas.update;
@@ -101,7 +101,7 @@ bookingSchemas.dateRange;
 ### Payment Schemas
 
 ```typescript
-import { paymentSchemas } from '@bhms/validation';
+import { paymentSchemas } from '@havenspace/validation';
 
 paymentSchemas.create;
 paymentSchemas.update;
@@ -112,7 +112,7 @@ paymentSchemas.amount;
 ### Boarder Schemas
 
 ```typescript
-import { boarderSchemas } from '@bhms/validation';
+import { boarderSchemas } from '@havenspace/validation';
 
 boarderSchemas.create;
 boarderSchemas.update;
@@ -124,7 +124,7 @@ boarderSchemas.emergencyContact;
 All schemas export inferred TypeScript types:
 
 ```typescript
-import { userSchemas, type UserCreateInput, type UserUpdateInput } from '@bhms/validation';
+import { userSchemas, type UserCreateInput, type UserUpdateInput } from '@havenspace/validation';
 
 // Use inferred types
 const createUser = (data: UserCreateInput) => {
@@ -138,7 +138,7 @@ type LoginInput = z.infer<typeof userSchemas.login>;
 ## Custom Error Messages
 
 ```typescript
-import { userSchemas } from '@bhms/validation';
+import { userSchemas } from '@havenspace/validation';
 
 try {
   userSchemas.create.parse(invalidData);
@@ -163,7 +163,7 @@ try {
 
 ```typescript
 import { z } from 'zod';
-import { commonSchemas } from '@bhms/validation';
+import { commonSchemas } from '@havenspace/validation';
 
 const customSchema = z.object({
   email: commonSchemas.email,
@@ -174,7 +174,8 @@ const customSchema = z.object({
 
 ## Related Packages
 
-- `@bhms/api` - Input validation for tRPC procedures
-- `@bhms/shared` - Shared validation utilities
-- `@bhms/database` - Schema matches Prisma types
-- `@bhms/ui` - Form validation with React Hook Form
+- `@havenspace/api` - Input validation for tRPC procedures
+- `@havenspace/shared` - Shared validation utilities
+- `@havenspace/database` - Schema matches Prisma types
+- `@havenspace/ui` - Form validation with React Hook Form
+

@@ -14,17 +14,17 @@ import {
   TrendingUp,
   Users,
 } from "lucide-react";
-import { Button } from "@bhms/ui";
-import { Input } from "@bhms/ui";
-import { Badge } from "@bhms/ui";
-import { Progress } from "@bhms/ui";
+import { Button } from "@havenspace/ui";
+import { Input } from "@havenspace/ui";
+import { Badge } from "@havenspace/ui";
+import { Progress } from "@havenspace/ui";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@bhms/ui";
+} from "@havenspace/ui";
 import {
   DropdownMenu,
   DropdownMenuContent,

@@ -16,9 +16,9 @@ import {
   MapPin,
   Bell,
 } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@bhms/ui";
-import { Button } from "@bhms/ui";
-import { Badge } from "@bhms/ui";
+import { Card, CardContent, CardHeader, CardTitle } from "@havenspace/ui";
+import { Button } from "@havenspace/ui";
+import { Badge } from "@havenspace/ui";
 import { formatCurrency } from "@/lib/utils";
 
 // Mock data
@@ -123,7 +123,7 @@ const recentMessages = [
   {
     id: "3",
     from: "Support Team",
-    message: "Welcome to BHMS! Let us know if you need help.",
+    message: "Welcome to Haven Space! Let us know if you need help.",
     time: "1 day ago",
     unread: false,
   },

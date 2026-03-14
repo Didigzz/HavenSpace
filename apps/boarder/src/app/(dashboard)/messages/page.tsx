@@ -17,11 +17,11 @@ import {
   Check,
   CheckCheck,
 } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@bhms/ui";
-import { Button } from "@bhms/ui";
-import { Input } from "@bhms/ui";
-import { Badge } from "@bhms/ui";
-import { Separator } from "@bhms/ui";
+import { Card, CardContent, CardHeader, CardTitle } from "@havenspace/ui";
+import { Button } from "@havenspace/ui";
+import { Input } from "@havenspace/ui";
+import { Badge } from "@havenspace/ui";
+import { Separator } from "@havenspace/ui";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -57,10 +57,10 @@ const mockConversations = [
   },
   {
     id: "3",
-    name: "BHMS Support",
+    name: "Haven Space Support",
     property: "Customer Support",
     avatar: "/avatars/support.jpg",
-    lastMessage: "Welcome to BHMS! Let us know if you need any help.",
+    lastMessage: "Welcome to Haven Space! Let us know if you need any help.",
     timestamp: new Date(Date.now() - 24 * 60 * 60 * 1000),
     unread: 0,
     online: false,
@@ -159,7 +159,7 @@ const mockMessages: Record<string, Array<{
     {
       id: "m1",
       senderId: "landlord",
-      content: "Welcome to BHMS! Let us know if you need any help.",
+      content: "Welcome to Haven Space! Let us know if you need any help.",
       timestamp: new Date(Date.now() - 24 * 60 * 60 * 1000),
       status: "read",
     },

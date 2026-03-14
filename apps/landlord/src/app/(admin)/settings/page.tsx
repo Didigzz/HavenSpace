@@ -10,27 +10,27 @@ import {
   Mail,
   Key,
 } from "lucide-react";
-import { Button } from "@bhms/ui";
-import { Input } from "@bhms/ui";
-import { Label } from "@bhms/ui";
-import { Switch } from "@bhms/ui";
+import { Button } from "@havenspace/ui";
+import { Input } from "@havenspace/ui";
+import { Label } from "@havenspace/ui";
+import { Switch } from "@havenspace/ui";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@bhms/ui";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@bhms/ui";
+} from "@havenspace/ui";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@havenspace/ui";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@bhms/ui";
-import { Separator } from "@bhms/ui";
-import { useToast } from "@bhms/ui";
+} from "@havenspace/ui";
+import { Separator } from "@havenspace/ui";
+import { useToast } from "@havenspace/ui";
 
 export default function SettingsPage() {
   const { toast } = useToast();
@@ -81,7 +81,7 @@ export default function SettingsPage() {
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
                   <Label htmlFor="orgName">Organization Name</Label>
-                  <Input id="orgName" defaultValue="BHMS Administration" />
+                  <Input id="orgName" defaultValue="Haven Space Administration" />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="orgEmail">Organization Email</Label>

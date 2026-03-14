@@ -1,5 +1,5 @@
 {
-  "name": "@bhms/ui",
+  "name": "@havenspace/ui",
   "version": "0.0.0",
   "private": true,
   "main": "./src/index.ts",
@@ -15,8 +15,8 @@
     "test:coverage": "vitest --coverage"
   },
   "dependencies": {
-    "@bhms/config": "workspace:*",
-    "@bhms/shared": "workspace:*",
+    "@havenspace/config": "workspace:*",
+    "@havenspace/shared": "workspace:*",
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-avatar": "^1.0.4",
     "@radix-ui/react-dialog": "^1.0.5",
@@ -41,7 +41,7 @@
     "tailwind-merge": "^2.5.4"
   },
   "devDependencies": {
-    "@bhms/typescript-config": "workspace:*",
+    "@havenspace/typescript-config": "workspace:*",
     "@testing-library/jest-dom": "^6.1.5",
     "@testing-library/react": "^14.1.2",
     "@types/node": "^22.0.0",

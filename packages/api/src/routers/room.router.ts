@@ -1,23 +1,42 @@
 import { z } from "zod";
 import { createTRPCRouter } from "../trpc";
-import { 
-  createRoomSchema, 
+import {
+  createRoomSchema,
   updateRoomSchema,
   RoomStatusEnum
-} from "@bhms/validation";
+} from "@havenspace/validation";
+import type { TRPCContext, HavenSession, ProtectedTRPCContext } from "../types/index";
+
+// Type helpers
+interface AuthenticatedCtx<TInput = unknown> {
+  ctx: ProtectedTRPCContext;
+  input: TInput;
+}
+
+type GetAllInput = z.infer<typeof getAllRoomsSchema>;
+type GetByIdInput = z.infer<typeof getRoomByIdSchema>;
+type CreateRoomInput = z.infer<typeof createRoomSchema>;
+type UpdateRoomInput = z.infer<typeof updateRoomSchema>;
+type DeleteRoomInput = z.infer<typeof deleteRoomSchema>;
+
+const getAllRoomsSchema = z.object({
+  status: RoomStatusEnum.optional(),
+  search: z.string().optional(),
+});
+
+const getRoomByIdSchema = z.object({
+  id: z.string(),
+});
+
+const deleteRoomSchema = z.object({
+  id: z.string(),
+});
 
 export const createRoomRouter = (protectedProcedure: any) => {
   return createTRPCRouter({
     getAll: protectedProcedure
-      .input(
-        z
-          .object({
-            status: RoomStatusEnum.optional(),
-            search: z.string().optional(),
-          })
-          .optional()
-      )
-      .query(async ({ ctx, input }: any) => {
+      .input(getAllRoomsSchema.optional())
+      .query(async ({ ctx, input }: AuthenticatedCtx) => {
         return ctx.db.room.findMany({
           where: {
             status: input?.status,
@@ -39,8 +58,8 @@ export const createRoomRouter = (protectedProcedure: any) => {
       }),
 
     getById: protectedProcedure
-      .input(z.object({ id: z.string() }))
-      .query(async ({ ctx, input }: any) => {
+      .input(getRoomByIdSchema)
+      .query(async ({ ctx, input }: AuthenticatedCtx) => {
         return ctx.db.room.findUnique({
           where: { id: input.id },
           include: {
@@ -55,7 +74,7 @@ export const createRoomRouter = (protectedProcedure: any) => {
 
     create: protectedProcedure
       .input(createRoomSchema)
-      .mutation(async ({ ctx, input }: any) => {
+      .mutation(async ({ ctx, input }: AuthenticatedCtx) => {
         return ctx.db.room.create({
           data: input,
         });
@@ -63,7 +82,7 @@ export const createRoomRouter = (protectedProcedure: any) => {
 
     update: protectedProcedure
       .input(updateRoomSchema)
-      .mutation(async ({ ctx, input }: any) => {
+      .mutation(async ({ ctx, input }: AuthenticatedCtx) => {
         const { id, ...data } = input;
         return ctx.db.room.update({
           where: { id },
@@ -72,14 +91,14 @@ export const createRoomRouter = (protectedProcedure: any) => {
       }),
 
     delete: protectedProcedure
-      .input(z.object({ id: z.string() }))
-      .mutation(async ({ ctx, input }: any) => {
+      .input(deleteRoomSchema)
+      .mutation(async ({ ctx, input }: AuthenticatedCtx) => {
         return ctx.db.room.delete({
           where: { id: input.id },
         });
       }),
 
-    getStats: protectedProcedure.query(async ({ ctx }: any) => {
+    getStats: protectedProcedure.query(async ({ ctx }: AuthenticatedCtx) => {
       const [total, available, occupied, maintenance] = await Promise.all([
         ctx.db.room.count(),
         ctx.db.room.count({ where: { status: "AVAILABLE" } }),

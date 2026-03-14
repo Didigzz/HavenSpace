@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import * as React from "react";
 import {
@@ -32,7 +32,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@bhms/ui";
+} from "@havenspace/ui";
 import { cn, formatCurrency, formatNumber } from "@/lib/utils";
 import {
   AreaChart,

@@ -18,7 +18,7 @@ import {
   HelpCircle,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { Button } from "@bhms/ui";
+import { Button } from "@havenspace/ui";
 import {
   Collapsible,
   CollapsibleContent,

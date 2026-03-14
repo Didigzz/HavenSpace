@@ -1,5 +1,5 @@
 {
-  "name": "@bhms/boarder",
+  "name": "@havenspace/boarder",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,10 +10,10 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@bhms/database": "workspace:*",
-    "@bhms/shared": "workspace:*",
-    "@bhms/ui": "workspace:*",
-    "@bhms/validation": "workspace:*",
+    "@havenspace/database": "workspace:*",
+    "@havenspace/shared": "workspace:*",
+    "@havenspace/ui": "workspace:*",
+    "@havenspace/validation": "workspace:*",
     "@hookform/resolvers": "^5.2.2",
     "@radix-ui/react-avatar": "^1.0.4",
     "@radix-ui/react-collapsible": "^1.0.3",
@@ -44,7 +44,7 @@
     "zustand": "^4.4.7"
   },
   "devDependencies": {
-    "@bhms/eslint-config": "workspace:*",
+    "@havenspace/eslint-config": "workspace:*",
     "@types/node": "^20.10.0",
     "@types/react": "^18.3.0",
     "@types/react-dom": "^18.3.0",

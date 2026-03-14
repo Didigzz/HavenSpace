@@ -5,15 +5,25 @@ import {
   registerSchema,
   updateUserSchema,
   changePasswordSchema
-} from "@bhms/validation";
+} from "@havenspace/validation";
 import bcrypt from "bcryptjs";
 import { TRPCError } from "@trpc/server";
+import type { TRPCContext, HavenSession } from "../types";
+
+// Type helpers
+type UserCreateInput = z.infer<typeof registerSchema>;
+type LoginInput = z.infer<typeof loginSchema>;
+type ChangePasswordInput = z.infer<typeof changePasswordSchema>;
+
+interface AuthenticatedCtx {
+  ctx: TRPCContext & { session: HavenSession };
+}
 
 export const createUserRouter = (protectedProcedure: any) => {
   return createTRPCRouter({
     login: publicProcedure
       .input(loginSchema)
-      .mutation(async ({ ctx, input }: any) => {
+      .mutation(async ({ ctx, input }: { ctx: TRPCContext; input: LoginInput }) => {
         const user = await ctx.db.user.findUnique({
           where: { email: input.email },
         });
@@ -36,11 +46,11 @@ export const createUserRouter = (protectedProcedure: any) => {
 
         // Return user data without password
         const { password, ...userWithoutPassword } = user;
-        
+
         // Generate a simple token (in production, use JWT)
-        const token = Buffer.from(JSON.stringify({ 
-          userId: user.id, 
-          email: user.email 
+        const token = Buffer.from(JSON.stringify({
+          userId: user.id,
+          email: user.email
         })).toString('base64');
 
         return {
@@ -51,7 +61,7 @@ export const createUserRouter = (protectedProcedure: any) => {
 
     register: publicProcedure
       .input(registerSchema)
-      .mutation(async ({ ctx, input }: any) => {
+      .mutation(async ({ ctx, input }: { ctx: TRPCContext; input: UserCreateInput }) => {
         const existingUser = await ctx.db.user.findUnique({
           where: { email: input.email },
         });
@@ -75,9 +85,9 @@ export const createUserRouter = (protectedProcedure: any) => {
         });
 
         // Generate token for newly registered user
-        const token = Buffer.from(JSON.stringify({ 
-          userId: user.id, 
-          email: user.email 
+        const token = Buffer.from(JSON.stringify({
+          userId: user.id,
+          email: user.email
         })).toString('base64');
 
         return {
@@ -86,7 +96,7 @@ export const createUserRouter = (protectedProcedure: any) => {
         };
       }),
 
-    getProfile: protectedProcedure.query(async ({ ctx }: any) => {
+    getProfile: protectedProcedure.query(async ({ ctx }: AuthenticatedCtx) => {
       return ctx.db.user.findUnique({
         where: { id: ctx.session.user.id },
         select: {
@@ -107,7 +117,7 @@ export const createUserRouter = (protectedProcedure: any) => {
           image: z.string().optional(),
         })
       )
-      .mutation(async ({ ctx, input }: any) => {
+      .mutation(async ({ ctx, input }: AuthenticatedCtx) => {
         return ctx.db.user.update({
           where: { id: ctx.session.user.id },
           data: input,
@@ -116,7 +126,7 @@ export const createUserRouter = (protectedProcedure: any) => {
 
     changePassword: protectedProcedure
       .input(changePasswordSchema)
-      .mutation(async ({ ctx, input }: any) => {
+      .mutation(async ({ ctx, input }: { ctx: TRPCContext & { session: HavenSession }; input: ChangePasswordInput }) => {
         const user = await ctx.db.user.findUnique({
           where: { id: ctx.session.user.id },
         });

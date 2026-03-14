@@ -4,7 +4,7 @@ import { useState } from "react";
 import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from "next-themes";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Toaster } from "@bhms/ui";
+import { Toaster } from "@havenspace/ui";
 
 export interface AppProvidersProps {
   children: React.ReactNode;

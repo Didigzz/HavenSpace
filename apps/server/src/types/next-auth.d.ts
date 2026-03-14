@@ -1,2 +1,2 @@
-// Import NextAuth type extensions from @bhms/auth
-import "@bhms/auth/types";
+// Import NextAuth type extensions from @havenspace/auth
+import "@havenspace/auth/types";

@@ -1,28 +1,53 @@
 import { z } from "zod";
 import { createTRPCRouter } from "../trpc";
-import { 
-  createPaymentSchema, 
+import {
+  createPaymentSchema,
   updatePaymentSchema,
   markPaymentPaidSchema,
   PaymentStatusEnum,
   PaymentTypeEnum
-} from "@bhms/validation";
+} from "@havenspace/validation";
+import type { TRPCContext, HavenSession, ProtectedTRPCContext } from "../types/index";
+
+// Type helpers
+interface AuthenticatedCtx<TInput = unknown> {
+  ctx: ProtectedTRPCContext;
+  input: TInput;
+}
+
+type GetAllInput = z.infer<typeof getAllPaymentsSchema>;
+type GetByIdInput = z.infer<typeof getPaymentByIdSchema>;
+type CreatePaymentInput = z.infer<typeof createPaymentSchema>;
+type UpdatePaymentInput = z.infer<typeof updatePaymentSchema>;
+type MarkAsPaidInput = z.infer<typeof markPaymentPaidSchema>;
+type DeletePaymentInput = z.infer<typeof deletePaymentSchema>;
+type GetMonthlyRevenueInput = z.infer<typeof getMonthlyRevenueSchema>;
+
+const getAllPaymentsSchema = z.object({
+  status: PaymentStatusEnum.optional(),
+  type: PaymentTypeEnum.optional(),
+  boarderId: z.string().optional(),
+  startDate: z.date().optional(),
+  endDate: z.date().optional(),
+});
+
+const getPaymentByIdSchema = z.object({
+  id: z.string(),
+});
+
+const deletePaymentSchema = z.object({
+  id: z.string(),
+});
+
+const getMonthlyRevenueSchema = z.object({
+  year: z.number().optional(),
+});
 
 export const createPaymentRouter = (protectedProcedure: any) => {
   return createTRPCRouter({
     getAll: protectedProcedure
-      .input(
-        z
-          .object({
-            status: PaymentStatusEnum.optional(),
-            type: PaymentTypeEnum.optional(),
-            boarderId: z.string().optional(),
-            startDate: z.date().optional(),
-            endDate: z.date().optional(),
-          })
-          .optional()
-      )
-      .query(async ({ ctx, input }: any) => {
+      .input(getAllPaymentsSchema.optional())
+      .query(async ({ ctx, input }: AuthenticatedCtx) => {
         return ctx.db.payment.findMany({
           where: {
             status: input?.status,
@@ -48,8 +73,8 @@ export const createPaymentRouter = (protectedProcedure: any) => {
       }),
 
     getById: protectedProcedure
-      .input(z.object({ id: z.string() }))
-      .query(async ({ ctx, input }: any) => {
+      .input(getPaymentByIdSchema)
+      .query(async ({ ctx, input }: AuthenticatedCtx) => {
         return ctx.db.payment.findUnique({
           where: { id: input.id },
           include: {
@@ -62,7 +87,7 @@ export const createPaymentRouter = (protectedProcedure: any) => {
 
     create: protectedProcedure
       .input(createPaymentSchema)
-      .mutation(async ({ ctx, input }: any) => {
+      .mutation(async ({ ctx, input }: AuthenticatedCtx) => {
         return ctx.db.payment.create({
           data: input,
         });
@@ -70,7 +95,7 @@ export const createPaymentRouter = (protectedProcedure: any) => {
 
     update: protectedProcedure
       .input(updatePaymentSchema)
-      .mutation(async ({ ctx, input }: any) => {
+      .mutation(async ({ ctx, input }: AuthenticatedCtx) => {
         const { id, ...data } = input;
         return ctx.db.payment.update({
           where: { id },
@@ -79,10 +104,10 @@ export const createPaymentRouter = (protectedProcedure: any) => {
       }),
 
     markAsPaid: protectedProcedure
-      .input(z.object({ id: z.string() }))
-      .mutation(async ({ ctx, input }: any) => {
+      .input(markPaymentPaidSchema)
+      .mutation(async ({ ctx, input }: AuthenticatedCtx) => {
         const receiptNumber = `RCP-${new Date().getFullYear()}-${Date.now().toString(36).toUpperCase()}`;
-        
+
         return ctx.db.payment.update({
           where: { id: input.id },
           data: {
@@ -94,14 +119,14 @@ export const createPaymentRouter = (protectedProcedure: any) => {
       }),
 
     delete: protectedProcedure
-      .input(z.object({ id: z.string() }))
-      .mutation(async ({ ctx, input }: any) => {
+      .input(deletePaymentSchema)
+      .mutation(async ({ ctx, input }: AuthenticatedCtx) => {
         return ctx.db.payment.delete({
           where: { id: input.id },
         });
       }),
 
-    getStats: protectedProcedure.query(async ({ ctx }: any) => {
+    getStats: protectedProcedure.query(async ({ ctx }: AuthenticatedCtx) => {
       const [totalPending, totalPaid, totalOverdue] = await Promise.all([
         ctx.db.payment.aggregate({
           where: { status: "PENDING" },
@@ -137,8 +162,8 @@ export const createPaymentRouter = (protectedProcedure: any) => {
     }),
 
     getMonthlyRevenue: protectedProcedure
-      .input(z.object({ year: z.number().optional() }))
-      .query(async ({ ctx, input }: any) => {
+      .input(getMonthlyRevenueSchema)
+      .query(async ({ ctx, input }: AuthenticatedCtx) => {
         const year = input?.year ?? new Date().getFullYear();
         const payments = await ctx.db.payment.findMany({
           where: {
@@ -157,9 +182,9 @@ export const createPaymentRouter = (protectedProcedure: any) => {
         const monthlyData = Array.from({ length: 12 }, (_, i) => ({
           month: new Date(year, i).toLocaleString("default", { month: "short" }),
           revenue: 0,
-        }));
+        })) as Array<{ month: string; revenue: number }>;
 
-        payments.forEach((payment: any) => {
+        payments.forEach((payment) => {
           if (payment.paidDate) {
             const month = payment.paidDate.getMonth();
             const monthData = monthlyData[month];

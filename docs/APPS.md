@@ -59,7 +59,7 @@ bun run test
 bun run test:coverage
 
 # Test specific package
-bun --filter @bhms/ui test
+bun --filter @havenspace/ui test
 ```
 
 ---

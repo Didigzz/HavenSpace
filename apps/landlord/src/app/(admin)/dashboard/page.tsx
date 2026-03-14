@@ -17,7 +17,7 @@ import {
   RevenueChart,
   OccupancyChart,
 } from "@/components/dashboard";
-import { Skeleton, Button, Badge, Card, CardContent, CardHeader, CardTitle, CardDescription } from "@bhms/ui";
+import { Skeleton, Button, Badge, Card, CardContent, CardHeader, CardTitle, CardDescription } from "@havenspace/ui";
 
 export default function DashboardPage() {
   const { currentProperty, isLoading } = useProperty();

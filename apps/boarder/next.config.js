@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  transpilePackages: ["@bhms/ui", "@bhms/shared", "@bhms/validation"],
+  transpilePackages: ["@havenspace/ui", "@havenspace/shared", "@havenspace/validation"],
   output: 'standalone',
   images: {
     remotePatterns: [

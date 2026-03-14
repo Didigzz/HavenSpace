@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import * as React from "react";
 import { useState } from "react";
@@ -15,16 +15,16 @@ import {
   Filter,
   Download,
 } from "lucide-react";
-import { Button } from "@bhms/ui";
-import { Input } from "@bhms/ui";
-import { Badge } from "@bhms/ui";
+import { Button } from "@havenspace/ui";
+import { Input } from "@havenspace/ui";
+import { Badge } from "@havenspace/ui";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@bhms/ui";
+} from "@havenspace/ui";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -39,7 +39,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@bhms/ui";
+} from "@havenspace/ui";
 import {
   Dialog,
   DialogContent,
@@ -48,12 +48,12 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@bhms/ui";
-import { Label } from "@bhms/ui";
+} from "@havenspace/ui";
+import { Label } from "@havenspace/ui";
 import { useProperty } from "@/lib/property-context";
 import { getExpensesByProperty, mockExpenses, type MockExpense } from "@/lib/mock-data";
 import { formatCurrency, formatDate, cn } from "@/lib/utils";
-import { useToast } from "@bhms/ui";
+import { useToast } from "@havenspace/ui";
 
 const categoryColors: Record<string, string> = {
   UTILITIES: "bg-blue-100 text-blue-800",

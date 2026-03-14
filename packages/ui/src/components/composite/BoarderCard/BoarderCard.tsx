@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "../../primitives/card"
 import { Badge } from "../../primitives/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "../../primitives/avatar";
 import { Phone, Mail, DoorOpen } from "lucide-react";
-import { formatDate } from "@bhms/shared";
+import { formatDate } from "@havenspace/shared";
 
 interface BoarderCardProps {
   boarder: {

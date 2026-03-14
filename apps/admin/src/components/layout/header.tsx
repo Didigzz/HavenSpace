@@ -1,9 +1,9 @@
-"use client";
+﻿"use client";
 
 import * as React from "react";
 import { Bell, Search, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
-import { Button, Input } from "@bhms/ui";
+import { Button, Input } from "@havenspace/ui";
 import {
   DropdownMenu,
   DropdownMenuContent,

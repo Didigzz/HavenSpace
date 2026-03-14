@@ -1,5 +1,5 @@
 {
-  "name": "@bhms/shared",
+  "name": "@havenspace/shared",
   "version": "0.0.1",
   "private": true,
   "main": "./src/index.ts",
@@ -17,8 +17,8 @@
     "lint": "eslint src/ --no-error-on-unmatched-pattern"
   },
   "dependencies": {
-    "@bhms/database": "workspace:*",
-    "@bhms/validation": "workspace:*",
+    "@havenspace/database": "workspace:*",
+    "@havenspace/validation": "workspace:*",
     "@prisma/client": "^7.4.2",
     "@radix-ui/react-toast": "^1.1.5",
     "@tanstack/react-query": "^5.90.16",
@@ -33,7 +33,7 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "@bhms/typescript-config": "workspace:*",
+    "@havenspace/typescript-config": "workspace:*",
     "@types/node": "^20.11.5",
     "@types/react": "^18.3.0",
     "@typescript-eslint/eslint-plugin": "^8.56.1",

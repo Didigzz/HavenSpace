@@ -51,7 +51,7 @@ const mockProperties: Property[] = [
 
 function getInitialProperty(): Property | null {
   if (typeof window === "undefined") return null;
-  const savedPropertyId = localStorage.getItem("bhms-current-property");
+  const savedPropertyId = localStorage.getItem("havenspace-current-property");
   if (savedPropertyId) {
     const savedProperty = mockProperties.find((p) => p.id === savedPropertyId);
     return savedProperty || mockProperties[0];
@@ -75,7 +75,7 @@ export function PropertyProvider({ children }: { children: React.ReactNode }) {
 
   const setCurrentProperty = useCallback((property: Property) => {
     setCurrentPropertyState(property);
-    localStorage.setItem("bhms-current-property", property.id);
+    localStorage.setItem("havenspace-current-property", property.id);
   }, []);
 
   return (

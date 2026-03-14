@@ -1,6 +1,42 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "../trpc";
 import { TRPCError } from "@trpc/server";
+import type { TRPCContext, HavenSession, LandlordTRPCContext } from "../types/index";
+import {
+  createPropertySchema,
+  updatePropertySchema,
+  propertyFilterSchema,
+} from "@havenspace/validation";
+
+// Type helpers
+interface LandlordCtx<TInput = unknown> {
+  ctx: LandlordTRPCContext;
+  input: TInput;
+}
+
+type GetAllInput = z.infer<typeof propertyFilterSchema> & {
+  page?: number;
+  limit?: number;
+};
+
+type GetByIdInput = z.infer<typeof getPropertyByIdSchema>;
+type GetMyPropertiesInput = void;
+type CreatePropertyInput = z.infer<typeof createPropertySchema>;
+type UpdatePropertyInput = z.infer<typeof updatePropertySchema>;
+type DeletePropertyInput = z.infer<typeof deletePropertySchema>;
+
+const getPropertyByIdSchema = z.object({
+  id: z.string(),
+});
+
+const getAllInputSchema = propertyFilterSchema.extend({
+  page: z.number().min(1).default(1),
+  limit: z.number().min(1).max(50).default(12),
+});
+
+const deletePropertySchema = z.object({
+  id: z.string(),
+});
 
 /**
  * Property router for managing boarding house properties
@@ -15,38 +51,41 @@ export const createPropertyRouter = (
   return createTRPCRouter({
     // Get all properties (public - for browsing)
     getAll: publicProcedure
-      .input(
-        z.object({
-          page: z.number().min(1).default(1),
-          limit: z.number().min(1).max(50).default(12),
-          search: z.string().optional(),
-          minPrice: z.number().optional(),
-          maxPrice: z.number().optional(),
-          amenities: z.array(z.string()).optional(),
-          city: z.string().optional(),
-        })
-      )
-      .query(async ({ ctx, input }: any) => {
-        const { page, limit, search, minPrice, maxPrice, amenities, city } =
+      .input(getAllInputSchema)
+      .query(async ({ ctx, input }: { ctx: TRPCContext; input: GetAllInput }) => {
+        const { page, limit, query, city, priceMin, priceMax, amenities, availableOnly, isPublished } =
           input;
         const skip = (page - 1) * limit;
 
-        const where: any = {
+        const where: {
+          isActive: boolean;
+          OR?: Array<{
+            name?: { contains: string; mode: "insensitive" };
+            description?: { contains: string; mode: "insensitive" };
+            address?: { contains: string; mode: "insensitive" };
+          }>;
+          price?: {
+            gte?: number;
+            lte?: number;
+          };
+          city?: { equals: string; mode: "insensitive" };
+          amenities?: { hasEvery: string[] };
+        } = {
           isActive: true,
         };
 
-        if (search) {
+        if (query) {
           where.OR = [
-            { name: { contains: search, mode: "insensitive" } },
-            { description: { contains: search, mode: "insensitive" } },
-            { address: { contains: search, mode: "insensitive" } },
+            { name: { contains: query, mode: "insensitive" } },
+            { description: { contains: query, mode: "insensitive" } },
+            { address: { contains: query, mode: "insensitive" } },
           ];
         }
 
-        if (minPrice !== undefined || maxPrice !== undefined) {
+        if (priceMin !== undefined || priceMax !== undefined) {
           where.price = {};
-          if (minPrice !== undefined) where.price.gte = minPrice;
-          if (maxPrice !== undefined) where.price.lte = maxPrice;
+          if (priceMin !== undefined) where.price.gte = priceMin;
+          if (priceMax !== undefined) where.price.lte = priceMax;
         }
 
         if (city) {
@@ -92,8 +131,8 @@ export const createPropertyRouter = (
 
     // Get single property by ID (public)
     getById: publicProcedure
-      .input(z.object({ id: z.string() }))
-      .query(async ({ ctx, input }) => {
+      .input(getPropertyByIdSchema)
+      .query(async ({ ctx, input }: { ctx: TRPCContext; input: GetByIdInput }) => {
         const property = await ctx.db.property.findUnique({
           where: { id: input.id },
           include: {
@@ -125,7 +164,7 @@ export const createPropertyRouter = (
       }),
 
     // Get landlord's own properties
-    getMyProperties: landlordProc.query(async ({ ctx }: any) => {
+    getMyProperties: landlordProc.query(async ({ ctx }: LandlordCtx) => {
       const landlordProfile = await ctx.db.landlordProfile.findUnique({
         where: { userId: ctx.session.user.id },
       });
@@ -150,24 +189,8 @@ export const createPropertyRouter = (
 
     // Create a new property
     create: landlordProc
-      .input(
-        z.object({
-          name: z.string().min(3),
-          description: z.string().min(20),
-          address: z.string().min(5),
-          city: z.string().min(2),
-          state: z.string().min(2),
-          zipCode: z.string().optional(),
-          latitude: z.number().optional(),
-          longitude: z.number().optional(),
-          price: z.number().min(0),
-          amenities: z.array(z.string()).default([]),
-          images: z.array(z.string()).default([]),
-          totalRooms: z.number().min(1).default(1),
-          availableRooms: z.number().min(0).default(1),
-        })
-      )
-      .mutation(async ({ ctx, input }: any) => {
+      .input(createPropertySchema)
+      .mutation(async ({ ctx, input }: LandlordCtx) => {
         const landlordProfile = await ctx.db.landlordProfile.findUnique({
           where: { userId: ctx.session.user.id },
         });
@@ -189,26 +212,8 @@ export const createPropertyRouter = (
 
     // Update a property
     update: landlordProc
-      .input(
-        z.object({
-          id: z.string(),
-          name: z.string().min(3).optional(),
-          description: z.string().min(20).optional(),
-          address: z.string().min(5).optional(),
-          city: z.string().min(2).optional(),
-          state: z.string().min(2).optional(),
-          zipCode: z.string().optional(),
-          latitude: z.number().optional(),
-          longitude: z.number().optional(),
-          price: z.number().min(0).optional(),
-          amenities: z.array(z.string()).optional(),
-          images: z.array(z.string()).optional(),
-          totalRooms: z.number().min(1).optional(),
-          availableRooms: z.number().min(0).optional(),
-          isActive: z.boolean().optional(),
-        })
-      )
-      .mutation(async ({ ctx, input }: any) => {
+      .input(updatePropertySchema)
+      .mutation(async ({ ctx, input }: LandlordCtx) => {
         const { id, ...data } = input;
 
         const landlordProfile = await ctx.db.landlordProfile.findUnique({
@@ -242,8 +247,8 @@ export const createPropertyRouter = (
 
     // Delete a property
     delete: landlordProc
-      .input(z.object({ id: z.string() }))
-      .mutation(async ({ ctx, input }: any) => {
+      .input(deletePropertySchema)
+      .mutation(async ({ ctx, input }: LandlordCtx) => {
         const landlordProfile = await ctx.db.landlordProfile.findUnique({
           where: { userId: ctx.session.user.id },
         });

@@ -2,7 +2,7 @@ import { Payment } from '../../domain/entities/payment.entity';
 import { PaymentStatus } from '../../domain/value-objects/payment-status.vo';
 import { PaymentType } from '../../domain/value-objects/payment-type.vo';
 import { IPaymentRepository, PaymentFilters, PaymentStats, MonthlyRevenue } from '../../domain/repositories/payment.repository.interface';
-import { PrismaClientType } from '@bhms/database';
+import { PrismaClientType } from '@havenspace/database';
 
 export class PrismaPaymentRepository implements IPaymentRepository {
   constructor(private prisma: PrismaClientType) {}

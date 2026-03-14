@@ -1,8 +1,42 @@
 import { createTRPCRouter } from "../trpc";
+import type { TRPCContext, HavenSession, ProtectedTRPCContext } from "../types/index";
+
+// Type helpers
+interface AuthenticatedCtx<TInput = unknown> {
+  ctx: ProtectedTRPCContext;
+  input: TInput;
+}
+
+// Type definitions for response types
+interface DashboardStats {
+  rooms: {
+    total: number;
+    available: number;
+    occupied: number;
+  };
+  boarders: {
+    total: number;
+    active: number;
+  };
+  payments: {
+    pendingCount: number;
+    pendingAmount: number;
+    paidThisMonth: number;
+  };
+  occupancyRate: number;
+}
+
+interface Activity {
+  id: string;
+  type: "payment" | "boarder";
+  title: string;
+  description: string;
+  date: Date;
+}
 
 export const createDashboardRouter = (protectedProcedure: any) => {
   return createTRPCRouter({
-    getStats: protectedProcedure.query(async ({ ctx }: any) => {
+    getStats: protectedProcedure.query(async ({ ctx }: AuthenticatedCtx): Promise<DashboardStats> => {
       const [
         totalRooms,
         availableRooms,
@@ -55,7 +89,7 @@ export const createDashboardRouter = (protectedProcedure: any) => {
       };
     }),
 
-    getRecentActivity: protectedProcedure.query(async ({ ctx }: any) => {
+    getRecentActivity: protectedProcedure.query(async ({ ctx }: AuthenticatedCtx): Promise<Activity[]> => {
       const [recentPayments, recentBoarders] = await Promise.all([
         ctx.db.payment.findMany({
           take: 5,
@@ -77,15 +111,15 @@ export const createDashboardRouter = (protectedProcedure: any) => {
         }),
       ]);
 
-      const activities = [
-        ...recentPayments.map((p: any) => ({
+      const activities: Activity[] = [
+        ...recentPayments.map((p) => ({
           id: p.id,
           type: "payment" as const,
           title: `Payment ${p.status.toLowerCase()}`,
           description: `${p.boarder.firstName} ${p.boarder.lastName} - ₱${p.amount.toNumber().toLocaleString()}`,
           date: p.createdAt,
         })),
-        ...recentBoarders.map((b: any) => ({
+        ...recentBoarders.map((b) => ({
           id: b.id,
           type: "boarder" as const,
           title: "New boarder",
@@ -97,7 +131,7 @@ export const createDashboardRouter = (protectedProcedure: any) => {
       return activities.slice(0, 10);
     }),
 
-    getUpcomingPayments: protectedProcedure.query(async ({ ctx }: any) => {
+    getUpcomingPayments: protectedProcedure.query(async ({ ctx }: AuthenticatedCtx) => {
       const nextWeek = new Date();
       nextWeek.setDate(nextWeek.getDate() + 7);
 

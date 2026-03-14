@@ -1,7 +1,7 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import { AppProviders } from "@bhms/providers";
+import { AppProviders } from "@havenspace/providers";
 
 export interface DashboardLayoutProps {
   children: React.ReactNode;

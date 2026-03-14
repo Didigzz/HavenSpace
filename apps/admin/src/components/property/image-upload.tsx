@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import * as React from "react";
 import { useCallback, useState } from "react";
@@ -11,14 +11,14 @@ import {
   GripVertical,
   Loader2,
 } from "lucide-react";
-import { Button } from "@bhms/ui";
+import { Button } from "@havenspace/ui";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@bhms/ui";
+} from "@havenspace/ui";
 import { cn } from "@/lib/utils";
 import type { PropertyImage } from "@/types";
 

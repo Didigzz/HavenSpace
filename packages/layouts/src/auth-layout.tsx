@@ -1,6 +1,6 @@
 "use client";
 
-import { AppProviders } from "@bhms/providers";
+import { AppProviders } from "@havenspace/providers";
 
 export interface AuthLayoutProps {
   children: React.ReactNode;

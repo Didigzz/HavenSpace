@@ -1,10 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  transpilePackages: ["@bhms/ui", "@bhms/shared", "@bhms/validation"],
+  transpilePackages: ["@havenspace/ui", "@havenspace/shared", "@havenspace/validation"],
   output: 'standalone',
   experimental: {
-    optimizePackageImports: ["@bhms/ui", "lucide-react", "recharts"],
+    optimizePackageImports: ["@havenspace/ui", "lucide-react", "recharts"],
   },
 };
 

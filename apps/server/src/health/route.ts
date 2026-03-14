@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { db } from '@bhms/database';
+import { db } from '@havenspace/database';
 
 export const dynamic = 'force-dynamic';
 
@@ -18,7 +18,7 @@ export async function GET() {
     status: 'healthy',
     timestamp: new Date().toISOString(),
     app: {
-      name: '@bhms/api-server',
+      name: '@havenspace/api-server',
       version: process.env.npm_package_version || '1.0.0',
       environment: process.env.NODE_ENV || 'development',
     },

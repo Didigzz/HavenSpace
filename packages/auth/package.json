@@ -1,5 +1,5 @@
 {
-  "name": "@bhms/auth",
+  "name": "@havenspace/auth",
   "version": "0.0.0",
   "private": true,
   "main": "./src/index.ts",
@@ -17,15 +17,16 @@
   },
   "dependencies": {
     "@auth/core": "^0.34.0",
-    "@bhms/config": "workspace:*",
-    "@bhms/database": "workspace:*",
+    "@havenspace/api": "workspace:*",
+    "@havenspace/config": "workspace:*",
+    "@havenspace/database": "workspace:*",
     "@trpc/server": "^10.45.2",
     "bcryptjs": "^3.0.3",
     "next-auth": "5.0.0-beta.30",
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "@bhms/typescript-config": "workspace:*",
+    "@havenspace/typescript-config": "workspace:*",
     "@eslint/js": "^9.0.0",
     "@types/bcryptjs": "^2.4.6",
     "@types/node": "^20.10.0",

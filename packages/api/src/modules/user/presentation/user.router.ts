@@ -4,7 +4,7 @@ import { ORPCError } from "@orpc/server";
 import {
   registerSchema,
   changePasswordSchema
-} from "@bhms/validation";
+} from "@havenspace/validation";
 import { PrismaUserRepository } from "../infrastructure/persistence/prisma-user.repository";
 import { UserService } from "../domain/services/user.service";
 import { User } from "../domain/entities/user.entity";

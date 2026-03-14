@@ -1,3 +1,3 @@
-import { handlers } from "@bhms/auth/config";
+import { handlers } from "@havenspace/auth/config";
 
 export const { GET, POST } = handlers;

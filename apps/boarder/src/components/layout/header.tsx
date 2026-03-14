@@ -2,7 +2,7 @@
 
 import { Bell, Moon, Search, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
-import { Button, Input } from "@bhms/ui";
+import { Button, Input } from "@havenspace/ui";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,

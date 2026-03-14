@@ -14,8 +14,8 @@ import {
   Building2,
   Check,
 } from "lucide-react";
-import { Button } from "@bhms/ui";
-import { Input } from "@bhms/ui";
+import { Button } from "@havenspace/ui";
+import { Input } from "@havenspace/ui";
 import {
   DropdownMenu,
   DropdownMenuContent,

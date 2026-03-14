@@ -1,6 +1,61 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "../trpc";
 import { TRPCError } from "@trpc/server";
+import type { TRPCContext, HavenSession, BoarderTRPCContext, LandlordTRPCContext } from "../types/index";
+
+// Type helpers
+interface BoarderCtx<TInput = unknown> {
+  ctx: BoarderTRPCContext;
+  input: TInput;
+}
+
+interface LandlordCtx<TInput = unknown> {
+  ctx: LandlordTRPCContext;
+  input: TInput;
+}
+
+type CreateBookingInput = z.infer<typeof createBookingSchema>;
+type GetMyBookingsInput = z.infer<typeof getMyBookingsSchema>;
+type GetLandlordBookingsInput = z.infer<typeof getLandlordBookingsSchema>;
+type ConfirmBookingInput = z.infer<typeof confirmBookingSchema>;
+type RejectBookingInput = z.infer<typeof rejectBookingSchema>;
+type CancelBookingInput = z.infer<typeof cancelBookingSchema>;
+
+const createBookingSchema = z.object({
+  propertyId: z.string(),
+  checkInDate: z.string().transform((val) => new Date(val)),
+  checkOutDate: z
+    .string()
+    .transform((val) => new Date(val))
+    .optional(),
+  message: z.string().optional(),
+});
+
+const getMyBookingsSchema = z.object({
+  status: z
+    .enum(["PENDING", "CONFIRMED", "ACTIVE", "COMPLETED", "CANCELLED"])
+    .optional(),
+});
+
+const getLandlordBookingsSchema = z.object({
+  propertyId: z.string().optional(),
+  status: z
+    .enum(["PENDING", "CONFIRMED", "ACTIVE", "COMPLETED", "CANCELLED"])
+    .optional(),
+});
+
+const confirmBookingSchema = z.object({
+  bookingId: z.string(),
+});
+
+const rejectBookingSchema = z.object({
+  bookingId: z.string(),
+  reason: z.string().optional(),
+});
+
+const cancelBookingSchema = z.object({
+  bookingId: z.string(),
+});
 
 /**
  * Booking router for managing property bookings
@@ -16,18 +71,8 @@ export const createBookingRouter = (
   return createTRPCRouter({
     // Create a new booking (boarder)
     create: boarderProc
-      .input(
-        z.object({
-          propertyId: z.string(),
-          checkInDate: z.string().transform((val) => new Date(val)),
-          checkOutDate: z
-            .string()
-            .transform((val) => new Date(val))
-            .optional(),
-          message: z.string().optional(),
-        })
-      )
-      .mutation(async ({ ctx, input }: any) => {
+      .input(createBookingSchema)
+      .mutation(async ({ ctx, input }: BoarderCtx) => {
         // Get boarder profile
         const boarder = await ctx.db.boarder.findUnique({
           where: { userId: ctx.session.user.id },
@@ -89,14 +134,8 @@ export const createBookingRouter = (
 
     // Get boarder's bookings
     getMyBookings: boarderProc
-      .input(
-        z.object({
-          status: z
-            .enum(["PENDING", "CONFIRMED", "ACTIVE", "COMPLETED", "CANCELLED"])
-            .optional(),
-        })
-      )
-      .query(async ({ ctx, input }: any) => {
+      .input(getMyBookingsSchema)
+      .query(async ({ ctx, input }: BoarderCtx) => {
         const boarder = await ctx.db.boarder.findUnique({
           where: { userId: ctx.session.user.id },
         });
@@ -108,7 +147,10 @@ export const createBookingRouter = (
           });
         }
 
-        const where: any = { boarderId: boarder.id };
+        const where: {
+          boarderId: string;
+          status?: "PENDING" | "CONFIRMED" | "ACTIVE" | "COMPLETED" | "CANCELLED";
+        } = { boarderId: boarder.id };
         if (input.status) where.status = input.status;
 
         return ctx.db.booking.findMany({
@@ -135,15 +177,8 @@ export const createBookingRouter = (
 
     // Get landlord's bookings (for their properties)
     getLandlordBookings: landlordProc
-      .input(
-        z.object({
-          propertyId: z.string().optional(),
-          status: z
-            .enum(["PENDING", "CONFIRMED", "ACTIVE", "COMPLETED", "CANCELLED"])
-            .optional(),
-        })
-      )
-      .query(async ({ ctx, input }: any) => {
+      .input(getLandlordBookingsSchema)
+      .query(async ({ ctx, input }: LandlordCtx) => {
         const landlordProfile = await ctx.db.landlordProfile.findUnique({
           where: { userId: ctx.session.user.id },
         });
@@ -155,7 +190,11 @@ export const createBookingRouter = (
           });
         }
 
-        const where: any = {
+        const where: {
+          property: { landlordId: string };
+          propertyId?: string;
+          status?: "PENDING" | "CONFIRMED" | "ACTIVE" | "COMPLETED" | "CANCELLED";
+        } = {
           property: { landlordId: landlordProfile.id },
         };
         if (input.propertyId) where.propertyId = input.propertyId;
@@ -184,8 +223,8 @@ export const createBookingRouter = (
 
     // Confirm a booking (landlord)
     confirm: landlordProc
-      .input(z.object({ bookingId: z.string() }))
-      .mutation(async ({ ctx, input }: any) => {
+      .input(confirmBookingSchema)
+      .mutation(async ({ ctx, input }: LandlordCtx) => {
         const landlordProfile = await ctx.db.landlordProfile.findUnique({
           where: { userId: ctx.session.user.id },
         });
@@ -233,13 +272,8 @@ export const createBookingRouter = (
 
     // Reject a booking (landlord)
     reject: landlordProc
-      .input(
-        z.object({
-          bookingId: z.string(),
-          reason: z.string().optional(),
-        })
-      )
-      .mutation(async ({ ctx, input }: any) => {
+      .input(rejectBookingSchema)
+      .mutation(async ({ ctx, input }: LandlordCtx) => {
         const landlordProfile = await ctx.db.landlordProfile.findUnique({
           where: { userId: ctx.session.user.id },
         });
@@ -275,8 +309,8 @@ export const createBookingRouter = (
 
     // Cancel a booking (boarder - only for pending/confirmed)
     cancel: boarderProc
-      .input(z.object({ bookingId: z.string() }))
-      .mutation(async ({ ctx, input }: any) => {
+      .input(cancelBookingSchema)
+      .mutation(async ({ ctx, input }: BoarderCtx) => {
         const boarder = await ctx.db.boarder.findUnique({
           where: { userId: ctx.session.user.id },
         });

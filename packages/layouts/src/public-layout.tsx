@@ -1,6 +1,6 @@
 "use client";
 
-import { PublicProviders } from "@bhms/providers";
+import { PublicProviders } from "@havenspace/providers";
 
 export interface PublicLayoutProps {
   children: React.ReactNode;

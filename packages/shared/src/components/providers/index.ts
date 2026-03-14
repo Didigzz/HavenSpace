@@ -1,4 +1,4 @@
-// @bhms/shared - Providers exports
+// @havenspace/shared - Providers exports
 export { AppProviders } from "./app-providers";
 export { PublicProviders } from "./public-providers";
 export type { AppProvidersProps } from "./app-providers";

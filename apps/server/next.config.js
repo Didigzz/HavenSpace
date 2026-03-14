@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  transpilePackages: ["@bhms/api", "@bhms/shared", "@bhms/validation", "@bhms/auth", "@bhms/database"],
+  transpilePackages: ["@havenspace/api", "@havenspace/shared", "@havenspace/validation", "@havenspace/auth", "@havenspace/database"],
   output: 'standalone',
   // API-only app, no pages needed
   async headers() {

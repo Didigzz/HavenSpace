@@ -1,14 +1,14 @@
-# Public Platform
+﻿# Public Platform
 
 The public-facing marketplace for the Haven Space platform. This application serves as the discovery layer where visitors can browse, search, and view boarding house listings, and includes integrated authentication.
 
-## 🌐 Overview
+## ðŸŒ Overview
 
 **Port**: 3000
 **URL**: http://localhost:3000
 **Purpose**: Public marketplace, property discovery, and authentication
 
-## ✨ Features
+## âœ¨ Features
 
 ### Property Discovery
 - **Browse Listings**: View all available boarding houses
@@ -27,7 +27,7 @@ The public-facing marketplace for the Haven Space platform. This application ser
 - **Contact**: Support and inquiry forms
 - **Terms & Privacy**: Legal documentation
 
-## 🔐 Authentication
+## ðŸ” Authentication
 
 Authentication is **built into this app** using NextAuth.js:
 
@@ -38,46 +38,46 @@ Authentication is **built into this app** using NextAuth.js:
 | Become a Landlord | `/become-landlord` |
 
 After successful authentication, users are redirected to their role-specific dashboard:
-- **Boarders** → Boarder Dashboard (port 3004)
-- **Landlords** → Landlord Portal (port 3005)
-- **Admins** → Admin Dashboard (port 3002)
+- **Boarders** â†’ Boarder Dashboard (port 3004)
+- **Landlords** â†’ Landlord Portal (port 3005)
+- **Admins** â†’ Admin Dashboard (port 3002)
 
-## 🏗️ Architecture
+## ðŸ—ï¸ Architecture
 
 ### Pages Structure
 ```
 src/app/
-├── page.tsx                 # Homepage with featured listings
-├── listings/
-│   ├── page.tsx            # All listings with search/filter
-│   └── [id]/page.tsx       # Individual property details
-├── map/
-│   └── page.tsx            # Map view of all properties
-├── login/
-│   └── page.tsx            # Login page
-├── register/
-│   └── page.tsx            # Registration page
-├── become-landlord/
-│   └── page.tsx            # Landlord information page
-├── api/
-│   ├── auth/[...nextauth]/ # NextAuth.js API route
-│   └── register/           # User registration API
-└── not-found.tsx           # 404 page
+â”œâ”€â”€ page.tsx                 # Homepage with featured listings
+â”œâ”€â”€ listings/
+â”‚   â”œâ”€â”€ page.tsx            # All listings with search/filter
+â”‚   â””â”€â”€ [id]/page.tsx       # Individual property details
+â”œâ”€â”€ map/
+â”‚   â””â”€â”€ page.tsx            # Map view of all properties
+â”œâ”€â”€ login/
+â”‚   â””â”€â”€ page.tsx            # Login page
+â”œâ”€â”€ register/
+â”‚   â””â”€â”€ page.tsx            # Registration page
+â”œâ”€â”€ become-landlord/
+â”‚   â””â”€â”€ page.tsx            # Landlord information page
+â”œâ”€â”€ api/
+â”‚   â”œâ”€â”€ auth/[...nextauth]/ # NextAuth.js API route
+â”‚   â””â”€â”€ register/           # User registration API
+â””â”€â”€ not-found.tsx           # 404 page
 ```
 
 ### Components
 ```
 src/components/
-├── layout/
-│   ├── header.tsx          # Main navigation
-│   ├── footer.tsx          # Site footer
-│   └── theme-toggle.tsx    # Dark/light mode
-└── listings/
-    ├── listing-card.tsx    # Property card component
-    └── search-filters.tsx  # Search and filter UI
+â”œâ”€â”€ layout/
+â”‚   â”œâ”€â”€ header.tsx          # Main navigation
+â”‚   â”œâ”€â”€ footer.tsx          # Site footer
+â”‚   â””â”€â”€ theme-toggle.tsx    # Dark/light mode
+â””â”€â”€ listings/
+    â”œâ”€â”€ listing-card.tsx    # Property card component
+    â””â”€â”€ search-filters.tsx  # Search and filter UI
 ```
 
-## 🚀 Getting Started
+## ðŸš€ Getting Started
 
 ### Prerequisites
 - Node.js 18+
@@ -91,7 +91,7 @@ src/components/
 bun install
 
 # Start development server
-bun --filter @bhms/public dev
+bun --filter @havenspace/public dev
 
 # Or from root
 bun run web:dev
@@ -115,7 +115,7 @@ NEXT_PUBLIC_API_URL=http://localhost:3001
 NEXT_PUBLIC_MAPBOX_TOKEN=your-mapbox-token
 ```
 
-## 🎨 UI Components
+## ðŸŽ¨ UI Components
 
 ### Layout Components
 - **Header**: Navigation with login/register buttons
@@ -131,7 +131,7 @@ NEXT_PUBLIC_MAPBOX_TOKEN=your-mapbox-token
 - **RegisterForm**: User registration with role selection
 - **ContactForm**: Inquiry and support forms
 
-## 🔍 Search & Filtering
+## ðŸ” Search & Filtering
 
 ### Search Parameters
 ```typescript
@@ -161,7 +161,7 @@ const { data: properties, isLoading } = api.property.search.useQuery({
 })
 ```
 
-## 🗺️ Map Integration
+## ðŸ—ºï¸ Map Integration
 
 ### Map Features
 - Property location markers
@@ -187,7 +187,7 @@ const { data: properties, isLoading } = api.property.search.useQuery({
 </MapContainer>
 ```
 
-## 🔐 Authentication Implementation
+## ðŸ” Authentication Implementation
 
 Authentication uses NextAuth.js with credentials provider:
 
@@ -208,10 +208,10 @@ const { data: session } = useSession();
 ### User Journey
 
 1. **Browse** - User discovers properties on Public Platform (port 3000)
-2. **Auth** - User clicks "Sign up" → fills registration form
+2. **Auth** - User clicks "Sign up" â†’ fills registration form
 3. **Dashboard** - After auth, user redirected to role-specific dashboard
 
-## 📱 Responsive Design
+## ðŸ“± Responsive Design
 
 ### Breakpoints
 - **Mobile**: < 768px
@@ -224,7 +224,7 @@ const { data: session } = useSession();
 - Simplified search interface
 - Swipeable property galleries
 
-## 🎯 SEO & Performance
+## ðŸŽ¯ SEO & Performance
 
 ### SEO Features
 - Server-side rendering with Next.js
@@ -238,19 +238,19 @@ const { data: session } = useSession();
 - Infinite scroll for large datasets
 - Caching with React Query
 
-## 🧪 Testing
+## ðŸ§ª Testing
 
 ### Test Structure
 ```
 src/__tests__/
-├── components/
-│   ├── listing-card.test.tsx
-│   └── search-filters.test.tsx
-├── pages/
-│   ├── homepage.test.tsx
-│   └── listings.test.tsx
-└── utils/
-    └── search.test.tsx
+â”œâ”€â”€ components/
+â”‚   â”œâ”€â”€ listing-card.test.tsx
+â”‚   â””â”€â”€ search-filters.test.tsx
+â”œâ”€â”€ pages/
+â”‚   â”œâ”€â”€ homepage.test.tsx
+â”‚   â””â”€â”€ listings.test.tsx
+â””â”€â”€ utils/
+    â””â”€â”€ search.test.tsx
 ```
 
 ### Running Tests
@@ -265,7 +265,7 @@ bun run test:e2e
 bun run test:coverage
 ```
 
-## 🚀 Deployment
+## ðŸš€ Deployment
 
 ### Build
 ```bash
@@ -288,7 +288,7 @@ NEXT_PUBLIC_API_URL=https://api.yourdomain.com
 - **Netlify**: Alternative with good Next.js support
 - **Docker**: Container deployment option
 
-## 📊 Analytics
+## ðŸ“Š Analytics
 
 ### Tracking Events
 - Property views
@@ -309,7 +309,7 @@ const handlePropertyView = (propertyId: string) => {
 }
 ```
 
-## 🔧 Configuration
+## ðŸ”§ Configuration
 
 ### Next.js Config
 ```javascript
@@ -340,7 +340,7 @@ export default {
 }
 ```
 
-## 🤝 Contributing
+## ðŸ¤ Contributing
 
 1. Follow the component structure in `src/components/`
 2. Use TypeScript for all new code
@@ -348,9 +348,10 @@ export default {
 4. Follow the existing naming conventions
 5. Update this README for significant changes
 
-## 📚 Related Documentation
+## ðŸ“š Related Documentation
 
 - [Main README](../../README.md)
 - [API Documentation](../api/README.md)
 - [Development Guidelines](../../DEVELOPMENT.md)
 - [Architecture Overview](../../flow.md)
+

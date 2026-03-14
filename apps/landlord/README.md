@@ -1,14 +1,14 @@
-# Landlord Portal
+﻿# Landlord Portal
 
 The landlord management interface for the Haven Space platform. This application provides approved landlords with comprehensive tools to manage their properties, handle bookings, communicate with boarders, and track earnings.
 
-## 🏢 Overview
+## ðŸ¢ Overview
 
 **Port**: 3005  
 **URL**: http://localhost:3005  
 **Purpose**: Property management and landlord operations
 
-## ✨ Features
+## âœ¨ Features
 
 ### Property Management
 - **Property Listings**: Create, edit, and manage boarding house listings
@@ -33,53 +33,53 @@ The landlord management interface for the Haven Space platform. This application
 - **Booking Notifications**: Real-time booking updates
 - **Support Channel**: Platform support access
 
-## 🏗️ Architecture
+## ðŸ—ï¸ Architecture
 
 ### Pages Structure
 ```
 src/app/
-├── page.tsx                           # Dashboard redirect
-└── (admin)/
-    ├── layout.tsx                     # Admin layout
-    ├── dashboard/page.tsx             # Main dashboard
-    ├── properties/
-    │   ├── page.tsx                   # Property list
-    │   ├── new/page.tsx              # Create property
-    │   └── map/page.tsx              # Property map view
-    ├── bookings/page.tsx              # Booking management
-    ├── messages/page.tsx              # Communication center
-    ├── earnings/page.tsx              # Financial overview
-    ├── payments/page.tsx              # Payment history
-    ├── tenants/
-    │   ├── page.tsx                   # Tenant list
-    │   └── new/page.tsx              # Add tenant
-    ├── maintenance/page.tsx           # Maintenance requests
-    ├── notifications/page.tsx         # Notification center
-    └── settings/page.tsx              # Account settings
+â”œâ”€â”€ page.tsx                           # Dashboard redirect
+â””â”€â”€ (admin)/
+    â”œâ”€â”€ layout.tsx                     # Admin layout
+    â”œâ”€â”€ dashboard/page.tsx             # Main dashboard
+    â”œâ”€â”€ properties/
+    â”‚   â”œâ”€â”€ page.tsx                   # Property list
+    â”‚   â”œâ”€â”€ new/page.tsx              # Create property
+    â”‚   â””â”€â”€ map/page.tsx              # Property map view
+    â”œâ”€â”€ bookings/page.tsx              # Booking management
+    â”œâ”€â”€ messages/page.tsx              # Communication center
+    â”œâ”€â”€ earnings/page.tsx              # Financial overview
+    â”œâ”€â”€ payments/page.tsx              # Payment history
+    â”œâ”€â”€ tenants/
+    â”‚   â”œâ”€â”€ page.tsx                   # Tenant list
+    â”‚   â””â”€â”€ new/page.tsx              # Add tenant
+    â”œâ”€â”€ maintenance/page.tsx           # Maintenance requests
+    â”œâ”€â”€ notifications/page.tsx         # Notification center
+    â””â”€â”€ settings/page.tsx              # Account settings
 ```
 
 ### Components Structure
 ```
 src/components/
-├── dashboard/
-│   ├── stats-card.tsx                 # Dashboard statistics
-│   ├── revenue-chart.tsx              # Revenue visualization
-│   ├── occupancy-chart.tsx            # Occupancy metrics
-│   ├── recent-payments.tsx            # Payment history
-│   └── upcoming-leases.tsx            # Upcoming bookings
-├── layout/
-│   ├── dashboard-layout.tsx           # Main layout
-│   ├── header.tsx                     # Dashboard header
-│   ├── sidebar.tsx                    # Navigation sidebar
-│   └── index.ts                       # Layout exports
-└── ui/
-    ├── avatar.tsx                     # User avatar
-    ├── collapsible.tsx                # Collapsible sections
-    ├── dropdown-menu.tsx              # Dropdown menus
-    └── index.ts                       # UI exports
+â”œâ”€â”€ dashboard/
+â”‚   â”œâ”€â”€ stats-card.tsx                 # Dashboard statistics
+â”‚   â”œâ”€â”€ revenue-chart.tsx              # Revenue visualization
+â”‚   â”œâ”€â”€ occupancy-chart.tsx            # Occupancy metrics
+â”‚   â”œâ”€â”€ recent-payments.tsx            # Payment history
+â”‚   â””â”€â”€ upcoming-leases.tsx            # Upcoming bookings
+â”œâ”€â”€ layout/
+â”‚   â”œâ”€â”€ dashboard-layout.tsx           # Main layout
+â”‚   â”œâ”€â”€ header.tsx                     # Dashboard header
+â”‚   â”œâ”€â”€ sidebar.tsx                    # Navigation sidebar
+â”‚   â””â”€â”€ index.ts                       # Layout exports
+â””â”€â”€ ui/
+    â”œâ”€â”€ avatar.tsx                     # User avatar
+    â”œâ”€â”€ collapsible.tsx                # Collapsible sections
+    â”œâ”€â”€ dropdown-menu.tsx              # Dropdown menus
+    â””â”€â”€ index.ts                       # UI exports
 ```
 
-## 🚀 Getting Started
+## ðŸš€ Getting Started
 
 ### Prerequisites
 - Node.js 18+
@@ -91,7 +91,7 @@ src/components/
 
 ```bash
 # Start development server
-bun --filter @bhms/landlord dev
+bun --filter @havenspace/landlord dev
 
 # Or from app directory
 cd apps/landlord
@@ -123,7 +123,7 @@ NEXT_PUBLIC_MAPBOX_TOKEN=your-mapbox-token
 NEXT_PUBLIC_ANALYTICS_ID=your-analytics-id
 ```
 
-## 🔐 Authentication & Authorization
+## ðŸ” Authentication & Authorization
 
 ### Access Control
 - **Role Requirement**: User must have `landlord` role
@@ -163,7 +163,7 @@ const getProperties = async (landlordId: string) => {
 }
 ```
 
-## 🏠 Property Management
+## ðŸ  Property Management
 
 ### Property Creation
 ```typescript
@@ -218,7 +218,7 @@ const PropertyForm = () => {
 }
 ```
 
-## 📅 Booking Management
+## ðŸ“… Booking Management
 
 ### Booking Workflow
 1. **Request Received**: Boarder submits booking request
@@ -282,7 +282,7 @@ const BookingRequestCard = ({ booking }: { booking: BookingRequest }) => {
 }
 ```
 
-## 💰 Financial Management
+## ðŸ’° Financial Management
 
 ### Revenue Tracking
 - **Monthly Earnings**: Revenue by month
@@ -347,7 +347,7 @@ const PayoutRequest = () => {
 }
 ```
 
-## 📊 Analytics & Reporting
+## ðŸ“Š Analytics & Reporting
 
 ### Dashboard Metrics
 - **Revenue Analytics**: Income trends and forecasts
@@ -386,7 +386,7 @@ const OccupancyChart = ({ data }: { data: OccupancyData[] }) => {
 }
 ```
 
-## 💬 Communication System
+## ðŸ’¬ Communication System
 
 ### Messaging Features
 - **Boarder Communication**: Direct messaging with guests
@@ -414,7 +414,7 @@ const MessageCenter = () => {
 }
 ```
 
-## 🔧 Maintenance Management
+## ðŸ”§ Maintenance Management
 
 ### Maintenance Features
 - **Request Tracking**: Monitor maintenance requests
@@ -448,22 +448,22 @@ const MaintenanceOverview = () => {
 }
 ```
 
-## 🧪 Testing
+## ðŸ§ª Testing
 
 ### Test Structure
 ```
 src/__tests__/
-├── components/
-│   ├── property-form.test.tsx
-│   ├── booking-card.test.tsx
-│   └── revenue-chart.test.tsx
-├── pages/
-│   ├── dashboard.test.tsx
-│   ├── properties.test.tsx
-│   └── bookings.test.tsx
-└── utils/
-    ├── financial-calculations.test.tsx
-    └── booking-helpers.test.tsx
+â”œâ”€â”€ components/
+â”‚   â”œâ”€â”€ property-form.test.tsx
+â”‚   â”œâ”€â”€ booking-card.test.tsx
+â”‚   â””â”€â”€ revenue-chart.test.tsx
+â”œâ”€â”€ pages/
+â”‚   â”œâ”€â”€ dashboard.test.tsx
+â”‚   â”œâ”€â”€ properties.test.tsx
+â”‚   â””â”€â”€ bookings.test.tsx
+â””â”€â”€ utils/
+    â”œâ”€â”€ financial-calculations.test.tsx
+    â””â”€â”€ booking-helpers.test.tsx
 ```
 
 ### Running Tests
@@ -481,7 +481,7 @@ bun run test:e2e
 bun run test:coverage
 ```
 
-## 🚀 Deployment
+## ðŸš€ Deployment
 
 ### Build Process
 ```bash
@@ -509,7 +509,7 @@ NEXT_PUBLIC_MAPBOX_TOKEN=production-token
 NEXT_PUBLIC_ANALYTICS_ID=production-analytics-id
 ```
 
-## 📱 Mobile Optimization
+## ðŸ“± Mobile Optimization
 
 ### Mobile Features
 - **Responsive Design**: Optimized for mobile devices
@@ -517,7 +517,7 @@ NEXT_PUBLIC_ANALYTICS_ID=production-analytics-id
 - **Image Optimization**: Fast loading property images
 - **Offline Support**: Basic offline functionality
 
-## 🔧 Configuration
+## ðŸ”§ Configuration
 
 ### Next.js Configuration
 ```javascript
@@ -550,7 +550,7 @@ export default {
 }
 ```
 
-## 📊 Performance
+## ðŸ“Š Performance
 
 ### Optimization Strategies
 - **Code Splitting**: Route-based code splitting
@@ -563,7 +563,7 @@ export default {
 - **User Analytics**: Usage tracking
 - **Error Monitoring**: Error tracking and reporting
 
-## 🤝 Contributing
+## ðŸ¤ Contributing
 
 1. Follow the component structure in `src/components/`
 2. Use TypeScript for all new code
@@ -571,9 +571,10 @@ export default {
 4. Follow tenant isolation patterns
 5. Update documentation for changes
 
-## 📚 Related Documentation
+## ðŸ“š Related Documentation
 
 - [Main README](../../README.md)
 - [API Documentation](../api/README.md)
 - [Boarder Dashboard](../boarder/README.md)
 - [Development Guidelines](../../docs/DEVELOPMENT.md)
+

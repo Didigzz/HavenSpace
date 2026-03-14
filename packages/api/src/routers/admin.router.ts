@@ -1,6 +1,50 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "../trpc";
 import { TRPCError } from "@trpc/server";
+import type { TRPCContext, HavenSession, AdminTRPCContext } from "../types/index";
+
+// Type helpers
+interface AdminCtx<TInput = unknown> {
+  ctx: AdminTRPCContext;
+  input: TInput;
+}
+
+type GetUsersInput = z.infer<typeof getUsersSchema>;
+type ApproveLandlordInput = z.infer<typeof approveLandlordSchema>;
+type RejectLandlordInput = z.infer<typeof rejectLandlordSchema>;
+type SuspendUserInput = z.infer<typeof suspendUserSchema>;
+type ReactivateUserInput = z.infer<typeof reactivateUserSchema>;
+type GetUserByIdInput = z.infer<typeof getUserByIdSchema>;
+
+const getUsersSchema = z.object({
+  page: z.number().min(1).default(1),
+  limit: z.number().min(1).max(100).default(20),
+  role: z.enum(["LANDLORD", "BOARDER", "ADMIN"]).optional(),
+  status: z.enum(["PENDING", "APPROVED", "SUSPENDED"]).optional(),
+  search: z.string().optional(),
+});
+
+const approveLandlordSchema = z.object({
+  userId: z.string(),
+});
+
+const rejectLandlordSchema = z.object({
+  userId: z.string(),
+  reason: z.string().min(10, "Please provide a reason"),
+});
+
+const suspendUserSchema = z.object({
+  userId: z.string(),
+  reason: z.string().min(10, "Please provide a reason"),
+});
+
+const reactivateUserSchema = z.object({
+  userId: z.string(),
+});
+
+const getUserByIdSchema = z.object({
+  userId: z.string(),
+});
 
 /**
  * Admin router for managing users and platform operations
@@ -12,20 +56,19 @@ export const createAdminRouter = (
   return createTRPCRouter({
     // Get all users with pagination and filtering
     getUsers: adminProcedure
-      .input(
-        z.object({
-          page: z.number().min(1).default(1),
-          limit: z.number().min(1).max(100).default(20),
-          role: z.enum(["LANDLORD", "BOARDER", "ADMIN"]).optional(),
-          status: z.enum(["PENDING", "APPROVED", "SUSPENDED"]).optional(),
-          search: z.string().optional(),
-        })
-      )
-      .query(async ({ ctx, input }: any) => {
+      .input(getUsersSchema)
+      .query(async ({ ctx, input }: AdminCtx<GetUsersInput>) => {
         const { page, limit, role, status, search } = input;
         const skip = (page - 1) * limit;
 
-        const where: any = {};
+        const where: {
+          role?: "LANDLORD" | "BOARDER" | "ADMIN";
+          status?: "PENDING" | "APPROVED" | "SUSPENDED";
+          OR?: Array<{
+            name?: { contains: string; mode: "insensitive" };
+            email?: { contains: string; mode: "insensitive" };
+          }>;
+        } = {};
         if (role) where.role = role;
         if (status) where.status = status;
         if (search) {
@@ -74,7 +117,7 @@ export const createAdminRouter = (
       }),
 
     // Get pending landlord approvals
-    getPendingLandlords: adminProcedure.query(async ({ ctx }: any) => {
+    getPendingLandlords: adminProcedure.query(async ({ ctx }: AdminCtx<void>) => {
       return ctx.db.user.findMany({
         where: {
           role: "LANDLORD",
@@ -102,8 +145,8 @@ export const createAdminRouter = (
 
     // Approve a landlord
     approveLandlord: adminProcedure
-      .input(z.object({ userId: z.string() }))
-      .mutation(async ({ ctx, input }: any) => {
+      .input(approveLandlordSchema)
+      .mutation(async ({ ctx, input }: AdminCtx<ApproveLandlordInput>) => {
         const user = await ctx.db.user.findUnique({
           where: { id: input.userId },
         });
@@ -140,13 +183,8 @@ export const createAdminRouter = (
 
     // Reject a landlord application
     rejectLandlord: adminProcedure
-      .input(
-        z.object({
-          userId: z.string(),
-          reason: z.string().min(10, "Please provide a reason"),
-        })
-      )
-      .mutation(async ({ ctx, input }: any) => {
+      .input(rejectLandlordSchema)
+      .mutation(async ({ ctx, input }: AdminCtx<RejectLandlordInput>) => {
         const user = await ctx.db.user.findUnique({
           where: { id: input.userId },
         });
@@ -185,13 +223,8 @@ export const createAdminRouter = (
 
     // Suspend a user
     suspendUser: adminProcedure
-      .input(
-        z.object({
-          userId: z.string(),
-          reason: z.string().min(10, "Please provide a reason"),
-        })
-      )
-      .mutation(async ({ ctx, input }: any) => {
+      .input(suspendUserSchema)
+      .mutation(async ({ ctx, input }: AdminCtx<SuspendUserInput>) => {
         const user = await ctx.db.user.findUnique({
           where: { id: input.userId },
         });
@@ -219,8 +252,8 @@ export const createAdminRouter = (
 
     // Reactivate a suspended user
     reactivateUser: adminProcedure
-      .input(z.object({ userId: z.string() }))
-      .mutation(async ({ ctx, input }: any) => {
+      .input(reactivateUserSchema)
+      .mutation(async ({ ctx, input }: AdminCtx<ReactivateUserInput>) => {
         const user = await ctx.db.user.findUnique({
           where: { id: input.userId },
         });
@@ -247,7 +280,7 @@ export const createAdminRouter = (
       }),
 
     // Get dashboard stats
-    getDashboardStats: adminProcedure.query(async ({ ctx }: any) => {
+    getDashboardStats: adminProcedure.query(async ({ ctx }: AdminCtx<void>) => {
       const [
         totalUsers,
         totalLandlords,
@@ -278,8 +311,8 @@ export const createAdminRouter = (
 
     // Get user details by ID
     getUserById: adminProcedure
-      .input(z.object({ userId: z.string() }))
-      .query(async ({ ctx, input }: any) => {
+      .input(getUserByIdSchema)
+      .query(async ({ ctx, input }: AdminCtx<GetUserByIdInput>) => {
         const user = await ctx.db.user.findUnique({
           where: { id: input.userId },
           include: {
