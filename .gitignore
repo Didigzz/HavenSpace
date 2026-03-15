@@ -47,3 +47,6 @@ coverage
 
 # TypeScript
 *.tsbuildinfo
+
+# Presentation assets (allow images for haven-space-pitch.html)
+!assets/
