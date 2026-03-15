@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Haven Space - Pitch Deck</title>
-  
+  <title>Haven Space - Final Project Proposal</title>
+
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  
+
   <style>
     /* === VIEWPORT BASE CSS (Required - fits 100vh, no scrolling) === */
     *, *::before, *::after {
@@ -17,21 +17,21 @@
       margin: 0;
       padding: 0;
     }
-    
+
     html, body {
       height: 100%;
       width: 100%;
       overflow: hidden;
       background: #0D0D0D;
     }
-    
+
     body {
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       color: #FFFFFF;
     }
-    
+
     /* Slide container - each slide fills viewport exactly */
     .slide {
       height: 100vh;
@@ -46,27 +46,27 @@
       justify-content: center;
       padding: clamp(2rem, 5vw, 4rem);
     }
-    
+
     .slide.active {
       display: flex;
     }
-    
+
     /* Responsive typography */
     .title {
       font-size: clamp(2rem, 6vw, 4rem);
       line-height: 1.1;
       font-weight: 700;
     }
-    
+
     .subtitle {
       font-size: clamp(1rem, 2.5vw, 1.5rem);
       line-height: 1.6;
     }
-    
+
     .small {
       font-size: clamp(0.875rem, 2vw, 1.125rem);
     }
-    
+
     /* === ELECTRIC STUDIO THEME === */
     :root {
       --bg-primary: #0D0D0D;
@@ -79,11 +79,11 @@
       --card-bg: rgba(255, 255, 255, 0.05);
       --card-border: rgba(255, 255, 255, 0.1);
     }
-    
+
     .slide {
       background: radial-gradient(ellipse at top left, var(--bg-gradient) 0%, var(--bg-primary) 70%);
     }
-    
+
     /* Animated gradient orb */
     .gradient-orb {
       position: absolute;
@@ -96,13 +96,13 @@
       animation: orbFloat 10s ease-in-out infinite;
       pointer-events: none;
     }
-    
+
     @keyframes orbFloat {
       0%, 100% { transform: translate(0, 0) scale(1); }
       33% { transform: translate(-30px, 30px) scale(1.05); }
       66% { transform: translate(20px, -20px) scale(0.95); }
     }
-    
+
     /* Grid pattern */
     .grid-overlay {
       position: absolute;
@@ -110,13 +110,13 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background-image: 
+      background-image:
         linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
         linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
       background-size: 80px 80px;
       pointer-events: none;
     }
-    
+
     /* Content container */
     .content {
       position: relative;
@@ -125,7 +125,7 @@
       margin: 0 auto;
       width: 100%;
     }
-    
+
     /* Header with logo */
     .header {
       display: flex;
@@ -133,7 +133,7 @@
       gap: clamp(0.75rem, 2vw, 1.25rem);
       margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
     }
-    
+
     .logo-mark {
       width: clamp(40px, 8vw, 56px);
       height: clamp(40px, 8vw, 56px);
@@ -147,7 +147,7 @@
       color: var(--bg-primary);
       font-family: 'Space Grotesk', sans-serif;
     }
-    
+
     .logo-text {
       font-size: clamp(1.125rem, 2.5vw, 1.5rem);
       font-weight: 600;
@@ -155,7 +155,7 @@
       font-family: 'Space Grotesk', sans-serif;
       letter-spacing: -0.02em;
     }
-    
+
     /* Slide number */
     .slide-number {
       position: absolute;
@@ -165,9 +165,9 @@
       color: var(--text-secondary);
       z-index: 10;
     }
-    
+
     /* === SLIDE SPECIFIC STYLES === */
-    
+
     /* Title Slide */
     .title-slide .main-title {
       font-family: 'Space Grotesk', sans-serif;
@@ -180,7 +180,7 @@
       margin-bottom: clamp(1rem, 2vw, 1.5rem);
       line-height: 1.1;
     }
-    
+
     .title-slide .tagline {
       display: inline-flex;
       align-items: center;
@@ -193,20 +193,20 @@
       font-weight: 500;
       margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
     }
-    
+
     .title-slide .description {
       color: var(--text-secondary);
       font-size: clamp(1rem, 2.5vw, 1.25rem);
       max-width: clamp(280px, 50vw, 550px);
       line-height: 1.7;
     }
-    
+
     /* Section header slide */
     .section-slide {
       text-align: center;
       align-items: center;
     }
-    
+
     .section-slide .section-label {
       font-size: clamp(0.875rem, 2vw, 1rem);
       color: var(--accent-blue);
@@ -214,7 +214,7 @@
       letter-spacing: 0.15em;
       margin-bottom: clamp(1rem, 2vw, 2rem);
     }
-    
+
     .section-slide .section-title {
       font-family: 'Space Grotesk', sans-serif;
       font-size: clamp(2.5rem, 6vw, 4.5rem);
@@ -224,7 +224,7 @@
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
-    
+
     /* Content slides */
     .slide-title {
       font-family: 'Space Grotesk', sans-serif;
@@ -233,25 +233,25 @@
       margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
       color: var(--text-primary);
     }
-    
+
     .grid-2 {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: clamp(1rem, 2vw, 1.5rem);
     }
-    
+
     .grid-3 {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: clamp(1rem, 2vw, 1.5rem);
     }
-    
+
     .grid-4 {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: clamp(1rem, 2vw, 1.5rem);
     }
-    
+
     .card {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
@@ -259,17 +259,17 @@
       padding: clamp(1rem, 2vw, 1.5rem);
       transition: transform 0.3s ease, border-color 0.3s ease;
     }
-    
+
     .card:hover {
       transform: translateY(-4px);
       border-color: rgba(0, 212, 255, 0.3);
     }
-    
+
     .card-icon {
       font-size: clamp(1.5rem, 3vw, 2rem);
       margin-bottom: clamp(0.75rem, 1.5vw, 1rem);
     }
-    
+
     .card-title {
       font-family: 'Space Grotesk', sans-serif;
       font-size: clamp(1rem, 2vw, 1.25rem);
@@ -277,13 +277,13 @@
       margin-bottom: clamp(0.5rem, 1vw, 0.75rem);
       color: var(--text-primary);
     }
-    
+
     .card-text {
       font-size: clamp(0.875rem, 1.75vw, 1rem);
       color: var(--text-secondary);
       line-height: 1.6;
     }
-    
+
     .card-value {
       font-family: 'Space Grotesk', sans-serif;
       font-size: clamp(1.5rem, 3vw, 2rem);
@@ -294,7 +294,7 @@
       background-clip: text;
       margin-bottom: clamp(0.25rem, 0.5vw, 0.5rem);
     }
-    
+
     /* List styles */
     .bullet-list {
       list-style: none;
@@ -302,7 +302,7 @@
       flex-direction: column;
       gap: clamp(0.75rem, 1.5vw, 1rem);
     }
-    
+
     .bullet-list li {
       display: flex;
       align-items: flex-start;
@@ -311,34 +311,34 @@
       color: var(--text-secondary);
       line-height: 1.6;
     }
-    
+
     .bullet-list li::before {
       content: '→';
       color: var(--accent-blue);
       font-weight: 700;
       flex-shrink: 0;
     }
-    
+
     /* Table */
     .table-container {
       overflow-x: auto;
       max-height: clamp(200px, 40vh, 350px);
       overflow-y: auto;
     }
-    
+
     .data-table {
       width: 100%;
       border-collapse: collapse;
       font-size: clamp(0.875rem, 1.75vw, 1rem);
     }
-    
+
     .data-table th,
     .data-table td {
       padding: clamp(0.75rem, 1.5vw, 1rem);
       text-align: left;
       border-bottom: 1px solid var(--card-border);
     }
-    
+
     .data-table th {
       color: var(--accent-blue);
       font-weight: 600;
@@ -347,35 +347,35 @@
       top: 0;
       background: var(--bg-primary);
     }
-    
+
     .data-table td {
       color: var(--text-secondary);
     }
-    
+
     .data-table tr:hover td {
       background: rgba(255, 255, 255, 0.02);
     }
-    
+
     /* Highlight text */
     .highlight {
       color: var(--accent-blue);
       font-weight: 600;
     }
-    
+
     .gradient-text {
       background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
-    
+
     /* Quote */
     .quote-block {
       border-left: 3px solid var(--accent-blue);
       padding-left: clamp(1rem, 2vw, 2rem);
       margin: clamp(1.5rem, 3vw, 2.5rem) 0;
     }
-    
+
     .quote-text {
       font-family: 'Space Grotesk', sans-serif;
       font-size: clamp(1.25rem, 3vw, 1.75rem);
@@ -384,12 +384,12 @@
       line-height: 1.6;
       margin-bottom: clamp(0.75rem, 1.5vw, 1rem);
     }
-    
+
     .quote-author {
       color: var(--text-secondary);
       font-size: clamp(0.875rem, 1.75vw, 1rem);
     }
-    
+
     /* CTA Box */
     .cta-box {
       background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(123, 44, 255, 0.1));
@@ -398,7 +398,7 @@
       padding: clamp(1.5rem, 3vw, 2.5rem);
       text-align: center;
     }
-    
+
     .cta-title {
       font-family: 'Space Grotesk', sans-serif;
       font-size: clamp(1.25rem, 3vw, 1.75rem);
@@ -406,21 +406,21 @@
       margin-bottom: clamp(0.75rem, 1.5vw, 1rem);
       color: var(--text-primary);
     }
-    
+
     .cta-text {
       color: var(--text-secondary);
       font-size: clamp(0.9rem, 2vw, 1.125rem);
       line-height: 1.6;
       margin-bottom: clamp(1rem, 2vw, 1.5rem);
     }
-    
+
     .cta-contact {
       font-family: 'Space Grotesk', sans-serif;
       font-size: clamp(1rem, 2.5vw, 1.25rem);
       color: var(--accent-blue);
       font-weight: 600;
     }
-    
+
     /* Stats row */
     .stats-row {
       display: flex;
@@ -429,11 +429,11 @@
       gap: clamp(1.5rem, 3vw, 3rem);
       margin: clamp(1.5rem, 3vw, 2.5rem) 0;
     }
-    
+
     .stat-item {
       text-align: center;
     }
-    
+
     .stat-value {
       font-family: 'Space Grotesk', sans-serif;
       font-size: clamp(2.5rem, 6vw, 4rem);
@@ -445,14 +445,48 @@
       line-height: 1;
       margin-bottom: clamp(0.5rem, 1vw, 0.75rem);
     }
-    
+
     .stat-label {
       color: var(--text-secondary);
       font-size: clamp(0.875rem, 1.75vw, 1rem);
       text-transform: uppercase;
       letter-spacing: 0.1em;
     }
-    
+
+    /* Team roles table */
+    .roles-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: clamp(1.5rem, 3vw, 2.5rem);
+    }
+
+    .roles-table th,
+    .roles-table td {
+      padding: clamp(0.75rem, 1.5vw, 1rem);
+      text-align: left;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .roles-table th {
+      color: var(--accent-blue);
+      font-weight: 600;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .roles-table td {
+      color: var(--text-secondary);
+    }
+
+    .role-badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      background: rgba(0, 212, 255, 0.15);
+      border-radius: 100px;
+      font-size: clamp(0.75rem, 1.5vw, 0.875rem);
+      color: var(--accent-blue);
+      font-weight: 600;
+    }
+
     /* === NAVIGATION === */
     .nav-dots {
       position: fixed;
@@ -464,7 +498,7 @@
       gap: clamp(0.5rem, 1vw, 0.75rem);
       z-index: 100;
     }
-    
+
     .nav-dot {
       width: clamp(8px, 1.5vw, 12px);
       height: clamp(8px, 1.5vw, 12px);
@@ -474,16 +508,16 @@
       cursor: pointer;
       transition: all 0.3s ease;
     }
-    
+
     .nav-dot.active {
       background: var(--accent-blue);
       transform: scale(1.2);
     }
-    
+
     .nav-dot:hover {
       background: rgba(0, 212, 255, 0.6);
     }
-    
+
     /* Progress bar */
     .progress-bar {
       position: fixed;
@@ -494,7 +528,7 @@
       transition: width 0.3s ease;
       z-index: 100;
     }
-    
+
     /* === EDIT MODE STYLES === */
     .edit-mode-indicator {
       position: fixed;
@@ -511,26 +545,26 @@
       align-items: center;
       gap: clamp(0.5rem, 1vw, 0.75rem);
     }
-    
+
     .edit-mode-indicator.active {
       display: flex;
     }
-    
+
     .editable {
       border: 1px dashed transparent;
       transition: border-color 0.2s ease;
     }
-    
+
     .edit-mode .editable {
       border-color: rgba(0, 212, 255, 0.5);
       cursor: text;
     }
-    
+
     .edit-mode .editable:hover {
       border-color: var(--accent-blue);
       background: rgba(0, 212, 255, 0.05);
     }
-    
+
     .edit-mode .editable:focus {
       outline: none;
       border-color: var(--accent-blue);
@@ -538,7 +572,7 @@
       border-radius: 4px;
       padding: 2px 4px;
     }
-    
+
     .save-notification {
       position: fixed;
       bottom: clamp(1rem, 3vw, 2rem);
@@ -554,28 +588,28 @@
       z-index: 1000;
       transition: transform 0.3s ease;
     }
-    
+
     .save-notification.show {
       transform: translateX(-50%) translateY(0);
     }
-    
+
     /* === ANIMATIONS === */
     .reveal {
       opacity: 0;
       transform: translateY(30px);
       transition: opacity 0.6s ease, transform 0.6s ease;
     }
-    
+
     .reveal.active {
       opacity: 1;
       transform: translateY(0);
     }
-    
+
     .reveal-delay-1 { transition-delay: 0.1s; }
     .reveal-delay-2 { transition-delay: 0.2s; }
     .reveal-delay-3 { transition-delay: 0.3s; }
     .reveal-delay-4 { transition-delay: 0.4s; }
-    
+
     /* Accent dots */
     .accent-dots {
       position: absolute;
@@ -584,7 +618,7 @@
       display: flex;
       gap: 8px;
     }
-    
+
     .dot {
       width: 8px;
       height: 8px;
@@ -592,15 +626,15 @@
       background: var(--accent-blue);
       animation: dotPulse 2s ease-in-out infinite;
     }
-    
+
     .dot:nth-child(2) { animation-delay: 0.2s; background: var(--accent-purple); }
     .dot:nth-child(3) { animation-delay: 0.4s; background: var(--accent-pink); }
-    
+
     @keyframes dotPulse {
       0%, 100% { transform: scale(1); opacity: 1; }
       50% { transform: scale(1.3); opacity: 0.7; }
     }
-    
+
     /* === RESPONSIVE === */
     @media (max-width: 768px) {
       .grid-2,
@@ -608,17 +642,17 @@
       .grid-4 {
         grid-template-columns: 1fr;
       }
-      
+
       .nav-dots {
         display: none;
       }
-      
+
       .stats-row {
         flex-direction: column;
         align-items: center;
       }
     }
-    
+
     /* Reduced motion */
     @media (prefers-reduced-motion: reduce) {
       .gradient-orb,
@@ -634,18 +668,18 @@
   <!-- Background elements (shared across slides) -->
   <div class="gradient-orb"></div>
   <div class="grid-overlay"></div>
-  
+
   <!-- Navigation -->
   <div class="nav-dots" id="navDots"></div>
   <div class="progress-bar" id="progressBar"></div>
-  
+
   <!-- Edit Mode -->
   <div class="edit-mode-indicator" id="editIndicator">
     <span>✏️ Edit Mode</span>
     <span style="opacity: 0.7;">Press E to toggle</span>
   </div>
   <div class="save-notification" id="saveNotification">✓ Saved to browser</div>
-  
+
   <!-- === SLIDE 1: TITLE === -->
   <div class="slide active title-slide" data-slide="1">
     <div class="content">
@@ -653,74 +687,330 @@
         <div class="logo-mark">H</div>
         <span class="logo-text">Haven Space</span>
       </div>
-      
-      <h1 class="main-title reveal reveal-delay-1">Find Your Space.<br>Feel at Home.</h1>
-      
+
+      <h1 class="main-title reveal reveal-delay-1">Haven Space:<br>Boarding House Management System</h1>
+
       <div class="tagline reveal reveal-delay-2">
-        ✨ Boarding Made Better
+        📋 Final Project Proposal
       </div>
-      
+
       <p class="description reveal reveal-delay-3">
-        The comprehensive multi-tenant platform transforming how boarding houses are discovered, managed, and experienced.
+        A comprehensive multi-tenant platform for managing boarding house operations, connecting landlords with boarders through modern web interfaces.
       </p>
     </div>
-    
+
     <div class="accent-dots">
       <div class="dot"></div>
       <div class="dot"></div>
       <div class="dot"></div>
     </div>
   </div>
-  
-  <!-- === SLIDE 2: PROBLEM === -->
+
+  <!-- === SLIDE 2: TEAM MEMBERS === -->
   <div class="slide" data-slide="2">
     <div class="content">
-      <h2 class="slide-title reveal">The Problem</h2>
-      
+      <h2 class="slide-title reveal">Team Members</h2>
+
+      <div class="table-container reveal reveal-delay-1">
+        <table class="roles-table">
+          <thead>
+            <tr>
+              <th>Member</th>
+              <th>Role</th>
+              <th>Responsibilities</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="highlight">John Paul Digal</span></td>
+              <td><span class="role-badge">Project Leader</span></td>
+              <td>Project coordination, client communication, sprint planning</td>
+            </tr>
+            <tr>
+              <td><span class="highlight">Melvis Alfonse Palmares</span></td>
+              <td><span class="role-badge">System Analyst</span></td>
+              <td>Requirements gathering, problem analysis, documentation</td>
+            </tr>
+            <tr>
+              <td><span class="highlight">John Paul Abecia</span></td>
+              <td><span class="role-badge">Lead Developer</span></td>
+              <td>Backend architecture, database design, API development</td>
+            </tr>
+            <tr>
+              <td><span class="highlight">Alistair Ybanez</span></td>
+              <td><span class="role-badge">UI/UX Designer</span></td>
+              <td>Interface design, user testing, quality assurance</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card reveal reveal-delay-2" style="margin-top: clamp(1.5rem, 3vw, 2.5rem);">
+        <p class="card-text" style="text-align: center;">
+          <span class="highlight">Team Size:</span> 4 Members &nbsp;|&nbsp; 
+          <span class="highlight">All members will participate</span> in the presentation
+        </p>
+      </div>
+    </div>
+
+    <div class="slide-number">2 / 12</div>
+    <div class="accent-dots">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+  </div>
+
+  <!-- === SLIDE 3: CLIENT 1 - STUDENT === -->
+  <div class="slide" data-slide="3">
+    <div class="content">
+      <h2 class="slide-title reveal">Client Identification (Student)</h2>
+
+      <div class="grid-2">
+        <div class="card reveal reveal-delay-1">
+          <div class="card-icon">🏢</div>
+          <h3 class="card-title">Client Name</h3>
+          <p class="card-text"><span class="highlight">Qwenzyy</span></p>
+          <p class="card-text" style="margin-top: 0.5rem;">BSIT Student</p>
+        </div>
+
+        <div class="card reveal reveal-delay-2">
+          <div class="card-icon">📍</div>
+          <h3 class="card-title">Organization Type</h3>
+          <p class="card-text">Educational Institution - Bukidnon State University</p>
+        </div>
+
+        <div class="card reveal reveal-delay-3" style="grid-column: span 2;">
+          <div class="card-icon">📖</div>
+          <h3 class="card-title">Background</h3>
+          <p class="card-text">The client is a BSIT student at Bukidnon State University. As a student, they face the common challenge of finding suitable boarding houses near the campus. The university serves numerous students who struggle to find affordable and convenient boarding accommodations.</p>
+        </div>
+      </div>
+
+      <div class="quote-block reveal reveal-delay-4">
+        <p class="quote-text">"I struggled to find boarding houses near the university. It was hard to know which ones had vacancies and were within my budget."</p>
+        <p class="quote-author">— Qwenzyy, BSIT Student</p>
+      </div>
+    </div>
+
+    <div class="slide-number">3 / 13</div>
+    <div class="accent-dots">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+  </div>
+
+  <!-- === SLIDE 4: CLIENT 2 - BOARDING HOUSE OWNER === -->
+  <div class="slide" data-slide="4">
+    <div class="content">
+      <h2 class="slide-title reveal">Client Identification (Landlord)</h2>
+
+      <div class="grid-2">
+        <div class="card reveal reveal-delay-1">
+          <div class="card-icon">🏢</div>
+          <h3 class="card-title">Client Name</h3>
+          <p class="card-text"><span class="highlight">Paul John</span></p>
+          <p class="card-text" style="margin-top: 0.5rem;">Owner, Onda Boarding House</p>
+        </div>
+
+        <div class="card reveal reveal-delay-2">
+          <div class="card-icon">📍</div>
+          <h3 class="card-title">Organization Type</h3>
+          <p class="card-text">Boarding House - Small Business Owner</p>
+        </div>
+
+        <div class="card reveal reveal-delay-3" style="grid-column: span 2;">
+          <div class="card-icon">📖</div>
+          <h3 class="card-title">Background</h3>
+          <p class="card-text">The client is the owner of Onda Boarding House, a small boarding establishment catering to students and young professionals. As a boarding house operator, they manage multiple rooms and handle tenant relations, bookings, and payments manually.</p>
+        </div>
+      </div>
+
+      <div class="quote-block reveal reveal-delay-4">
+        <p class="quote-text">"Managing my boarding house manually is challenging. I struggle to keep track of vacancies, payments, and tenant information efficiently."</p>
+        <p class="quote-author">— Paul John, Onda Boarding House Owner</p>
+      </div>
+    </div>
+
+    <div class="slide-number">4 / 13</div>
+    <div class="accent-dots">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+  </div>
+
+  <!-- === SLIDE 5: CURRENT PROCESS === -->
+  <div class="slide" data-slide="5">
+    <div class="content">
+      <h2 class="slide-title reveal">Current Process</h2>
+
+      <div class="grid-3">
+        <div class="card reveal reveal-delay-1">
+          <div class="card-icon">📝</div>
+          <h3 class="card-title">Manual Listings</h3>
+          <p class="card-text">Landlords submit property information via paper forms or SMS messages</p>
+        </div>
+
+        <div class="card reveal reveal-delay-2">
+          <div class="card-icon">🚶</div>
+          <h3 class="card-title">Finding Physical Boarding Houses</h3>
+          <p class="card-text">Students walk around the area looking for boarding houses one by one, checking for vacancy signs</p>
+        </div>
+
+        <div class="card reveal reveal-delay-3">
+          <div class="card-icon">📞</div>
+          <h3 class="card-title">Phone-Based Booking</h3>
+          <p class="card-text">Students call the office to inquire about availability and schedule viewings</p>
+        </div>
+
+        <div class="card reveal reveal-delay-4">
+          <div class="card-icon">💵</div>
+          <h3 class="card-title">Cash Payments</h3>
+          <p class="card-text">Payments processed in-person with manual receipt writing</p>
+        </div>
+
+        <div class="card reveal reveal-delay-4">
+          <div class="card-icon">📋</div>
+          <h3 class="card-title">Paper Contracts</h3>
+          <p class="card-text">Rental agreements stored in filing cabinets, prone to damage and loss</p>
+        </div>
+
+        <div class="card reveal reveal-delay-4">
+          <div class="card-icon">🔍</div>
+          <h3 class="card-title">No Verification</h3>
+          <p class="card-text">No systematic background checking or landlord accreditation process</p>
+        </div>
+      </div>
+
+      <div class="card reveal reveal-delay-4" style="margin-top: clamp(1.5rem, 3vw, 2.5rem); background: rgba(255, 100, 100, 0.1); border-color: rgba(255, 100, 100, 0.3);">
+        <p class="card-text" style="text-align: center; color: #FF6B6B;">
+          ⚠️ <span class="highlight">Result:</span> Slow processing, lost records, and poor communication between all parties
+        </p>
+      </div>
+    </div>
+
+    <div class="slide-number">5 / 13</div>
+    <div class="accent-dots">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+  </div>
+
+  <!-- === SLIDE 5: PROBLEM IDENTIFICATION === -->
+  <div class="slide" data-slide="5">
+    <div class="content">
+      <h2 class="slide-title reveal">Problem Identification</h2>
+
       <div class="grid-2">
         <div class="card reveal reveal-delay-1">
           <div class="card-icon">🏠</div>
           <h3 class="card-title">Fragmented Market</h3>
-          <p class="card-text">Boarding house listings scattered across multiple platforms with no centralized marketplace</p>
+          <p class="card-text">Boarding house listings scattered across multiple platforms with no centralized marketplace for students to browse</p>
         </div>
-        
+
         <div class="card reveal reveal-delay-2">
           <div class="card-icon">📋</div>
           <h3 class="card-title">No Standard Process</h3>
-          <p class="card-text">Booking processes vary wildly, creating confusion and inefficiency for both parties</p>
+          <p class="card-text">Booking processes vary wildly between landlords, creating confusion and inefficiency for students and staff</p>
         </div>
-        
+
         <div class="card reveal reveal-delay-3">
           <div class="card-icon">🔒</div>
           <h3 class="card-title">Payment Concerns</h3>
-          <p class="card-text">No escrow-style protection creates trust issues and financial risk</p>
+          <p class="card-text">No secure payment system creates trust issues and financial risk for both landlords and tenants</p>
         </div>
-        
+
         <div class="card reveal reveal-delay-4">
           <div class="card-icon">💬</div>
           <h3 class="card-title">Poor Communication</h3>
-          <p class="card-text">Landlord-tenant communication relies on disconnected channels</p>
+          <p class="card-text">Landlord-tenant communication relies on disconnected channels (SMS, phone, social media)</p>
         </div>
       </div>
-      
+
       <div class="quote-block reveal reveal-delay-4" style="margin-top: clamp(2rem, 4vw, 3rem);">
-        <p class="quote-text">"The boarding house market is underserved and ready for disruption"</p>
+        <p class="quote-text">"The boarding house management process is manual, inefficient, and ready for digital transformation."</p>
       </div>
     </div>
-    
-    <div class="slide-number">2 / 11</div>
+
+    <div class="slide-number">6 / 13</div>
     <div class="accent-dots">
       <div class="dot"></div>
       <div class="dot"></div>
       <div class="dot"></div>
     </div>
   </div>
-  
-  <!-- === SLIDE 3: SOLUTION === -->
-  <div class="slide" data-slide="3">
+
+  <!-- === SLIDE 6: WHY IT IS A PROBLEM === -->
+  <div class="slide" data-slide="6">
     <div class="content">
-      <h2 class="slide-title reveal">The Solution</h2>
-      
+      <h2 class="slide-title reveal">Why It Is a Problem</h2>
+
+      <div class="stats-row reveal reveal-delay-1">
+        <div class="stat-item">
+          <div class="stat-value">Hours</div>
+          <div class="stat-label">Wasted Searching</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">Limited</div>
+          <div class="stat-label">Information Access</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">High</div>
+          <div class="stat-label">Complaints</div>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-top: clamp(2rem, 4vw, 3rem);">
+        <div class="card reveal reveal-delay-2">
+          <h3 class="card-title highlight">Impact on Students</h3>
+          <ul class="bullet-list" style="margin-top: 0.75rem;">
+            <li>Waste hours walking around looking for vacancies</li>
+            <li>Lack of transparent pricing information</li>
+            <li>Difficulty comparing options efficiently</li>
+            <li>No recourse for payment disputes</li>
+            <li>Missed classes due to house hunting</li>
+          </ul>
+        </div>
+
+        <div class="card reveal reveal-delay-3">
+          <h3 class="card-title highlight">Impact on Landlords</h3>
+          <ul class="bullet-list" style="margin-top: 0.75rem;">
+            <li>Manual record keeping leads to errors</li>
+            <li>Difficulty reaching potential tenants</li>
+            <li>Manual tenant screening process</li>
+            <li>Cash flow tracking challenges</li>
+            <li>No standardized rental agreements</li>
+          </ul>
+        </div>
+
+        <div class="card reveal reveal-delay-4" style="grid-column: span 2;">
+          <h3 class="card-title highlight">Overall Consequences</h3>
+          <ul class="bullet-list" style="margin-top: 0.75rem;">
+            <li>Causes delays in securing accommodation</li>
+            <li>Leads to inaccurate housing records</li>
+            <li>Creates inconvenience for all users</li>
+            <li>Limits scalability of housing options</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-number">7 / 13</div>
+    <div class="accent-dots">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+  </div>
+
+  <!-- === SLIDE 7: PROPOSED SOLUTION === -->
+  <div class="slide" data-slide="7">
+    <div class="content">
+      <h2 class="slide-title reveal">Proposed System Solution</h2>
+
       <div class="stats-row reveal reveal-delay-1">
         <div class="stat-item">
           <div class="stat-value">1</div>
@@ -731,464 +1021,361 @@
           <div class="stat-label">User Roles</div>
         </div>
         <div class="stat-item">
-          <div class="stat-value">∞</div>
-          <div class="stat-label">Possibilities</div>
+          <div class="stat-value">4</div>
+          <div class="stat-label">Applications</div>
         </div>
       </div>
-      
-      <div class="grid-3" style="margin-top: clamp(2rem, 4vw, 3rem);">
-        <div class="card reveal reveal-delay-2">
-          <div class="card-value">Boarders</div>
-          <p class="card-text">Browse, book, message, and pay securely—all in one place</p>
-        </div>
-        
-        <div class="card reveal reveal-delay-3">
-          <div class="card-value">Landlords</div>
-          <p class="card-text">Manage properties, screen tenants, track income effortlessly</p>
-        </div>
-        
-        <div class="card reveal reveal-delay-4">
-          <div class="card-value">Platform</div>
-          <p class="card-text">Scalable SaaS with multiple revenue streams</p>
-        </div>
+
+      <div class="card reveal reveal-delay-2" style="margin-top: clamp(2rem, 4vw, 3rem);">
+        <h3 class="card-title">System Overview</h3>
+        <p class="card-text" style="margin-top: 1rem;">
+          <span class="highlight">Haven Space</span> is a <span class="highlight">Web-Based and Mobile Boarding House Management System</span> that centralizes all boarding house operations into a single platform, connecting the administration office, landlords, and student boarders through role-based dashboards.
+        </p>
       </div>
-    </div>
-    
-    <div class="slide-number">3 / 11</div>
-    <div class="accent-dots">
-      <div class="dot"></div>
-      <div class="dot"></div>
-      <div class="dot"></div>
-    </div>
-  </div>
-  
-  <!-- === SLIDE 4: FEATURES === -->
-  <div class="slide" data-slide="4">
-    <div class="content">
-      <h2 class="slide-title reveal">Platform Features</h2>
-      
-      <div class="grid-2">
-        <div class="card reveal reveal-delay-1">
-          <div class="card-icon">🎯</div>
-          <h3 class="card-title">Public Marketplace</h3>
-          <ul class="bullet-list" style="margin-top: 0.75rem;">
-            <li>Advanced search with filters</li>
-            <li>Interactive map view</li>
-            <li>Photo galleries & descriptions</li>
-          </ul>
-        </div>
-        
-        <div class="card reveal reveal-delay-2">
-          <div class="card-icon">👤</div>
-          <h3 class="card-title">Boarder Dashboard</h3>
-          <ul class="bullet-list" style="margin-top: 0.75rem;">
-            <li>Booking history & favorites</li>
-            <li>In-platform messaging</li>
-            <li>Secure payments & receipts</li>
-          </ul>
-        </div>
-        
-        <div class="card reveal reveal-delay-3">
-          <div class="card-icon">🏢</div>
-          <h3 class="card-title">Landlord Portal</h3>
-          <ul class="bullet-list" style="margin-top: 0.75rem;">
-            <li>Multi-property management</li>
-            <li>Booking approval workflow</li>
-            <li>Revenue analytics</li>
-          </ul>
-        </div>
-        
-        <div class="card reveal reveal-delay-4">
-          <div class="card-icon">⚙️</div>
-          <h3 class="card-title">Admin Dashboard</h3>
-          <ul class="bullet-list" style="margin-top: 0.75rem;">
-            <li>User management</li>
-            <li>Content moderation</li>
-            <li>Platform analytics</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    
-    <div class="slide-number">4 / 11</div>
-    <div class="accent-dots">
-      <div class="dot"></div>
-      <div class="dot"></div>
-      <div class="dot"></div>
-    </div>
-  </div>
-  
-  <!-- === SLIDE 5: MARKET === -->
-  <div class="slide" data-slide="5">
-    <div class="content">
-      <h2 class="slide-title reveal">Market Opportunity</h2>
-      
-      <div class="grid-4" style="margin-bottom: clamp(2rem, 3vw, 3rem);">
-        <div class="card reveal reveal-delay-1" style="text-align: center;">
-          <div class="card-icon">🎓</div>
-          <div class="card-value" style="font-size: clamp(1.5rem, 4vw, 2.5rem);">200M+</div>
-          <p class="card-text">Students globally</p>
-        </div>
-        
-        <div class="card reveal reveal-delay-2" style="text-align: center;">
-          <div class="card-icon">💼</div>
-          <div class="card-value" style="font-size: clamp(1.5rem, 4vw, 2.5rem);">Growing</div>
-          <p class="card-text">Young professionals</p>
-        </div>
-        
-        <div class="card reveal reveal-delay-3" style="text-align: center;">
-          <div class="card-icon">👷</div>
-          <div class="card-value" style="font-size: clamp(1.5rem, 4vw, 2.5rem);">Significant</div>
-          <p class="card-text">Migrant workers</p>
-        </div>
-        
-        <div class="card reveal reveal-delay-4" style="text-align: center;">
-          <div class="card-icon">🏥</div>
-          <div class="card-value" style="font-size: clamp(1.5rem, 4vw, 2.5rem);">High-income</div>
-          <p class="card-text">Travel nurses</p>
-        </div>
-      </div>
-      
-      <div class="card reveal reveal-delay-4">
-        <h3 class="card-title" style="margin-bottom: 1rem;">Geographic Rollout</h3>
-        <div style="display: flex; gap: clamp(1rem, 2vw, 2rem); align-items: center; flex-wrap: wrap;">
-          <span class="highlight">Phase 1: Philippines</span>
-          <span style="color: var(--text-secondary);">→</span>
-          <span class="highlight">Phase 2: Southeast Asia</span>
-          <span style="color: var(--text-secondary);">→</span>
-          <span class="highlight">Phase 3: Global</span>
-        </div>
-      </div>
-    </div>
-    
-    <div class="slide-number">5 / 11</div>
-    <div class="accent-dots">
-      <div class="dot"></div>
-      <div class="dot"></div>
-      <div class="dot"></div>
-    </div>
-  </div>
-  
-  <!-- === SLIDE 6: BUSINESS MODEL === -->
-  <div class="slide" data-slide="6">
-    <div class="content">
-      <h2 class="slide-title reveal">Business Model</h2>
-      
-      <div class="table-container reveal reveal-delay-1">
-        <table class="data-table">
-          <thead>
-            <tr>
-              <th>Revenue Stream</th>
-              <th>Pricing</th>
-              <th>Margin</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><span class="highlight">Landlord Subscriptions</span></td>
-              <td>₱499-₱1,499/month</td>
-              <td>80%+</td>
-            </tr>
-            <tr>
-              <td><span class="highlight">Transaction Fees</span></td>
-              <td>2-3% per booking</td>
-              <td>95%+</td>
-            </tr>
-            <tr>
-              <td><span class="highlight">Featured Listings</span></td>
-              <td>₱100-₱500/listing</td>
-              <td>90%+</td>
-            </tr>
-            <tr>
-              <td><span class="highlight">Verification Services</span></td>
-              <td>₱200-₱500 one-time</td>
-              <td>85%+</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      
+
       <div class="grid-3" style="margin-top: clamp(1.5rem, 3vw, 2.5rem);">
-        <div class="card reveal reveal-delay-2">
-          <div class="card-text" style="font-size: clamp(0.75rem, 1.5vw, 0.875rem);">LTV:CAC Ratio</div>
-          <div class="card-value">15:1</div>
-        </div>
-        
         <div class="card reveal reveal-delay-3">
-          <div class="card-text" style="font-size: clamp(0.75rem, 1.5vw, 0.875rem);">Gross Margin</div>
-          <div class="card-value">80%+</div>
+          <div class="card-value" style="font-size: clamp(1.25rem, 3vw, 1.5rem);">Boarders</div>
+          <p class="card-text">Browse listings, book rooms, make secure payments, and communicate with landlords</p>
         </div>
-        
-        <div class="card reveal reveal-delay-4">
-          <div class="card-text" style="font-size: clamp(0.75rem, 1.5vw, 0.875rem);">Target MRR</div>
-          <div class="card-value">$50K</div>
+
+        <div class="card reveal reveal-delay-3">
+          <div class="card-value" style="font-size: clamp(1.25rem, 3vw, 1.5rem);">Landlords</div>
+          <p class="card-text">Manage properties, screen tenants, track bookings, and monitor income</p>
+        </div>
+
+        <div class="card reveal reveal-delay-3">
+          <div class="card-value" style="font-size: clamp(1.25rem, 3vw, 1.5rem);">Admin</div>
+          <p class="card-text">Oversee platform operations, manage users, and generate reports</p>
         </div>
       </div>
     </div>
-    
-    <div class="slide-number">6 / 11</div>
+
+    <div class="slide-number">8 / 13</div>
     <div class="accent-dots">
       <div class="dot"></div>
       <div class="dot"></div>
       <div class="dot"></div>
     </div>
   </div>
-  
-  <!-- === SLIDE 7: SUBSCRIPTION TIERS === -->
-  <div class="slide" data-slide="7">
-    <div class="content">
-      <h2 class="slide-title reveal">Subscription Tiers</h2>
-      
-      <div class="grid-4">
-        <div class="card reveal reveal-delay-1">
-          <div class="card-title" style="color: var(--text-secondary);">Free</div>
-          <div class="card-value" style="font-size: clamp(1.5rem, 3vw, 2rem);">₱0</div>
-          <ul class="bullet-list" style="margin-top: 1rem; font-size: clamp(0.75rem, 1.5vw, 0.875rem);">
-            <li>1 property</li>
-            <li>Basic listing</li>
-            <li>5% transaction fee</li>
-          </ul>
-        </div>
-        
-        <div class="card reveal reveal-delay-2" style="border-color: var(--accent-blue);">
-          <div class="card-title highlight">Starter</div>
-          <div class="card-value" style="font-size: clamp(1.5rem, 3vw, 2rem);">₱499<span style="font-size: 0.75em; color: var(--text-secondary);">/mo</span></div>
-          <ul class="bullet-list" style="margin-top: 1rem; font-size: clamp(0.75rem, 1.5vw, 0.875rem);">
-            <li>5 properties</li>
-            <li>Analytics</li>
-            <li>3% transaction fee</li>
-          </ul>
-        </div>
-        
-        <div class="card reveal reveal-delay-3" style="border-color: var(--accent-purple);">
-          <div class="card-title gradient-text">Professional</div>
-          <div class="card-value" style="font-size: clamp(1.5rem, 3vw, 2rem);">₱999<span style="font-size: 0.75em; color: var(--text-secondary);">/mo</span></div>
-          <ul class="bullet-list" style="margin-top: 1rem; font-size: clamp(0.75rem, 1.5vw, 0.875rem);">
-            <li>20 properties</li>
-            <li>Priority support</li>
-            <li>2% transaction fee</li>
-          </ul>
-        </div>
-        
-        <div class="card reveal reveal-delay-4" style="border-color: var(--accent-pink);">
-          <div class="card-title" style="color: var(--accent-pink);">Enterprise</div>
-          <div class="card-value" style="font-size: clamp(1.5rem, 3vw, 2rem);">₱1,499<span style="font-size: 0.75em; color: var(--text-secondary);">/mo</span></div>
-          <ul class="bullet-list" style="margin-top: 1rem; font-size: clamp(0.75rem, 1.5vw, 0.875rem);">
-            <li>Unlimited properties</li>
-            <li>API access</li>
-            <li>1.5% transaction fee</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    
-    <div class="slide-number">7 / 11</div>
-    <div class="accent-dots">
-      <div class="dot"></div>
-      <div class="dot"></div>
-      <div class="dot"></div>
-    </div>
-  </div>
-  
-  <!-- === SLIDE 8: TECHNOLOGY === -->
+
+  <!-- === SLIDE 8: SYSTEM FEATURES === -->
   <div class="slide" data-slide="8">
     <div class="content">
-      <h2 class="slide-title reveal">Technology Stack</h2>
-      
+      <h2 class="slide-title reveal">System Features</h2>
+
+      <div class="grid-2">
+        <div class="card reveal reveal-delay-1">
+          <div class="card-icon">👤</div>
+          <h3 class="card-title highlight">User Features (Boarders & Landlords)</h3>
+          <ul class="bullet-list" style="margin-top: 0.75rem;">
+            <li>User registration and login with role selection</li>
+            <li>Property listing browsing with search and filters</li>
+            <li>Interactive map view for location-based search</li>
+            <li>Online booking and reservation system</li>
+            <li>In-platform messaging and notifications</li>
+            <li>Secure payment processing with receipts</li>
+            <li>Booking history and favorites management</li>
+            <li>Profile management and document upload</li>
+          </ul>
+        </div>
+
+        <div class="card reveal reveal-delay-2">
+          <div class="card-icon">⚙️</div>
+          <h3 class="card-title highlight">Admin Features</h3>
+          <ul class="bullet-list" style="margin-top: 0.75rem;">
+            <li>User management (approve, suspend, verify)</li>
+            <li>Property listing moderation and approval</li>
+            <li>Booking oversight and dispute resolution</li>
+            <li>Payment monitoring and financial reports</li>
+            <li>Platform analytics and usage statistics</li>
+            <li>Content management and announcements</li>
+            <li>System activity logs and audit trails</li>
+            <li>Report generation (PDF/Excel export)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card reveal reveal-delay-3" style="margin-top: clamp(1.5rem, 3vw, 2.5rem);">
+        <h3 class="card-title">Multi-Tenant Architecture</h3>
+        <div class="grid-4" style="margin-top: 1rem;">
+          <div style="text-align: center;">
+            <div class="card-value" style="font-size: clamp(1.5rem, 3vw, 2rem);">Public</div>
+            <p class="card-text" style="font-size: clamp(0.75rem, 1.25vw, 0.875rem);">Marketplace</p>
+          </div>
+          <div style="text-align: center;">
+            <div class="card-value" style="font-size: clamp(1.5rem, 3vw, 2rem);">Boarder</div>
+            <p class="card-text" style="font-size: clamp(0.75rem, 1.25vw, 0.875rem);">Dashboard</p>
+          </div>
+          <div style="text-align: center;">
+            <div class="card-value" style="font-size: clamp(1.5rem, 3vw, 2rem);">Landlord</div>
+            <p class="card-text" style="font-size: clamp(0.75rem, 1.25vw, 0.875rem);">Portal</p>
+          </div>
+          <div style="text-align: center;">
+            <div class="card-value" style="font-size: clamp(1.5rem, 3vw, 2rem);">Admin</div>
+            <p class="card-text" style="font-size: clamp(0.75rem, 1.25vw, 0.875rem);">Dashboard</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-number">9 / 13</div>
+    <div class="accent-dots">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+  </div>
+
+  <!-- === SLIDE 9: DEVELOPMENT PLAN === -->
+  <div class="slide" data-slide="9">
+    <div class="content">
+      <h2 class="slide-title reveal">Development Plan</h2>
+
+      <div class="card reveal reveal-delay-1">
+        <h3 class="card-title">Development Methodology</h3>
+        <p class="card-text" style="margin-top: 0.5rem;"><span class="highlight">Agile Development</span> with iterative sprints and regular client feedback</p>
+      </div>
+
+      <div style="position: relative; padding: clamp(1rem, 2vw, 2rem) 0; margin-top: clamp(1.5rem, 3vw, 2.5rem); display: flex; flex-direction: column; align-items: center;">
+        <!-- Timeline line -->
+        <div style="position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; background: linear-gradient(180deg, var(--accent-blue), var(--accent-purple)); transform: translateX(-50%);"></div>
+
+        <div class="card reveal reveal-delay-2" style="position: relative; left: -27%; width: 45%; margin-bottom: clamp(1rem, 2vw, 2rem);">
+          <div class="card-title highlight">Phase 1: Analysis</div>
+          <p class="card-text">Problem analysis, requirements gathering, system design</p>
+        </div>
+
+        <div class="card reveal reveal-delay-3" style="position: relative; left: 27%; width: 45%; margin-bottom: clamp(1rem, 2vw, 2rem);">
+          <div class="card-title highlight">Phase 2: Development</div>
+          <p class="card-text">Core features implementation, database setup, API development</p>
+        </div>
+
+        <div class="card reveal reveal-delay-3" style="position: relative; left: -27%; width: 45%; margin-bottom: clamp(1rem, 2vw, 2rem);">
+          <div class="card-title highlight">Phase 3: Testing</div>
+          <p class="card-text">User acceptance testing, bug fixes, performance optimization</p>
+        </div>
+
+        <div class="card reveal reveal-delay-4" style="position: relative; left: 27%; width: 45%;">
+          <div class="card-title highlight">Phase 4: Deployment</div>
+          <p class="card-text">System deployment, user training, documentation handover</p>
+        </div>
+      </div>
+
+      <div class="grid-3" style="margin-top: clamp(2rem, 4vw, 3rem);">
+        <div class="card reveal reveal-delay-4">
+          <div class="card-value" style="font-size: clamp(1.5rem, 3vw, 2rem);">12</div>
+          <p class="card-text">Weeks Total</p>
+        </div>
+        <div class="card reveal reveal-delay-4">
+          <div class="card-value" style="font-size: clamp(1.5rem, 3vw, 2rem);">4</div>
+          <p class="card-text">Development Sprints</p>
+        </div>
+        <div class="card reveal reveal-delay-4">
+          <div class="card-value" style="font-size: clamp(1.5rem, 3vw, 2rem);">Weekly</div>
+          <p class="card-text">Client Check-ins</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-number">10 / 13</div>
+    <div class="accent-dots">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+  </div>
+
+  <!-- === SLIDE 10: TECHNOLOGIES === -->
+  <div class="slide" data-slide="10">
+    <div class="content">
+      <h2 class="slide-title reveal">Technologies to be Used</h2>
+
       <div class="grid-2">
         <div class="card reveal reveal-delay-1">
           <h3 class="card-title">Frontend</h3>
           <ul class="bullet-list" style="margin-top: 0.75rem;">
-            <li>Next.js 16</li>
-            <li>React 18</li>
-            <li>TypeScript</li>
-            <li>Tailwind CSS + Radix UI</li>
+            <li>Next.js 16 (React Framework)</li>
+            <li>React 18 (Component Library)</li>
+            <li>TypeScript (Type Safety)</li>
+            <li>Tailwind CSS + Radix UI (Styling)</li>
           </ul>
         </div>
-        
+
         <div class="card reveal reveal-delay-2">
           <h3 class="card-title">Backend</h3>
           <ul class="bullet-list" style="margin-top: 0.75rem;">
-            <li>tRPC (type-safe APIs)</li>
-            <li>Express.js</li>
-            <li>NextAuth.js</li>
-            <li>Role-based access control</li>
+            <li>tRPC (Type-Safe APIs)</li>
+            <li>Express.js (Server Framework)</li>
+            <li>NextAuth.js (Authentication)</li>
+            <li>Role-Based Access Control</li>
           </ul>
         </div>
-        
+
         <div class="card reveal reveal-delay-3">
           <h3 class="card-title">Database</h3>
           <ul class="bullet-list" style="margin-top: 0.75rem;">
-            <li>PostgreSQL 15</li>
-            <li>Prisma ORM</li>
-            <li>Redis caching</li>
+            <li>PostgreSQL 15 (Primary Database)</li>
+            <li>Prisma ORM (Database Client)</li>
+            <li>Redis (Session Caching)</li>
           </ul>
         </div>
-        
+
         <div class="card reveal reveal-delay-4">
           <h3 class="card-title">Infrastructure</h3>
           <ul class="bullet-list" style="margin-top: 0.75rem;">
-            <li>Turborepo monorepo</li>
-            <li>Docker containerization</li>
-            <li>Nginx reverse proxy</li>
-            <li>GitHub Actions CI/CD</li>
+            <li>Turborepo (Monorepo Build Tool)</li>
+            <li>Docker (Containerization)</li>
+            <li>Nginx (Reverse Proxy)</li>
+            <li>GitHub Actions (CI/CD)</li>
           </ul>
         </div>
       </div>
-      
-      <p class="reveal reveal-delay-4" style="margin-top: clamp(1.5rem, 3vw, 2.5rem); color: var(--text-secondary); text-align: center;">
-        <span class="highlight">Production-ready</span> • <span class="highlight">Scalable architecture</span> • <span class="highlight">Docker-ready deployment</span>
-      </p>
+
+      <div class="card reveal reveal-delay-4" style="margin-top: clamp(1.5rem, 3vw, 2.5rem); background: rgba(0, 212, 255, 0.1); border-color: var(--accent-blue);">
+        <p class="card-text" style="text-align: center;">
+          <span class="highlight">Production-Ready Stack</span> • <span class="highlight">Scalable Architecture</span> • <span class="highlight">Modern Development Tools</span>
+        </p>
+      </div>
     </div>
-    
-    <div class="slide-number">8 / 11</div>
+
+    <div class="slide-number">11 / 13</div>
     <div class="accent-dots">
       <div class="dot"></div>
       <div class="dot"></div>
       <div class="dot"></div>
     </div>
   </div>
-  
-  <!-- === SLIDE 9: ROADMAP === -->
-  <div class="slide" data-slide="9">
-    <div class="content">
-      <h2 class="slide-title reveal">12-Month Roadmap</h2>
-      
-      <div style="position: relative; padding: clamp(1rem, 2vw, 2rem) 0;">
-        <!-- Timeline line -->
-        <div style="position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; background: linear-gradient(180deg, var(--accent-blue), var(--accent-purple)); transform: translateX(-50%);"></div>
-        
-        <div class="card reveal reveal-delay-1" style="position: relative; left: -52%; width: 48%; margin-bottom: clamp(1rem, 2vw, 2rem);">
-          <div class="card-title highlight">Q1 - Beta Launch</div>
-          <p class="card-text">100 landlords, 500 boarders</p>
-        </div>
-        
-        <div class="card reveal reveal-delay-2" style="position: relative; left: 2%; width: 48%; margin-bottom: clamp(1rem, 2vw, 2rem);">
-          <div class="card-title highlight">Q2 - Market Entry</div>
-          <p class="card-text">500 landlords, 2,500 boarders</p>
-        </div>
-        
-        <div class="card reveal reveal-delay-3" style="position: relative; left: -52%; width: 48%; margin-bottom: clamp(1rem, 2vw, 2rem);">
-          <div class="card-title highlight">Q3 - Scale & Optimize</div>
-          <p class="card-text">2,000 landlords, 10,000 boarders</p>
-        </div>
-        
-        <div class="card reveal reveal-delay-4" style="position: relative; left: 2%; width: 48%;">
-          <div class="card-title highlight">Q4 - Expansion</div>
-          <p class="card-text">5,000 landlords, 25,000 boarders</p>
-        </div>
-      </div>
-    </div>
-    
-    <div class="slide-number">9 / 11</div>
-    <div class="accent-dots">
-      <div class="dot"></div>
-      <div class="dot"></div>
-      <div class="dot"></div>
-    </div>
-  </div>
-  
-  <!-- === SLIDE 10: METRICS === -->
-  <div class="slide" data-slide="10">
-    <div class="content">
-      <h2 class="slide-title reveal">Key Performance Indicators</h2>
-      
-      <div class="grid-2" style="margin-top: clamp(2rem, 3vw, 3rem);">
-        <div class="card reveal reveal-delay-1">
-          <div class="card-text">Monthly Active Users</div>
-          <div class="card-value">10,000+</div>
-          <p class="card-text" style="margin-top: 0.5rem;">Target by Year 1</p>
-        </div>
-        
-        <div class="card reveal reveal-delay-2">
-          <div class="card-text">Booking Conversion Rate</div>
-          <div class="card-value">15%+</div>
-          <p class="card-text" style="margin-top: 0.5rem;">Engagement metric</p>
-        </div>
-        
-        <div class="card reveal reveal-delay-3">
-          <div class="card-text">Monthly Recurring Revenue</div>
-          <div class="card-value">$50K+</div>
-          <p class="card-text" style="margin-top: 0.5rem;">Target by Year 1</p>
-        </div>
-        
-        <div class="card reveal reveal-delay-4">
-          <div class="card-text">Landlord Retention</div>
-          <div class="card-value">85%+</div>
-          <p class="card-text" style="margin-top: 0.5rem;">Retention metric</p>
-        </div>
-      </div>
-      
-      <div class="card reveal reveal-delay-4" style="margin-top: clamp(1.5rem, 3vw, 2.5rem);">
-        <div class="card-text">Net Promoter Score</div>
-        <div class="card-value" style="font-size: clamp(2rem, 5vw, 3rem);">50+</div>
-      </div>
-    </div>
-    
-    <div class="slide-number">10 / 11</div>
-    <div class="accent-dots">
-      <div class="dot"></div>
-      <div class="dot"></div>
-      <div class="dot"></div>
-    </div>
-  </div>
-  
-  <!-- === SLIDE 11: CTA === -->
+
+  <!-- === SLIDE 11: EXPECTED BENEFITS === -->
   <div class="slide" data-slide="11">
+    <div class="content">
+      <h2 class="slide-title reveal">Expected Benefits</h2>
+
+      <div class="stats-row reveal reveal-delay-1">
+        <div class="stat-item">
+          <div class="stat-value">70%</div>
+          <div class="stat-label">Time Savings</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">90%</div>
+          <div class="stat-label">Data Accuracy</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">100%</div>
+          <div class="stat-label">Digital Records</div>
+        </div>
+      </div>
+
+      <div class="grid-3" style="margin-top: clamp(2rem, 4vw, 3rem);">
+        <div class="card reveal reveal-delay-2">
+          <div class="card-icon">🎯</div>
+          <h3 class="card-title highlight">For Students</h3>
+          <ul class="bullet-list" style="margin-top: 0.75rem; font-size: clamp(0.8rem, 1.5vw, 0.9rem);">
+            <li>Faster accommodation search</li>
+            <li>Transparent pricing and availability</li>
+            <li>Secure payment processing</li>
+            <li>Direct communication with landlords</li>
+          </ul>
+        </div>
+
+        <div class="card reveal reveal-delay-3">
+          <div class="card-icon">🏢</div>
+          <h3 class="card-title highlight">For Administration</h3>
+          <ul class="bullet-list" style="margin-top: 0.75rem; font-size: clamp(0.8rem, 1.5vw, 0.9rem);">
+            <li>Centralized data management</li>
+            <li>Automated report generation</li>
+            <li>Improved service delivery</li>
+            <li>Better oversight and monitoring</li>
+          </ul>
+        </div>
+
+        <div class="card reveal reveal-delay-4">
+          <div class="card-icon">🏠</div>
+          <h3 class="card-title highlight">For Landlords</h3>
+          <ul class="bullet-list" style="margin-top: 0.75rem; font-size: clamp(0.8rem, 1.5vw, 0.9rem);">
+            <li>Wider tenant reach</li>
+            <li>Streamlined booking process</li>
+            <li>Automated income tracking</li>
+            <li>Digital rental agreements</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="quote-block reveal reveal-delay-4" style="margin-top: clamp(2rem, 4vw, 3rem);">
+        <p class="quote-text">"Haven Space will transform how boarding houses are discovered, managed, and experienced."</p>
+      </div>
+    </div>
+
+    <div class="slide-number">12 / 13</div>
+    <div class="accent-dots">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+  </div>
+
+  <!-- === SLIDE 12: CONCLUSION === -->
+  <div class="slide" data-slide="12">
     <div class="content" style="text-align: center;">
       <div class="header reveal" style="justify-content: center;">
         <div class="logo-mark">H</div>
         <span class="logo-text">Haven Space</span>
       </div>
-      
-      <h2 class="slide-title reveal reveal-delay-1" style="margin-top: clamp(1rem, 2vw, 2rem);">Let's Build the Future<br>of Flexible Housing</h2>
-      
-      <div class="cta-box reveal reveal-delay-2" style="margin-top: clamp(2rem, 4vw, 3rem);">
-        <h3 class="cta-title">For Investors</h3>
-        <p class="cta-text">
-          The boarding house market is underserved and ready for disruption.<br>
-          Let's talk about how Haven Space can deliver 10x returns while solving a real problem for millions.
+
+      <h2 class="slide-title reveal reveal-delay-1" style="margin-top: clamp(1rem, 2vw, 2rem);">Conclusion</h2>
+
+      <div class="card reveal reveal-delay-2" style="margin-top: clamp(1.5rem, 3vw, 2.5rem);">
+        <p class="card-text" style="font-size: clamp(1rem, 2vw, 1.125rem); line-height: 1.8;">
+          Haven Space addresses the <span class="highlight">real problem</span> of manual boarding house management faced by the administration office.<br><br>
+          Our proposed <span class="highlight">web-based system</span> provides a practical, feasible solution using modern technologies that the team is proficient in.<br><br>
+          The system features are <span class="highlight">well-defined and realistic</span>, directly addressing the client's needs for centralized management, improved communication, and secure transactions.
         </p>
-        <div class="cta-contact">📧 investors@havenspace.com</div>
       </div>
-      
+
       <div class="grid-3" style="margin-top: clamp(2rem, 4vw, 3rem);">
         <div class="card reveal reveal-delay-3">
-          <div class="card-title">Landlords</div>
-          <p class="card-text">First 100 get 6 months FREE Professional plan</p>
+          <div class="card-value" style="font-size: clamp(1.25rem, 3vw, 1.5rem);">✓ Clear Problem</div>
+          <p class="card-text">Manual processes identified</p>
         </div>
-        
+
         <div class="card reveal reveal-delay-3">
-          <div class="card-title">Boarders</div>
-          <p class="card-text">Join waitlist - get ₱500 off first booking</p>
+          <div class="card-value" style="font-size: clamp(1.25rem, 3vw, 1.5rem);">✓ Logical Solution</div>
+          <p class="card-text">Web-based platform proposed</p>
         </div>
-        
+
         <div class="card reveal reveal-delay-3">
-          <div class="card-title">Partners</div>
-          <p class="card-text">Universities & payment providers welcome</p>
+          <div class="card-value" style="font-size: clamp(1.25rem, 3vw, 1.5rem);">✓ Practical Plan</div>
+          <p class="card-text">12-week Agile development</p>
         </div>
       </div>
-      
+
+      <div class="cta-box reveal reveal-delay-4" style="margin-top: clamp(2rem, 4vw, 3rem);">
+        <h3 class="cta-title">Thank You</h3>
+        <p class="cta-text">We are ready to answer your questions</p>
+        <div class="cta-contact" style="margin-top: 1rem;">📧 havenspace.team@email.com</div>
+      </div>
+
       <p class="reveal reveal-delay-4" style="margin-top: clamp(2rem, 4vw, 3rem); color: var(--text-secondary);">
         Where Landlords Meet Boarders—Seamlessly.
       </p>
     </div>
-    
-    <div class="slide-number">11 / 11</div>
+
+    <div class="slide-number">13 / 13</div>
     <div class="accent-dots">
       <div class="dot"></div>
       <div class="dot"></div>
       <div class="dot"></div>
     </div>
   </div>
-  
+
   <!-- === JAVASCRIPT === -->
   <script>
     // === NAVIGATION STATE ===
     let currentSlide = 1;
-    const totalSlides = 11;
+    const totalSlides = 13;
     let editMode = false;
-    
+
     // === INITIALIZATION ===
     document.addEventListener('DOMContentLoaded', () => {
       initNavDots();
@@ -1196,7 +1383,7 @@
       loadSavedContent();
       initKeyboardNavigation();
       initTouchNavigation();
-      
+
       // Trigger initial animations
       setTimeout(() => {
         document.querySelectorAll('.slide.active .reveal').forEach(el => {
@@ -1204,7 +1391,7 @@
         });
       }, 100);
     });
-    
+
     // === NAVIGATION DOTS ===
     function initNavDots() {
       const navDots = document.getElementById('navDots');
@@ -1216,50 +1403,50 @@
         navDots.appendChild(dot);
       }
     }
-    
+
     // === SLIDE NAVIGATION ===
     function goToSlide(slideNum) {
       if (slideNum < 1 || slideNum > totalSlides) return;
-      
+
       // Remove active class from current slide
       document.querySelector('.slide.active').classList.remove('active');
       document.querySelector('.nav-dot.active').classList.remove('active');
-      
+
       // Add active class to new slide
       currentSlide = slideNum;
       document.querySelector('.slide[data-slide="' + slideNum + '"]').classList.add('active');
       document.querySelectorAll('.nav-dot')[slideNum - 1].classList.add('active');
-      
+
       // Trigger animations
       setTimeout(() => {
         document.querySelectorAll('.slide[data-slide="' + slideNum + '"] .reveal').forEach(el => {
           el.classList.add('active');
         });
       }, 50);
-      
+
       updateNavigation();
       saveProgress();
     }
-    
+
     function nextSlide() {
       if (currentSlide < totalSlides) {
         goToSlide(currentSlide + 1);
       }
     }
-    
+
     function prevSlide() {
       if (currentSlide > 1) {
         goToSlide(currentSlide - 1);
       }
     }
-    
+
     // === PROGRESS BAR ===
     function updateNavigation() {
       const progressBar = document.getElementById('progressBar');
       const progress = ((currentSlide - 1) / (totalSlides - 1)) * 100;
       progressBar.style.width = progress + '%';
     }
-    
+
     // === KEYBOARD NAVIGATION ===
     function initKeyboardNavigation() {
       document.addEventListener('keydown', (e) => {
@@ -1270,7 +1457,7 @@
             return;
           }
         }
-        
+
         // Save in edit mode
         if ((e.ctrlKey || e.metaKey) && e.key === 's') {
           if (editMode) {
@@ -1279,10 +1466,10 @@
           }
           return;
         }
-        
+
         // Don't navigate while editing
         if (editMode && document.activeElement.isContentEditable) return;
-        
+
         switch(e.key) {
           case 'ArrowRight':
           case 'ArrowDown':
@@ -1308,26 +1495,26 @@
         }
       });
     }
-    
+
     // === TOUCH NAVIGATION ===
     function initTouchNavigation() {
       let touchStartX = 0;
       let touchStartY = 0;
-      
+
       document.addEventListener('touchstart', (e) => {
         touchStartX = e.touches[0].clientX;
         touchStartY = e.touches[0].clientY;
       }, { passive: true });
-      
+
       document.addEventListener('touchend', (e) => {
         if (!touchStartX || !touchStartY) return;
-        
+
         const touchEndX = e.changedTouches[0].clientX;
         const touchEndY = e.changedTouches[0].clientY;
-        
+
         const diffX = touchStartX - touchEndX;
         const diffY = touchStartY - touchEndY;
-        
+
         // Horizontal swipe
         if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
           if (diffX > 0) {
@@ -1336,18 +1523,18 @@
             prevSlide();
           }
         }
-        
+
         touchStartX = 0;
         touchStartY = 0;
       }, { passive: true });
     }
-    
+
     // === EDIT MODE ===
     function toggleEditMode() {
       editMode = !editMode;
       document.body.classList.toggle('edit-mode', editMode);
       document.getElementById('editIndicator').classList.toggle('active', editMode);
-      
+
       if (editMode) {
         // Make all text elements editable
         document.querySelectorAll('.editable, .slide-title, .card-title, .card-text, .cta-text, .quote-text, .stat-label, .bullet-list li').forEach(el => {
@@ -1361,7 +1548,7 @@
         saveContent();
       }
     }
-    
+
     function saveContent() {
       const content = {};
       document.querySelectorAll('.slide').forEach(slide => {
@@ -1369,13 +1556,13 @@
         content[slideNum] = slide.innerHTML;
       });
       localStorage.setItem('haven-space-pitch-content', JSON.stringify(content));
-      
+
       // Show save notification
       const notification = document.getElementById('saveNotification');
       notification.classList.add('show');
       setTimeout(() => notification.classList.remove('show'), 2000);
     }
-    
+
     function loadSavedContent() {
       const saved = localStorage.getItem('haven-space-pitch-content');
       if (saved) {
@@ -1392,16 +1579,16 @@
         }
       }
     }
-    
+
     function saveProgress() {
       localStorage.setItem('haven-space-pitch-slide', currentSlide.toString());
     }
-    
+
     // === MOUSE WHEEL NAVIGATION ===
     let wheelTimeout = null;
     document.addEventListener('wheel', (e) => {
       if (editMode) return;
-      
+
       clearTimeout(wheelTimeout);
       wheelTimeout = setTimeout(() => {
         if (e.deltaY > 0) {
