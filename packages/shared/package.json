@@ -52,7 +52,7 @@
     "react-day-picker": "^9.13.0",
     "react-hook-form": "^7.48.2",
     "tailwind-merge": "^3.5.0",
-    "zustand": "^4.4.7",
+    "zustand": "^5.0.12",
     "zod": "^4.3.6"
   },
   "devDependencies": {
