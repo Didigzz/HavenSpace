@@ -1,3 +1,3 @@
-import config from "@bhms/eslint-config/next.js";
+import config from "@havenspace/config/eslint/next.js";
 
 export default config;

@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "../trpc";
 import { TRPCError } from "@trpc/server";
-import type { TRPCContext, HavenSession, LandlordTRPCContext } from "../types/index";
+import type { LandlordTRPCContext, TRPCContext } from "../types/index";
 import {
   createPropertySchema,
   updatePropertySchema,
@@ -17,7 +17,6 @@ interface LandlordCtx<TInput = unknown> {
 type GetAllInput = z.infer<typeof getAllInputSchema>;
 
 type GetByIdInput = z.infer<typeof getPropertyByIdSchema>;
-type GetMyPropertiesInput = void;
 type CreatePropertyInput = z.infer<typeof createPropertySchema>;
 type UpdatePropertyInput = z.infer<typeof updatePropertySchema>;
 type DeletePropertyInput = z.infer<typeof deletePropertySchema>;
@@ -50,7 +49,7 @@ export const createPropertyRouter = (
     getAll: publicProcedure
       .input(getAllInputSchema)
       .query(async ({ ctx, input }: { ctx: TRPCContext; input: GetAllInput }) => {
-        const { page, limit, query, city, priceMin, priceMax, amenities, availableOnly, isPublished } =
+        const { page, limit, query, city, priceMin, priceMax, amenities } =
           input;
         const skip = (page - 1) * limit;
 

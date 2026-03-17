@@ -1,6 +1,5 @@
 import { z } from "zod";
 import { publicProcedure } from "../../../orpc";
-import { ORPCError } from "@orpc/server";
 import {
   registerSchema,
   changePasswordSchema

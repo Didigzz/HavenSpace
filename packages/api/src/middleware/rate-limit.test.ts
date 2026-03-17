@@ -188,15 +188,16 @@ describe('Rate Limit Middleware', () => {
 
   it('should cleanup old entries', () => {
     vi.useRealTimers();
-    
-    // Add some entries
+
+    // Add some entries - middleware not used in this test
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const middleware = createRateLimitMiddleware({
       windowMs: 1000,
       maxRequests: 5,
     });
 
     cleanupRateLimitStore();
-    
+
     // Should not throw
     expect(() => cleanupRateLimitStore()).not.toThrow();
   });

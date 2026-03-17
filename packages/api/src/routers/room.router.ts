@@ -5,7 +5,7 @@ import {
   updateRoomSchema,
   RoomStatusEnum
 } from "@havenspace/validation";
-import type { TRPCContext, HavenSession, ProtectedTRPCContext } from "../types/index";
+import type { ProtectedTRPCContext } from "../types/index";
 
 // Type helpers
 interface AuthenticatedCtx<TInput = unknown> {

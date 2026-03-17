@@ -41,9 +41,11 @@ function getRedisClient(): Redis | null {
         });
 
         redisClient.on("connect", () => {
+          // eslint-disable-next-line no-console
           console.log("[Rate Limit] Connected to Redis");
         });
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("[Rate Limit] Failed to initialize Redis:", error);
       }
     }

@@ -1,4 +1,3 @@
-import { Payment } from '../entities/payment.entity';
 import { IPaymentRepository } from '../repositories/payment.repository.interface';
 
 /**

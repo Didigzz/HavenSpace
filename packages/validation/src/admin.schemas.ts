@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { paginationSchema, idSchema, requiredStringSchema, emailSchema } from './common.schemas';
+import { paginationSchema, idSchema, emailSchema } from './common.schemas';
 import { UserRoleEnum, UserStatusEnum } from './user.schemas';
 
 /**

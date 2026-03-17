@@ -1,8 +1,7 @@
 import { z } from "zod";
-import { TRPCError } from "@trpc/server";
-import { createTRPCRouter, publicProcedure } from "../trpc";
+import { createTRPCRouter } from "../trpc";
 import { db } from "@havenspace/database";
-import type { TRPCContext, HavenSession, AdminTRPCContext } from "../types/index";
+import type { AdminTRPCContext } from "../types/index";
 
 // Type helpers
 interface AdminCtx<TInput = unknown> {
@@ -49,19 +48,6 @@ const getRecentSchema = z.object({
 });
 
 // Type definitions for audit log types
-interface AuditLog {
-  id: string;
-  userId: string | null;
-  action: string;
-  entity: string;
-  entityId: string | null;
-  oldValue: unknown | null;
-  newValue: unknown | null;
-  timestamp: Date;
-  ipAddress: string | null;
-  userAgent: string | null;
-}
-
 interface AuditLogStats {
   total: number;
   byAction: Array<{ action: string; count: number }>;

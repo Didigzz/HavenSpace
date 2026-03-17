@@ -8,6 +8,7 @@ import type { TRPCContext, HavenSession, UserRole, UserStatus } from "@havenspac
 export function createAuthMiddleware(
   getSession: (ctx: TRPCContext) => Promise<HavenSession | null>
 ) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return async ({ ctx, next }: { ctx: TRPCContext; next: any }) => {
     const session = await getSession(ctx);
 
@@ -28,6 +29,7 @@ export function createAuthMiddleware(
  * Create role-based middleware
  */
 export function createRoleMiddleware(requiredRole: UserRole) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return ({ ctx, next }: { ctx: TRPCContext & { session: HavenSession }; next: any }) => {
     if (!ctx.session?.user || ctx.session.user.role !== requiredRole) {
       throw new TRPCError({ code: "FORBIDDEN" });
@@ -42,6 +44,7 @@ export function createRoleMiddleware(requiredRole: UserRole) {
 export function createStatusMiddleware(requiredStatus: UserStatus | UserStatus[]) {
   const allowedStatuses = Array.isArray(requiredStatus) ? requiredStatus : [requiredStatus];
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return ({ ctx, next }: { ctx: TRPCContext & { session: HavenSession }; next: any }) => {
     if (!ctx.session?.user || !allowedStatuses.includes(ctx.session.user.status)) {
       throw new TRPCError({
@@ -57,6 +60,7 @@ export function createStatusMiddleware(requiredStatus: UserStatus | UserStatus[]
  * Create landlord-only middleware (requires APPROVED status)
  */
 export function createLandlordMiddleware() {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return ({ ctx, next }: { ctx: TRPCContext & { session: HavenSession }; next: any }) => {
     if (!ctx.session?.user) {
       throw new TRPCError({ code: "UNAUTHORIZED" });
@@ -81,6 +85,7 @@ export function createLandlordMiddleware() {
  * Create boarder-only middleware (requires non-SUSPENDED status)
  */
 export function createBoarderMiddleware() {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return ({ ctx, next }: { ctx: TRPCContext & { session: HavenSession }; next: any }) => {
     if (!ctx.session?.user) {
       throw new TRPCError({ code: "UNAUTHORIZED" });
@@ -105,6 +110,7 @@ export function createBoarderMiddleware() {
  * Create admin middleware
  */
 export function createAdminMiddleware() {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return ({ ctx, next }: { ctx: TRPCContext & { session: HavenSession }; next: any }) => {
     if (!ctx.session?.user) {
       throw new TRPCError({ code: "UNAUTHORIZED" });

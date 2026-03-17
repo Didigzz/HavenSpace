@@ -1,5 +1,4 @@
-import { os, ORPCError } from "@orpc/server";
-import { ZodError } from "zod";
+import { os } from "@orpc/server";
 import { db } from "@havenspace/database";
 
 export const createORPCContext = async (opts: { headers: Headers }) => {

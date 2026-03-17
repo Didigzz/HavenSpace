@@ -8,7 +8,7 @@ export class UserRole extends ValueObject<string> {
   }
 
   static create(value: string): UserRole {
-    if (!UserRole.VALID_ROLES.includes(value as any)) {
+    if (!Array.prototype.includes.call(UserRole.VALID_ROLES, value)) {
       throw new Error(`Invalid user role: ${value}`);
     }
     return new UserRole(value);

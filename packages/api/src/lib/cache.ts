@@ -36,11 +36,13 @@ export function getRedisClient(): Redis | null {
     });
 
     redisClient.on("connect", () => {
+      // eslint-disable-next-line no-console
       console.log("[Redis] Connected successfully");
     });
 
     return redisClient;
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error("[Redis] Failed to create client:", error);
     return null;
   }

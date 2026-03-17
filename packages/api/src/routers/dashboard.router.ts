@@ -1,5 +1,5 @@
 import { createTRPCRouter } from "../trpc";
-import type { TRPCContext, HavenSession, ProtectedTRPCContext } from "../types/index";
+import type { ProtectedTRPCContext } from "../types/index";
 
 // Type helpers
 interface AuthenticatedCtx<TInput = unknown> {

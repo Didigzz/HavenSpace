@@ -4,7 +4,7 @@ import { ZodError } from "zod";
 import { db } from "@havenspace/database";
 import { createRateLimitMiddleware, rateLimits } from "./middleware/rate-limit";
 import { verifyCSRFToken } from "./lib/csrf";
-import type { TRPCContext, HavenSession, MiddlewareFn, ProcedureOpts } from "./types/index";
+import type { TRPCContext, HavenSession, UserStatus } from "./types/index";
 
 export const createTRPCContext = async (opts: {
   headers: Headers;
@@ -56,6 +56,7 @@ const timingMiddleware = t.middleware(async ({ next, path }) => {
   const result = await next();
 
   const end = Date.now();
+  // eslint-disable-next-line no-console
   console.log(`[TRPC] ${path} took ${end - start}ms to execute`);
 
   return result;
@@ -166,7 +167,7 @@ export const createStatusMiddleware = (
       ? requiredStatus
       : [requiredStatus];
 
-    if (!allowedStatuses.includes(ctx.session.user.status)) {
+    if (!Array.prototype.includes.call(allowedStatuses, ctx.session.user.status)) {
       throw new TRPCError({
         code: "FORBIDDEN",
         message: `This action requires one of these statuses: ${allowedStatuses.join(", ")}`,

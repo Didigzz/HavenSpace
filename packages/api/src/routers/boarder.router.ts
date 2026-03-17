@@ -1,12 +1,11 @@
 import { z } from "zod";
-import { createTRPCRouter, publicProcedure, createProtectedProcedure } from "../trpc";
+import { createTRPCRouter } from "../trpc";
 import {
   createBoarderSchema,
-  updateBoarderSchema,
-  searchSchema
+  updateBoarderSchema
 } from "@havenspace/validation";
 import { TRPCError } from "@trpc/server";
-import type { TRPCContext, HavenSession, ProtectedTRPCContext } from "../types/index";
+import type { ProtectedTRPCContext } from "../types/index";
 
 // Type helpers
 type GetAllInput = z.infer<typeof getAllBoardersSchema>;

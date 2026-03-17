@@ -13,9 +13,6 @@ import { TRPCError } from "@trpc/server";
 // Import Prisma types conditionally - using any to avoid compilation errors
 type PrismaClient = any;
 
-// Import next-auth types conditionally
-type Session = any;
-
 /**
  * User role and status types
  */

@@ -104,7 +104,7 @@ export function validateFileType(
     return; // No type restrictions
   }
 
-  if (!allowedMimeTypes.includes(file.type)) {
+  if (!Array.prototype.includes.call(allowedMimeTypes, file.type)) {
     throw new TRPCError({
       code: "BAD_REQUEST",
       message: `File type "${file.type}" is not allowed. Allowed types: ${allowedMimeTypes.join(", ")}`,
@@ -124,8 +124,8 @@ export function validateFileExtension(
   }
 
   const extension = "." + file.name.split(".").pop()?.toLowerCase();
-  
-  if (!allowedExtensions.includes(extension)) {
+
+  if (!Array.prototype.includes.call(allowedExtensions, extension)) {
     throw new TRPCError({
       code: "BAD_REQUEST",
       message: `File extension "${extension}" is not allowed. Allowed extensions: ${allowedExtensions.join(", ")}`,
@@ -138,8 +138,8 @@ export function validateFileExtension(
  * This is a placeholder that should be implemented with actual image processing
  */
 export async function validateImageDimensions(
-  file: FileMetadata,
-  options: {
+  _file: FileMetadata,
+  _options: {
     maxWidth?: number;
     maxHeight?: number;
     minDimensions?: { width: number; height: number };
@@ -150,7 +150,7 @@ export async function validateImageDimensions(
   // const sharp = require('sharp');
   // const metadata = await sharp(file.path || file.buffer).metadata();
   // const { width, height } = metadata;
-  
+
   // For now, we'll skip actual dimension validation
   // This should be implemented when integrating with actual file storage
   console.warn("[Upload] Image dimension validation not implemented - skipping");
@@ -167,14 +167,15 @@ export function generateUniqueFilename(
   const random = Math.random().toString(36).substring(2, 8);
   const extension = originalName.split(".").pop();
   const baseName = originalName.split(".").slice(0, -1).join(".") || "file";
-  
-  // Sanitize filename
+
+  // Sanitize filename (currently unused, keeping for future use)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const sanitizedBase = baseName
     .toLowerCase()
     .replace(/[^a-z0-9-]/g, "-")
     .replace(/-+/g, "-")
     .substring(0, 50);
-  
+
   return `${prefix}${prefix ? "-" : ""}${timestamp}-${random}.${extension}`;
 }
 

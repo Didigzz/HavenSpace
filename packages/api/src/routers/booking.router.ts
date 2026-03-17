@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { createTRPCRouter, publicProcedure } from "../trpc";
+import { createTRPCRouter } from "../trpc";
 import { TRPCError } from "@trpc/server";
-import type { TRPCContext, HavenSession, BoarderTRPCContext, LandlordTRPCContext } from "../types/index";
+import type { BoarderTRPCContext, LandlordTRPCContext } from "../types/index";
 
 // Type helpers
 interface BoarderCtx<TInput = unknown> {

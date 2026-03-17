@@ -115,9 +115,9 @@ export function createChangeLog<T extends Record<string, unknown>>(
   }
   
   const updated: Record<string, unknown> = {};
-  
+
   for (const key in newData) {
-    if (sensitiveFields.includes(key)) {
+    if (Array.prototype.includes.call(sensitiveFields, key)) {
       continue; // Skip sensitive fields
     }
     

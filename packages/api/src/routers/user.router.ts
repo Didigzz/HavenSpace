@@ -3,7 +3,6 @@ import { createTRPCRouter, publicProcedure, createSensitiveProcedure } from "../
 import {
   loginSchema,
   registerSchema,
-  updateUserSchema,
   changePasswordSchema
 } from "@havenspace/validation";
 import bcrypt from "bcryptjs";
@@ -12,24 +11,9 @@ import { generateToken } from "../lib/jwt";
 import { createAuthError } from "../lib/errors";
 
 // Type helpers
-type UserCreateInput = z.infer<typeof registerSchema>;
 type LoginInput = z.infer<typeof loginSchema>;
+type RegisterInput = z.infer<typeof registerSchema>;
 type ChangePasswordInput = z.infer<typeof changePasswordSchema>;
-
-interface AuthenticatedCtx {
-  ctx: {
-    db: any;
-    session: {
-      user: {
-        id: string;
-        email?: string | null;
-        role: string;
-      };
-    };
-    headers: Headers;
-  };
-  input?: any;
-}
 
 export const createUserRouter = (protectedProcedure: any, authMiddleware: any) => {
   // Sensitive procedure for password changes with strict rate limiting
@@ -54,6 +38,7 @@ export const createUserRouter = (protectedProcedure: any, authMiddleware: any) =
         }
 
         // Return user data without password
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { password, ...userWithoutPassword } = user;
 
         // Generate secure JWT token
@@ -71,7 +56,7 @@ export const createUserRouter = (protectedProcedure: any, authMiddleware: any) =
 
     register: publicProcedure
       .input(registerSchema)
-      .mutation(async ({ ctx, input }: { ctx: any; input: UserCreateInput }) => {
+      .mutation(async ({ ctx, input }: { ctx: any; input: RegisterInput }) => {
         const existingUser = await ctx.db.user.findUnique({
           where: { email: input.email },
         });
