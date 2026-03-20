@@ -6,6 +6,9 @@ import { createRateLimitMiddleware, rateLimits } from "./middleware/rate-limit";
 import { verifyCSRFToken } from "./lib/csrf";
 import type { TRPCContext, HavenSession } from "./types/index";
 
+// Re-export types for convenience
+export type { TRPCContext, HavenSession } from "./types/index";
+
 export const createTRPCContext = async (opts: {
   headers: Headers;
   session?: HavenSession | null;
@@ -159,7 +162,7 @@ export const createStatusMiddleware = (
       ? requiredStatus
       : [requiredStatus];
 
-    if (!allowedStatuses.includes(ctx.session.user.status as string)) {
+    if ((allowedStatuses as string[]).indexOf(ctx.session.user.status) === -1) {
       throw new TRPCError({
         code: "FORBIDDEN",
         message: `This action requires one of these statuses: ${allowedStatuses.join(", ")}`,
@@ -208,7 +211,7 @@ export const adminMiddleware = t.middleware(async (opts) => {
  */
 export const landlordMiddleware = t.middleware(async (opts) => {
   const { ctx, next } = opts;
-  
+
   if (!ctx.session?.user) {
     throw new TRPCError({
       code: "UNAUTHORIZED",
@@ -275,79 +278,79 @@ export const boarderMiddleware = t.middleware(async (opts) => {
 
 // Public procedure with rate limiting and CSRF protection
 export const publicProcedure = t.procedure
-  .use(rateLimitMiddleware)
+  .use(rateLimitMiddleware as never)
   .use(timingMiddleware)
   .use(csrfMiddleware);
 
 // Protected procedure with default auth middleware
 export const protectedProcedure = t.procedure
-  .use(rateLimitMiddleware)
-  .use(writeRateLimitMiddleware)
+  .use(rateLimitMiddleware as never)
+  .use(writeRateLimitMiddleware as never)
   .use(timingMiddleware)
   .use(csrfMiddleware)
   .use(defaultAuthMiddleware);
 
 // Admin procedure with admin middleware
 export const adminProcedure = t.procedure
-  .use(rateLimitMiddleware)
-  .use(writeRateLimitMiddleware)
+  .use(rateLimitMiddleware as never)
+  .use(writeRateLimitMiddleware as never)
   .use(timingMiddleware)
   .use(csrfMiddleware)
   .use(adminMiddleware);
 
 // Landlord procedure with landlord middleware
 export const landlordProcedure = t.procedure
-  .use(rateLimitMiddleware)
-  .use(writeRateLimitMiddleware)
+  .use(rateLimitMiddleware as never)
+  .use(writeRateLimitMiddleware as never)
   .use(timingMiddleware)
   .use(csrfMiddleware)
   .use(landlordMiddleware);
 
 // Boarder procedure with boarder middleware
 export const boarderProcedure = t.procedure
-  .use(rateLimitMiddleware)
-  .use(writeRateLimitMiddleware)
+  .use(rateLimitMiddleware as never)
+  .use(writeRateLimitMiddleware as never)
   .use(timingMiddleware)
   .use(csrfMiddleware)
   .use(boarderMiddleware);
 
 // Auth-specific procedure with strict rate limiting
 export const authProcedure = t.procedure
-  .use(authRateLimitMiddleware)
+  .use(authRateLimitMiddleware as never)
   .use(timingMiddleware)
   .use(csrfMiddleware)
   .use(defaultAuthMiddleware);
 
 // Sensitive operations (password changes, account deletion) with very strict rate limiting
 export const sensitiveProcedure = t.procedure
-  .use(sensitiveRateLimitMiddleware)
-  .use(writeRateLimitMiddleware)
+  .use(sensitiveRateLimitMiddleware as never)
+  .use(writeRateLimitMiddleware as never)
   .use(timingMiddleware)
   .use(csrfMiddleware)
   .use(defaultAuthMiddleware);
 
 // Legacy exports for backward compatibility
-export const createProtectedProcedure = (authMiddleware?: unknown) => {
+export const createProtectedProcedure = (authMiddleware?: typeof defaultAuthMiddleware) => {
   return t.procedure
-    .use(rateLimitMiddleware)
-    .use(writeRateLimitMiddleware)
+    .use(rateLimitMiddleware as never)
+    .use(writeRateLimitMiddleware as never)
     .use(timingMiddleware)
     .use(csrfMiddleware)
     .use(authMiddleware || defaultAuthMiddleware);
 };
 
-export const createAuthProcedure = (authMiddleware?: unknown) => {
+export const createAuthProcedure = (authMiddleware?: typeof defaultAuthMiddleware) => {
   return t.procedure
-    .use(authRateLimitMiddleware)
+    .use(authRateLimitMiddleware as never)
     .use(timingMiddleware)
     .use(csrfMiddleware)
     .use(authMiddleware || defaultAuthMiddleware);
 };
 
-export const createSensitiveProcedure = (authMiddleware?: unknown) => {
+export const createSensitiveProcedure = (authMiddleware?: typeof defaultAuthMiddleware) => {
   return t.procedure
-    .use(sensitiveRateLimitMiddleware)
-    .use(writeRateLimitMiddleware)
+    .use(sensitiveRateLimitMiddleware as never)
+    .use(writeRateLimitMiddleware as never)
     .use(timingMiddleware)
     .use(csrfMiddleware)
     .use(authMiddleware || defaultAuthMiddleware);

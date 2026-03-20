@@ -46,7 +46,7 @@ export function createStatusMiddleware(requiredStatus: UserStatus | UserStatus[]
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return ({ ctx, next }: { ctx: TRPCContext & { session: HavenSession }; next: any }) => {
-    if (!ctx.session?.user || !allowedStatuses.includes(ctx.session.user.status)) {
+    if (!ctx.session?.user || allowedStatuses.indexOf(ctx.session.user.status) === -1) {
       throw new TRPCError({
         code: "FORBIDDEN",
         message: "Account status does not permit this action"

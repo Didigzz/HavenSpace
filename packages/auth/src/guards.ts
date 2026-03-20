@@ -18,7 +18,7 @@ export function isAdmin(role?: string): boolean {
 
 export function hasRole(userRole: string | undefined, allowedRoles: UserRole[]): boolean {
     if (!userRole) return false;
-    return allowedRoles.includes(userRole as UserRole);
+    return allowedRoles.indexOf(userRole as UserRole) !== -1;
 }
 
 export function isPending(status?: string): boolean {

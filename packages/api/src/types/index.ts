@@ -25,11 +25,11 @@ export interface HavenSession {
     id: string;
     role: UserRole;
     status: UserStatus;
-    email?: string | null;
-    name?: string | null;
-    image?: string | null;
+    email?: string;
+    name?: string;
+    image?: string;
   };
-  csrfSecret?: string | null;
+  csrfSecret?: string;
 }
 
 /**
@@ -146,7 +146,7 @@ export function handleTRPCError(error: unknown): never {
  * Type-safe procedure context builder
  */
 export function createProcedureContext(opts: {
-  db: PrismaClient;
+  db: PrismaClientType;
   session: HavenSession | null;
   headers: Headers;
 }): TRPCContext {
@@ -197,7 +197,7 @@ export function assertStatus(
     ? requiredStatus
     : [requiredStatus];
 
-  if (!allowedStatuses.includes(session.user.status)) {
+  if ((allowedStatuses as string[]).indexOf(session.user.status) === -1) {
     throw new TRPCError({
       code: "FORBIDDEN",
       message: `This action requires one of these statuses: ${allowedStatuses.join(", ")}`,
