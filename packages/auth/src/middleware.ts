@@ -1,5 +1,10 @@
 import { TRPCError } from "@trpc/server";
-import type { TRPCContext, HavenSession, UserRole, UserStatus } from "@havenspace/api";
+import type {
+  TRPCContext,
+  HavenSession,
+  UserRole,
+  UserStatus,
+} from "@havenspace/api";
 
 /**
  * Create auth middleware for tRPC procedures
@@ -30,7 +35,13 @@ export function createAuthMiddleware(
  */
 export function createRoleMiddleware(requiredRole: UserRole) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return ({ ctx, next }: { ctx: TRPCContext & { session: HavenSession }; next: any }) => {
+  return ({
+    ctx,
+    next,
+  }: {
+    ctx: TRPCContext & { session: HavenSession };
+    next: any;
+  }) => {
     if (!ctx.session?.user || ctx.session.user.role !== requiredRole) {
       throw new TRPCError({ code: "FORBIDDEN" });
     }
@@ -41,15 +52,28 @@ export function createRoleMiddleware(requiredRole: UserRole) {
 /**
  * Create status-based middleware
  */
-export function createStatusMiddleware(requiredStatus: UserStatus | UserStatus[]) {
-  const allowedStatuses = Array.isArray(requiredStatus) ? requiredStatus : [requiredStatus];
+export function createStatusMiddleware(
+  requiredStatus: UserStatus | UserStatus[]
+) {
+  const allowedStatuses = Array.isArray(requiredStatus)
+    ? requiredStatus
+    : [requiredStatus];
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return ({ ctx, next }: { ctx: TRPCContext & { session: HavenSession }; next: any }) => {
-    if (!ctx.session?.user || allowedStatuses.indexOf(ctx.session.user.status) === -1) {
+  return ({
+    ctx,
+    next,
+  }: {
+    ctx: TRPCContext & { session: HavenSession };
+    next: any;
+  }) => {
+    if (
+      !ctx.session?.user ||
+      allowedStatuses.indexOf(ctx.session.user.status) === -1
+    ) {
       throw new TRPCError({
         code: "FORBIDDEN",
-        message: "Account status does not permit this action"
+        message: "Account status does not permit this action",
       });
     }
     return next({ ctx });
@@ -61,7 +85,13 @@ export function createStatusMiddleware(requiredStatus: UserStatus | UserStatus[]
  */
 export function createLandlordMiddleware() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return ({ ctx, next }: { ctx: TRPCContext & { session: HavenSession }; next: any }) => {
+  return ({
+    ctx,
+    next,
+  }: {
+    ctx: TRPCContext & { session: HavenSession };
+    next: any;
+  }) => {
     if (!ctx.session?.user) {
       throw new TRPCError({ code: "UNAUTHORIZED" });
     }
@@ -73,7 +103,7 @@ export function createLandlordMiddleware() {
     if (ctx.session.user.status !== "APPROVED") {
       throw new TRPCError({
         code: "FORBIDDEN",
-        message: "Your account is pending approval"
+        message: "Your account is pending approval",
       });
     }
 
@@ -86,7 +116,13 @@ export function createLandlordMiddleware() {
  */
 export function createBoarderMiddleware() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return ({ ctx, next }: { ctx: TRPCContext & { session: HavenSession }; next: any }) => {
+  return ({
+    ctx,
+    next,
+  }: {
+    ctx: TRPCContext & { session: HavenSession };
+    next: any;
+  }) => {
     if (!ctx.session?.user) {
       throw new TRPCError({ code: "UNAUTHORIZED" });
     }
@@ -98,7 +134,7 @@ export function createBoarderMiddleware() {
     if (ctx.session.user.status === "SUSPENDED") {
       throw new TRPCError({
         code: "FORBIDDEN",
-        message: "Your account has been suspended"
+        message: "Your account has been suspended",
       });
     }
 
@@ -111,13 +147,22 @@ export function createBoarderMiddleware() {
  */
 export function createAdminMiddleware() {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return ({ ctx, next }: { ctx: TRPCContext & { session: HavenSession }; next: any }) => {
+  return ({
+    ctx,
+    next,
+  }: {
+    ctx: TRPCContext & { session: HavenSession };
+    next: any;
+  }) => {
     if (!ctx.session?.user) {
       throw new TRPCError({ code: "UNAUTHORIZED" });
     }
 
     if (ctx.session.user.role !== "ADMIN") {
-      throw new TRPCError({ code: "FORBIDDEN", message: "Administrators only" });
+      throw new TRPCError({
+        code: "FORBIDDEN",
+        message: "Administrators only",
+      });
     }
 
     return next({ ctx });

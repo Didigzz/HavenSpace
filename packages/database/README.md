@@ -5,6 +5,7 @@ Database layer for the Haven Space platform using Prisma ORM.
 ## Overview
 
 This package provides:
+
 - Prisma schema definition for all domain entities
 - Singleton Prisma client with Accelerate extension
 - Database migrations and seeding utilities
@@ -87,7 +88,10 @@ The Prisma client uses a singleton pattern to prevent multiple instances in deve
 ```typescript
 // src/client.ts
 export const prisma = new PrismaClient({
-  log: process.env.NODE_ENV === 'development' ? ['query', 'error', 'warn'] : ['error'],
+  log:
+    process.env.NODE_ENV === "development"
+      ? ["query", "error", "warn"]
+      : ["error"],
 });
 ```
 
@@ -96,7 +100,7 @@ export const prisma = new PrismaClient({
 Includes Prisma Accelerate for connection pooling and performance:
 
 ```typescript
-import { withAccelerate } from '@prisma/extension-accelerate';
+import { withAccelerate } from "@prisma/extension-accelerate";
 
 const prisma = new PrismaClient().$extends(withAccelerate());
 ```
@@ -104,6 +108,7 @@ const prisma = new PrismaClient().$extends(withAccelerate());
 ### Soft Deletes
 
 Key entities support soft deletes via `isActive` flag:
+
 - Property
 - Room
 - Boarder
@@ -128,4 +133,3 @@ DIRECT_URL="postgresql://postgres:password@localhost:5432/boarding_house_db?sche
 - `@havenspace/api` - Uses Prisma client in repositories
 - `@havenspace/shared` - Uses Prisma types
 - `@havenspace/validation` - Validation schemas for entities
-

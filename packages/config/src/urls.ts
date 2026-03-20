@@ -1,6 +1,6 @@
 /**
  * Centralized URL configuration for all BHMS applications
- * 
+ *
  * Environment variables should be set in .env files:
  * - NEXT_PUBLIC_URL: Public marketplace URL
  * - API_URL: API server URL
@@ -12,7 +12,7 @@
 
 // Type-safe environment variable access
 const getEnvVar = (key: string, fallback: string): string => {
-  if (typeof process !== 'undefined' && process.env) {
+  if (typeof process !== "undefined" && process.env) {
     return process.env[key] || fallback;
   }
   return fallback;
@@ -20,22 +20,22 @@ const getEnvVar = (key: string, fallback: string): string => {
 
 export const APP_URLS = {
   /** Public marketplace - property discovery */
-  public: getEnvVar('NEXT_PUBLIC_URL', 'http://localhost:3000'),
-  
+  public: getEnvVar("NEXT_PUBLIC_URL", "http://localhost:3000"),
+
   /** API server - tRPC backend */
-  api: getEnvVar('API_URL', 'http://localhost:3001'),
-  
+  api: getEnvVar("API_URL", "http://localhost:3001"),
+
   /** Admin dashboard - platform management */
-  admin: getEnvVar('ADMIN_URL', 'http://localhost:3002'),
-  
+  admin: getEnvVar("ADMIN_URL", "http://localhost:3002"),
+
   /** Authentication app - login/register */
-  auth: getEnvVar('AUTH_URL', 'http://localhost:3003'),
-  
+  auth: getEnvVar("AUTH_URL", "http://localhost:3003"),
+
   /** Boarder dashboard - renter interface */
-  boarder: getEnvVar('BOARDER_URL', 'http://localhost:3004'),
-  
+  boarder: getEnvVar("BOARDER_URL", "http://localhost:3004"),
+
   /** Landlord portal - property management */
-  landlord: getEnvVar('LANDLORD_URL', 'http://localhost:3005'),
+  landlord: getEnvVar("LANDLORD_URL", "http://localhost:3005"),
 } as const;
 
 /**
@@ -43,11 +43,11 @@ export const APP_URLS = {
  */
 export function getDashboardUrl(role: string): string {
   switch (role) {
-    case 'ADMIN':
+    case "ADMIN":
       return APP_URLS.admin;
-    case 'LANDLORD':
+    case "LANDLORD":
       return APP_URLS.landlord;
-    case 'BOARDER':
+    case "BOARDER":
       return APP_URLS.boarder;
     default:
       return APP_URLS.public;
@@ -57,7 +57,7 @@ export function getDashboardUrl(role: string): string {
 /**
  * Get the full dashboard URL with path
  */
-export function getFullDashboardUrl(role: string, path = '/dashboard'): string {
+export function getFullDashboardUrl(role: string, path = "/dashboard"): string {
   const baseUrl = getDashboardUrl(role);
   return `${baseUrl}${path}`;
 }
@@ -65,7 +65,10 @@ export function getFullDashboardUrl(role: string, path = '/dashboard'): string {
 /**
  * Check if a URL is an external app URL (different port/domain)
  */
-export function isExternalUrl(url: string, currentApp: keyof typeof APP_URLS): boolean {
+export function isExternalUrl(
+  url: string,
+  currentApp: keyof typeof APP_URLS
+): boolean {
   const currentUrl = APP_URLS[currentApp];
   return !url.startsWith(currentUrl);
 }

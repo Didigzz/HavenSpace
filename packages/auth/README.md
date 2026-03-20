@@ -5,6 +5,7 @@ Authentication and authorization utilities for the Haven Space platform using Ne
 ## Overview
 
 This package provides:
+
 - NextAuth.js configuration with Credentials provider
 - Role-based authorization guards
 - tRPC authentication middleware
@@ -23,8 +24,8 @@ import { guards, middleware } from '@havenspace/auth';
 
 ```typescript
 // apps/(auth)/api/auth/[...nextauth]/route.ts
-import { authConfig } from '@havenspace/auth/config';
-import NextAuth from 'next-auth';
+import { authConfig } from "@havenspace/auth/config";
+import NextAuth from "next-auth";
 
 const handler = NextAuth(authConfig);
 export { handler as GET, handler as POST };
@@ -35,7 +36,7 @@ export { handler as GET, handler as POST };
 For edge runtime (no database access):
 
 ```typescript
-import { authConfigEdge } from '@havenspace/auth';
+import { authConfigEdge } from "@havenspace/auth";
 ```
 
 ### Authorization Guards
@@ -47,8 +48,8 @@ import {
   isAdmin,
   hasRole,
   canAccessLandlordDashboard,
-  getRedirectUrl
-} from '@havenspace/auth';
+  getRedirectUrl,
+} from "@havenspace/auth";
 
 // Check role
 if (isLandlord(user.role)) {
@@ -56,7 +57,7 @@ if (isLandlord(user.role)) {
 }
 
 // Check multiple roles
-if (hasRole(user.role, ['ADMIN', 'LANDLORD'])) {
+if (hasRole(user.role, ["ADMIN", "LANDLORD"])) {
   // Admin or landlord logic
 }
 
@@ -72,12 +73,12 @@ const redirectUrl = getRedirectUrl(user.role, user.status);
 ### tRPC Middleware
 
 ```typescript
-import { createAuthMiddleware } from '@havenspace/auth/middleware';
-import { auth } from '@havenspace/auth/config';
+import { createAuthMiddleware } from "@havenspace/auth/middleware";
+import { auth } from "@havenspace/auth/config";
 
 const authMiddleware = createAuthMiddleware();
 
-export const router = publicRouter.middleware(authMiddleware).query('...', {
+export const router = publicRouter.middleware(authMiddleware).query("...", {
   resolve: ({ ctx, input }) => {
     // ctx.session is available
     // ctx.user is available
@@ -87,34 +88,34 @@ export const router = publicRouter.middleware(authMiddleware).query('...', {
 
 ## User Roles
 
-| Role | Description | Dashboard |
-|------|-------------|-----------|
-| `LANDLORD` | Property owners | `/landlord/dashboard` |
-| `BOARDER` | Renters/tenants | `/boarder/dashboard` |
-| `ADMIN` | Platform administrators | `/admin/dashboard` |
+| Role       | Description             | Dashboard             |
+| ---------- | ----------------------- | --------------------- |
+| `LANDLORD` | Property owners         | `/landlord/dashboard` |
+| `BOARDER`  | Renters/tenants         | `/boarder/dashboard`  |
+| `ADMIN`    | Platform administrators | `/admin/dashboard`    |
 
 ## User Status
 
-| Status | Description | Access |
-|--------|-------------|--------|
-| `PENDING` | Awaiting approval | Limited |
-| `APPROVED` | Active and approved | Full |
-| `SUSPENDED` | Suspended account | None |
+| Status      | Description         | Access  |
+| ----------- | ------------------- | ------- |
+| `PENDING`   | Awaiting approval   | Limited |
+| `APPROVED`  | Active and approved | Full    |
+| `SUSPENDED` | Suspended account   | None    |
 
 ## Session Types
 
 The package extends NextAuth session types:
 
 ```typescript
-import { DefaultSession } from 'next-auth';
+import { DefaultSession } from "next-auth";
 
-declare module 'next-auth' {
+declare module "next-auth" {
   interface Session {
     user: {
       id: string;
       role: UserRole;
       status: UserStatus;
-    } & DefaultSession['user'];
+    } & DefaultSession["user"];
   }
 }
 ```
@@ -150,4 +151,3 @@ LANDLORD_URL="http://localhost:3005"
 - `@havenspace/database` - User database operations
 - `@havenspace/api` - tRPC authentication
 - `@havenspace/shared` - Shared types and utilities
-

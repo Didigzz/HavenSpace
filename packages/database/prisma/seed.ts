@@ -14,7 +14,8 @@ async function main() {
 
   // Use environment variables for credentials (with secure defaults for development)
   const seedEmail = process.env.SEED_USER_EMAIL || "landlord@havenspace.com";
-  const seedPassword = process.env.SEED_USER_PASSWORD || "HavenSpace2024!Secure";
+  const seedPassword =
+    process.env.SEED_USER_PASSWORD || "HavenSpace2024!Secure";
   const seedName = process.env.SEED_USER_NAME || "John Landlord";
 
   // Create landlord user
@@ -34,7 +35,9 @@ async function main() {
   console.log("📝 Login credentials:");
   console.log(`   Email: ${seedEmail}`);
   console.log(`   Password: ${seedPassword}`);
-  console.log("⚠️  Change these in production! Set SEED_USER_EMAIL and SEED_USER_PASSWORD environment variables.");
+  console.log(
+    "⚠️  Change these in production! Set SEED_USER_EMAIL and SEED_USER_PASSWORD environment variables."
+  );
 
   // Create rooms
   const rooms = await Promise.all([

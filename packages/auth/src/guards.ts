@@ -1,48 +1,57 @@
 // Role-based guards for authorization
-import { APP_URLS, getFullDashboardUrl } from '@havenspace/config';
+import { APP_URLS, getFullDashboardUrl } from "@havenspace/config";
 
-export type UserRole = 'LANDLORD' | 'BOARDER' | 'ADMIN';
-export type UserStatus = 'PENDING' | 'APPROVED' | 'SUSPENDED';
+export type UserRole = "LANDLORD" | "BOARDER" | "ADMIN";
+export type UserStatus = "PENDING" | "APPROVED" | "SUSPENDED";
 
 export function isLandlord(role?: string): boolean {
-    return role === 'LANDLORD';
+  return role === "LANDLORD";
 }
 
 export function isBoarder(role?: string): boolean {
-    return role === 'BOARDER';
+  return role === "BOARDER";
 }
 
 export function isAdmin(role?: string): boolean {
-    return role === 'ADMIN';
+  return role === "ADMIN";
 }
 
-export function hasRole(userRole: string | undefined, allowedRoles: UserRole[]): boolean {
-    if (!userRole) return false;
-    return allowedRoles.indexOf(userRole as UserRole) !== -1;
+export function hasRole(
+  userRole: string | undefined,
+  allowedRoles: UserRole[]
+): boolean {
+  if (!userRole) return false;
+  return allowedRoles.indexOf(userRole as UserRole) !== -1;
 }
 
 export function isPending(status?: string): boolean {
-    return status === 'PENDING';
+  return status === "PENDING";
 }
 
 export function isApproved(status?: string): boolean {
-    return status === 'APPROVED';
+  return status === "APPROVED";
 }
 
 export function isSuspended(status?: string): boolean {
-    return status === 'SUSPENDED';
+  return status === "SUSPENDED";
 }
 
-export function canAccessLandlordDashboard(role?: string, status?: string): boolean {
-    return isLandlord(role) && isApproved(status);
+export function canAccessLandlordDashboard(
+  role?: string,
+  status?: string
+): boolean {
+  return isLandlord(role) && isApproved(status);
 }
 
-export function canAccessBoarderDashboard(role?: string, status?: string): boolean {
-    return isBoarder(role) && isApproved(status);
+export function canAccessBoarderDashboard(
+  role?: string,
+  status?: string
+): boolean {
+  return isBoarder(role) && isApproved(status);
 }
 
 export function canAccessAdminDashboard(role?: string): boolean {
-    return isAdmin(role);
+  return isAdmin(role);
 }
 
 /**
@@ -50,28 +59,28 @@ export function canAccessAdminDashboard(role?: string): boolean {
  * Uses centralized URL configuration from @havenspace/config
  */
 export function getRedirectUrl(role?: string, status?: string): string {
-    if (!role) return '/login';
+  if (!role) return "/login";
 
-    if (isAdmin(role)) {
-        return getFullDashboardUrl('ADMIN');
+  if (isAdmin(role)) {
+    return getFullDashboardUrl("ADMIN");
+  }
+
+  if (isLandlord(role)) {
+    if (isPending(status)) {
+      return "/pending-approval";
     }
-
-    if (isLandlord(role)) {
-        if (isPending(status)) {
-            return '/pending-approval';
-        }
-        if (isSuspended(status)) {
-            return '/account-suspended';
-        }
-        return getFullDashboardUrl('LANDLORD');
+    if (isSuspended(status)) {
+      return "/account-suspended";
     }
+    return getFullDashboardUrl("LANDLORD");
+  }
 
-    if (isBoarder(role)) {
-        if (isSuspended(status)) {
-            return '/account-suspended';
-        }
-        return getFullDashboardUrl('BOARDER');
+  if (isBoarder(role)) {
+    if (isSuspended(status)) {
+      return "/account-suspended";
     }
+    return getFullDashboardUrl("BOARDER");
+  }
 
-    return APP_URLS.public;
+  return APP_URLS.public;
 }
