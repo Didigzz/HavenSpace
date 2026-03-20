@@ -107,7 +107,7 @@ export default function SettingsPage() {
                   <Button variant="outline" size="sm">
                     Change Photo
                   </Button>
-                  <p className="mt-1 text-xs text-muted-foreground">
+                  <p className="text-muted-foreground mt-1 text-xs">
                     JPG, PNG or GIF. Max size 2MB.
                   </p>
                 </div>
@@ -190,7 +190,7 @@ export default function SettingsPage() {
                 <div className="flex items-center justify-between">
                   <div className="space-y-1">
                     <p className="font-medium">2FA Status</p>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-muted-foreground text-sm">
                       Two-factor authentication is currently disabled
                     </p>
                   </div>
@@ -211,10 +211,10 @@ export default function SettingsPage() {
                   <div className="flex items-center justify-between rounded-lg border p-4">
                     <div>
                       <p className="font-medium">Current Session</p>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-muted-foreground text-sm">
                         Windows • Chrome • Manila, Philippines
                       </p>
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-muted-foreground text-xs">
                         Last active: Just now
                       </p>
                     </div>
@@ -281,7 +281,7 @@ export default function SettingsPage() {
                     >
                       <div>
                         <p className="font-medium">{item.label}</p>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-muted-foreground text-sm">
                           {item.description}
                         </p>
                       </div>
@@ -308,7 +308,8 @@ export default function SettingsPage() {
                     {
                       id: "urgent-alerts",
                       label: "Urgent alerts",
-                      description: "Critical issues requiring immediate attention",
+                      description:
+                        "Critical issues requiring immediate attention",
                     },
                     {
                       id: "desktop-notifications",
@@ -322,7 +323,7 @@ export default function SettingsPage() {
                     >
                       <div>
                         <p className="font-medium">{item.label}</p>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-muted-foreground text-sm">
                           {item.description}
                         </p>
                       </div>
@@ -374,7 +375,9 @@ export default function SettingsPage() {
                         <SelectValue placeholder="Select currency" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="php">PHP - Philippine Peso</SelectItem>
+                        <SelectItem value="php">
+                          PHP - Philippine Peso
+                        </SelectItem>
                         <SelectItem value="usd">USD - US Dollar</SelectItem>
                       </SelectContent>
                     </Select>
@@ -412,7 +415,7 @@ export default function SettingsPage() {
                         min="0"
                         max="100"
                       />
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-muted-foreground text-xs">
                         Fee charged per transaction
                       </p>
                     </div>
@@ -444,12 +447,12 @@ export default function SettingsPage() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="flex items-center justify-between rounded-lg border border-yellow-500/20 bg-yellow-50 dark:bg-yellow-950/20 p-4">
+                <div className="flex items-center justify-between rounded-lg border border-yellow-500/20 bg-yellow-50 p-4 dark:bg-yellow-950/20">
                   <div className="flex items-center gap-3">
                     <AlertTriangle className="h-5 w-5 text-yellow-600" />
                     <div>
                       <p className="font-medium">Maintenance Mode</p>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-muted-foreground text-sm">
                         When enabled, only admins can access the platform
                       </p>
                     </div>
@@ -474,19 +477,19 @@ export default function SettingsPage() {
               <CardContent>
                 <div className="grid gap-4 md:grid-cols-3">
                   <div className="rounded-lg border p-4">
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-muted-foreground text-sm">
                       This Month&apos;s Fees
                     </p>
                     <p className="text-2xl font-bold">₱125,400</p>
                   </div>
                   <div className="rounded-lg border p-4">
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-muted-foreground text-sm">
                       Last Month&apos;s Fees
                     </p>
                     <p className="text-2xl font-bold">₱98,200</p>
                   </div>
                   <div className="rounded-lg border p-4">
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-muted-foreground text-sm">
                       Total Fees Collected
                     </p>
                     <p className="text-2xl font-bold">₱2,450,000</p>
@@ -506,12 +509,12 @@ export default function SettingsPage() {
                 <div className="grid gap-4 md:grid-cols-2">
                   <div className="flex items-center justify-between rounded-lg border p-4">
                     <div className="flex items-center gap-3">
-                      <div className="h-10 w-10 rounded-lg bg-blue-100 flex items-center justify-center">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-blue-100">
                         <span className="font-bold text-blue-600">G</span>
                       </div>
                       <div>
                         <p className="font-medium">GCash</p>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-muted-foreground text-sm">
                           Connected
                         </p>
                       </div>
@@ -522,12 +525,12 @@ export default function SettingsPage() {
                   </div>
                   <div className="flex items-center justify-between rounded-lg border p-4">
                     <div className="flex items-center gap-3">
-                      <div className="h-10 w-10 rounded-lg bg-green-100 flex items-center justify-center">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-green-100">
                         <span className="font-bold text-green-600">P</span>
                       </div>
                       <div>
                         <p className="font-medium">PayMaya</p>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-muted-foreground text-sm">
                           Connected
                         </p>
                       </div>

@@ -1,6 +1,13 @@
 "use client";
 
-import React, { createContext, useContext, useState, useCallback, useRef, useLayoutEffect } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useCallback,
+  useRef,
+  useLayoutEffect,
+} from "react";
 
 // Types for multitenancy
 export interface Property {
@@ -19,7 +26,9 @@ interface PropertyContextType {
   isLoading: boolean;
 }
 
-const PropertyContext = createContext<PropertyContextType | undefined>(undefined);
+const PropertyContext = createContext<PropertyContextType | undefined>(
+  undefined
+);
 
 // Mock data for demonstration - replace with API calls
 const mockProperties: Property[] = [
@@ -61,7 +70,9 @@ function getInitialProperty(): Property | null {
 
 export function PropertyProvider({ children }: { children: React.ReactNode }) {
   const [properties] = useState<Property[]>(mockProperties);
-  const [currentProperty, setCurrentPropertyState] = useState<Property | null>(getInitialProperty);
+  const [currentProperty, setCurrentPropertyState] = useState<Property | null>(
+    getInitialProperty
+  );
   const isLoadingRef = useRef(true);
   const [isLoading, setIsLoading] = useState(true);
 

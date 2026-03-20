@@ -43,8 +43,18 @@ const maintenanceSchema = z.object({
   title: z.string().min(1, "Title is required"),
   description: z.string().min(10, "Description must be at least 10 characters"),
   priority: z.enum(["LOW", "MEDIUM", "HIGH"]),
-  category: z.enum(["PLUMBING", "ELECTRICAL", "HVAC", "APPLIANCE", "STRUCTURAL", "OTHER"]),
-  estimatedCost: z.preprocess((val) => (val === "" || val === undefined ? 0 : Number(val)), z.number().min(0).optional()),
+  category: z.enum([
+    "PLUMBING",
+    "ELECTRICAL",
+    "HVAC",
+    "APPLIANCE",
+    "STRUCTURAL",
+    "OTHER",
+  ]),
+  estimatedCost: z.preprocess(
+    (val) => (val === "" || val === undefined ? 0 : Number(val)),
+    z.number().min(0).optional()
+  ),
   assignedTo: z.string().optional(),
 });
 
@@ -60,9 +70,21 @@ const categories = [
 ];
 
 const priorityConfig = {
-  LOW: { label: "Low", color: "text-green-600", description: "Can wait a few days" },
-  MEDIUM: { label: "Medium", color: "text-yellow-600", description: "Should be addressed soon" },
-  HIGH: { label: "High", color: "text-red-600", description: "Urgent - affects daily living" },
+  LOW: {
+    label: "Low",
+    color: "text-green-600",
+    description: "Can wait a few days",
+  },
+  MEDIUM: {
+    label: "Medium",
+    color: "text-yellow-600",
+    description: "Should be addressed soon",
+  },
+  HIGH: {
+    label: "High",
+    color: "text-red-600",
+    description: "Urgent - affects daily living",
+  },
 };
 
 function NewMaintenanceContent() {
@@ -89,7 +111,9 @@ function NewMaintenanceContent() {
     watch,
     formState: { errors },
   } = useForm<MaintenanceFormData>({
-    resolver: zodResolver(maintenanceSchema) as unknown as Resolver<MaintenanceFormData>,
+    resolver: zodResolver(
+      maintenanceSchema
+    ) as unknown as Resolver<MaintenanceFormData>,
     defaultValues: {
       roomId: roomIdParam || "",
       title: "",
@@ -146,7 +170,9 @@ function NewMaintenanceContent() {
             </Link>
           </Button>
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">New Maintenance Request</h1>
+            <h1 className="text-3xl font-bold tracking-tight">
+              New Maintenance Request
+            </h1>
             <p className="text-muted-foreground">
               Report a maintenance issue or service request
             </p>
@@ -164,7 +190,7 @@ function NewMaintenanceContent() {
 
       <div className="grid gap-6 lg:grid-cols-3">
         {/* Main Form */}
-        <div className="lg:col-span-2 space-y-6">
+        <div className="space-y-6 lg:col-span-2">
           {/* Request Details */}
           <Card>
             <CardHeader>
@@ -199,7 +225,9 @@ function NewMaintenanceContent() {
                     </SelectContent>
                   </Select>
                   {errors.roomId && (
-                    <p className="text-sm text-destructive">{errors.roomId.message}</p>
+                    <p className="text-destructive text-sm">
+                      {errors.roomId.message}
+                    </p>
                   )}
                 </div>
 
@@ -233,7 +261,9 @@ function NewMaintenanceContent() {
                   placeholder="e.g., Leaking faucet in bathroom"
                 />
                 {errors.title && (
-                  <p className="text-sm text-destructive">{errors.title.message}</p>
+                  <p className="text-destructive text-sm">
+                    {errors.title.message}
+                  </p>
                 )}
               </div>
 
@@ -242,11 +272,13 @@ function NewMaintenanceContent() {
                 <textarea
                   id="description"
                   {...register("description")}
-                  className="min-h-[120px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                  className="border-input bg-background min-h-[120px] w-full rounded-md border px-3 py-2 text-sm"
                   placeholder="Provide detailed information about the issue. Include when it started, how severe it is, and any relevant details..."
                 />
                 {errors.description && (
-                  <p className="text-sm text-destructive">{errors.description.message}</p>
+                  <p className="text-destructive text-sm">
+                    {errors.description.message}
+                  </p>
                 )}
               </div>
             </CardContent>
@@ -282,15 +314,15 @@ function NewMaintenanceContent() {
                               level === "LOW"
                                 ? "bg-green-500"
                                 : level === "MEDIUM"
-                                ? "bg-yellow-500"
-                                : "bg-red-500"
+                                  ? "bg-yellow-500"
+                                  : "bg-red-500"
                             }`}
                           />
                           <span className={`font-medium ${config.color}`}>
                             {config.label}
                           </span>
                         </div>
-                        <p className="mt-1 text-xs text-muted-foreground">
+                        <p className="text-muted-foreground mt-1 text-xs">
                           {config.description}
                         </p>
                       </div>
@@ -337,8 +369,8 @@ function NewMaintenanceContent() {
             <CardContent>
               <div className="flex items-center justify-center rounded-lg border-2 border-dashed p-8">
                 <div className="text-center">
-                  <Camera className="mx-auto h-10 w-10 text-muted-foreground" />
-                  <p className="mt-2 text-sm text-muted-foreground">
+                  <Camera className="text-muted-foreground mx-auto h-10 w-10" />
+                  <p className="text-muted-foreground mt-2 text-sm">
                     Drag and drop images here, or click to browse
                   </p>
                   <Button variant="outline" className="mt-4" type="button">
@@ -376,7 +408,10 @@ function NewMaintenanceContent() {
                 </div>
                 <div className="flex items-center justify-between">
                   <span className="text-muted-foreground">Occupants</span>
-                  <span>{selectedRoom.currentTenants?.length || 0} / {selectedRoom.capacity}</span>
+                  <span>
+                    {selectedRoom.currentTenants?.length || 0} /{" "}
+                    {selectedRoom.capacity}
+                  </span>
                 </div>
               </CardContent>
             </Card>
@@ -391,7 +426,8 @@ function NewMaintenanceContent() {
               <div className="flex items-center justify-between">
                 <span className="text-muted-foreground">Category</span>
                 <Badge variant="outline">
-                  {categories.find((c) => c.value === category)?.label || "Other"}
+                  {categories.find((c) => c.value === category)?.label ||
+                    "Other"}
                 </Badge>
               </div>
               <div className="flex items-center justify-between">
@@ -402,8 +438,8 @@ function NewMaintenanceContent() {
                     priority === "LOW"
                       ? "border-green-500 text-green-500"
                       : priority === "MEDIUM"
-                      ? "border-yellow-500 text-yellow-500"
-                      : "border-red-500 text-red-500"
+                        ? "border-yellow-500 text-yellow-500"
+                        : "border-red-500 text-red-500"
                   }
                 >
                   {priorityConfig[priority].label}
@@ -421,7 +457,7 @@ function NewMaintenanceContent() {
             <CardHeader>
               <CardTitle>Tips</CardTitle>
             </CardHeader>
-            <CardContent className="space-y-2 text-sm text-muted-foreground">
+            <CardContent className="text-muted-foreground space-y-2 text-sm">
               <p>• Be as specific as possible about the issue</p>
               <p>• Include photos if available</p>
               <p>• Mention if the issue affects daily living</p>

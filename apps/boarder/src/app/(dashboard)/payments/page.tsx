@@ -30,7 +30,12 @@ import {
 import { Button } from "@havenspace/shared/ui";
 import { Input } from "@havenspace/shared/ui";
 import { Badge } from "@havenspace/shared/ui";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@havenspace/shared/ui";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@havenspace/shared/ui";
 import {
   Select,
   SelectContent,
@@ -153,7 +158,9 @@ export default function PaymentsPage() {
   const [selectedPayment, setSelectedPayment] = useState<string | null>(null);
   const [showPayDialog, setShowPayDialog] = useState(false);
   const [selectedMethod, setSelectedMethod] = useState<string | null>(null);
-  const [paymentToPay, setPaymentToPay] = useState<(typeof mockUpcomingPayments)[0] | null>(null);
+  const [paymentToPay, setPaymentToPay] = useState<
+    (typeof mockUpcomingPayments)[0] | null
+  >(null);
 
   const filteredPayments = mockPayments.filter((payment) => {
     const matchesSearch =
@@ -172,7 +179,9 @@ export default function PaymentsPage() {
     .filter((p) => p.status === "pending")
     .reduce((sum, p) => sum + p.amount, 0);
 
-  const selectedPaymentData = mockPayments.find((p) => p.id === selectedPayment);
+  const selectedPaymentData = mockPayments.find(
+    (p) => p.id === selectedPayment
+  );
 
   const handlePay = (payment: (typeof mockUpcomingPayments)[0]) => {
     setPaymentToPay(payment);
@@ -180,7 +189,12 @@ export default function PaymentsPage() {
   };
 
   const handleConfirmPayment = () => {
-    console.log("Processing payment:", paymentToPay, "with method:", selectedMethod);
+    console.log(
+      "Processing payment:",
+      paymentToPay,
+      "with method:",
+      selectedMethod
+    );
     setShowPayDialog(false);
     setSelectedMethod(null);
     setPaymentToPay(null);
@@ -214,7 +228,7 @@ export default function PaymentsPage() {
       <div className="grid gap-4 md:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
+            <CardTitle className="text-muted-foreground text-sm font-medium">
               Total Paid
             </CardTitle>
             <ArrowUpRight className="h-4 w-4 text-green-500" />
@@ -223,12 +237,12 @@ export default function PaymentsPage() {
             <div className="text-2xl font-bold text-green-600">
               {formatCurrency(totalPaid)}
             </div>
-            <p className="text-xs text-muted-foreground">All time</p>
+            <p className="text-muted-foreground text-xs">All time</p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
+            <CardTitle className="text-muted-foreground text-sm font-medium">
               Pending
             </CardTitle>
             <Clock className="h-4 w-4 text-yellow-500" />
@@ -237,31 +251,31 @@ export default function PaymentsPage() {
             <div className="text-2xl font-bold text-yellow-600">
               {formatCurrency(totalPending)}
             </div>
-            <p className="text-xs text-muted-foreground">Awaiting payment</p>
+            <p className="text-muted-foreground text-xs">Awaiting payment</p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
+            <CardTitle className="text-muted-foreground text-sm font-medium">
               This Month
             </CardTitle>
             <Calendar className="h-4 w-4 text-blue-500" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{formatCurrency(5500)}</div>
-            <p className="text-xs text-muted-foreground">January 2025</p>
+            <p className="text-muted-foreground text-xs">January 2025</p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
+            <CardTitle className="text-muted-foreground text-sm font-medium">
               Next Due
             </CardTitle>
             <AlertCircle className="h-4 w-4 text-orange-500" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{formatCurrency(6500)}</div>
-            <p className="text-xs text-muted-foreground">Due Jan 25, 2025</p>
+            <p className="text-muted-foreground text-xs">Due Jan 25, 2025</p>
           </CardContent>
         </Card>
       </div>
@@ -283,23 +297,25 @@ export default function PaymentsPage() {
               {mockUpcomingPayments.map((payment) => (
                 <div
                   key={payment.id}
-                  className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-lg border"
+                  className="flex flex-col justify-between gap-4 rounded-lg border p-4 sm:flex-row sm:items-center"
                 >
                   <div className="flex items-center gap-4">
-                    <div className="p-2 rounded-full bg-muted">
+                    <div className="bg-muted rounded-full p-2">
                       <Building className="h-5 w-5" />
                     </div>
                     <div>
                       <p className="font-medium">{payment.propertyName}</p>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-muted-foreground text-sm">
                         {payment.period}
                       </p>
                     </div>
                   </div>
                   <div className="flex items-center gap-4">
                     <div className="text-right">
-                      <p className="font-semibold">{formatCurrency(payment.amount)}</p>
-                      <p className="text-sm text-muted-foreground flex items-center gap-1 justify-end">
+                      <p className="font-semibold">
+                        {formatCurrency(payment.amount)}
+                      </p>
+                      <p className="text-muted-foreground flex items-center justify-end gap-1 text-sm">
                         <Clock className="h-3 w-3" />
                         Due {formatDate(payment.dueDate)}
                       </p>
@@ -326,9 +342,9 @@ export default function PaymentsPage() {
         </CardHeader>
         <CardContent>
           {/* Filters */}
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-6">
-            <div className="relative flex-1 max-w-sm">
-              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="relative max-w-sm flex-1">
+              <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
               <Input
                 placeholder="Search payments..."
                 value={searchQuery}
@@ -351,25 +367,25 @@ export default function PaymentsPage() {
           </div>
 
           {/* Payments Table */}
-          <div className="rounded-lg border overflow-hidden">
+          <div className="overflow-hidden rounded-lg border">
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead className="bg-muted/50">
                   <tr>
-                    <th className="text-left p-4 font-medium text-sm">
+                    <th className="p-4 text-left text-sm font-medium">
                       Transaction
                     </th>
-                    <th className="text-left p-4 font-medium text-sm">
+                    <th className="p-4 text-left text-sm font-medium">
                       Property
                     </th>
-                    <th className="text-left p-4 font-medium text-sm">
+                    <th className="p-4 text-left text-sm font-medium">
                       Amount
                     </th>
-                    <th className="text-left p-4 font-medium text-sm">
+                    <th className="p-4 text-left text-sm font-medium">
                       Status
                     </th>
-                    <th className="text-left p-4 font-medium text-sm">Date</th>
-                    <th className="text-left p-4 font-medium text-sm">
+                    <th className="p-4 text-left text-sm font-medium">Date</th>
+                    <th className="p-4 text-left text-sm font-medium">
                       Actions
                     </th>
                   </tr>
@@ -380,7 +396,7 @@ export default function PaymentsPage() {
                       <td className="p-4">
                         <div>
                           <p className="font-medium">{payment.id}</p>
-                          <p className="text-sm text-muted-foreground capitalize">
+                          <p className="text-muted-foreground text-sm capitalize">
                             {payment.type} - {payment.period}
                           </p>
                         </div>
@@ -438,9 +454,11 @@ export default function PaymentsPage() {
                 </DialogDescription>
               </DialogHeader>
               <div className="space-y-4">
-                <div className="flex justify-between items-center">
+                <div className="flex items-center justify-between">
                   <span className="text-muted-foreground">Status</span>
-                  <Badge className={statusConfig[selectedPaymentData.status]?.color}>
+                  <Badge
+                    className={statusConfig[selectedPaymentData.status]?.color}
+                  >
                     {statusConfig[selectedPaymentData.status]?.label}
                   </Badge>
                 </div>
@@ -460,11 +478,13 @@ export default function PaymentsPage() {
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Period</span>
-                    <span className="font-medium">{selectedPaymentData.period}</span>
+                    <span className="font-medium">
+                      {selectedPaymentData.period}
+                    </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Amount</span>
-                    <span className="font-bold text-lg">
+                    <span className="text-lg font-bold">
                       {formatCurrency(selectedPaymentData.amount)}
                     </span>
                   </div>
@@ -520,11 +540,11 @@ export default function PaymentsPage() {
           </DialogHeader>
           {paymentToPay && (
             <div className="space-y-4">
-              <div className="p-4 rounded-lg bg-muted">
-                <div className="flex justify-between items-center">
+              <div className="bg-muted rounded-lg p-4">
+                <div className="flex items-center justify-between">
                   <div>
                     <p className="font-medium">{paymentToPay.propertyName}</p>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-muted-foreground text-sm">
                       {paymentToPay.period}
                     </p>
                   </div>
@@ -541,14 +561,14 @@ export default function PaymentsPage() {
                     <button
                       key={method.id}
                       onClick={() => setSelectedMethod(method.id)}
-                      className={`p-4 rounded-lg border text-left transition-colors ${
+                      className={`rounded-lg border p-4 text-left transition-colors ${
                         selectedMethod === method.id
                           ? "border-primary bg-primary/5"
                           : "hover:bg-muted"
                       }`}
                     >
                       <span className="text-2xl">{method.icon}</span>
-                      <p className="font-medium mt-2">{method.name}</p>
+                      <p className="mt-2 font-medium">{method.name}</p>
                     </button>
                   ))}
                 </div>

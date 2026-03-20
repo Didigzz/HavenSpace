@@ -77,8 +77,8 @@ const columns: ColumnDef<AuditLog>[] = [
     header: "User",
     cell: ({ row }) => (
       <div className="flex items-center gap-2">
-        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10">
-          <User className="h-4 w-4 text-primary" />
+        <div className="bg-primary/10 flex h-8 w-8 items-center justify-center rounded-full">
+          <User className="text-primary h-4 w-4" />
         </div>
         <span className="font-medium">{row.original.userName}</span>
       </div>
@@ -91,7 +91,10 @@ const columns: ColumnDef<AuditLog>[] = [
       const action = row.original.action;
       const Icon = actionIcons[action] || FileEdit;
       return (
-        <Badge variant="secondary" className={cn("gap-1", actionColors[action])}>
+        <Badge
+          variant="secondary"
+          className={cn("gap-1", actionColors[action])}
+        >
           <Icon className="h-3 w-3" />
           {action}
         </Badge>
@@ -104,7 +107,7 @@ const columns: ColumnDef<AuditLog>[] = [
     cell: ({ row }) => (
       <div>
         <p className="font-medium">{row.original.resource}</p>
-        <p className="text-xs text-muted-foreground font-mono">
+        <p className="text-muted-foreground font-mono text-xs">
           {row.original.resourceId}
         </p>
       </div>
@@ -114,7 +117,7 @@ const columns: ColumnDef<AuditLog>[] = [
     accessorKey: "details",
     header: "Details",
     cell: ({ row }) => (
-      <p className="max-w-[300px] truncate text-sm text-muted-foreground">
+      <p className="text-muted-foreground max-w-[300px] truncate text-sm">
         {row.original.details}
       </p>
     ),
@@ -142,7 +145,8 @@ export default function AuditLogsPage() {
       log.details.toLowerCase().includes(searchQuery.toLowerCase()) ||
       log.resource.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesAction = actionFilter === "all" || log.action === actionFilter;
-    const matchesResource = resourceFilter === "all" || log.resource === resourceFilter;
+    const matchesResource =
+      resourceFilter === "all" || log.resource === resourceFilter;
     return matchesSearch && matchesAction && matchesResource;
   });
 
@@ -161,7 +165,9 @@ export default function AuditLogsPage() {
   });
 
   // Get unique resources for filter
-  const uniqueResources = Array.from(new Set(mockAuditLogs.map((log) => log.resource)));
+  const uniqueResources = Array.from(
+    new Set(mockAuditLogs.map((log) => log.resource))
+  );
 
   return (
     <div className="space-y-6">
@@ -232,7 +238,7 @@ export default function AuditLogsPage() {
             </CardTitle>
             <div className="flex flex-wrap items-center gap-2">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
                 <Input
                   placeholder="Search logs..."
                   value={searchQuery}
@@ -315,8 +321,9 @@ export default function AuditLogsPage() {
           </div>
           {/* Pagination */}
           <div className="flex items-center justify-between px-2 py-4">
-            <div className="text-sm text-muted-foreground">
-              Showing {table.getRowModel().rows.length} of {filteredLogs.length} logs
+            <div className="text-muted-foreground text-sm">
+              Showing {table.getRowModel().rows.length} of {filteredLogs.length}{" "}
+              logs
             </div>
             <div className="flex items-center space-x-2">
               <Button

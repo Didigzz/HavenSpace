@@ -53,7 +53,9 @@ export default function NewTenantPage() {
   const [isSubmitting, setIsSubmitting] = React.useState(false);
 
   const rooms = currentProperty
-    ? getRoomsByProperty(currentProperty.id).filter((r) => r.status === "AVAILABLE")
+    ? getRoomsByProperty(currentProperty.id).filter(
+        (r) => r.status === "AVAILABLE"
+      )
     : mockRooms.filter((r) => r.status === "AVAILABLE");
 
   const {
@@ -129,7 +131,9 @@ export default function NewTenantPage() {
           <Card>
             <CardHeader>
               <CardTitle>Personal Information</CardTitle>
-              <CardDescription>Basic tenant details and contact information</CardDescription>
+              <CardDescription>
+                Basic tenant details and contact information
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid gap-4 sm:grid-cols-2">
@@ -141,7 +145,9 @@ export default function NewTenantPage() {
                     placeholder="Juan"
                   />
                   {errors.firstName && (
-                    <p className="text-sm text-destructive">{errors.firstName.message}</p>
+                    <p className="text-destructive text-sm">
+                      {errors.firstName.message}
+                    </p>
                   )}
                 </div>
                 <div className="space-y-2">
@@ -152,7 +158,9 @@ export default function NewTenantPage() {
                     placeholder="Dela Cruz"
                   />
                   {errors.lastName && (
-                    <p className="text-sm text-destructive">{errors.lastName.message}</p>
+                    <p className="text-destructive text-sm">
+                      {errors.lastName.message}
+                    </p>
                   )}
                 </div>
               </div>
@@ -165,7 +173,9 @@ export default function NewTenantPage() {
                   placeholder="juan.delacruz@email.com"
                 />
                 {errors.email && (
-                  <p className="text-sm text-destructive">{errors.email.message}</p>
+                  <p className="text-destructive text-sm">
+                    {errors.email.message}
+                  </p>
                 )}
               </div>
               <div className="space-y-2">
@@ -201,7 +211,9 @@ export default function NewTenantPage() {
           <Card>
             <CardHeader>
               <CardTitle>Room Assignment</CardTitle>
-              <CardDescription>Assign the tenant to an available room</CardDescription>
+              <CardDescription>
+                Assign the tenant to an available room
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
@@ -216,19 +228,20 @@ export default function NewTenantPage() {
                   <SelectContent>
                     {rooms.map((room) => (
                       <SelectItem key={room.id} value={room.id}>
-                        Room {room.roomNumber} - Floor {room.floor} ({formatCurrency(room.monthlyRate)}/mo)
+                        Room {room.roomNumber} - Floor {room.floor} (
+                        {formatCurrency(room.monthlyRate)}/mo)
                       </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
                 {rooms.length === 0 && (
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-muted-foreground text-sm">
                     No available rooms. Please add a room first.
                   </p>
                 )}
               </div>
               {selectedRoom && (
-                <div className="rounded-lg border bg-muted/50 p-4">
+                <div className="bg-muted/50 rounded-lg border p-4">
                   <h4 className="font-medium">Room Details</h4>
                   <div className="mt-2 grid grid-cols-2 gap-2 text-sm">
                     <p className="text-muted-foreground">Capacity:</p>
@@ -236,7 +249,9 @@ export default function NewTenantPage() {
                     <p className="text-muted-foreground">Amenities:</p>
                     <p>{selectedRoom.amenities.join(", ") || "None"}</p>
                     <p className="text-muted-foreground">Monthly Rate:</p>
-                    <p className="font-medium">{formatCurrency(selectedRoom.monthlyRate)}</p>
+                    <p className="font-medium">
+                      {formatCurrency(selectedRoom.monthlyRate)}
+                    </p>
                   </div>
                 </div>
               )}
@@ -259,7 +274,9 @@ export default function NewTenantPage() {
                     {...register("moveInDate")}
                   />
                   {errors.moveInDate && (
-                    <p className="text-sm text-destructive">{errors.moveInDate.message}</p>
+                    <p className="text-destructive text-sm">
+                      {errors.moveInDate.message}
+                    </p>
                   )}
                 </div>
                 <div className="space-y-2">
@@ -270,7 +287,9 @@ export default function NewTenantPage() {
                     {...register("leaseStartDate")}
                   />
                   {errors.leaseStartDate && (
-                    <p className="text-sm text-destructive">{errors.leaseStartDate.message}</p>
+                    <p className="text-destructive text-sm">
+                      {errors.leaseStartDate.message}
+                    </p>
                   )}
                 </div>
               </div>
@@ -281,7 +300,7 @@ export default function NewTenantPage() {
                   type="date"
                   {...register("leaseEndDate")}
                 />
-                <p className="text-xs text-muted-foreground">
+                <p className="text-muted-foreground text-xs">
                   Leave empty for month-to-month lease
                 </p>
               </div>
@@ -292,7 +311,9 @@ export default function NewTenantPage() {
           <Card>
             <CardHeader>
               <CardTitle>Payment Information</CardTitle>
-              <CardDescription>Monthly rent and deposit amounts</CardDescription>
+              <CardDescription>
+                Monthly rent and deposit amounts
+              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
@@ -304,7 +325,9 @@ export default function NewTenantPage() {
                   min={0}
                 />
                 {errors.monthlyRent && (
-                  <p className="text-sm text-destructive">{errors.monthlyRent.message}</p>
+                  <p className="text-destructive text-sm">
+                    {errors.monthlyRent.message}
+                  </p>
                 )}
               </div>
               <div className="space-y-2">
@@ -316,9 +339,11 @@ export default function NewTenantPage() {
                   min={0}
                 />
                 {errors.depositAmount && (
-                  <p className="text-sm text-destructive">{errors.depositAmount.message}</p>
+                  <p className="text-destructive text-sm">
+                    {errors.depositAmount.message}
+                  </p>
                 )}
-                <p className="text-xs text-muted-foreground">
+                <p className="text-muted-foreground text-xs">
                   Typically 2 months of rent
                 </p>
               </div>

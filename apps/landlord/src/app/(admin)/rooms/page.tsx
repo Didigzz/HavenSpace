@@ -57,7 +57,7 @@ function RoomCard({ room }: { room: Room }) {
     <Card className="relative overflow-hidden">
       <div
         className={cn(
-          "absolute left-0 top-0 h-full w-1",
+          "absolute top-0 left-0 h-full w-1",
           room.status === "AVAILABLE" && "bg-green-500",
           room.status === "OCCUPIED" && "bg-blue-500",
           room.status === "MAINTENANCE" && "bg-yellow-500"
@@ -66,8 +66,8 @@ function RoomCard({ room }: { room: Room }) {
       <CardHeader className="pb-2">
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-2">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
-              <DoorOpen className="h-5 w-5 text-primary" />
+            <div className="bg-primary/10 flex h-10 w-10 items-center justify-center rounded-lg">
+              <DoorOpen className="text-primary h-5 w-5" />
             </div>
             <div>
               <CardTitle className="text-lg">Room {room.roomNumber}</CardTitle>
@@ -107,17 +107,16 @@ function RoomCard({ room }: { room: Room }) {
         <div className="flex items-center justify-between">
           <Badge
             variant="secondary"
-            className={cn(
-              "gap-1",
-              getStatusColor(room.status.toLowerCase())
-            )}
+            className={cn("gap-1", getStatusColor(room.status.toLowerCase()))}
           >
             <StatusIcon className="h-3 w-3" />
             {statusLabels[room.status]}
           </Badge>
-          <span className="text-lg font-bold">{formatCurrency(room.monthlyRate)}</span>
+          <span className="text-lg font-bold">
+            {formatCurrency(room.monthlyRate)}
+          </span>
         </div>
-        
+
         <div className="space-y-2 text-sm">
           <div className="flex justify-between">
             <span className="text-muted-foreground">Capacity</span>
@@ -125,7 +124,9 @@ function RoomCard({ room }: { room: Room }) {
           </div>
           <div className="flex justify-between">
             <span className="text-muted-foreground">Occupants</span>
-            <span>{room.currentTenants} / {room.capacity}</span>
+            <span>
+              {room.currentTenants} / {room.capacity}
+            </span>
           </div>
         </div>
 
@@ -158,7 +159,9 @@ export default function RoomsPage() {
     : mockRooms;
 
   const filteredRooms = allRooms.filter((room) => {
-    const matchesSearch = room.roomNumber.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesSearch = room.roomNumber
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase());
     const matchesTab =
       activeTab === "all" ||
       room.status.toLowerCase() === activeTab.toLowerCase();
@@ -204,7 +207,9 @@ export default function RoomsPage() {
               <CheckCircle className="h-4 w-4 text-green-500" />
               Available
             </CardDescription>
-            <CardTitle className="text-3xl text-green-600">{stats.available}</CardTitle>
+            <CardTitle className="text-3xl text-green-600">
+              {stats.available}
+            </CardTitle>
           </CardHeader>
         </Card>
         <Card>
@@ -213,7 +218,9 @@ export default function RoomsPage() {
               <Users className="h-4 w-4 text-blue-500" />
               Occupied
             </CardDescription>
-            <CardTitle className="text-3xl text-blue-600">{stats.occupied}</CardTitle>
+            <CardTitle className="text-3xl text-blue-600">
+              {stats.occupied}
+            </CardTitle>
           </CardHeader>
         </Card>
         <Card>
@@ -222,23 +229,35 @@ export default function RoomsPage() {
               <Wrench className="h-4 w-4 text-yellow-500" />
               Maintenance
             </CardDescription>
-            <CardTitle className="text-3xl text-yellow-600">{stats.maintenance}</CardTitle>
+            <CardTitle className="text-3xl text-yellow-600">
+              {stats.maintenance}
+            </CardTitle>
           </CardHeader>
         </Card>
       </div>
 
       {/* Filters and Tabs */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full sm:w-auto">
+        <Tabs
+          value={activeTab}
+          onValueChange={setActiveTab}
+          className="w-full sm:w-auto"
+        >
           <TabsList>
             <TabsTrigger value="all">All ({stats.total})</TabsTrigger>
-            <TabsTrigger value="available">Available ({stats.available})</TabsTrigger>
-            <TabsTrigger value="occupied">Occupied ({stats.occupied})</TabsTrigger>
-            <TabsTrigger value="maintenance">Maintenance ({stats.maintenance})</TabsTrigger>
+            <TabsTrigger value="available">
+              Available ({stats.available})
+            </TabsTrigger>
+            <TabsTrigger value="occupied">
+              Occupied ({stats.occupied})
+            </TabsTrigger>
+            <TabsTrigger value="maintenance">
+              Maintenance ({stats.maintenance})
+            </TabsTrigger>
           </TabsList>
         </Tabs>
         <div className="relative w-full sm:w-64">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
           <Input
             placeholder="Search rooms..."
             value={searchQuery}
@@ -258,7 +277,7 @@ export default function RoomsPage() {
       {filteredRooms.length === 0 && (
         <Card className="py-12">
           <CardContent className="text-center">
-            <DoorOpen className="mx-auto h-12 w-12 text-muted-foreground" />
+            <DoorOpen className="text-muted-foreground mx-auto h-12 w-12" />
             <h3 className="mt-4 text-lg font-medium">No rooms found</h3>
             <p className="text-muted-foreground">
               {searchQuery

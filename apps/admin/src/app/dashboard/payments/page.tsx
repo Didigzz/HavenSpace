@@ -59,7 +59,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { cn, formatDate, formatCurrency, getInitials, getRelativeTime, formatDateTime } from "@/lib/utils";
+import {
+  cn,
+  formatDate,
+  formatCurrency,
+  getInitials,
+  getRelativeTime,
+  formatDateTime,
+} from "@/lib/utils";
 import {
   AreaChart,
   Area,
@@ -70,7 +77,12 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-type PaymentStatus = "completed" | "pending" | "failed" | "refunded" | "disputed";
+type PaymentStatus =
+  | "completed"
+  | "pending"
+  | "failed"
+  | "refunded"
+  | "disputed";
 type PaymentMethod = "gcash" | "paymaya" | "bank_transfer" | "cash";
 
 interface PaymentData {
@@ -144,7 +156,8 @@ const mockPayments: PaymentData[] = [
     description: "Monthly rent - December 2024",
     createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 5),
     completedAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 5),
-    disputeReason: "Services not as described - Room conditions differ from listing",
+    disputeReason:
+      "Services not as described - Room conditions differ from listing",
   },
   {
     id: "PAY004",
@@ -187,7 +200,8 @@ const mockPayments: PaymentData[] = [
     payer: { id: "b6", name: "Anna Lee", email: "anna@example.com" },
     recipient: { id: "l2", name: "Carlos Tan", email: "carlos@example.com" },
     listing: "Green Residence Dormitory",
-    description: "Monthly rent - November 2024 (Refunded due to early termination)",
+    description:
+      "Monthly rent - November 2024 (Refunded due to early termination)",
     createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 30),
     completedAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 25),
   },
@@ -205,11 +219,14 @@ const revenueChartData = [
 ];
 
 const statusColors: Record<PaymentStatus, string> = {
-  completed: "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300",
-  pending: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300",
+  completed:
+    "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300",
+  pending:
+    "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300",
   failed: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300",
   refunded: "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300",
-  disputed: "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-300",
+  disputed:
+    "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-300",
 };
 
 const methodLabels: Record<PaymentMethod, string> = {
@@ -219,7 +236,10 @@ const methodLabels: Record<PaymentMethod, string> = {
   cash: "Cash",
 };
 
-const statusIcons: Record<PaymentStatus, React.ComponentType<{ className?: string }>> = {
+const statusIcons: Record<
+  PaymentStatus,
+  React.ComponentType<{ className?: string }>
+> = {
   completed: CheckCircle,
   pending: Clock,
   failed: XCircle,
@@ -230,7 +250,8 @@ const statusIcons: Record<PaymentStatus, React.ComponentType<{ className?: strin
 export default function PaymentsPage() {
   const [filter, setFilter] = React.useState<"all" | PaymentStatus>("all");
   const [searchQuery, setSearchQuery] = React.useState("");
-  const [selectedPayment, setSelectedPayment] = React.useState<PaymentData | null>(null);
+  const [selectedPayment, setSelectedPayment] =
+    React.useState<PaymentData | null>(null);
   const [disputeDialog, setDisputeDialog] = React.useState<{
     open: boolean;
     payment: PaymentData | null;
@@ -242,7 +263,9 @@ export default function PaymentsPage() {
     const matchesSearch =
       payment.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
       payment.payer.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      payment.recipient.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      payment.recipient.name
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase()) ||
       payment.listing.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesFilter && matchesSearch;
   });
@@ -274,7 +297,9 @@ export default function PaymentsPage() {
       {/* Page Header */}
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Payments Monitoring</h1>
+          <h1 className="text-3xl font-bold tracking-tight">
+            Payments Monitoring
+          </h1>
           <p className="text-muted-foreground">
             Track and manage all platform payments
           </p>
@@ -290,10 +315,12 @@ export default function PaymentsPage() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Revenue</CardTitle>
-            <DollarSign className="h-4 w-4 text-muted-foreground" />
+            <DollarSign className="text-muted-foreground h-4 w-4" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{formatCurrency(totalRevenue)}</div>
+            <div className="text-2xl font-bold">
+              {formatCurrency(totalRevenue)}
+            </div>
             <p className="flex items-center text-xs text-green-600">
               <TrendingUp className="mr-1 h-3 w-3" />
               +12.5% from last month
@@ -303,11 +330,13 @@ export default function PaymentsPage() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Platform Fees</CardTitle>
-            <CreditCard className="h-4 w-4 text-muted-foreground" />
+            <CreditCard className="text-muted-foreground h-4 w-4" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{formatCurrency(totalFees)}</div>
-            <p className="text-xs text-muted-foreground">3% transaction fee</p>
+            <div className="text-2xl font-bold">
+              {formatCurrency(totalFees)}
+            </div>
+            <p className="text-muted-foreground text-xs">3% transaction fee</p>
           </CardContent>
         </Card>
         <Card>
@@ -317,7 +346,9 @@ export default function PaymentsPage() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{paymentCounts.pending}</div>
-            <p className="text-xs text-muted-foreground">Awaiting confirmation</p>
+            <p className="text-muted-foreground text-xs">
+              Awaiting confirmation
+            </p>
           </CardContent>
         </Card>
         <Card>
@@ -327,7 +358,7 @@ export default function PaymentsPage() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{paymentCounts.disputed}</div>
-            <p className="text-xs text-muted-foreground">Needs attention</p>
+            <p className="text-muted-foreground text-xs">Needs attention</p>
           </CardContent>
         </Card>
       </div>
@@ -365,7 +396,9 @@ export default function PaymentsPage() {
                     border: "1px solid hsl(var(--border))",
                     borderRadius: "8px",
                   }}
-                  formatter={(value: number | undefined) => [formatCurrency(value ?? 0), "Revenue"] as [string, string]}
+                  formatter={(value: number | undefined) =>
+                    [formatCurrency(value ?? 0), "Revenue"] as [string, string]
+                  }
                 />
                 <Area
                   type="monotone"
@@ -384,7 +417,10 @@ export default function PaymentsPage() {
       <Card>
         <CardHeader>
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-            <Tabs value={filter} onValueChange={(v) => setFilter(v as typeof filter)}>
+            <Tabs
+              value={filter}
+              onValueChange={(v) => setFilter(v as typeof filter)}
+            >
               <TabsList>
                 <TabsTrigger value="all">All</TabsTrigger>
                 <TabsTrigger value="completed">Completed</TabsTrigger>
@@ -395,7 +431,7 @@ export default function PaymentsPage() {
               </TabsList>
             </Tabs>
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+              <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
               <Input
                 placeholder="Search payments..."
                 className="w-full pl-9 md:w-72"
@@ -438,7 +474,7 @@ export default function PaymentsPage() {
                       <TableCell>
                         <div className="flex items-center gap-2">
                           <Avatar className="h-7 w-7">
-                            <AvatarFallback className="bg-blue-100 text-blue-800 text-xs">
+                            <AvatarFallback className="bg-blue-100 text-xs text-blue-800">
                               {getInitials(payment.payer.name)}
                             </AvatarFallback>
                           </Avatar>
@@ -448,29 +484,36 @@ export default function PaymentsPage() {
                       <TableCell>
                         <div className="flex items-center gap-2">
                           <Avatar className="h-7 w-7">
-                            <AvatarFallback className="bg-purple-100 text-purple-800 text-xs">
+                            <AvatarFallback className="bg-purple-100 text-xs text-purple-800">
                               {getInitials(payment.recipient.name)}
                             </AvatarFallback>
                           </Avatar>
-                          <span className="text-sm">{payment.recipient.name}</span>
+                          <span className="text-sm">
+                            {payment.recipient.name}
+                          </span>
                         </div>
                       </TableCell>
                       <TableCell className="font-medium">
                         {formatCurrency(payment.amount)}
                       </TableCell>
-                      <TableCell className="text-sm text-muted-foreground">
+                      <TableCell className="text-muted-foreground text-sm">
                         {formatCurrency(payment.fee)}
                       </TableCell>
                       <TableCell className="text-sm">
                         {methodLabels[payment.method]}
                       </TableCell>
                       <TableCell>
-                        <Badge className={cn("text-xs", statusColors[payment.status])}>
+                        <Badge
+                          className={cn(
+                            "text-xs",
+                            statusColors[payment.status]
+                          )}
+                        >
                           <StatusIcon className="mr-1 h-3 w-3" />
                           {payment.status}
                         </Badge>
                       </TableCell>
-                      <TableCell className="text-sm text-muted-foreground">
+                      <TableCell className="text-muted-foreground text-sm">
                         {getRelativeTime(payment.createdAt)}
                       </TableCell>
                       <TableCell className="text-right">
@@ -483,7 +526,9 @@ export default function PaymentsPage() {
                           <DropdownMenuContent align="end">
                             <DropdownMenuLabel>Actions</DropdownMenuLabel>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem onClick={() => setSelectedPayment(payment)}>
+                            <DropdownMenuItem
+                              onClick={() => setSelectedPayment(payment)}
+                            >
                               <Eye className="mr-2 h-4 w-4" />
                               View Details
                             </DropdownMenuItem>
@@ -492,7 +537,11 @@ export default function PaymentsPage() {
                                 <DropdownMenuSeparator />
                                 <DropdownMenuItem
                                   onClick={() =>
-                                    setDisputeDialog({ open: true, payment, action: "resolve" })
+                                    setDisputeDialog({
+                                      open: true,
+                                      payment,
+                                      action: "resolve",
+                                    })
                                   }
                                   className="text-green-600"
                                 >
@@ -501,7 +550,11 @@ export default function PaymentsPage() {
                                 </DropdownMenuItem>
                                 <DropdownMenuItem
                                   onClick={() =>
-                                    setDisputeDialog({ open: true, payment, action: "refund" })
+                                    setDisputeDialog({
+                                      open: true,
+                                      payment,
+                                      action: "refund",
+                                    })
                                   }
                                   className="text-orange-600"
                                 >
@@ -542,32 +595,42 @@ export default function PaymentsPage() {
                   <Badge className={cn(statusColors[selectedPayment.status])}>
                     {selectedPayment.status}
                   </Badge>
-                  <span className="text-sm text-muted-foreground">
+                  <span className="text-muted-foreground text-sm">
                     via {methodLabels[selectedPayment.method]}
                   </span>
                 </div>
 
                 {/* Amount Details */}
-                <div className="rounded-lg border p-4 space-y-2">
+                <div className="space-y-2 rounded-lg border p-4">
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Amount</span>
-                    <span className="font-medium">{formatCurrency(selectedPayment.amount)}</span>
+                    <span className="font-medium">
+                      {formatCurrency(selectedPayment.amount)}
+                    </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Platform Fee (3%)</span>
-                    <span className="text-muted-foreground">-{formatCurrency(selectedPayment.fee)}</span>
+                    <span className="text-muted-foreground">
+                      Platform Fee (3%)
+                    </span>
+                    <span className="text-muted-foreground">
+                      -{formatCurrency(selectedPayment.fee)}
+                    </span>
                   </div>
                   <Separator />
                   <div className="flex justify-between">
                     <span className="font-medium">Net Amount</span>
-                    <span className="font-medium">{formatCurrency(selectedPayment.netAmount)}</span>
+                    <span className="font-medium">
+                      {formatCurrency(selectedPayment.netAmount)}
+                    </span>
                   </div>
                 </div>
 
                 {/* Parties */}
                 <div className="grid gap-4 md:grid-cols-2">
                   <div className="rounded-lg border p-4">
-                    <p className="text-sm text-muted-foreground mb-2">From (Payer)</p>
+                    <p className="text-muted-foreground mb-2 text-sm">
+                      From (Payer)
+                    </p>
                     <div className="flex items-center gap-2">
                       <Avatar className="h-8 w-8">
                         <AvatarFallback className="bg-blue-100 text-blue-800">
@@ -575,15 +638,19 @@ export default function PaymentsPage() {
                         </AvatarFallback>
                       </Avatar>
                       <div>
-                        <p className="font-medium">{selectedPayment.payer.name}</p>
-                        <p className="text-xs text-muted-foreground">
+                        <p className="font-medium">
+                          {selectedPayment.payer.name}
+                        </p>
+                        <p className="text-muted-foreground text-xs">
                           {selectedPayment.payer.email}
                         </p>
                       </div>
                     </div>
                   </div>
                   <div className="rounded-lg border p-4">
-                    <p className="text-sm text-muted-foreground mb-2">To (Recipient)</p>
+                    <p className="text-muted-foreground mb-2 text-sm">
+                      To (Recipient)
+                    </p>
                     <div className="flex items-center gap-2">
                       <Avatar className="h-8 w-8">
                         <AvatarFallback className="bg-purple-100 text-purple-800">
@@ -591,8 +658,10 @@ export default function PaymentsPage() {
                         </AvatarFallback>
                       </Avatar>
                       <div>
-                        <p className="font-medium">{selectedPayment.recipient.name}</p>
-                        <p className="text-xs text-muted-foreground">
+                        <p className="font-medium">
+                          {selectedPayment.recipient.name}
+                        </p>
+                        <p className="text-muted-foreground text-xs">
                           {selectedPayment.recipient.email}
                         </p>
                       </div>
@@ -602,42 +671,52 @@ export default function PaymentsPage() {
 
                 {/* Description */}
                 <div className="rounded-lg border p-4">
-                  <p className="text-sm text-muted-foreground">Description</p>
+                  <p className="text-muted-foreground text-sm">Description</p>
                   <p className="font-medium">{selectedPayment.description}</p>
-                  <p className="text-sm text-muted-foreground mt-1">
+                  <p className="text-muted-foreground mt-1 text-sm">
                     Listing: {selectedPayment.listing}
                   </p>
                 </div>
 
                 {/* Dispute Info */}
-                {selectedPayment.status === "disputed" && selectedPayment.disputeReason && (
-                  <div className="rounded-lg bg-orange-50 dark:bg-orange-950 p-4">
-                    <p className="font-medium text-orange-800 dark:text-orange-200">
-                      Dispute Reason
-                    </p>
-                    <p className="text-orange-700 dark:text-orange-300">
-                      {selectedPayment.disputeReason}
-                    </p>
-                  </div>
-                )}
+                {selectedPayment.status === "disputed" &&
+                  selectedPayment.disputeReason && (
+                    <div className="rounded-lg bg-orange-50 p-4 dark:bg-orange-950">
+                      <p className="font-medium text-orange-800 dark:text-orange-200">
+                        Dispute Reason
+                      </p>
+                      <p className="text-orange-700 dark:text-orange-300">
+                        {selectedPayment.disputeReason}
+                      </p>
+                    </div>
+                  )}
 
                 {/* Timestamps */}
-                <div className="text-sm text-muted-foreground">
+                <div className="text-muted-foreground text-sm">
                   <p>Created: {formatDateTime(selectedPayment.createdAt)}</p>
                   {selectedPayment.completedAt && (
-                    <p>Completed: {formatDateTime(selectedPayment.completedAt)}</p>
+                    <p>
+                      Completed: {formatDateTime(selectedPayment.completedAt)}
+                    </p>
                   )}
                 </div>
               </div>
               <DialogFooter>
-                <Button variant="outline" onClick={() => setSelectedPayment(null)}>
+                <Button
+                  variant="outline"
+                  onClick={() => setSelectedPayment(null)}
+                >
                   Close
                 </Button>
                 {selectedPayment.status === "disputed" && (
                   <Button
                     onClick={() => {
                       setSelectedPayment(null);
-                      setDisputeDialog({ open: true, payment: selectedPayment, action: "resolve" });
+                      setDisputeDialog({
+                        open: true,
+                        payment: selectedPayment,
+                        action: "resolve",
+                      });
                     }}
                   >
                     Handle Dispute
@@ -653,13 +732,16 @@ export default function PaymentsPage() {
       <Dialog
         open={disputeDialog.open}
         onOpenChange={(open) =>
-          !open && setDisputeDialog({ open: false, payment: null, action: null })
+          !open &&
+          setDisputeDialog({ open: false, payment: null, action: null })
         }
       >
         <DialogContent>
           <DialogHeader>
             <DialogTitle>
-              {disputeDialog.action === "resolve" ? "Resolve Dispute" : "Issue Refund"}
+              {disputeDialog.action === "resolve"
+                ? "Resolve Dispute"
+                : "Issue Refund"}
             </DialogTitle>
             <DialogDescription>
               {disputeDialog.action === "resolve"
@@ -670,7 +752,7 @@ export default function PaymentsPage() {
           <div className="py-4">
             <label className="text-sm font-medium">Resolution Notes</label>
             <textarea
-              className="mt-1.5 w-full rounded-md border bg-background px-3 py-2 text-sm"
+              className="bg-background mt-1.5 w-full rounded-md border px-3 py-2 text-sm"
               rows={4}
               placeholder="Add notes about this decision..."
             />
@@ -678,18 +760,24 @@ export default function PaymentsPage() {
           <DialogFooter>
             <Button
               variant="outline"
-              onClick={() => setDisputeDialog({ open: false, payment: null, action: null })}
+              onClick={() =>
+                setDisputeDialog({ open: false, payment: null, action: null })
+              }
             >
               Cancel
             </Button>
             <Button
               onClick={() => handleDisputeAction(disputeDialog.action!)}
               className={cn(
-                disputeDialog.action === "resolve" && "bg-green-600 hover:bg-green-700",
-                disputeDialog.action === "refund" && "bg-orange-600 hover:bg-orange-700"
+                disputeDialog.action === "resolve" &&
+                  "bg-green-600 hover:bg-green-700",
+                disputeDialog.action === "refund" &&
+                  "bg-orange-600 hover:bg-orange-700"
               )}
             >
-              {disputeDialog.action === "resolve" ? "Resolve & Release" : "Issue Refund"}
+              {disputeDialog.action === "resolve"
+                ? "Resolve & Release"
+                : "Issue Refund"}
             </Button>
           </DialogFooter>
         </DialogContent>

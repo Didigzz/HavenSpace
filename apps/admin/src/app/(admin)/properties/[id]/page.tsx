@@ -43,9 +43,18 @@ import {
   CardHeader,
   CardTitle,
 } from "@havenspace/shared/ui";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@havenspace/shared/ui";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@havenspace/shared/ui";
 import { Separator } from "@/components/ui/separator";
-import { mockProperties, getRoomsByProperty, getTenantsByProperty } from "@/lib/mock-data";
+import {
+  mockProperties,
+  getRoomsByProperty,
+  getTenantsByProperty,
+} from "@/lib/mock-data";
 import {
   formatCurrency,
   formatDate,
@@ -59,7 +68,10 @@ import type { Property, PropertyAmenity, PropertyRule } from "@/types";
 const MapView = React.lazy(() => import("@/components/map/map-view"));
 
 // Icon mapping for amenities
-const amenityIcons: Record<string, React.ComponentType<{ className?: string }>> = {
+const amenityIcons: Record<
+  string,
+  React.ComponentType<{ className?: string }>
+> = {
   wifi: Wifi,
   car: Car,
   shirt: Shirt,
@@ -82,8 +94,8 @@ function ImageGallery({ images }: { images: Property["images"] }) {
 
   if (!images || images.length === 0) {
     return (
-      <div className="aspect-video w-full rounded-lg bg-muted flex items-center justify-center">
-        <Building className="h-16 w-16 text-muted-foreground" />
+      <div className="bg-muted flex aspect-video w-full items-center justify-center rounded-lg">
+        <Building className="text-muted-foreground h-16 w-16" />
       </div>
     );
   }
@@ -92,19 +104,23 @@ function ImageGallery({ images }: { images: Property["images"] }) {
   const selectedImage = sortedImages[selectedIndex];
 
   const goToPrevious = () => {
-    setSelectedIndex((prev) => (prev === 0 ? sortedImages.length - 1 : prev - 1));
+    setSelectedIndex((prev) =>
+      prev === 0 ? sortedImages.length - 1 : prev - 1
+    );
   };
 
   const goToNext = () => {
-    setSelectedIndex((prev) => (prev === sortedImages.length - 1 ? 0 : prev + 1));
+    setSelectedIndex((prev) =>
+      prev === sortedImages.length - 1 ? 0 : prev + 1
+    );
   };
 
   return (
     <>
       {/* Main Image */}
-      <div className="relative group">
+      <div className="group relative">
         <div
-          className="aspect-video w-full overflow-hidden rounded-lg cursor-pointer"
+          className="aspect-video w-full cursor-pointer overflow-hidden rounded-lg"
           onClick={() => setIsLightboxOpen(true)}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -119,7 +135,7 @@ function ImageGallery({ images }: { images: Property["images"] }) {
             <Button
               variant="secondary"
               size="icon"
-              className="absolute left-2 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity"
+              className="absolute top-1/2 left-2 -translate-y-1/2 opacity-0 transition-opacity group-hover:opacity-100"
               onClick={(e) => {
                 e.stopPropagation();
                 goToPrevious();
@@ -130,7 +146,7 @@ function ImageGallery({ images }: { images: Property["images"] }) {
             <Button
               variant="secondary"
               size="icon"
-              className="absolute right-2 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity"
+              className="absolute top-1/2 right-2 -translate-y-1/2 opacity-0 transition-opacity group-hover:opacity-100"
               onClick={(e) => {
                 e.stopPropagation();
                 goToNext();
@@ -140,7 +156,7 @@ function ImageGallery({ images }: { images: Property["images"] }) {
             </Button>
           </>
         )}
-        <div className="absolute bottom-2 right-2 rounded bg-black/60 px-2 py-1 text-xs text-white">
+        <div className="absolute right-2 bottom-2 rounded bg-black/60 px-2 py-1 text-xs text-white">
           {selectedIndex + 1} / {sortedImages.length}
         </div>
       </div>
@@ -154,7 +170,7 @@ function ImageGallery({ images }: { images: Property["images"] }) {
               type="button"
               onClick={() => setSelectedIndex(index)}
               className={cn(
-                "flex-shrink-0 h-16 w-24 overflow-hidden rounded-md border-2 transition-all",
+                "h-16 w-24 flex-shrink-0 overflow-hidden rounded-md border-2 transition-all",
                 selectedIndex === index
                   ? "border-primary"
                   : "border-transparent opacity-60 hover:opacity-100"
@@ -180,7 +196,7 @@ function ImageGallery({ images }: { images: Property["images"] }) {
           <Button
             variant="ghost"
             size="icon"
-            className="absolute right-4 top-4 text-white hover:bg-white/20"
+            className="absolute top-4 right-4 text-white hover:bg-white/20"
             onClick={() => setIsLightboxOpen(false)}
           >
             <X className="h-6 w-6" />
@@ -188,7 +204,7 @@ function ImageGallery({ images }: { images: Property["images"] }) {
           <Button
             variant="ghost"
             size="icon"
-            className="absolute left-4 top-1/2 -translate-y-1/2 text-white hover:bg-white/20"
+            className="absolute top-1/2 left-4 -translate-y-1/2 text-white hover:bg-white/20"
             onClick={(e) => {
               e.stopPropagation();
               goToPrevious();
@@ -198,15 +214,15 @@ function ImageGallery({ images }: { images: Property["images"] }) {
           </Button>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={selectedImage?.url || ''}
-            alt={selectedImage?.alt || ''}
+            src={selectedImage?.url || ""}
+            alt={selectedImage?.alt || ""}
             className="max-h-[90vh] max-w-[90vw] object-contain"
             onClick={(e) => e.stopPropagation()}
           />
           <Button
             variant="ghost"
             size="icon"
-            className="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:bg-white/20"
+            className="absolute top-1/2 right-4 -translate-y-1/2 text-white hover:bg-white/20"
             onClick={(e) => {
               e.stopPropagation();
               goToNext();
@@ -227,7 +243,7 @@ function AmenityBadge({ amenity }: { amenity: PropertyAmenity }) {
   const Icon = amenityIcons[amenity.icon || ""] || Sparkles;
   return (
     <div className="flex items-center gap-2 rounded-lg border p-3">
-      <Icon className="h-5 w-5 text-primary" />
+      <Icon className="text-primary h-5 w-5" />
       <span className="text-sm font-medium">{amenity.name}</span>
     </div>
   );
@@ -245,7 +261,9 @@ export default function PropertyDetailPage() {
     return (
       <div className="flex flex-col items-center justify-center py-12">
         <h1 className="text-2xl font-bold">Property Not Found</h1>
-        <p className="text-muted-foreground">The property you&apos;re looking for doesn&apos;t exist.</p>
+        <p className="text-muted-foreground">
+          The property you&apos;re looking for doesn&apos;t exist.
+        </p>
         <Button asChild className="mt-4">
           <Link href="/properties">
             <ArrowLeft className="mr-2 h-4 w-4" />
@@ -256,10 +274,15 @@ export default function PropertyDetailPage() {
     );
   }
 
-  const occupancyRate = calculateOccupancyRate(property.occupiedRooms ?? 0, property.totalRooms ?? 0);
+  const occupancyRate = calculateOccupancyRate(
+    property.occupiedRooms ?? 0,
+    property.totalRooms ?? 0
+  );
   const availableRooms = rooms.filter((r) => r.status === "AVAILABLE").length;
   const occupiedRooms = rooms.filter((r) => r.status === "OCCUPIED").length;
-  const maintenanceRooms = rooms.filter((r) => r.status === "MAINTENANCE").length;
+  const maintenanceRooms = rooms.filter(
+    (r) => r.status === "MAINTENANCE"
+  ).length;
 
   return (
     <div className="space-y-6">
@@ -272,15 +295,20 @@ export default function PropertyDetailPage() {
             </Link>
           </Button>
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">{property.name}</h1>
-            <p className="flex items-center gap-1 text-muted-foreground">
+            <h1 className="text-3xl font-bold tracking-tight">
+              {property.name}
+            </h1>
+            <p className="text-muted-foreground flex items-center gap-1">
               <MapPin className="h-4 w-4" />
               {property.address}, {property.city}
             </p>
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <Badge variant="secondary" className={cn(getStatusColor(property.status))}>
+          <Badge
+            variant="secondary"
+            className={cn(getStatusColor(property.status))}
+          >
             {property.status.charAt(0).toUpperCase() + property.status.slice(1)}
           </Badge>
           <Button asChild>
@@ -295,11 +323,21 @@ export default function PropertyDetailPage() {
       {/* Main Content */}
       <div className="grid gap-6 lg:grid-cols-3">
         {/* Left Column - Images and Details */}
-        <div className="lg:col-span-2 space-y-6">
+        <div className="space-y-6 lg:col-span-2">
           {/* Image Gallery */}
           <Card>
             <CardContent className="p-4">
-              <ImageGallery images={property.images?.map((url, i) => ({ id: `img-${i}`, url, alt: '', order: i, isPrimary: i === 0 })) || []} />
+              <ImageGallery
+                images={
+                  property.images?.map((url, i) => ({
+                    id: `img-${i}`,
+                    url,
+                    alt: "",
+                    order: i,
+                    isPrimary: i === 0,
+                  })) || []
+                }
+              />
             </CardContent>
           </Card>
 
@@ -325,42 +363,44 @@ export default function PropertyDetailPage() {
               </Card>
 
               {/* Nearby Landmarks */}
-              {property.nearbyLandmarks && property.nearbyLandmarks.length > 0 && (
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Nearby Landmarks</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <ul className="grid gap-2 sm:grid-cols-2">
-                      {property.nearbyLandmarks.map((landmark, index) => (
-                        <li key={index} className="flex items-center gap-2">
-                          <MapPin className="h-4 w-4 text-muted-foreground" />
-                          {landmark}
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              )}
+              {property.nearbyLandmarks &&
+                property.nearbyLandmarks.length > 0 && (
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Nearby Landmarks</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <ul className="grid gap-2 sm:grid-cols-2">
+                        {property.nearbyLandmarks.map((landmark, index) => (
+                          <li key={index} className="flex items-center gap-2">
+                            <MapPin className="text-muted-foreground h-4 w-4" />
+                            {landmark}
+                          </li>
+                        ))}
+                      </ul>
+                    </CardContent>
+                  </Card>
+                )}
 
               {/* Public Transport */}
-              {property.publicTransport && property.publicTransport.length > 0 && (
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Public Transportation</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <ul className="space-y-2">
-                      {property.publicTransport.map((transport, index) => (
-                        <li key={index} className="flex items-center gap-2">
-                          <Car className="h-4 w-4 text-muted-foreground" />
-                          {transport}
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              )}
+              {property.publicTransport &&
+                property.publicTransport.length > 0 && (
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>Public Transportation</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <ul className="space-y-2">
+                        {property.publicTransport.map((transport, index) => (
+                          <li key={index} className="flex items-center gap-2">
+                            <Car className="text-muted-foreground h-4 w-4" />
+                            {transport}
+                          </li>
+                        ))}
+                      </ul>
+                    </CardContent>
+                  </Card>
+                )}
             </TabsContent>
 
             <TabsContent value="amenities">
@@ -375,11 +415,16 @@ export default function PropertyDetailPage() {
                   {property.amenities && property.amenities.length > 0 ? (
                     <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3">
                       {property.amenities.map((name) => (
-                        <AmenityBadge key={name} amenity={{ id: name, name, icon: 'sparkles' }} />
+                        <AmenityBadge
+                          key={name}
+                          amenity={{ id: name, name, icon: "sparkles" }}
+                        />
                       ))}
                     </div>
                   ) : (
-                    <p className="text-muted-foreground">No amenities listed.</p>
+                    <p className="text-muted-foreground">
+                      No amenities listed.
+                    </p>
                   )}
                 </CardContent>
               </Card>
@@ -397,11 +442,16 @@ export default function PropertyDetailPage() {
                   {property.rules && property.rules.length > 0 ? (
                     <div className="space-y-4">
                       {property.rules.map((rule) => (
-                        <div key={rule.id} className="border-l-4 border-primary pl-4">
+                        <div
+                          key={rule.id}
+                          className="border-primary border-l-4 pl-4"
+                        >
                           <h4 className="font-semibold">{rule.title}</h4>
-                          <p className="text-sm text-muted-foreground">{rule.description}</p>
+                          <p className="text-muted-foreground text-sm">
+                            {rule.description}
+                          </p>
                           <Badge variant="outline" className="mt-1 text-xs">
-                            {(rule as PropertyRule).category || 'general'}
+                            {(rule as PropertyRule).category || "general"}
                           </Badge>
                         </div>
                       ))}
@@ -418,7 +468,8 @@ export default function PropertyDetailPage() {
                 <CardHeader>
                   <CardTitle>Property Location</CardTitle>
                   <CardDescription>
-                    {property.location?.address || `${property.address}, ${property.city}`}
+                    {property.location?.address ||
+                      `${property.address}, ${property.city}`}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -426,14 +477,20 @@ export default function PropertyDetailPage() {
                     <div className="h-[400px] overflow-hidden rounded-lg border">
                       <Suspense
                         fallback={
-                          <div className="flex h-full items-center justify-center bg-muted">
+                          <div className="bg-muted flex h-full items-center justify-center">
                             Loading map...
                           </div>
                         }
                       >
                         <MapView
-                          center={[property.location.latitude, property.location.longitude]}
-                          markerPosition={[property.location.latitude, property.location.longitude]}
+                          center={[
+                            property.location.latitude,
+                            property.location.longitude,
+                          ]}
+                          markerPosition={[
+                            property.location.latitude,
+                            property.location.longitude,
+                          ]}
                           zoom={16}
                           interactive={true}
                         />
@@ -491,7 +548,9 @@ export default function PropertyDetailPage() {
                   <Users className="h-4 w-4 text-purple-600" />
                   <span>Active Tenants</span>
                 </div>
-                <span className="font-bold">{tenants.filter((t) => t.isActive).length}</span>
+                <span className="font-bold">
+                  {tenants.filter((t) => t.isActive).length}
+                </span>
               </div>
               <Separator />
               <div className="flex items-center justify-between">
@@ -499,7 +558,9 @@ export default function PropertyDetailPage() {
                   <TrendingUp className="h-4 w-4 text-green-600" />
                   <span>Monthly Revenue</span>
                 </div>
-                <span className="font-bold">{formatCurrency(property.monthlyRevenue ?? 0)}</span>
+                <span className="font-bold">
+                  {formatCurrency(property.monthlyRevenue ?? 0)}
+                </span>
               </div>
             </CardContent>
           </Card>
@@ -511,7 +572,9 @@ export default function PropertyDetailPage() {
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
-                <p className="text-sm text-muted-foreground">Monthly Rent Range</p>
+                <p className="text-muted-foreground text-sm">
+                  Monthly Rent Range
+                </p>
                 <p className="text-2xl font-bold">
                   {property.minRent && property.maxRent
                     ? `${formatCurrency(property.minRent)} - ${formatCurrency(property.maxRent)}`
@@ -520,13 +583,13 @@ export default function PropertyDetailPage() {
               </div>
               {property.parkingType && property.parkingType !== "none" && (
                 <div>
-                  <p className="text-sm text-muted-foreground">Parking</p>
+                  <p className="text-muted-foreground text-sm">Parking</p>
                   <p className="font-medium">
                     {property.parkingType === "free"
                       ? "Free parking available"
                       : `${formatCurrency(property.parkingRate || 0)}/month`}
                   </p>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-muted-foreground text-xs">
                     {property.parkingSpaces} spaces available
                   </p>
                 </div>
@@ -542,21 +605,23 @@ export default function PropertyDetailPage() {
             <CardContent className="space-y-4">
               {property.managerName && (
                 <div className="flex items-center gap-3">
-                  <User className="h-4 w-4 text-muted-foreground" />
+                  <User className="text-muted-foreground h-4 w-4" />
                   <div>
-                    <p className="text-sm text-muted-foreground">Property Manager</p>
+                    <p className="text-muted-foreground text-sm">
+                      Property Manager
+                    </p>
                     <p className="font-medium">{property.managerName}</p>
                   </div>
                 </div>
               )}
               {property.contactPhone && (
                 <div className="flex items-center gap-3">
-                  <Phone className="h-4 w-4 text-muted-foreground" />
+                  <Phone className="text-muted-foreground h-4 w-4" />
                   <div>
-                    <p className="text-sm text-muted-foreground">Phone</p>
+                    <p className="text-muted-foreground text-sm">Phone</p>
                     <a
                       href={`tel:${property.contactPhone}`}
-                      className="font-medium text-primary hover:underline"
+                      className="text-primary font-medium hover:underline"
                     >
                       {property.contactPhone}
                     </a>
@@ -565,12 +630,12 @@ export default function PropertyDetailPage() {
               )}
               {property.contactEmail && (
                 <div className="flex items-center gap-3">
-                  <Mail className="h-4 w-4 text-muted-foreground" />
+                  <Mail className="text-muted-foreground h-4 w-4" />
                   <div>
-                    <p className="text-sm text-muted-foreground">Email</p>
+                    <p className="text-muted-foreground text-sm">Email</p>
                     <a
                       href={`mailto:${property.contactEmail}`}
-                      className="font-medium text-primary hover:underline"
+                      className="text-primary font-medium hover:underline"
                     >
                       {property.contactEmail}
                     </a>
@@ -582,14 +647,18 @@ export default function PropertyDetailPage() {
 
           {/* Timestamps */}
           <Card>
-            <CardContent className="pt-6 space-y-2 text-sm text-muted-foreground">
+            <CardContent className="text-muted-foreground space-y-2 pt-6 text-sm">
               <div className="flex items-center gap-2">
                 <Calendar className="h-4 w-4" />
-                <span>Created: {formatDate(property.createdAt || new Date())}</span>
+                <span>
+                  Created: {formatDate(property.createdAt || new Date())}
+                </span>
               </div>
               <div className="flex items-center gap-2">
                 <Clock className="h-4 w-4" />
-                <span>Last updated: {formatDate(property.updatedAt || new Date())}</span>
+                <span>
+                  Last updated: {formatDate(property.updatedAt || new Date())}
+                </span>
               </div>
             </CardContent>
           </Card>

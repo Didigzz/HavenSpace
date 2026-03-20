@@ -28,7 +28,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@havenspace/shared/ui";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@havenspace/shared/ui";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@havenspace/shared/ui";
 import { Separator } from "@havenspace/shared/ui";
 import { Avatar, AvatarFallback, AvatarImage } from "@havenspace/shared/ui";
 import { useToast } from "@havenspace/shared/ui";
@@ -65,7 +70,8 @@ const currentUser = {
   phone: "+63 917 123 4567",
   address: "123 Main Street, Metro Manila",
   bio: "System administrator for BHMS. Managing properties since 2020.",
-  avatar: "https://ui-avatars.com/api/?name=John+Admin&background=0D8ABC&color=fff",
+  avatar:
+    "https://ui-avatars.com/api/?name=John+Admin&background=0D8ABC&color=fff",
   role: "ADMIN",
   createdAt: "2023-01-15T00:00:00Z",
   lastLogin: "2024-01-15T14:30:00Z",
@@ -142,7 +148,10 @@ export default function ProfilePage() {
               <div className="flex flex-col items-center text-center">
                 <div className="relative">
                   <Avatar className="h-24 w-24">
-                    <AvatarImage src={currentUser.avatar} alt={currentUser.firstName} />
+                    <AvatarImage
+                      src={currentUser.avatar}
+                      alt={currentUser.firstName}
+                    />
                     <AvatarFallback className="text-2xl">
                       {currentUser.firstName[0]}
                       {currentUser.lastName[0]}
@@ -151,7 +160,7 @@ export default function ProfilePage() {
                   <Button
                     size="icon"
                     variant="outline"
-                    className="absolute -bottom-2 -right-2 h-8 w-8 rounded-full"
+                    className="absolute -right-2 -bottom-2 h-8 w-8 rounded-full"
                   >
                     <Camera className="h-4 w-4" />
                   </Button>
@@ -159,7 +168,9 @@ export default function ProfilePage() {
                 <h2 className="mt-4 text-xl font-semibold">
                   {currentUser.firstName} {currentUser.lastName}
                 </h2>
-                <p className="text-sm text-muted-foreground">{currentUser.email}</p>
+                <p className="text-muted-foreground text-sm">
+                  {currentUser.email}
+                </p>
                 <Badge className="mt-2" variant="secondary">
                   {currentUser.role}
                 </Badge>
@@ -169,25 +180,32 @@ export default function ProfilePage() {
 
               <div className="space-y-4">
                 <div className="flex items-center gap-3">
-                  <Mail className="h-4 w-4 text-muted-foreground" />
+                  <Mail className="text-muted-foreground h-4 w-4" />
                   <span className="text-sm">{currentUser.email}</span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <Phone className="h-4 w-4 text-muted-foreground" />
-                  <span className="text-sm">{currentUser.phone || "Not set"}</span>
+                  <Phone className="text-muted-foreground h-4 w-4" />
+                  <span className="text-sm">
+                    {currentUser.phone || "Not set"}
+                  </span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <MapPin className="h-4 w-4 text-muted-foreground" />
-                  <span className="text-sm">{currentUser.address || "Not set"}</span>
+                  <MapPin className="text-muted-foreground h-4 w-4" />
+                  <span className="text-sm">
+                    {currentUser.address || "Not set"}
+                  </span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <Calendar className="h-4 w-4 text-muted-foreground" />
+                  <Calendar className="text-muted-foreground h-4 w-4" />
                   <span className="text-sm">
                     Member since{" "}
-                    {new Date(currentUser.createdAt).toLocaleDateString("en-US", {
-                      month: "long",
-                      year: "numeric",
-                    })}
+                    {new Date(currentUser.createdAt).toLocaleDateString(
+                      "en-US",
+                      {
+                        month: "long",
+                        year: "numeric",
+                      }
+                    )}
                   </span>
                 </div>
               </div>
@@ -198,12 +216,15 @@ export default function ProfilePage() {
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Last Login</span>
                   <span>
-                    {new Date(currentUser.lastLogin).toLocaleDateString("en-US", {
-                      month: "short",
-                      day: "numeric",
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
+                    {new Date(currentUser.lastLogin).toLocaleDateString(
+                      "en-US",
+                      {
+                        month: "short",
+                        day: "numeric",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      }
+                    )}
                   </span>
                 </div>
               </div>
@@ -242,7 +263,7 @@ export default function ProfilePage() {
                           {...registerProfile("firstName")}
                         />
                         {profileErrors.firstName && (
-                          <p className="text-sm text-destructive">
+                          <p className="text-destructive text-sm">
                             {profileErrors.firstName.message}
                           </p>
                         )}
@@ -251,7 +272,7 @@ export default function ProfilePage() {
                         <Label htmlFor="lastName">Last Name *</Label>
                         <Input id="lastName" {...registerProfile("lastName")} />
                         {profileErrors.lastName && (
-                          <p className="text-sm text-destructive">
+                          <p className="text-destructive text-sm">
                             {profileErrors.lastName.message}
                           </p>
                         )}
@@ -266,7 +287,7 @@ export default function ProfilePage() {
                         {...registerProfile("email")}
                       />
                       {profileErrors.email && (
-                        <p className="text-sm text-destructive">
+                        <p className="text-destructive text-sm">
                           {profileErrors.email.message}
                         </p>
                       )}
@@ -287,7 +308,7 @@ export default function ProfilePage() {
                       <textarea
                         id="bio"
                         {...registerProfile("bio")}
-                        className="min-h-[100px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                        className="border-input bg-background ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring min-h-[100px] w-full rounded-md border px-3 py-2 text-sm focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
                         placeholder="Tell us a little about yourself..."
                       />
                     </div>
@@ -323,14 +344,16 @@ export default function ProfilePage() {
                     </CardHeader>
                     <CardContent className="space-y-4">
                       <div className="space-y-2">
-                        <Label htmlFor="currentPassword">Current Password *</Label>
+                        <Label htmlFor="currentPassword">
+                          Current Password *
+                        </Label>
                         <Input
                           id="currentPassword"
                           type="password"
                           {...registerPassword("currentPassword")}
                         />
                         {passwordErrors.currentPassword && (
-                          <p className="text-sm text-destructive">
+                          <p className="text-destructive text-sm">
                             {passwordErrors.currentPassword.message}
                           </p>
                         )}
@@ -344,21 +367,23 @@ export default function ProfilePage() {
                           {...registerPassword("newPassword")}
                         />
                         {passwordErrors.newPassword && (
-                          <p className="text-sm text-destructive">
+                          <p className="text-destructive text-sm">
                             {passwordErrors.newPassword.message}
                           </p>
                         )}
                       </div>
 
                       <div className="space-y-2">
-                        <Label htmlFor="confirmPassword">Confirm New Password *</Label>
+                        <Label htmlFor="confirmPassword">
+                          Confirm New Password *
+                        </Label>
                         <Input
                           id="confirmPassword"
                           type="password"
                           {...registerPassword("confirmPassword")}
                         />
                         {passwordErrors.confirmPassword && (
-                          <p className="text-sm text-destructive">
+                          <p className="text-destructive text-sm">
                             {passwordErrors.confirmPassword.message}
                           </p>
                         )}
@@ -392,8 +417,9 @@ export default function ProfilePage() {
                     <div className="flex items-center justify-between">
                       <div>
                         <p className="font-medium">Authenticator App</p>
-                        <p className="text-sm text-muted-foreground">
-                          Use an authenticator app to generate verification codes
+                        <p className="text-muted-foreground text-sm">
+                          Use an authenticator app to generate verification
+                          codes
                         </p>
                       </div>
                       <Button variant="outline">Enable</Button>
@@ -403,7 +429,9 @@ export default function ProfilePage() {
 
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-destructive">Danger Zone</CardTitle>
+                    <CardTitle className="text-destructive">
+                      Danger Zone
+                    </CardTitle>
                     <CardDescription>
                       Irreversible and destructive actions
                     </CardDescription>
@@ -412,8 +440,9 @@ export default function ProfilePage() {
                     <div className="flex items-center justify-between">
                       <div>
                         <p className="font-medium">Delete Account</p>
-                        <p className="text-sm text-muted-foreground">
-                          Permanently delete your account and all associated data
+                        <p className="text-muted-foreground text-sm">
+                          Permanently delete your account and all associated
+                          data
                         </p>
                       </div>
                       <Button variant="destructive">Delete Account</Button>
@@ -428,7 +457,9 @@ export default function ProfilePage() {
               <Card>
                 <CardHeader>
                   <CardTitle>Recent Activity</CardTitle>
-                  <CardDescription>Your recent actions and login history</CardDescription>
+                  <CardDescription>
+                    Your recent actions and login history
+                  </CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
@@ -470,11 +501,11 @@ export default function ProfilePage() {
                       >
                         <div>
                           <p className="font-medium">{activity.action}</p>
-                          <p className="text-sm text-muted-foreground">
+                          <p className="text-muted-foreground text-sm">
                             {activity.device} • {activity.location}
                           </p>
                         </div>
-                        <span className="text-sm text-muted-foreground">
+                        <span className="text-muted-foreground text-sm">
                           {activity.time}
                         </span>
                       </div>

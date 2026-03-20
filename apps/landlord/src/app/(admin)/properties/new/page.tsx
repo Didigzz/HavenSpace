@@ -51,7 +51,7 @@ import { MALAYBALAY_BOUNDS } from "@/components/map/map-picker";
 const MapPicker = dynamic(() => import("@/components/map/map-picker"), {
   ssr: false,
   loading: () => (
-    <div className="h-[300px] w-full bg-muted animate-pulse flex items-center justify-center rounded-lg border">
+    <div className="bg-muted flex h-[300px] w-full animate-pulse items-center justify-center rounded-lg border">
       <div className="text-muted-foreground text-sm">Loading map...</div>
     </div>
   ),
@@ -71,7 +71,9 @@ export default function NewPropertyPage() {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = React.useState(false);
   const [images, setImages] = React.useState<string[]>([]);
-  const [selectedAmenities, setSelectedAmenities] = React.useState<string[]>([]);
+  const [selectedAmenities, setSelectedAmenities] = React.useState<string[]>(
+    []
+  );
   const [formData, setFormData] = React.useState({
     name: "",
     description: "",
@@ -88,9 +90,11 @@ export default function NewPropertyPage() {
     longitude: "",
   });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -98,19 +102,21 @@ export default function NewPropertyPage() {
     if (files) {
       // In production, upload to cloud storage and get URLs
       // For now, create object URLs for preview
-      const newImages = Array.from(files).map(file => URL.createObjectURL(file));
-      setImages(prev => [...prev, ...newImages]);
+      const newImages = Array.from(files).map((file) =>
+        URL.createObjectURL(file)
+      );
+      setImages((prev) => [...prev, ...newImages]);
     }
   };
 
   const removeImage = (index: number) => {
-    setImages(prev => prev.filter((_, i) => i !== index));
+    setImages((prev) => prev.filter((_, i) => i !== index));
   };
 
   const toggleAmenity = (amenityId: string) => {
-    setSelectedAmenities(prev =>
+    setSelectedAmenities((prev) =>
       prev.includes(amenityId)
-        ? prev.filter(id => id !== amenityId)
+        ? prev.filter((id) => id !== amenityId)
         : [...prev, amenityId]
     );
   };
@@ -125,10 +131,14 @@ export default function NewPropertyPage() {
         const lat = parseFloat(formData.latitude);
         const lng = parseFloat(formData.longitude);
         if (
-          lat < MALAYBALAY_BOUNDS.south || lat > MALAYBALAY_BOUNDS.north ||
-          lng < MALAYBALAY_BOUNDS.west || lng > MALAYBALAY_BOUNDS.east
+          lat < MALAYBALAY_BOUNDS.south ||
+          lat > MALAYBALAY_BOUNDS.north ||
+          lng < MALAYBALAY_BOUNDS.west ||
+          lng > MALAYBALAY_BOUNDS.east
         ) {
-          alert("Property location must be within Malaybalay City, Bukidnon service area.");
+          alert(
+            "Property location must be within Malaybalay City, Bukidnon service area."
+          );
           setIsSubmitting(false);
           return;
         }
@@ -136,10 +146,10 @@ export default function NewPropertyPage() {
 
       // TODO: Call API to create property
       // await createProperty({ ...formData, images, amenities: selectedAmenities });
-      
+
       // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+
       router.push("/properties");
     } catch (error) {
       console.error("Failed to create property:", error);
@@ -158,7 +168,9 @@ export default function NewPropertyPage() {
           </Link>
         </Button>
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Add New Property</h1>
+          <h1 className="text-3xl font-bold tracking-tight">
+            Add New Property
+          </h1>
           <p className="text-muted-foreground">
             Create a new boarding house listing
           </p>
@@ -168,7 +180,7 @@ export default function NewPropertyPage() {
       <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid gap-6 lg:grid-cols-3">
           {/* Main Info */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="space-y-6 lg:col-span-2">
             {/* Basic Information */}
             <Card>
               <CardHeader>
@@ -200,7 +212,7 @@ export default function NewPropertyPage() {
                     placeholder="Describe your property, including features, nearby landmarks, and what makes it special..."
                     value={formData.description}
                     onChange={handleInputChange}
-                    className="min-h-[120px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    className="border-input bg-background ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring min-h-[120px] w-full rounded-md border px-3 py-2 text-sm focus-visible:ring-2 focus-visible:outline-none"
                     required
                   />
                 </div>
@@ -208,15 +220,21 @@ export default function NewPropertyPage() {
                   <Label htmlFor="propertyType">Property Type *</Label>
                   <Select
                     value={formData.propertyType}
-                    onValueChange={(value) => setFormData(prev => ({ ...prev, propertyType: value }))}
+                    onValueChange={(value) =>
+                      setFormData((prev) => ({ ...prev, propertyType: value }))
+                    }
                   >
                     <SelectTrigger>
                       <SelectValue placeholder="Select property type" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="boarding-house">Boarding House</SelectItem>
+                      <SelectItem value="boarding-house">
+                        Boarding House
+                      </SelectItem>
                       <SelectItem value="dormitory">Dormitory</SelectItem>
-                      <SelectItem value="apartment">Apartment Building</SelectItem>
+                      <SelectItem value="apartment">
+                        Apartment Building
+                      </SelectItem>
                       <SelectItem value="bedspace">Bedspace</SelectItem>
                     </SelectContent>
                   </Select>
@@ -281,19 +299,24 @@ export default function NewPropertyPage() {
                     />
                   </div>
                 </div>
-                
+
                 {/* Map picker */}
                 <div className="space-y-2">
                   <Label>Pin Location on Map *</Label>
-                  <p className="text-xs text-muted-foreground mb-2">
-                    Click on the map to pin your property location within Malaybalay City, Bukidnon.
-                    You can also drag the pin to adjust.
+                  <p className="text-muted-foreground mb-2 text-xs">
+                    Click on the map to pin your property location within
+                    Malaybalay City, Bukidnon. You can also drag the pin to
+                    adjust.
                   </p>
                   <MapPicker
-                    latitude={formData.latitude ? parseFloat(formData.latitude) : null}
-                    longitude={formData.longitude ? parseFloat(formData.longitude) : null}
+                    latitude={
+                      formData.latitude ? parseFloat(formData.latitude) : null
+                    }
+                    longitude={
+                      formData.longitude ? parseFloat(formData.longitude) : null
+                    }
                     onChange={(lat, lng) => {
-                      setFormData(prev => ({
+                      setFormData((prev) => ({
                         ...prev,
                         latitude: lat.toFixed(6),
                         longitude: lng.toFixed(6),
@@ -304,7 +327,9 @@ export default function NewPropertyPage() {
                   {formData.latitude && formData.longitude && (
                     <div className="flex items-center gap-1 text-xs text-green-600">
                       <MapPin className="h-3 w-3" />
-                      Location pinned: {parseFloat(formData.latitude).toFixed(6)}, {parseFloat(formData.longitude).toFixed(6)}
+                      Location pinned:{" "}
+                      {parseFloat(formData.latitude).toFixed(6)},{" "}
+                      {parseFloat(formData.longitude).toFixed(6)}
                     </div>
                   )}
                   {!formData.latitude && !formData.longitude && (
@@ -355,7 +380,10 @@ export default function NewPropertyPage() {
               <CardContent className="space-y-4">
                 <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
                   {images.map((image, index) => (
-                    <div key={index} className="relative aspect-video rounded-lg overflow-hidden border">
+                    <div
+                      key={index}
+                      className="relative aspect-video overflow-hidden rounded-lg border"
+                    >
                       <Image
                         src={image}
                         alt={`Property image ${index + 1}`}
@@ -365,20 +393,22 @@ export default function NewPropertyPage() {
                       <button
                         type="button"
                         onClick={() => removeImage(index)}
-                        className="absolute top-2 right-2 p-1 rounded-full bg-black/50 text-white hover:bg-black/70"
+                        className="absolute top-2 right-2 rounded-full bg-black/50 p-1 text-white hover:bg-black/70"
                       >
                         <X className="h-4 w-4" />
                       </button>
                       {index === 0 && (
-                        <Badge className="absolute bottom-2 left-2">Cover Photo</Badge>
+                        <Badge className="absolute bottom-2 left-2">
+                          Cover Photo
+                        </Badge>
                       )}
                     </div>
                   ))}
                   {images.length < 10 && (
-                    <label className="flex aspect-video cursor-pointer items-center justify-center rounded-lg border-2 border-dashed border-muted-foreground/25 hover:border-muted-foreground/50 transition-colors">
+                    <label className="border-muted-foreground/25 hover:border-muted-foreground/50 flex aspect-video cursor-pointer items-center justify-center rounded-lg border-2 border-dashed transition-colors">
                       <div className="text-center">
-                        <Upload className="mx-auto h-8 w-8 text-muted-foreground" />
-                        <p className="mt-2 text-sm text-muted-foreground">
+                        <Upload className="text-muted-foreground mx-auto h-8 w-8" />
+                        <p className="text-muted-foreground mt-2 text-sm">
                           Click to upload
                         </p>
                       </div>
@@ -392,8 +422,9 @@ export default function NewPropertyPage() {
                     </label>
                   )}
                 </div>
-                <p className="text-xs text-muted-foreground">
-                  First image will be used as the cover photo. Recommended: 1920x1080px
+                <p className="text-muted-foreground text-xs">
+                  First image will be used as the cover photo. Recommended:
+                  1920x1080px
                 </p>
               </CardContent>
             </Card>
@@ -440,7 +471,7 @@ export default function NewPropertyPage() {
                   <Label>Price Range (₱ per month)</Label>
                   <div className="grid grid-cols-2 gap-2">
                     <div className="relative">
-                      <DollarSign className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                      <DollarSign className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
                       <Input
                         name="priceMin"
                         type="number"
@@ -451,7 +482,7 @@ export default function NewPropertyPage() {
                       />
                     </div>
                     <div className="relative">
-                      <DollarSign className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                      <DollarSign className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
                       <Input
                         name="priceMax"
                         type="number"
@@ -470,9 +501,7 @@ export default function NewPropertyPage() {
             <Card>
               <CardHeader>
                 <CardTitle>Amenities</CardTitle>
-                <CardDescription>
-                  Select available amenities
-                </CardDescription>
+                <CardDescription>Select available amenities</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-2 gap-2">
@@ -502,8 +531,12 @@ export default function NewPropertyPage() {
 
             {/* Actions */}
             <Card>
-              <CardContent className="pt-6 space-y-3">
-                <Button type="submit" className="w-full" disabled={isSubmitting}>
+              <CardContent className="space-y-3 pt-6">
+                <Button
+                  type="submit"
+                  className="w-full"
+                  disabled={isSubmitting}
+                >
                   {isSubmitting ? (
                     <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
@@ -516,7 +549,12 @@ export default function NewPropertyPage() {
                     </>
                   )}
                 </Button>
-                <Button type="button" variant="outline" className="w-full" asChild>
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="w-full"
+                  asChild
+                >
                   <Link href="/properties">Cancel</Link>
                 </Button>
               </CardContent>

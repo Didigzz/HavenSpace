@@ -93,7 +93,7 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
   return (
     <aside
       className={cn(
-        "fixed left-0 top-0 z-40 h-screen border-r bg-sidebar transition-all duration-300",
+        "bg-sidebar fixed top-0 left-0 z-40 h-screen border-r transition-all duration-300",
         collapsed ? "w-16" : "w-64"
       )}
     >
@@ -101,11 +101,11 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
         {/* Logo */}
         <div className="flex h-16 items-center justify-between border-b px-4">
           <Link href="/dashboard" className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
-              <Shield className="h-5 w-5 text-primary-foreground" />
+            <div className="bg-primary flex h-8 w-8 items-center justify-center rounded-lg">
+              <Shield className="text-primary-foreground h-5 w-5" />
             </div>
             {!collapsed && (
-              <span className="text-lg font-bold text-sidebar-foreground">
+              <span className="text-sidebar-foreground text-lg font-bold">
                 Admin
               </span>
             )}
@@ -115,8 +115,9 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
             size="icon"
             onClick={onToggle}
             className={cn(
-              "h-8 w-8 text-sidebar-foreground hover:bg-sidebar-accent",
-              collapsed && "absolute -right-3 top-5 h-6 w-6 rounded-full border bg-background shadow-sm"
+              "text-sidebar-foreground hover:bg-sidebar-accent h-8 w-8",
+              collapsed &&
+                "bg-background absolute top-5 -right-3 h-6 w-6 rounded-full border shadow-sm"
             )}
           >
             <ChevronLeft
@@ -160,7 +161,7 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
             <DropdownMenuTrigger asChild>
               <button
                 className={cn(
-                  "flex w-full items-center gap-3 rounded-lg px-2 py-2 text-left transition-colors hover:bg-sidebar-accent",
+                  "hover:bg-sidebar-accent flex w-full items-center gap-3 rounded-lg px-2 py-2 text-left transition-colors",
                   collapsed && "justify-center"
                 )}
               >
@@ -172,10 +173,10 @@ export function Sidebar({ collapsed, onToggle }: SidebarProps) {
                 </Avatar>
                 {!collapsed && (
                   <div className="flex-1 overflow-hidden">
-                    <p className="truncate text-sm font-medium text-sidebar-foreground">
+                    <p className="text-sidebar-foreground truncate text-sm font-medium">
                       {session?.user?.name || "Admin User"}
                     </p>
-                    <p className="truncate text-xs text-muted-foreground">
+                    <p className="text-muted-foreground truncate text-xs">
                       {session?.user?.email || "admin@bhms.com"}
                     </p>
                   </div>

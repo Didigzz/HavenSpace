@@ -14,7 +14,10 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
     <div className="flex h-screen overflow-hidden">
       {/* Sidebar */}
-      <Sidebar isCollapsed={isCollapsed} onToggle={() => setIsCollapsed(!isCollapsed)} />
+      <Sidebar
+        isCollapsed={isCollapsed}
+        onToggle={() => setIsCollapsed(!isCollapsed)}
+      />
 
       {/* Main content */}
       <div className="flex flex-1 flex-col overflow-hidden">
@@ -22,7 +25,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
         <Header />
 
         {/* Page content */}
-        <main className="flex-1 overflow-y-auto bg-muted/30 p-4 lg:p-6">
+        <main className="bg-muted/30 flex-1 overflow-y-auto p-4 lg:p-6">
           {children}
         </main>
       </div>

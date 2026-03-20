@@ -5,6 +5,7 @@ The Boarder Dashboard is the authenticated user interface for boarders (renters)
 ## ðŸŽ¯ Overview
 
 This application provides boarders with a comprehensive dashboard to:
+
 - Browse and search available boarding houses
 - Manage bookings and reservations
 - Track payment history
@@ -79,17 +80,17 @@ apps/boarder/
 
 ### Dashboard Routes
 
-| Route | Description |
-|-------|-------------|
+| Route        | Description                                        |
+| ------------ | -------------------------------------------------- |
 | `/dashboard` | Main overview with quick stats and recent activity |
-| `/browse` | Search and filter available boarding houses |
-| `/bookings` | Manage current and pending bookings |
-| `/history` | View past booking history |
-| `/saved` | Saved/favorite properties |
-| `/messages` | In-app messaging with landlords |
-| `/payments` | Payment processing and transaction history |
-| `/profile` | User profile and preferences |
-| `/settings` | Account settings and notifications |
+| `/browse`    | Search and filter available boarding houses        |
+| `/bookings`  | Manage current and pending bookings                |
+| `/history`   | View past booking history                          |
+| `/saved`     | Saved/favorite properties                          |
+| `/messages`  | In-app messaging with landlords                    |
+| `/payments`  | Payment processing and transaction history         |
+| `/profile`   | User profile and preferences                       |
+| `/settings`  | Account settings and notifications                 |
 
 ### Core Capabilities
 
@@ -106,22 +107,22 @@ apps/boarder/
 
 ### Dependencies
 
-| Package | Purpose |
-|---------|---------|
-| `next` (16.1.5) | React framework |
-| `react` (18+) / `react-dom` (19+) | UI library |
-| `@tanstack/react-query` | Data fetching and caching |
-| `next-auth` (5.0.0-beta.30) | Authentication |
-| `next-themes` | Dark/light theme |
-| `zustand` | State management |
-| `react-hook-form` + `@hookform/resolvers` | Form handling |
-| `zod` | Schema validation |
-| `date-fns` | Date utilities |
-| `lucide-react` | Icon library |
-| `@radix-ui/*` | Headless UI components |
-| `tailwindcss` + `tailwindcss-animate` | Styling |
-| `class-variance-authority` | Component variants |
-| `clsx` + `tailwind-merge` | Class name utilities |
+| Package                                   | Purpose                   |
+| ----------------------------------------- | ------------------------- |
+| `next` (16.1.5)                           | React framework           |
+| `react` (18+) / `react-dom` (19+)         | UI library                |
+| `@tanstack/react-query`                   | Data fetching and caching |
+| `next-auth` (5.0.0-beta.30)               | Authentication            |
+| `next-themes`                             | Dark/light theme          |
+| `zustand`                                 | State management          |
+| `react-hook-form` + `@hookform/resolvers` | Form handling             |
+| `zod`                                     | Schema validation         |
+| `date-fns`                                | Date utilities            |
+| `lucide-react`                            | Icon library              |
+| `@radix-ui/*`                             | Headless UI components    |
+| `tailwindcss` + `tailwindcss-animate`     | Styling                   |
+| `class-variance-authority`                | Component variants        |
+| `clsx` + `tailwind-merge`                 | Class name utilities      |
 
 ### Workspace Dependencies
 
@@ -245,8 +246,8 @@ The boarder dashboard is fully responsive:
 ## ðŸ”— Related Packages
 
 - [`@havenspace/api-server`](../api) - Backend API
-- [`@havenspace/auth-app`](../(auth)) - Authentication application
-- [`@havenspace/public`](../(public)) - Public marketplace
+- [`@havenspace/auth-app`](<../(auth)>) - Authentication application
+- [`@havenspace/public`](<../(public)>) - Public marketplace
 - [`@havenspace/landlord`](../landlord) - Landlord portal
 - [`@havenspace/admin`](../admin) - Admin dashboard
 
@@ -271,4 +272,3 @@ When adding features to the boarder app:
 ---
 
 **Part of the Haven Space platform**
-

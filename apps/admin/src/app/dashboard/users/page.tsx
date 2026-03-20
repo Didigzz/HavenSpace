@@ -167,17 +167,22 @@ const mockUsers: UserData[] = [
 
 const roleColors: Record<UserRole, string> = {
   boarder: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300",
-  landlord: "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300",
+  landlord:
+    "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300",
   admin: "bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-300",
 };
 
 const statusColors: Record<UserStatus, string> = {
   active: "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300",
   suspended: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300",
-  pending: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300",
+  pending:
+    "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300",
 };
 
-const roleIcons: Record<UserRole, React.ComponentType<{ className?: string }>> = {
+const roleIcons: Record<
+  UserRole,
+  React.ComponentType<{ className?: string }>
+> = {
   boarder: User,
   landlord: Building2,
   admin: Shield,
@@ -185,7 +190,9 @@ const roleIcons: Record<UserRole, React.ComponentType<{ className?: string }>> =
 
 export default function UsersPage() {
   const [filter, setFilter] = React.useState<"all" | UserRole>("all");
-  const [statusFilter, setStatusFilter] = React.useState<"all" | UserStatus>("all");
+  const [statusFilter, setStatusFilter] = React.useState<"all" | UserStatus>(
+    "all"
+  );
   const [searchQuery, setSearchQuery] = React.useState("");
   const [selectedUser, setSelectedUser] = React.useState<UserData | null>(null);
   const [isUserDialogOpen, setIsUserDialogOpen] = React.useState(false);
@@ -196,7 +203,8 @@ export default function UsersPage() {
 
   const filteredUsers = mockUsers.filter((user) => {
     const matchesRole = filter === "all" || user.role === filter;
-    const matchesStatus = statusFilter === "all" || user.status === statusFilter;
+    const matchesStatus =
+      statusFilter === "all" || user.status === statusFilter;
     const matchesSearch =
       user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       user.email.toLowerCase().includes(searchQuery.toLowerCase());
@@ -247,11 +255,11 @@ export default function UsersPage() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Users</CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
+            <Users className="text-muted-foreground h-4 w-4" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{mockUsers.length}</div>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-muted-foreground text-xs">
               All registered users
             </p>
           </CardContent>
@@ -263,9 +271,7 @@ export default function UsersPage() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{userCounts.boarder}</div>
-            <p className="text-xs text-muted-foreground">
-              Active tenants
-            </p>
+            <p className="text-muted-foreground text-xs">Active tenants</p>
           </CardContent>
         </Card>
         <Card>
@@ -275,9 +281,7 @@ export default function UsersPage() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{userCounts.landlord}</div>
-            <p className="text-xs text-muted-foreground">
-              Property owners
-            </p>
+            <p className="text-muted-foreground text-xs">Property owners</p>
           </CardContent>
         </Card>
         <Card>
@@ -287,7 +291,7 @@ export default function UsersPage() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{userCounts.admin}</div>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-muted-foreground text-xs">
               Platform administrators
             </p>
           </CardContent>
@@ -298,17 +302,26 @@ export default function UsersPage() {
       <Card>
         <CardHeader>
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-            <Tabs value={filter} onValueChange={(v) => setFilter(v as typeof filter)}>
+            <Tabs
+              value={filter}
+              onValueChange={(v) => setFilter(v as typeof filter)}
+            >
               <TabsList>
                 <TabsTrigger value="all">All ({userCounts.all})</TabsTrigger>
-                <TabsTrigger value="boarder">Boarders ({userCounts.boarder})</TabsTrigger>
-                <TabsTrigger value="landlord">Landlords ({userCounts.landlord})</TabsTrigger>
-                <TabsTrigger value="admin">Admins ({userCounts.admin})</TabsTrigger>
+                <TabsTrigger value="boarder">
+                  Boarders ({userCounts.boarder})
+                </TabsTrigger>
+                <TabsTrigger value="landlord">
+                  Landlords ({userCounts.landlord})
+                </TabsTrigger>
+                <TabsTrigger value="admin">
+                  Admins ({userCounts.admin})
+                </TabsTrigger>
               </TabsList>
             </Tabs>
             <div className="flex gap-2">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
                 <Input
                   placeholder="Search users..."
                   className="w-full pl-9 md:w-64"
@@ -367,7 +380,7 @@ export default function UsersPage() {
                           </Avatar>
                           <div>
                             <p className="font-medium">{user.name}</p>
-                            <p className="text-sm text-muted-foreground">
+                            <p className="text-muted-foreground text-sm">
                               {user.email}
                             </p>
                           </div>
@@ -380,14 +393,16 @@ export default function UsersPage() {
                         </Badge>
                       </TableCell>
                       <TableCell>
-                        <Badge className={cn("text-xs", statusColors[user.status])}>
+                        <Badge
+                          className={cn("text-xs", statusColors[user.status])}
+                        >
                           {user.status}
                         </Badge>
                       </TableCell>
-                      <TableCell className="text-sm text-muted-foreground">
+                      <TableCell className="text-muted-foreground text-sm">
                         {formatDate(user.createdAt)}
                       </TableCell>
-                      <TableCell className="text-sm text-muted-foreground">
+                      <TableCell className="text-muted-foreground text-sm">
                         {getRelativeTime(user.lastActive)}
                       </TableCell>
                       <TableCell className="text-right">
@@ -413,7 +428,9 @@ export default function UsersPage() {
                               <Pencil className="mr-2 h-4 w-4" />
                               Edit User
                             </DropdownMenuItem>
-                            <DropdownMenuItem onClick={() => handleAction("changeRole", user)}>
+                            <DropdownMenuItem
+                              onClick={() => handleAction("changeRole", user)}
+                            >
                               <Shield className="mr-2 h-4 w-4" />
                               Change Role
                             </DropdownMenuItem>
@@ -474,8 +491,10 @@ export default function UsersPage() {
                     </AvatarFallback>
                   </Avatar>
                   <div>
-                    <h3 className="text-xl font-semibold">{selectedUser.name}</h3>
-                    <div className="flex items-center gap-2 mt-1">
+                    <h3 className="text-xl font-semibold">
+                      {selectedUser.name}
+                    </h3>
+                    <div className="mt-1 flex items-center gap-2">
                       <Badge className={cn(roleColors[selectedUser.role])}>
                         {selectedUser.role}
                       </Badge>
@@ -488,37 +507,54 @@ export default function UsersPage() {
 
                 <div className="grid gap-4 md:grid-cols-2">
                   <div className="rounded-lg border p-4">
-                    <p className="text-sm text-muted-foreground">Email</p>
+                    <p className="text-muted-foreground text-sm">Email</p>
                     <p className="font-medium">{selectedUser.email}</p>
                   </div>
                   <div className="rounded-lg border p-4">
-                    <p className="text-sm text-muted-foreground">Phone</p>
+                    <p className="text-muted-foreground text-sm">Phone</p>
                     <p className="font-medium">{selectedUser.phone}</p>
                   </div>
                   <div className="rounded-lg border p-4">
-                    <p className="text-sm text-muted-foreground">Joined</p>
-                    <p className="font-medium">{formatDate(selectedUser.createdAt)}</p>
+                    <p className="text-muted-foreground text-sm">Joined</p>
+                    <p className="font-medium">
+                      {formatDate(selectedUser.createdAt)}
+                    </p>
                   </div>
                   <div className="rounded-lg border p-4">
-                    <p className="text-sm text-muted-foreground">Last Active</p>
-                    <p className="font-medium">{getRelativeTime(selectedUser.lastActive)}</p>
+                    <p className="text-muted-foreground text-sm">Last Active</p>
+                    <p className="font-medium">
+                      {getRelativeTime(selectedUser.lastActive)}
+                    </p>
                   </div>
-                  {selectedUser.role === "landlord" && selectedUser.properties !== undefined && (
-                    <div className="rounded-lg border p-4">
-                      <p className="text-sm text-muted-foreground">Properties</p>
-                      <p className="font-medium">{selectedUser.properties} properties</p>
-                    </div>
-                  )}
-                  {selectedUser.role === "boarder" && selectedUser.bookings !== undefined && (
-                    <div className="rounded-lg border p-4">
-                      <p className="text-sm text-muted-foreground">Bookings</p>
-                      <p className="font-medium">{selectedUser.bookings} bookings</p>
-                    </div>
-                  )}
+                  {selectedUser.role === "landlord" &&
+                    selectedUser.properties !== undefined && (
+                      <div className="rounded-lg border p-4">
+                        <p className="text-muted-foreground text-sm">
+                          Properties
+                        </p>
+                        <p className="font-medium">
+                          {selectedUser.properties} properties
+                        </p>
+                      </div>
+                    )}
+                  {selectedUser.role === "boarder" &&
+                    selectedUser.bookings !== undefined && (
+                      <div className="rounded-lg border p-4">
+                        <p className="text-muted-foreground text-sm">
+                          Bookings
+                        </p>
+                        <p className="font-medium">
+                          {selectedUser.bookings} bookings
+                        </p>
+                      </div>
+                    )}
                 </div>
               </div>
               <DialogFooter>
-                <Button variant="outline" onClick={() => setIsUserDialogOpen(false)}>
+                <Button
+                  variant="outline"
+                  onClick={() => setIsUserDialogOpen(false)}
+                >
                   Close
                 </Button>
                 <Button>Edit User</Button>
@@ -575,10 +611,14 @@ export default function UsersPage() {
             </Button>
             <Button
               onClick={confirmAction}
-              variant={actionDialog.type === "delete" ? "destructive" : "default"}
+              variant={
+                actionDialog.type === "delete" ? "destructive" : "default"
+              }
               className={cn(
-                actionDialog.type === "suspend" && "bg-yellow-600 hover:bg-yellow-700",
-                actionDialog.type === "activate" && "bg-green-600 hover:bg-green-700"
+                actionDialog.type === "suspend" &&
+                  "bg-yellow-600 hover:bg-yellow-700",
+                actionDialog.type === "activate" &&
+                  "bg-green-600 hover:bg-green-700"
               )}
             >
               Confirm

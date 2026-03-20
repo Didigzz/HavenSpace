@@ -28,7 +28,12 @@ import {
 import { Button } from "@havenspace/shared/ui";
 import { Input } from "@havenspace/shared/ui";
 import { Badge } from "@havenspace/shared/ui";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@havenspace/shared/ui";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@havenspace/shared/ui";
 import {
   Select,
   SelectContent,
@@ -175,12 +180,16 @@ export default function BookingsPage() {
   const activeBookings = filteredBookings.filter(
     (b) => b.status === "active" || b.status === "confirmed"
   );
-  const pendingBookings = filteredBookings.filter((b) => b.status === "pending");
+  const pendingBookings = filteredBookings.filter(
+    (b) => b.status === "pending"
+  );
   const pastBookings = filteredBookings.filter(
     (b) => b.status === "completed" || b.status === "cancelled"
   );
 
-  const selectedBookingData = mockBookings.find((b) => b.id === selectedBooking);
+  const selectedBookingData = mockBookings.find(
+    (b) => b.id === selectedBooking
+  );
 
   const handleCancelBooking = () => {
     console.log("Cancelling booking:", selectedBooking);
@@ -189,33 +198,37 @@ export default function BookingsPage() {
   };
 
   const BookingCard = ({ booking }: { booking: (typeof mockBookings)[0] }) => (
-    <Card className="overflow-hidden hover:shadow-md transition-shadow">
+    <Card className="overflow-hidden transition-shadow hover:shadow-md">
       <div className="flex flex-col sm:flex-row">
-        <div className="h-32 sm:h-auto sm:w-40 bg-muted flex items-center justify-center flex-shrink-0">
-          <Home className="h-10 w-10 text-muted-foreground" />
+        <div className="bg-muted flex h-32 flex-shrink-0 items-center justify-center sm:h-auto sm:w-40">
+          <Home className="text-muted-foreground h-10 w-10" />
         </div>
         <CardContent className="flex-1 p-4">
           <div className="flex items-start justify-between gap-2">
             <div>
-              <div className="flex items-center gap-2 mb-1">
+              <div className="mb-1 flex items-center gap-2">
                 <h3 className="font-semibold">{booking.propertyName}</h3>
                 <Badge className={statusConfig[booking.status]?.color}>
                   {statusConfig[booking.status]?.icon}
-                  <span className="ml-1">{statusConfig[booking.status]?.label}</span>
+                  <span className="ml-1">
+                    {statusConfig[booking.status]?.label}
+                  </span>
                 </Badge>
               </div>
-              <p className="text-sm text-muted-foreground flex items-center gap-1">
+              <p className="text-muted-foreground flex items-center gap-1 text-sm">
                 <MapPin className="h-3 w-3" />
                 {booking.location}
               </p>
             </div>
             <div className="text-right">
-              <p className="font-semibold">{formatCurrency(booking.monthlyRate)}</p>
-              <p className="text-xs text-muted-foreground">/month</p>
+              <p className="font-semibold">
+                {formatCurrency(booking.monthlyRate)}
+              </p>
+              <p className="text-muted-foreground text-xs">/month</p>
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4 mt-4 text-sm">
+          <div className="mt-4 grid grid-cols-2 gap-4 text-sm">
             <div>
               <p className="text-muted-foreground">Room Type</p>
               <p className="font-medium">{booking.roomType}</p>
@@ -226,14 +239,14 @@ export default function BookingsPage() {
             </div>
             <div>
               <p className="text-muted-foreground">Check-in</p>
-              <p className="font-medium flex items-center gap-1">
+              <p className="flex items-center gap-1 font-medium">
                 <Calendar className="h-3 w-3" />
                 {formatDate(booking.checkIn)}
               </p>
             </div>
             <div>
               <p className="text-muted-foreground">Check-out</p>
-              <p className="font-medium flex items-center gap-1">
+              <p className="flex items-center gap-1 font-medium">
                 <Calendar className="h-3 w-3" />
                 {formatDate(booking.checkOut)}
               </p>
@@ -241,31 +254,34 @@ export default function BookingsPage() {
           </div>
 
           {booking.nextPayment && (
-            <div className="mt-4 p-3 bg-muted/50 rounded-lg">
-              <p className="text-sm flex items-center gap-2">
+            <div className="bg-muted/50 mt-4 rounded-lg p-3">
+              <p className="flex items-center gap-2 text-sm">
                 <Clock className="h-4 w-4 text-orange-500" />
                 <span>Next payment due: </span>
-                <span className="font-medium">{formatDate(booking.nextPayment)}</span>
+                <span className="font-medium">
+                  {formatDate(booking.nextPayment)}
+                </span>
               </p>
             </div>
           )}
 
-          <div className="flex items-center gap-2 mt-4">
+          <div className="mt-4 flex items-center gap-2">
             <Button
               variant="outline"
               size="sm"
               onClick={() => setSelectedBooking(booking.id)}
             >
-              <Eye className="h-4 w-4 mr-1" />
+              <Eye className="mr-1 h-4 w-4" />
               View Details
             </Button>
             <Button variant="outline" size="sm" asChild>
               <Link href={`/messages?landlord=${booking.landlord}`}>
-                <MessageSquare className="h-4 w-4 mr-1" />
+                <MessageSquare className="mr-1 h-4 w-4" />
                 Message
               </Link>
             </Button>
-            {(booking.status === "pending" || booking.status === "confirmed") && (
+            {(booking.status === "pending" ||
+              booking.status === "confirmed") && (
               <Button
                 variant="ghost"
                 size="sm"
@@ -275,7 +291,7 @@ export default function BookingsPage() {
                   setShowCancelDialog(true);
                 }}
               >
-                <X className="h-4 w-4 mr-1" />
+                <X className="mr-1 h-4 w-4" />
                 Cancel
               </Button>
             )}
@@ -309,8 +325,8 @@ export default function BookingsPage() {
       <Card>
         <CardContent className="pt-6">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <div className="relative flex-1 max-w-sm">
-              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <div className="relative max-w-sm flex-1">
+              <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
               <Input
                 placeholder="Search bookings..."
                 value={searchQuery}
@@ -352,9 +368,9 @@ export default function BookingsPage() {
           {activeBookings.length === 0 ? (
             <Card>
               <CardContent className="flex flex-col items-center justify-center py-12">
-                <Calendar className="h-12 w-12 text-muted-foreground mb-4" />
+                <Calendar className="text-muted-foreground mb-4 h-12 w-12" />
                 <h3 className="text-lg font-semibold">No active bookings</h3>
-                <p className="text-muted-foreground text-center mt-2">
+                <p className="text-muted-foreground mt-2 text-center">
                   You don&apos;t have any active bookings at the moment.
                 </p>
                 <Button className="mt-4" asChild>
@@ -373,9 +389,9 @@ export default function BookingsPage() {
           {pendingBookings.length === 0 ? (
             <Card>
               <CardContent className="flex flex-col items-center justify-center py-12">
-                <Clock className="h-12 w-12 text-muted-foreground mb-4" />
+                <Clock className="text-muted-foreground mb-4 h-12 w-12" />
                 <h3 className="text-lg font-semibold">No pending requests</h3>
-                <p className="text-muted-foreground text-center mt-2">
+                <p className="text-muted-foreground mt-2 text-center">
                   All your booking requests have been processed.
                 </p>
               </CardContent>
@@ -391,9 +407,9 @@ export default function BookingsPage() {
           {pastBookings.length === 0 ? (
             <Card>
               <CardContent className="flex flex-col items-center justify-center py-12">
-                <Clock className="h-12 w-12 text-muted-foreground mb-4" />
+                <Clock className="text-muted-foreground mb-4 h-12 w-12" />
                 <h3 className="text-lg font-semibold">No past bookings</h3>
-                <p className="text-muted-foreground text-center mt-2">
+                <p className="text-muted-foreground mt-2 text-center">
                   Your booking history will appear here.
                 </p>
               </CardContent>
@@ -433,73 +449,89 @@ export default function BookingsPage() {
                         </Badge>
                       );
                     })()}
-                    <span className="text-sm text-muted-foreground">
+                    <span className="text-muted-foreground text-sm">
                       Requested on {formatDate(selectedBookingData.requestedAt)}
                     </span>
                   </div>
 
-                <Separator />
+                  <Separator />
 
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <p className="text-sm text-muted-foreground">Location</p>
-                    <p className="font-medium flex items-center gap-1">
-                      <MapPin className="h-4 w-4" />
-                      {selectedBookingData?.location}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">Room Type</p>
-                    <p className="font-medium">{selectedBookingData?.roomType}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">Landlord</p>
-                    <p className="font-medium">{selectedBookingData?.landlord}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">Monthly Rate</p>
-                    <p className="font-medium">
-                      {formatCurrency(selectedBookingData?.monthlyRate || 0)}
-                    </p>
-                  </div>
-                </div>
-
-                <Separator />
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <p className="text-sm text-muted-foreground">Check-in Date</p>
-                    <p className="font-medium">
-                      {formatDate(selectedBookingData?.checkIn || "")}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">Check-out Date</p>
-                    <p className="font-medium">
-                      {formatDate(selectedBookingData?.checkOut || "")}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">Deposit Paid</p>
-                    <p className="font-medium">
-                      {formatCurrency(selectedBookingData?.depositPaid || 0)}
-                    </p>
-                  </div>
-                  {selectedBookingData?.nextPayment && (
+                  <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <p className="text-sm text-muted-foreground">Next Payment</p>
-                      <p className="font-medium text-orange-600">
-                        {formatDate(selectedBookingData.nextPayment)}
+                      <p className="text-muted-foreground text-sm">Location</p>
+                      <p className="flex items-center gap-1 font-medium">
+                        <MapPin className="h-4 w-4" />
+                        {selectedBookingData?.location}
                       </p>
                     </div>
-                  )}
+                    <div>
+                      <p className="text-muted-foreground text-sm">Room Type</p>
+                      <p className="font-medium">
+                        {selectedBookingData?.roomType}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-muted-foreground text-sm">Landlord</p>
+                      <p className="font-medium">
+                        {selectedBookingData?.landlord}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-muted-foreground text-sm">
+                        Monthly Rate
+                      </p>
+                      <p className="font-medium">
+                        {formatCurrency(selectedBookingData?.monthlyRate || 0)}
+                      </p>
+                    </div>
+                  </div>
+
+                  <Separator />
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <p className="text-muted-foreground text-sm">
+                        Check-in Date
+                      </p>
+                      <p className="font-medium">
+                        {formatDate(selectedBookingData?.checkIn || "")}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-muted-foreground text-sm">
+                        Check-out Date
+                      </p>
+                      <p className="font-medium">
+                        {formatDate(selectedBookingData?.checkOut || "")}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-muted-foreground text-sm">
+                        Deposit Paid
+                      </p>
+                      <p className="font-medium">
+                        {formatCurrency(selectedBookingData?.depositPaid || 0)}
+                      </p>
+                    </div>
+                    {selectedBookingData?.nextPayment && (
+                      <div>
+                        <p className="text-muted-foreground text-sm">
+                          Next Payment
+                        </p>
+                        <p className="font-medium text-orange-600">
+                          {formatDate(selectedBookingData.nextPayment)}
+                        </p>
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
               )}
               <DialogFooter>
                 <Button variant="outline" asChild>
-                  <Link href={`/messages?landlord=${selectedBookingData?.landlord}`}>
-                    <MessageSquare className="h-4 w-4 mr-2" />
+                  <Link
+                    href={`/messages?landlord=${selectedBookingData?.landlord}`}
+                  >
+                    <MessageSquare className="mr-2 h-4 w-4" />
                     Contact Landlord
                   </Link>
                 </Button>
@@ -520,20 +552,23 @@ export default function BookingsPage() {
           <DialogHeader>
             <DialogTitle>Cancel Booking</DialogTitle>
             <DialogDescription>
-              Are you sure you want to cancel this booking? This action cannot be
-              undone.
+              Are you sure you want to cancel this booking? This action cannot
+              be undone.
             </DialogDescription>
           </DialogHeader>
           {selectedBookingData && (
             <div className="py-4">
               <p className="font-medium">{selectedBookingData.propertyName}</p>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-muted-foreground text-sm">
                 Check-in: {formatDate(selectedBookingData.checkIn)}
               </p>
             </div>
           )}
           <DialogFooter>
-            <Button variant="outline" onClick={() => setShowCancelDialog(false)}>
+            <Button
+              variant="outline"
+              onClick={() => setShowCancelDialog(false)}
+            >
               Keep Booking
             </Button>
             <Button variant="destructive" onClick={handleCancelBooking}>

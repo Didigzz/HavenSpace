@@ -7,10 +7,10 @@ import "@/styles/leaflet.css";
 
 // Malaybalay City, Bukidnon - service coverage area
 export const MALAYBALAY_BOUNDS = {
-  north: 8.2200,
-  south: 8.1000,
-  east: 125.1700,
-  west: 125.0800,
+  north: 8.22,
+  south: 8.1,
+  east: 125.17,
+  west: 125.08,
 };
 
 export const MALAYBALAY_CENTER: [number, number] = [8.1575, 125.1276];
@@ -220,7 +220,7 @@ export default function MapPicker({
     <div
       ref={containerRef}
       style={{ height, width: "100%" }}
-      className={`rounded-lg overflow-hidden border ${className}`}
+      className={`overflow-hidden rounded-lg border ${className}`}
     />
   );
 }

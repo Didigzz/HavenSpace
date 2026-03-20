@@ -117,15 +117,15 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
   return (
     <div
       className={cn(
-        "flex h-full flex-col border-r bg-sidebar transition-all duration-300",
+        "bg-sidebar flex h-full flex-col border-r transition-all duration-300",
         isCollapsed ? "w-16" : "w-64"
       )}
     >
       {/* Logo */}
       <div className="flex h-16 items-center border-b px-4">
         <Link href="/dashboard" className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
-            <Home className="h-5 w-5 text-primary-foreground" />
+          <div className="bg-primary flex h-8 w-8 items-center justify-center rounded-lg">
+            <Home className="text-primary-foreground h-5 w-5" />
           </div>
           {!isCollapsed && (
             <span className="text-lg font-semibold">Landlord Portal</span>
@@ -139,7 +139,7 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
           {/* Main Navigation */}
           <div className="mb-4">
             {!isCollapsed && (
-              <p className="mb-2 px-3 text-xs font-semibold uppercase text-muted-foreground">
+              <p className="text-muted-foreground mb-2 px-3 text-xs font-semibold uppercase">
                 Management
               </p>
             )}
@@ -156,7 +156,7 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
           {/* Settings Navigation */}
           <div>
             {!isCollapsed && (
-              <p className="mb-2 px-3 text-xs font-semibold uppercase text-muted-foreground">
+              <p className="text-muted-foreground mb-2 px-3 text-xs font-semibold uppercase">
                 Account
               </p>
             )}
@@ -198,18 +198,28 @@ interface NavItemComponentProps {
   pathname: string;
 }
 
-function NavItemComponent({ item, isCollapsed, pathname }: NavItemComponentProps) {
+function NavItemComponent({
+  item,
+  isCollapsed,
+  pathname,
+}: NavItemComponentProps) {
   const [isOpen, setIsOpen] = React.useState(false);
   const Icon = item.icon;
   const isActive = item.href
     ? pathname === item.href || pathname.startsWith(item.href + "/")
-    : item.items?.some((subItem) => pathname === subItem.href || pathname.startsWith(subItem.href.split("?")[0]));
+    : item.items?.some(
+        (subItem) =>
+          pathname === subItem.href ||
+          pathname.startsWith(subItem.href.split("?")[0])
+      );
 
   // Check if any sub-item is active
   React.useEffect(() => {
     if (item.items) {
       const hasActiveChild = item.items.some(
-        (subItem) => pathname === subItem.href || pathname.startsWith(subItem.href.split("?")[0])
+        (subItem) =>
+          pathname === subItem.href ||
+          pathname.startsWith(subItem.href.split("?")[0])
       );
       if (hasActiveChild) {
         setIsOpen(true);
@@ -240,14 +250,15 @@ function NavItemComponent({ item, isCollapsed, pathname }: NavItemComponentProps
             />
           </Button>
         </CollapsibleTrigger>
-        <CollapsibleContent className="space-y-1 pl-9 pt-1">
+        <CollapsibleContent className="space-y-1 pt-1 pl-9">
           {item.items.map((subItem) => (
             <Link
               key={subItem.href}
               href={subItem.href}
               className={cn(
-                "block rounded-md px-3 py-2 text-sm transition-colors hover:bg-sidebar-accent",
-                pathname === subItem.href && "bg-sidebar-accent text-sidebar-accent-foreground font-medium"
+                "hover:bg-sidebar-accent block rounded-md px-3 py-2 text-sm transition-colors",
+                pathname === subItem.href &&
+                  "bg-sidebar-accent text-sidebar-accent-foreground font-medium"
               )}
             >
               {subItem.title}
@@ -273,7 +284,7 @@ function NavItemComponent({ item, isCollapsed, pathname }: NavItemComponentProps
           <Icon className="h-4 w-4" />
           {!isCollapsed && <span>{item.title}</span>}
           {!isCollapsed && item.badge && (
-            <span className="ml-auto flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs text-primary-foreground">
+            <span className="bg-primary text-primary-foreground ml-auto flex h-5 w-5 items-center justify-center rounded-full text-xs">
               {item.badge}
             </span>
           )}

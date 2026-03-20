@@ -6,9 +6,7 @@ import { PropertyProvider } from "@/lib/property-context";
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <AppProviders theme="system" requireAuth>
-      <PropertyProvider>
-        {children}
-      </PropertyProvider>
+      <PropertyProvider>{children}</PropertyProvider>
     </AppProviders>
   );
 }

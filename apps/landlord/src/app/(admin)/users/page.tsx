@@ -160,7 +160,7 @@ export default function UsersPage() {
               All Users
             </CardTitle>
             <div className="relative w-64">
-              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+              <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
               <Input
                 placeholder="Search users..."
                 value={searchQuery}
@@ -190,22 +190,33 @@ export default function UsersPage() {
                       <div className="flex items-center gap-3">
                         <Avatar className="h-9 w-9">
                           <AvatarImage src={`/avatars/${user.id}.png`} />
-                          <AvatarFallback>{getInitials(user.name)}</AvatarFallback>
+                          <AvatarFallback>
+                            {getInitials(user.name)}
+                          </AvatarFallback>
                         </Avatar>
                         <div>
                           <p className="font-medium">{user.name}</p>
-                          <p className="text-sm text-muted-foreground">{user.email}</p>
+                          <p className="text-muted-foreground text-sm">
+                            {user.email}
+                          </p>
                         </div>
                       </div>
                     </TableCell>
                     <TableCell>
-                      <Badge variant="secondary" className={roleColors[user.role]}>
+                      <Badge
+                        variant="secondary"
+                        className={roleColors[user.role]}
+                      >
                         {user.role}
                       </Badge>
                     </TableCell>
                     <TableCell>
-                      <Badge variant="secondary" className={statusColors[user.status]}>
-                        {user.status.charAt(0).toUpperCase() + user.status.slice(1)}
+                      <Badge
+                        variant="secondary"
+                        className={statusColors[user.status]}
+                      >
+                        {user.status.charAt(0).toUpperCase() +
+                          user.status.slice(1)}
                       </Badge>
                     </TableCell>
                     <TableCell>{formatDate(user.lastLogin)}</TableCell>
@@ -242,7 +253,7 @@ export default function UsersPage() {
           </div>
           {filteredUsers.length === 0 && (
             <div className="py-12 text-center">
-              <User className="mx-auto h-12 w-12 text-muted-foreground" />
+              <User className="text-muted-foreground mx-auto h-12 w-12" />
               <h3 className="mt-4 text-lg font-medium">No users found</h3>
               <p className="text-muted-foreground">
                 Try adjusting your search criteria
@@ -273,18 +284,65 @@ export default function UsersPage() {
               </TableHeader>
               <TableBody>
                 {[
-                  { name: "View Dashboard", admin: true, manager: true, staff: true },
-                  { name: "Manage Tenants", admin: true, manager: true, staff: true },
-                  { name: "Manage Rooms", admin: true, manager: true, staff: false },
-                  { name: "Manage Payments", admin: true, manager: true, staff: true },
-                  { name: "View Financial Reports", admin: true, manager: true, staff: false },
-                  { name: "Manage Properties", admin: true, manager: false, staff: false },
-                  { name: "Manage Users", admin: true, manager: false, staff: false },
-                  { name: "View Audit Logs", admin: true, manager: true, staff: false },
-                  { name: "System Settings", admin: true, manager: false, staff: false },
+                  {
+                    name: "View Dashboard",
+                    admin: true,
+                    manager: true,
+                    staff: true,
+                  },
+                  {
+                    name: "Manage Tenants",
+                    admin: true,
+                    manager: true,
+                    staff: true,
+                  },
+                  {
+                    name: "Manage Rooms",
+                    admin: true,
+                    manager: true,
+                    staff: false,
+                  },
+                  {
+                    name: "Manage Payments",
+                    admin: true,
+                    manager: true,
+                    staff: true,
+                  },
+                  {
+                    name: "View Financial Reports",
+                    admin: true,
+                    manager: true,
+                    staff: false,
+                  },
+                  {
+                    name: "Manage Properties",
+                    admin: true,
+                    manager: false,
+                    staff: false,
+                  },
+                  {
+                    name: "Manage Users",
+                    admin: true,
+                    manager: false,
+                    staff: false,
+                  },
+                  {
+                    name: "View Audit Logs",
+                    admin: true,
+                    manager: true,
+                    staff: false,
+                  },
+                  {
+                    name: "System Settings",
+                    admin: true,
+                    manager: false,
+                    staff: false,
+                  },
                 ].map((permission) => (
                   <TableRow key={permission.name}>
-                    <TableCell className="font-medium">{permission.name}</TableCell>
+                    <TableCell className="font-medium">
+                      {permission.name}
+                    </TableCell>
                     <TableCell className="text-center">
                       {permission.admin ? "✓" : "—"}
                     </TableCell>

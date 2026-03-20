@@ -36,7 +36,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@havenspace/shared/ui";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@havenspace/shared/ui";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@havenspace/shared/ui";
 import { Switch } from "@/components/ui/switch";
 import { LocationPicker } from "@/components/map";
 import { ImageUpload } from "@/components/property/image-upload";
@@ -53,9 +58,15 @@ const propertySchema = z.object({
   contactEmail: z.string().email("Invalid email").optional().or(z.literal("")),
   contactPhone: z.string().optional(),
   managerName: z.string().optional(),
-  parkingSpaces: z.preprocess((val) => (val === "" || val === undefined ? 0 : Number(val)), z.number().min(0).optional()),
+  parkingSpaces: z.preprocess(
+    (val) => (val === "" || val === undefined ? 0 : Number(val)),
+    z.number().min(0).optional()
+  ),
   parkingType: z.enum(["free", "paid", "none"]).optional(),
-  parkingRate: z.preprocess((val) => (val === "" || val === undefined ? 0 : Number(val)), z.number().min(0).optional()),
+  parkingRate: z.preprocess(
+    (val) => (val === "" || val === undefined ? 0 : Number(val)),
+    z.number().min(0).optional()
+  ),
 });
 
 type PropertyFormData = z.infer<typeof propertySchema>;
@@ -78,7 +89,9 @@ export default function NewPropertyPage() {
     watch,
     formState: { errors },
   } = useForm<PropertyFormData>({
-    resolver: zodResolver(propertySchema) as unknown as Resolver<PropertyFormData>,
+    resolver: zodResolver(
+      propertySchema
+    ) as unknown as Resolver<PropertyFormData>,
     defaultValues: {
       name: "",
       address: "",
@@ -149,7 +162,11 @@ export default function NewPropertyPage() {
     setRules((prev) => [...prev, newRule]);
   };
 
-  const updateRule = (index: number, field: keyof PropertyRule, value: string) => {
+  const updateRule = (
+    index: number,
+    field: keyof PropertyRule,
+    value: string
+  ) => {
     setRules((prev) => {
       const updated = [...prev];
       const rule = updated[index];
@@ -207,8 +224,12 @@ export default function NewPropertyPage() {
             </Link>
           </Button>
           <div>
-            <h1 className="text-3xl font-bold tracking-tight">Add New Property</h1>
-            <p className="text-muted-foreground">Create a new boarding house property</p>
+            <h1 className="text-3xl font-bold tracking-tight">
+              Add New Property
+            </h1>
+            <p className="text-muted-foreground">
+              Create a new boarding house property
+            </p>
           </div>
         </div>
         <Button type="submit" disabled={isSubmitting}>
@@ -252,7 +273,9 @@ export default function NewPropertyPage() {
                     placeholder="e.g., Sunrise Boarding House"
                   />
                   {errors.name && (
-                    <p className="text-sm text-destructive">{errors.name.message}</p>
+                    <p className="text-destructive text-sm">
+                      {errors.name.message}
+                    </p>
                   )}
                 </div>
                 <div className="space-y-2">
@@ -270,7 +293,9 @@ export default function NewPropertyPage() {
                     <SelectContent>
                       <SelectItem value="active">Active</SelectItem>
                       <SelectItem value="inactive">Inactive</SelectItem>
-                      <SelectItem value="maintenance">Under Maintenance</SelectItem>
+                      <SelectItem value="maintenance">
+                        Under Maintenance
+                      </SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -285,7 +310,9 @@ export default function NewPropertyPage() {
                     placeholder="Street address"
                   />
                   {errors.address && (
-                    <p className="text-sm text-destructive">{errors.address.message}</p>
+                    <p className="text-destructive text-sm">
+                      {errors.address.message}
+                    </p>
                   )}
                 </div>
                 <div className="space-y-2">
@@ -296,7 +323,9 @@ export default function NewPropertyPage() {
                     placeholder="e.g., Metro Manila"
                   />
                   {errors.city && (
-                    <p className="text-sm text-destructive">{errors.city.message}</p>
+                    <p className="text-destructive text-sm">
+                      {errors.city.message}
+                    </p>
                   )}
                 </div>
               </div>
@@ -306,7 +335,7 @@ export default function NewPropertyPage() {
                 <textarea
                   id="description"
                   {...register("description")}
-                  className="min-h-[100px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  className="border-input bg-background ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring min-h-[100px] w-full rounded-md border px-3 py-2 text-sm focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
                   placeholder="Describe your property..."
                 />
               </div>
@@ -348,7 +377,9 @@ export default function NewPropertyPage() {
                     placeholder="email@example.com"
                   />
                   {errors.contactEmail && (
-                    <p className="text-sm text-destructive">{errors.contactEmail.message}</p>
+                    <p className="text-destructive text-sm">
+                      {errors.contactEmail.message}
+                    </p>
                   )}
                 </div>
               </div>
@@ -488,7 +519,11 @@ export default function NewPropertyPage() {
 
         {/* Location */}
         <TabsContent value="location">
-          <LocationPicker value={location} onChange={setLocation} height="500px" />
+          <LocationPicker
+            value={location}
+            onChange={setLocation}
+            height="500px"
+          />
         </TabsContent>
 
         {/* Amenities */}
@@ -543,7 +578,9 @@ export default function NewPropertyPage() {
                           <Label>Rule Title</Label>
                           <Input
                             value={rule.title}
-                            onChange={(e) => updateRule(index, "title", e.target.value)}
+                            onChange={(e) =>
+                              updateRule(index, "title", e.target.value)
+                            }
                             placeholder="e.g., No Smoking"
                           />
                         </div>
@@ -572,8 +609,10 @@ export default function NewPropertyPage() {
                         <Label>Description</Label>
                         <textarea
                           value={rule.description}
-                          onChange={(e) => updateRule(index, "description", e.target.value)}
-                          className="min-h-[60px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                          onChange={(e) =>
+                            updateRule(index, "description", e.target.value)
+                          }
+                          className="border-input bg-background ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring min-h-[60px] w-full rounded-md border px-3 py-2 text-sm focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
                           placeholder="Describe this rule..."
                         />
                       </div>
@@ -585,7 +624,7 @@ export default function NewPropertyPage() {
                       className="ml-2"
                       onClick={() => removeRule(index)}
                     >
-                      <Trash2 className="h-4 w-4 text-destructive" />
+                      <Trash2 className="text-destructive h-4 w-4" />
                     </Button>
                   </div>
                 </div>

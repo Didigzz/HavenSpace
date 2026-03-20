@@ -43,7 +43,8 @@ const mockSavedListings = [
   {
     id: "1",
     name: "University Residence",
-    description: "Modern dormitory near major universities with complete amenities.",
+    description:
+      "Modern dormitory near major universities with complete amenities.",
     location: "España, Manila",
     price: 4500,
     rating: 4.8,
@@ -57,7 +58,8 @@ const mockSavedListings = [
   {
     id: "2",
     name: "Metro Boarding House",
-    description: "Spacious rooms with private bathroom in prime Cubao location.",
+    description:
+      "Spacious rooms with private bathroom in prime Cubao location.",
     location: "Cubao, Quezon City",
     price: 5000,
     rating: 4.5,
@@ -194,8 +196,8 @@ export default function SavedListingsPage() {
       <Card>
         <CardContent className="pt-6">
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-            <div className="relative flex-1 max-w-sm">
-              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <div className="relative max-w-sm flex-1">
+              <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
               <Input
                 placeholder="Search saved listings..."
                 value={searchQuery}
@@ -227,7 +229,7 @@ export default function SavedListingsPage() {
                   <SelectItem value="rating">Highest Rated</SelectItem>
                 </SelectContent>
               </Select>
-              <div className="flex border rounded-lg">
+              <div className="flex rounded-lg border">
                 <Button
                   variant={viewMode === "grid" ? "secondary" : "ghost"}
                   size="icon"
@@ -252,9 +254,9 @@ export default function SavedListingsPage() {
       {filteredListings.length === 0 ? (
         <Card>
           <CardContent className="flex flex-col items-center justify-center py-12">
-            <Bookmark className="h-12 w-12 text-muted-foreground mb-4" />
+            <Bookmark className="text-muted-foreground mb-4 h-12 w-12" />
             <h3 className="text-lg font-semibold">No saved listings found</h3>
-            <p className="text-muted-foreground text-center mt-2">
+            <p className="text-muted-foreground mt-2 text-center">
               {searchQuery || filterType !== "all"
                 ? "Try adjusting your filters or search query."
                 : "Start browsing and save properties you're interested in."}
@@ -267,13 +269,13 @@ export default function SavedListingsPage() {
       ) : viewMode === "grid" ? (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {filteredListings.map((listing) => (
-            <Card key={listing.id} className="overflow-hidden group">
-              <div className="relative h-48 bg-muted">
+            <Card key={listing.id} className="group overflow-hidden">
+              <div className="bg-muted relative h-48">
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <Home className="h-12 w-12 text-muted-foreground" />
+                  <Home className="text-muted-foreground h-12 w-12" />
                 </div>
                 {!listing.available && (
-                  <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/50">
                     <Badge variant="secondary" className="text-sm">
                       Not Available
                     </Badge>
@@ -282,7 +284,7 @@ export default function SavedListingsPage() {
                 <Button
                   variant="secondary"
                   size="icon"
-                  className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity"
+                  className="absolute top-2 right-2 opacity-0 transition-opacity group-hover:opacity-100"
                   onClick={() => handleRemoveSaved(listing.id)}
                 >
                   <BookmarkX className="h-4 w-4" />
@@ -292,8 +294,8 @@ export default function SavedListingsPage() {
               <CardContent className="p-4">
                 <div className="flex items-start justify-between gap-2">
                   <div className="min-w-0">
-                    <h3 className="font-semibold truncate">{listing.name}</h3>
-                    <p className="text-sm text-muted-foreground flex items-center gap-1">
+                    <h3 className="truncate font-semibold">{listing.name}</h3>
+                    <p className="text-muted-foreground flex items-center gap-1 text-sm">
                       <MapPin className="h-3 w-3 flex-shrink-0" />
                       <span className="truncate">{listing.location}</span>
                     </p>
@@ -301,29 +303,31 @@ export default function SavedListingsPage() {
                   <div className="flex items-center gap-1 text-sm">
                     <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
                     <span className="font-medium">{listing.rating}</span>
-                    <span className="text-muted-foreground">({listing.reviews})</span>
+                    <span className="text-muted-foreground">
+                      ({listing.reviews})
+                    </span>
                   </div>
                 </div>
-                <p className="text-sm text-muted-foreground mt-2 line-clamp-2">
+                <p className="text-muted-foreground mt-2 line-clamp-2 text-sm">
                   {listing.description}
                 </p>
-                <div className="flex items-center gap-2 mt-3">
+                <div className="mt-3 flex items-center gap-2">
                   {listing.amenities.slice(0, 4).map((amenity) => (
                     <div
                       key={amenity}
-                      className="p-1.5 rounded-md bg-muted text-muted-foreground"
+                      className="bg-muted text-muted-foreground rounded-md p-1.5"
                       title={amenity}
                     >
                       {amenityIcons[amenity]}
                     </div>
                   ))}
                   {listing.amenities.length > 4 && (
-                    <span className="text-xs text-muted-foreground">
+                    <span className="text-muted-foreground text-xs">
                       +{listing.amenities.length - 4}
                     </span>
                   )}
                 </div>
-                <div className="flex items-center justify-between mt-4 pt-4 border-t">
+                <div className="mt-4 flex items-center justify-between border-t pt-4">
                   <div>
                     <span className="text-lg font-bold">
                       {formatCurrency(listing.price)}
@@ -333,7 +337,7 @@ export default function SavedListingsPage() {
                   <div className="flex gap-2">
                     <Button variant="outline" size="sm" asChild>
                       <Link href={`/browse/${listing.id}`}>
-                        <Eye className="h-4 w-4 mr-1" />
+                        <Eye className="mr-1 h-4 w-4" />
                         View
                       </Link>
                     </Button>
@@ -351,23 +355,27 @@ export default function SavedListingsPage() {
           {filteredListings.map((listing) => (
             <Card key={listing.id} className="overflow-hidden">
               <div className="flex flex-col md:flex-row">
-                <div className="relative h-48 md:h-auto md:w-64 bg-muted flex-shrink-0">
+                <div className="bg-muted relative h-48 flex-shrink-0 md:h-auto md:w-64">
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <Home className="h-12 w-12 text-muted-foreground" />
+                    <Home className="text-muted-foreground h-12 w-12" />
                   </div>
                   {!listing.available && (
-                    <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/50">
                       <Badge variant="secondary">Not Available</Badge>
                     </div>
                   )}
-                  <Badge className="absolute top-2 left-2">{listing.type}</Badge>
+                  <Badge className="absolute top-2 left-2">
+                    {listing.type}
+                  </Badge>
                 </div>
                 <CardContent className="flex-1 p-4">
-                  <div className="flex flex-col h-full">
+                  <div className="flex h-full flex-col">
                     <div className="flex items-start justify-between gap-4">
                       <div>
-                        <h3 className="font-semibold text-lg">{listing.name}</h3>
-                        <p className="text-sm text-muted-foreground flex items-center gap-1">
+                        <h3 className="text-lg font-semibold">
+                          {listing.name}
+                        </h3>
+                        <p className="text-muted-foreground flex items-center gap-1 text-sm">
                           <MapPin className="h-3 w-3" />
                           {listing.location}
                         </p>
@@ -375,7 +383,7 @@ export default function SavedListingsPage() {
                       <div className="flex items-center gap-1">
                         <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
                         <span className="font-medium">{listing.rating}</span>
-                        <span className="text-sm text-muted-foreground">
+                        <span className="text-muted-foreground text-sm">
                           ({listing.reviews} reviews)
                         </span>
                       </div>
@@ -383,18 +391,18 @@ export default function SavedListingsPage() {
                     <p className="text-muted-foreground mt-2 flex-1">
                       {listing.description}
                     </p>
-                    <div className="flex items-center gap-2 mt-3">
+                    <div className="mt-3 flex items-center gap-2">
                       {listing.amenities.map((amenity) => (
                         <div
                           key={amenity}
-                          className="p-1.5 rounded-md bg-muted text-muted-foreground"
+                          className="bg-muted text-muted-foreground rounded-md p-1.5"
                           title={amenity}
                         >
                           {amenityIcons[amenity]}
                         </div>
                       ))}
                     </div>
-                    <div className="flex items-center justify-between mt-4 pt-4 border-t">
+                    <div className="mt-4 flex items-center justify-between border-t pt-4">
                       <div>
                         <span className="text-xl font-bold">
                           {formatCurrency(listing.price)}
@@ -407,12 +415,12 @@ export default function SavedListingsPage() {
                           size="sm"
                           onClick={() => handleRemoveSaved(listing.id)}
                         >
-                          <BookmarkX className="h-4 w-4 mr-1" />
+                          <BookmarkX className="mr-1 h-4 w-4" />
                           Remove
                         </Button>
                         <Button variant="outline" size="sm" asChild>
                           <Link href={`/browse/${listing.id}`}>
-                            <Eye className="h-4 w-4 mr-1" />
+                            <Eye className="mr-1 h-4 w-4" />
                             View Details
                           </Link>
                         </Button>

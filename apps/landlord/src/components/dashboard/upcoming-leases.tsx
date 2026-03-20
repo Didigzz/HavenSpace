@@ -18,7 +18,10 @@ interface UpcomingLeasesProps {
   daysThreshold?: number;
 }
 
-export function UpcomingLeases({ propertyId, daysThreshold = 30 }: UpcomingLeasesProps) {
+export function UpcomingLeases({
+  propertyId,
+  daysThreshold = 30,
+}: UpcomingLeasesProps) {
   const tenants = propertyId
     ? mockTenants.filter((t) => t.propertyId === propertyId)
     : mockTenants;
@@ -34,7 +37,10 @@ export function UpcomingLeases({ propertyId, daysThreshold = 30 }: UpcomingLease
       return daysUntilExpiry > 0 && daysUntilExpiry <= daysThreshold;
     })
     .sort((a, b) => {
-      return new Date(a.leaseEndDate!).getTime() - new Date(b.leaseEndDate!).getTime();
+      return (
+        new Date(a.leaseEndDate!).getTime() -
+        new Date(b.leaseEndDate!).getTime()
+      );
     });
 
   const getDaysRemaining = (leaseEndDate: string) => {
@@ -50,11 +56,13 @@ export function UpcomingLeases({ propertyId, daysThreshold = 30 }: UpcomingLease
             <Clock className="h-5 w-5" />
             Expiring Leases
           </CardTitle>
-          <CardDescription>Leases expiring within {daysThreshold} days</CardDescription>
+          <CardDescription>
+            Leases expiring within {daysThreshold} days
+          </CardDescription>
         </div>
         <Link
           href="/tenants?filter=expiring"
-          className="text-sm text-primary hover:underline"
+          className="text-primary text-sm hover:underline"
         >
           View all
         </Link>
@@ -76,10 +84,10 @@ export function UpcomingLeases({ propertyId, daysThreshold = 30 }: UpcomingLease
                       {tenant.firstName} {tenant.lastName}
                     </p>
                     {isUrgent && (
-                      <AlertTriangle className="h-4 w-4 text-destructive" />
+                      <AlertTriangle className="text-destructive h-4 w-4" />
                     )}
                   </div>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-muted-foreground text-sm">
                     Expires: {formatDate(tenant.leaseEndDate!)}
                   </p>
                 </div>
@@ -93,7 +101,7 @@ export function UpcomingLeases({ propertyId, daysThreshold = 30 }: UpcomingLease
             );
           })}
           {expiringLeases.length === 0 && (
-            <p className="text-center text-muted-foreground">
+            <p className="text-muted-foreground text-center">
               No leases expiring soon
             </p>
           )}

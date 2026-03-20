@@ -38,14 +38,24 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@havenspace/shared/ui";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@havenspace/shared/ui";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@havenspace/shared/ui";
 import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
 import { LocationPicker } from "@/components/map";
 import { ImageUpload } from "@/components/property/image-upload";
 import { useToast } from "@havenspace/shared/ui";
 import { mockProperties, propertyAmenities } from "@/lib/mock-data";
-import type { GeoLocation, PropertyImage, PropertyAmenity, PropertyRule } from "@/types";
+import type {
+  GeoLocation,
+  PropertyImage,
+  PropertyAmenity,
+  PropertyRule,
+} from "@/types";
 
 const propertySchema = z.object({
   name: z.string().min(1, "Property name is required"),
@@ -56,9 +66,15 @@ const propertySchema = z.object({
   contactEmail: z.string().email("Invalid email").optional().or(z.literal("")),
   contactPhone: z.string().optional(),
   managerName: z.string().optional(),
-  parkingSpaces: z.preprocess((val) => (val === "" || val === undefined ? 0 : Number(val)), z.number().min(0).optional()),
+  parkingSpaces: z.preprocess(
+    (val) => (val === "" || val === undefined ? 0 : Number(val)),
+    z.number().min(0).optional()
+  ),
   parkingType: z.enum(["free", "paid", "none"]).optional(),
-  parkingRate: z.preprocess((val) => (val === "" || val === undefined ? 0 : Number(val)), z.number().min(0).optional()),
+  parkingRate: z.preprocess(
+    (val) => (val === "" || val === undefined ? 0 : Number(val)),
+    z.number().min(0).optional()
+  ),
 });
 
 type PropertyFormData = z.infer<typeof propertySchema>;
@@ -72,9 +88,17 @@ export default function EditPropertyPage() {
   const property = mockProperties.find((p) => p.id === propertyId);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [location, setLocation] = useState<GeoLocation | undefined>(property?.location);
+  const [location, setLocation] = useState<GeoLocation | undefined>(
+    property?.location
+  );
   const [images, setImages] = useState<PropertyImage[]>(
-    property?.images?.map((url, i) => ({ id: `img-${i}`, url, alt: '', order: i, isPrimary: i === 0 })) || []
+    property?.images?.map((url, i) => ({
+      id: `img-${i}`,
+      url,
+      alt: "",
+      order: i,
+      isPrimary: i === 0,
+    })) || []
   );
   const [selectedAmenities, setSelectedAmenities] = useState<string[]>(
     property?.amenities || []
@@ -95,7 +119,9 @@ export default function EditPropertyPage() {
     watch,
     formState: { errors },
   } = useForm<PropertyFormData>({
-    resolver: zodResolver(propertySchema) as unknown as Resolver<PropertyFormData>,
+    resolver: zodResolver(
+      propertySchema
+    ) as unknown as Resolver<PropertyFormData>,
     defaultValues: {
       name: property?.name || "",
       address: property?.address || "",
@@ -122,7 +148,11 @@ export default function EditPropertyPage() {
       ...data,
       location,
       images,
-      amenities: selectedAmenities.map((name) => ({ id: name, name, icon: 'sparkles' })),
+      amenities: selectedAmenities.map((name) => ({
+        id: name,
+        name,
+        icon: "sparkles",
+      })),
       rules,
       nearbyLandmarks,
       publicTransport,
@@ -162,7 +192,11 @@ export default function EditPropertyPage() {
     setRules((prev) => [...prev, newRule]);
   };
 
-  const updateRule = (index: number, field: keyof PropertyRule, value: string) => {
+  const updateRule = (
+    index: number,
+    field: keyof PropertyRule,
+    value: string
+  ) => {
     setRules((prev) => {
       const updated = [...prev];
       const rule = updated[index];
@@ -213,7 +247,9 @@ export default function EditPropertyPage() {
     return (
       <div className="flex flex-col items-center justify-center py-12">
         <h1 className="text-2xl font-bold">Property Not Found</h1>
-        <p className="text-muted-foreground">The property you&apos;re trying to edit doesn&apos;t exist.</p>
+        <p className="text-muted-foreground">
+          The property you&apos;re trying to edit doesn&apos;t exist.
+        </p>
         <Button asChild className="mt-4">
           <Link href="/properties">
             <ArrowLeft className="mr-2 h-4 w-4" />
@@ -280,7 +316,9 @@ export default function EditPropertyPage() {
                     placeholder="e.g., Sunrise Boarding House"
                   />
                   {errors.name && (
-                    <p className="text-sm text-destructive">{errors.name.message}</p>
+                    <p className="text-destructive text-sm">
+                      {errors.name.message}
+                    </p>
                   )}
                 </div>
                 <div className="space-y-2">
@@ -298,7 +336,9 @@ export default function EditPropertyPage() {
                     <SelectContent>
                       <SelectItem value="active">Active</SelectItem>
                       <SelectItem value="inactive">Inactive</SelectItem>
-                      <SelectItem value="maintenance">Under Maintenance</SelectItem>
+                      <SelectItem value="maintenance">
+                        Under Maintenance
+                      </SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -313,7 +353,9 @@ export default function EditPropertyPage() {
                     placeholder="Street address"
                   />
                   {errors.address && (
-                    <p className="text-sm text-destructive">{errors.address.message}</p>
+                    <p className="text-destructive text-sm">
+                      {errors.address.message}
+                    </p>
                   )}
                 </div>
                 <div className="space-y-2">
@@ -324,7 +366,9 @@ export default function EditPropertyPage() {
                     placeholder="e.g., Metro Manila"
                   />
                   {errors.city && (
-                    <p className="text-sm text-destructive">{errors.city.message}</p>
+                    <p className="text-destructive text-sm">
+                      {errors.city.message}
+                    </p>
                   )}
                 </div>
               </div>
@@ -334,7 +378,7 @@ export default function EditPropertyPage() {
                 <textarea
                   id="description"
                   {...register("description")}
-                  className="min-h-[100px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                  className="border-input bg-background ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring min-h-[100px] w-full rounded-md border px-3 py-2 text-sm focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
                   placeholder="Describe your property..."
                 />
               </div>
@@ -376,7 +420,9 @@ export default function EditPropertyPage() {
                     placeholder="email@example.com"
                   />
                   {errors.contactEmail && (
-                    <p className="text-sm text-destructive">{errors.contactEmail.message}</p>
+                    <p className="text-destructive text-sm">
+                      {errors.contactEmail.message}
+                    </p>
                   )}
                 </div>
               </div>
@@ -516,7 +562,11 @@ export default function EditPropertyPage() {
 
         {/* Location */}
         <TabsContent value="location">
-          <LocationPicker value={location} onChange={setLocation} height="500px" />
+          <LocationPicker
+            value={location}
+            onChange={setLocation}
+            height="500px"
+          />
         </TabsContent>
 
         {/* Amenities */}
@@ -571,7 +621,9 @@ export default function EditPropertyPage() {
                           <Label>Rule Title</Label>
                           <Input
                             value={rule.title}
-                            onChange={(e) => updateRule(index, "title", e.target.value)}
+                            onChange={(e) =>
+                              updateRule(index, "title", e.target.value)
+                            }
                             placeholder="e.g., No Smoking"
                           />
                         </div>
@@ -600,8 +652,10 @@ export default function EditPropertyPage() {
                         <Label>Description</Label>
                         <textarea
                           value={rule.description}
-                          onChange={(e) => updateRule(index, "description", e.target.value)}
-                          className="min-h-[60px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                          onChange={(e) =>
+                            updateRule(index, "description", e.target.value)
+                          }
+                          className="border-input bg-background ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring min-h-[60px] w-full rounded-md border px-3 py-2 text-sm focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
                           placeholder="Describe this rule..."
                         />
                       </div>
@@ -613,7 +667,7 @@ export default function EditPropertyPage() {
                       className="ml-2"
                       onClick={() => removeRule(index)}
                     >
-                      <Trash2 className="h-4 w-4 text-destructive" />
+                      <Trash2 className="text-destructive h-4 w-4" />
                     </Button>
                   </div>
                 </div>

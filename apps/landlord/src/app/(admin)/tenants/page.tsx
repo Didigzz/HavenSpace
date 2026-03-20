@@ -63,14 +63,14 @@ const columns: ColumnDef<Tenant>[] = [
       const tenant = row.original;
       return (
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary">
+          <div className="bg-primary/10 text-primary flex h-10 w-10 items-center justify-center rounded-full">
             <User className="h-5 w-5" />
           </div>
           <div>
             <p className="font-medium">
               {tenant.firstName} {tenant.lastName}
             </p>
-            <p className="text-sm text-muted-foreground">{tenant.email}</p>
+            <p className="text-muted-foreground text-sm">{tenant.email}</p>
           </div>
         </div>
       );
@@ -98,27 +98,35 @@ const columns: ColumnDef<Tenant>[] = [
     header: "Lease Ends",
     cell: ({ row }) => {
       const tenant = row.original;
-      if (!tenant.leaseEndDate) return <span className="text-muted-foreground">—</span>;
-      
+      if (!tenant.leaseEndDate)
+        return <span className="text-muted-foreground">—</span>;
+
       const daysUntil = Math.ceil(
-        (new Date(tenant.leaseEndDate).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)
+        (new Date(tenant.leaseEndDate).getTime() - new Date().getTime()) /
+          (1000 * 60 * 60 * 24)
       );
       const isExpiringSoon = daysUntil > 0 && daysUntil <= 30;
       const isExpired = daysUntil <= 0;
-      
+
       return (
         <div className="flex items-center gap-2">
-          <span className={cn(isExpired && "text-destructive", isExpiringSoon && "text-orange-600")}>
+          <span
+            className={cn(
+              isExpired && "text-destructive",
+              isExpiringSoon && "text-orange-600"
+            )}
+          >
             {formatDate(tenant.leaseEndDate)}
           </span>
           {isExpiringSoon && !isExpired && (
-            <Badge variant="secondary" className="bg-orange-100 text-orange-800">
+            <Badge
+              variant="secondary"
+              className="bg-orange-100 text-orange-800"
+            >
               {daysUntil}d
             </Badge>
           )}
-          {isExpired && (
-            <Badge variant="destructive">Expired</Badge>
-          )}
+          {isExpired && <Badge variant="destructive">Expired</Badge>}
         </div>
       );
     },
@@ -146,7 +154,11 @@ const columns: ColumnDef<Tenant>[] = [
     cell: ({ row }) => (
       <Badge
         variant="secondary"
-        className={row.original.isActive ? getStatusColor("active") : getStatusColor("inactive")}
+        className={
+          row.original.isActive
+            ? getStatusColor("active")
+            : getStatusColor("inactive")
+        }
       >
         {row.original.isActive ? "Active" : "Inactive"}
       </Badge>
@@ -197,8 +209,11 @@ const columns: ColumnDef<Tenant>[] = [
 export default function TenantsPage() {
   const { currentProperty } = useProperty();
   const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
-  const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+    []
+  );
+  const [columnVisibility, setColumnVisibility] =
+    React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
 
   const data = currentProperty
@@ -209,14 +224,14 @@ export default function TenantsPage() {
   const table = useReactTable({
     data,
     columns,
-    onSortingChange: ( updater ) => setSorting(updater),
-    onColumnFiltersChange: ( updater ) => setColumnFilters(updater),
+    onSortingChange: (updater) => setSorting(updater),
+    onColumnFiltersChange: (updater) => setColumnFilters(updater),
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-    onColumnVisibilityChange: ( updater ) => setColumnVisibility(updater),
-    onRowSelectionChange: ( updater ) => setRowSelection(updater),
+    onColumnVisibilityChange: (updater) => setColumnVisibility(updater),
+    onRowSelectionChange: (updater) => setRowSelection(updater),
     state: {
       sorting,
       columnFilters,
@@ -271,7 +286,7 @@ export default function TenantsPage() {
         <Card>
           <CardHeader className="pb-2">
             <CardDescription>Total Outstanding</CardDescription>
-            <CardTitle className="text-3xl text-destructive">
+            <CardTitle className="text-destructive text-3xl">
               {formatCurrency(totalBalance)}
             </CardTitle>
           </CardHeader>
@@ -285,10 +300,12 @@ export default function TenantsPage() {
             <CardTitle>All Tenants</CardTitle>
             <div className="flex items-center gap-2">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
                 <Input
                   placeholder="Search tenants..."
-                  value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+                  value={
+                    (table.getColumn("name")?.getFilterValue() as string) ?? ""
+                  }
                   onChange={(event) =>
                     table.getColumn("name")?.setFilterValue(event.target.value)
                   }
@@ -349,7 +366,7 @@ export default function TenantsPage() {
           </div>
           {/* Pagination */}
           <div className="flex items-center justify-between px-2 py-4">
-            <div className="text-sm text-muted-foreground">
+            <div className="text-muted-foreground text-sm">
               Showing {table.getRowModel().rows.length} of {data.length} tenants
             </div>
             <div className="flex items-center space-x-2">

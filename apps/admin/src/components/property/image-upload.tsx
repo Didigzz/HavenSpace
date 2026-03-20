@@ -28,7 +28,11 @@ interface ImageUploadProps {
   maxImages?: number;
 }
 
-export function ImageUpload({ value, onChange, maxImages = 10 }: ImageUploadProps) {
+export function ImageUpload({
+  value,
+  onChange,
+  maxImages = 10,
+}: ImageUploadProps) {
   const [isUploading, setIsUploading] = useState(false);
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
 
@@ -120,8 +124,8 @@ export function ImageUpload({ value, onChange, maxImages = 10 }: ImageUploadProp
           Property Images
         </CardTitle>
         <CardDescription>
-          Upload images of your property. The first image will be used as the cover photo.
-          Drag to reorder. Click the star to set as primary.
+          Upload images of your property. The first image will be used as the
+          cover photo. Drag to reorder. Click the star to set as primary.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -138,16 +142,16 @@ export function ImageUpload({ value, onChange, maxImages = 10 }: ImageUploadProp
         >
           <input {...getInputProps()} disabled={value.length >= maxImages} />
           {isUploading ? (
-            <Loader2 className="h-10 w-10 animate-spin text-muted-foreground" />
+            <Loader2 className="text-muted-foreground h-10 w-10 animate-spin" />
           ) : (
             <>
-              <Upload className="h-10 w-10 text-muted-foreground" />
-              <p className="mt-2 text-sm text-muted-foreground">
+              <Upload className="text-muted-foreground h-10 w-10" />
+              <p className="text-muted-foreground mt-2 text-sm">
                 {isDragActive
                   ? "Drop the images here..."
                   : "Drag & drop images here, or click to select"}
               </p>
-              <p className="text-xs text-muted-foreground mt-1">
+              <p className="text-muted-foreground mt-1 text-xs">
                 PNG, JPG, JPEG or WebP (max 5MB each)
               </p>
             </>
@@ -167,9 +171,9 @@ export function ImageUpload({ value, onChange, maxImages = 10 }: ImageUploadProp
                   onDragOver={(e) => handleDragOver(e, index)}
                   onDragEnd={handleDragEnd}
                   className={cn(
-                    "group relative aspect-square overflow-hidden rounded-lg border bg-muted",
+                    "group bg-muted relative aspect-square overflow-hidden rounded-lg border",
                     draggedIndex === index && "opacity-50",
-                    image.isPrimary && "ring-2 ring-primary"
+                    image.isPrimary && "ring-primary ring-2"
                   )}
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -180,13 +184,13 @@ export function ImageUpload({ value, onChange, maxImages = 10 }: ImageUploadProp
                   />
                   {/* Primary Badge */}
                   {image.isPrimary && (
-                    <div className="absolute left-2 top-2 rounded bg-primary px-2 py-0.5 text-xs font-medium text-primary-foreground">
+                    <div className="bg-primary text-primary-foreground absolute top-2 left-2 rounded px-2 py-0.5 text-xs font-medium">
                       Primary
                     </div>
                   )}
                   {/* Hover Overlay */}
                   <div className="absolute inset-0 flex items-center justify-center gap-1 bg-black/50 opacity-0 transition-opacity group-hover:opacity-100">
-                    <GripVertical className="absolute left-2 top-2 h-4 w-4 cursor-grab text-white" />
+                    <GripVertical className="absolute top-2 left-2 h-4 w-4 cursor-grab text-white" />
                     {!image.isPrimary && (
                       <Button
                         type="button"
@@ -213,7 +217,7 @@ export function ImageUpload({ value, onChange, maxImages = 10 }: ImageUploadProp
           </div>
         )}
 
-        <p className="text-sm text-muted-foreground">
+        <p className="text-muted-foreground text-sm">
           {value.length} of {maxImages} images uploaded
         </p>
       </CardContent>

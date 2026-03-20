@@ -46,7 +46,12 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@havenspace/shared/ui";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@havenspace/shared/ui";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@havenspace/shared/ui";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { formatCurrency, formatDate, getInitials } from "@/lib/utils";
 
@@ -61,7 +66,7 @@ Our dormitory features modern amenities including high-speed WiFi, air-condition
 The location is perfect for students as it's walking distance to major universities including UST, FEU, and UE. Nearby you'll find convenience stores, restaurants, laundromats, and public transportation.`,
   location: "123 España Blvd, Sampaloc, Manila",
   city: "Manila",
-  coordinates: { lat: 14.6091, lng: 120.9890 },
+  coordinates: { lat: 14.6091, lng: 120.989 },
   price: 5500,
   depositAmount: 11000,
   rating: 4.8,
@@ -114,7 +119,8 @@ const mockReviews = [
     avatar: "/avatars/maria.jpg",
     rating: 5,
     date: "2025-01-10",
-    comment: "Great place to stay! Very clean and well-maintained. The landlord is very accommodating and responsive. Highly recommended for students!",
+    comment:
+      "Great place to stay! Very clean and well-maintained. The landlord is very accommodating and responsive. Highly recommended for students!",
     stayDuration: "6 months",
   },
   {
@@ -123,7 +129,8 @@ const mockReviews = [
     avatar: "/avatars/pedro.jpg",
     rating: 4,
     date: "2024-12-15",
-    comment: "Good value for money. Location is excellent, very near to universities. WiFi is fast. Only wish there was better ventilation in common areas.",
+    comment:
+      "Good value for money. Location is excellent, very near to universities. WiFi is fast. Only wish there was better ventilation in common areas.",
     stayDuration: "1 year",
   },
   {
@@ -132,7 +139,8 @@ const mockReviews = [
     avatar: "/avatars/ana.jpg",
     rating: 5,
     date: "2024-11-20",
-    comment: "I've been staying here for 2 years now. Best dorm in the area! The management keeps improving the facilities. Feels like home.",
+    comment:
+      "I've been staying here for 2 years now. Best dorm in the area! The management keeps improving the facilities. Feels like home.",
     stayDuration: "2 years",
   },
 ];
@@ -154,7 +162,7 @@ export default function ListingDetailPage({
   const { id } = use(params);
   const searchParams = useSearchParams();
   const showBooking = searchParams.get("book") === "true";
-  
+
   const [isSaved, setIsSaved] = useState(false);
   const [showBookingDialog, setShowBookingDialog] = useState(showBooking);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -199,7 +207,7 @@ export default function ListingDetailPage({
       {/* Header */}
       <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
         <div>
-          <div className="flex items-center gap-2 mb-2">
+          <div className="mb-2 flex items-center gap-2">
             <h1 className="text-2xl font-bold tracking-tight md:text-3xl">
               {listing.name}
             </h1>
@@ -207,7 +215,7 @@ export default function ListingDetailPage({
               <Badge className="bg-green-100 text-green-800">Available</Badge>
             )}
           </div>
-          <div className="flex flex-wrap items-center gap-4 text-muted-foreground">
+          <div className="text-muted-foreground flex flex-wrap items-center gap-4">
             <span className="flex items-center gap-1">
               <MapPin className="h-4 w-4" />
               {listing.location}
@@ -239,14 +247,14 @@ export default function ListingDetailPage({
 
       {/* Image Gallery */}
       <Card className="overflow-hidden">
-        <div className="relative h-64 md:h-96 bg-muted">
+        <div className="bg-muted relative h-64 md:h-96">
           <div className="absolute inset-0 flex items-center justify-center">
-            <Home className="h-16 w-16 text-muted-foreground" />
+            <Home className="text-muted-foreground h-16 w-16" />
           </div>
           <Button
             variant="secondary"
             size="icon"
-            className="absolute left-4 top-1/2 -translate-y-1/2"
+            className="absolute top-1/2 left-4 -translate-y-1/2"
             onClick={prevImage}
           >
             <ChevronLeft className="h-5 w-5" />
@@ -254,16 +262,16 @@ export default function ListingDetailPage({
           <Button
             variant="secondary"
             size="icon"
-            className="absolute right-4 top-1/2 -translate-y-1/2"
+            className="absolute top-1/2 right-4 -translate-y-1/2"
             onClick={nextImage}
           >
             <ChevronRight className="h-5 w-5" />
           </Button>
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+          <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-2">
             {listing.images.map((_, index) => (
               <button
                 key={index}
-                className={`w-2 h-2 rounded-full transition-colors ${
+                className={`h-2 w-2 rounded-full transition-colors ${
                   index === currentImageIndex ? "bg-white" : "bg-white/50"
                 }`}
                 onClick={() => setCurrentImageIndex(index)}
@@ -276,14 +284,14 @@ export default function ListingDetailPage({
       {/* Main Content */}
       <div className="grid gap-6 lg:grid-cols-3">
         {/* Left Column - Details */}
-        <div className="lg:col-span-2 space-y-6">
+        <div className="space-y-6 lg:col-span-2">
           {/* Description */}
           <Card>
             <CardHeader>
               <CardTitle>About this place</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="whitespace-pre-line text-muted-foreground">
+              <p className="text-muted-foreground whitespace-pre-line">
                 {listing.description}
               </p>
             </CardContent>
@@ -295,27 +303,28 @@ export default function ListingDetailPage({
               <CardTitle>Room Details</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div className="text-center p-4 rounded-lg bg-muted">
-                  <Home className="h-6 w-6 mx-auto mb-2" />
-                  <p className="text-sm text-muted-foreground">Room Type</p>
+              <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+                <div className="bg-muted rounded-lg p-4 text-center">
+                  <Home className="mx-auto mb-2 h-6 w-6" />
+                  <p className="text-muted-foreground text-sm">Room Type</p>
                   <p className="font-medium">{listing.roomType}</p>
                 </div>
-                <div className="text-center p-4 rounded-lg bg-muted">
-                  <Users className="h-6 w-6 mx-auto mb-2" />
-                  <p className="text-sm text-muted-foreground">Capacity</p>
+                <div className="bg-muted rounded-lg p-4 text-center">
+                  <Users className="mx-auto mb-2 h-6 w-6" />
+                  <p className="text-muted-foreground text-sm">Capacity</p>
                   <p className="font-medium">
-                    {listing.capacity} {listing.capacity > 1 ? "persons" : "person"}
+                    {listing.capacity}{" "}
+                    {listing.capacity > 1 ? "persons" : "person"}
                   </p>
                 </div>
-                <div className="text-center p-4 rounded-lg bg-muted">
-                  <Home className="h-6 w-6 mx-auto mb-2" />
-                  <p className="text-sm text-muted-foreground">Size</p>
+                <div className="bg-muted rounded-lg p-4 text-center">
+                  <Home className="mx-auto mb-2 h-6 w-6" />
+                  <p className="text-muted-foreground text-sm">Size</p>
                   <p className="font-medium">{listing.size}</p>
                 </div>
-                <div className="text-center p-4 rounded-lg bg-muted">
-                  <Home className="h-6 w-6 mx-auto mb-2" />
-                  <p className="text-sm text-muted-foreground">Floor</p>
+                <div className="bg-muted rounded-lg p-4 text-center">
+                  <Home className="mx-auto mb-2 h-6 w-6" />
+                  <p className="text-muted-foreground text-sm">Floor</p>
                   <p className="font-medium">{listing.floor}</p>
                 </div>
               </div>
@@ -328,11 +337,11 @@ export default function ListingDetailPage({
               <CardTitle>Amenities</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
                 {listing.amenities.map((amenity) => (
                   <div
                     key={amenity.key}
-                    className={`flex items-center gap-3 p-3 rounded-lg ${
+                    className={`flex items-center gap-3 rounded-lg p-3 ${
                       amenity.included
                         ? "bg-green-50 text-green-800"
                         : "bg-muted text-muted-foreground line-through"
@@ -340,7 +349,7 @@ export default function ListingDetailPage({
                   >
                     {amenityIcons[amenity.key]}
                     <span>{amenity.label}</span>
-                    {amenity.included && <Check className="h-4 w-4 ml-auto" />}
+                    {amenity.included && <Check className="ml-auto h-4 w-4" />}
                   </div>
                 ))}
               </div>
@@ -370,7 +379,8 @@ export default function ListingDetailPage({
               <div>
                 <CardTitle>Reviews</CardTitle>
                 <CardDescription>
-                  {listing.reviewCount} reviews • {listing.rating} average rating
+                  {listing.reviewCount} reviews • {listing.rating} average
+                  rating
                 </CardDescription>
               </div>
               <div className="flex items-center gap-1">
@@ -392,13 +402,15 @@ export default function ListingDetailPage({
                   <div className="flex items-start gap-3">
                     <Avatar>
                       <AvatarImage src={review.avatar} />
-                      <AvatarFallback>{getInitials(review.author)}</AvatarFallback>
+                      <AvatarFallback>
+                        {getInitials(review.author)}
+                      </AvatarFallback>
                     </Avatar>
                     <div className="flex-1">
                       <div className="flex items-center justify-between">
                         <div>
                           <p className="font-medium">{review.author}</p>
-                          <p className="text-sm text-muted-foreground">
+                          <p className="text-muted-foreground text-sm">
                             Stayed for {review.stayDuration}
                           </p>
                         </div>
@@ -415,8 +427,10 @@ export default function ListingDetailPage({
                           ))}
                         </div>
                       </div>
-                      <p className="mt-2 text-muted-foreground">{review.comment}</p>
-                      <p className="text-xs text-muted-foreground mt-2">
+                      <p className="text-muted-foreground mt-2">
+                        {review.comment}
+                      </p>
+                      <p className="text-muted-foreground mt-2 text-xs">
                         {formatDate(review.date)}
                       </p>
                     </div>
@@ -477,8 +491,9 @@ export default function ListingDetailPage({
                 </Link>
               </Button>
 
-              <p className="text-xs text-center text-muted-foreground">
-                You won&apos;t be charged yet. The landlord will review your request.
+              <p className="text-muted-foreground text-center text-xs">
+                You won&apos;t be charged yet. The landlord will review your
+                request.
               </p>
             </CardContent>
           </Card>
@@ -503,7 +518,7 @@ export default function ListingDetailPage({
                       <Shield className="h-4 w-4 text-blue-500" />
                     )}
                   </div>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-muted-foreground text-sm">
                     Member since {listing.landlord.memberSince}
                   </p>
                 </div>
@@ -512,7 +527,9 @@ export default function ListingDetailPage({
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="text-muted-foreground">Response rate</p>
-                  <p className="font-medium">{listing.landlord.responseRate}%</p>
+                  <p className="font-medium">
+                    {listing.landlord.responseRate}%
+                  </p>
                 </div>
                 <div>
                   <p className="text-muted-foreground">Response time</p>
@@ -549,23 +566,23 @@ export default function ListingDetailPage({
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4 py-4">
-            <div className="p-4 rounded-lg bg-muted">
-              <div className="flex justify-between items-center">
+            <div className="bg-muted rounded-lg p-4">
+              <div className="flex items-center justify-between">
                 <span className="text-muted-foreground">Monthly rent</span>
                 <span className="font-semibold">
                   {formatCurrency(listing.price)}
                 </span>
               </div>
-              <div className="flex justify-between items-center mt-2">
+              <div className="mt-2 flex items-center justify-between">
                 <span className="text-muted-foreground">Security deposit</span>
                 <span className="font-semibold">
                   {formatCurrency(listing.depositAmount)}
                 </span>
               </div>
               <Separator className="my-3" />
-              <div className="flex justify-between items-center">
+              <div className="flex items-center justify-between">
                 <span className="font-medium">Total to pay on move-in</span>
-                <span className="font-bold text-lg">
+                <span className="text-lg font-bold">
                   {formatCurrency(listing.price + listing.depositAmount)}
                 </span>
               </div>
@@ -592,7 +609,7 @@ export default function ListingDetailPage({
                 onChange={(e) =>
                   setBookingData({ ...bookingData, duration: e.target.value })
                 }
-                className="w-full px-3 py-2 rounded-md border bg-background"
+                className="bg-background w-full rounded-md border px-3 py-2"
               >
                 <option value="6">6 months</option>
                 <option value="12">1 year</option>
@@ -610,20 +627,24 @@ export default function ListingDetailPage({
                   setBookingData({ ...bookingData, message: e.target.value })
                 }
                 placeholder="Introduce yourself and mention why you're interested..."
-                className="w-full px-3 py-2 rounded-md border bg-background min-h-[100px]"
+                className="bg-background min-h-[100px] w-full rounded-md border px-3 py-2"
               />
             </div>
 
-            <div className="flex items-start gap-2 text-sm text-muted-foreground">
-              <Clock className="h-4 w-4 mt-0.5" />
+            <div className="text-muted-foreground flex items-start gap-2 text-sm">
+              <Clock className="mt-0.5 h-4 w-4" />
               <span>
                 The landlord typically responds {listing.landlord.responseTime}.
-                You&apos;ll receive a notification once they review your request.
+                You&apos;ll receive a notification once they review your
+                request.
               </span>
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setShowBookingDialog(false)}>
+            <Button
+              variant="outline"
+              onClick={() => setShowBookingDialog(false)}
+            >
               Cancel
             </Button>
             <Button onClick={handleBooking} disabled={!bookingData.checkIn}>

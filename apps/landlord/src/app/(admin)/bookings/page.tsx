@@ -17,10 +17,7 @@ import {
 import { Button } from "@havenspace/shared/ui";
 import { Input } from "@havenspace/shared/ui";
 import { Badge } from "@havenspace/shared/ui";
-import {
-  Card,
-  CardContent,
-} from "@havenspace/shared/ui";
+import { Card, CardContent } from "@havenspace/shared/ui";
 import {
   Select,
   SelectContent,
@@ -36,7 +33,12 @@ import {
 } from "@havenspace/shared/ui";
 import { cn } from "@/lib/utils";
 
-type BookingStatus = "pending" | "confirmed" | "active" | "completed" | "cancelled";
+type BookingStatus =
+  | "pending"
+  | "confirmed"
+  | "active"
+  | "completed"
+  | "cancelled";
 
 interface Booking {
   id: string;
@@ -60,7 +62,11 @@ interface Booking {
 const mockBookings: Booking[] = [
   {
     id: "1",
-    boarder: { name: "Maria Santos", email: "maria@example.com", phone: "09171234567" },
+    boarder: {
+      name: "Maria Santos",
+      email: "maria@example.com",
+      phone: "09171234567",
+    },
     property: "Sunrise Residences",
     room: "Room 205",
     checkInDate: "2024-02-01",
@@ -71,7 +77,11 @@ const mockBookings: Booking[] = [
   },
   {
     id: "2",
-    boarder: { name: "Juan Dela Cruz", email: "juan@example.com", phone: "09181234567" },
+    boarder: {
+      name: "Juan Dela Cruz",
+      email: "juan@example.com",
+      phone: "09181234567",
+    },
     property: "Sunrise Residences",
     room: "Room 102",
     checkInDate: "2024-02-05",
@@ -81,7 +91,11 @@ const mockBookings: Booking[] = [
   },
   {
     id: "3",
-    boarder: { name: "Ana Garcia", email: "ana@example.com", phone: "09191234567" },
+    boarder: {
+      name: "Ana Garcia",
+      email: "ana@example.com",
+      phone: "09191234567",
+    },
     property: "Green Valley BH",
     room: "Room 301",
     checkInDate: "2024-01-20",
@@ -91,7 +105,11 @@ const mockBookings: Booking[] = [
   },
   {
     id: "4",
-    boarder: { name: "Carlos Reyes", email: "carlos@example.com", phone: "09201234567" },
+    boarder: {
+      name: "Carlos Reyes",
+      email: "carlos@example.com",
+      phone: "09201234567",
+    },
     property: "Metro Living Spaces",
     room: "Room 401",
     checkInDate: "2024-01-01",
@@ -101,7 +119,11 @@ const mockBookings: Booking[] = [
   },
   {
     id: "5",
-    boarder: { name: "Lisa Chen", email: "lisa@example.com", phone: "09211234567" },
+    boarder: {
+      name: "Lisa Chen",
+      email: "lisa@example.com",
+      phone: "09211234567",
+    },
     property: "Sunrise Residences",
     room: "Room 108",
     checkInDate: "2023-10-01",
@@ -112,15 +134,40 @@ const mockBookings: Booking[] = [
   },
 ];
 
-const statusConfig: Record<BookingStatus, { label: string; color: string; icon: React.ComponentType<{ className?: string }> }> = {
-  pending: { label: "Pending", color: "bg-yellow-100 text-yellow-800", icon: Clock },
-  confirmed: { label: "Confirmed", color: "bg-blue-100 text-blue-800", icon: Check },
+const statusConfig: Record<
+  BookingStatus,
+  {
+    label: string;
+    color: string;
+    icon: React.ComponentType<{ className?: string }>;
+  }
+> = {
+  pending: {
+    label: "Pending",
+    color: "bg-yellow-100 text-yellow-800",
+    icon: Clock,
+  },
+  confirmed: {
+    label: "Confirmed",
+    color: "bg-blue-100 text-blue-800",
+    icon: Check,
+  },
   active: { label: "Active", color: "bg-green-100 text-green-800", icon: User },
-  completed: { label: "Completed", color: "bg-gray-100 text-gray-800", icon: Check },
+  completed: {
+    label: "Completed",
+    color: "bg-gray-100 text-gray-800",
+    icon: Check,
+  },
   cancelled: { label: "Cancelled", color: "bg-red-100 text-red-800", icon: X },
 };
 
-function BookingCard({ booking, onAction }: { booking: Booking; onAction: (action: string, id: string) => void }) {
+function BookingCard({
+  booking,
+  onAction,
+}: {
+  booking: Booking;
+  onAction: (action: string, id: string) => void;
+}) {
   const status = statusConfig[booking.status];
   const StatusIcon = status.icon;
 
@@ -129,8 +176,8 @@ function BookingCard({ booking, onAction }: { booking: Booking; onAction: (actio
       <CardContent className="p-4">
         <div className="flex items-start justify-between">
           <div className="flex gap-4">
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-              <span className="text-lg font-semibold text-primary">
+            <div className="bg-primary/10 flex h-12 w-12 items-center justify-center rounded-full">
+              <span className="text-primary text-lg font-semibold">
                 {booking.boarder.name.charAt(0)}
               </span>
             </div>
@@ -142,7 +189,7 @@ function BookingCard({ booking, onAction }: { booking: Booking; onAction: (actio
                   {status.label}
                 </Badge>
               </div>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-muted-foreground text-sm">
                 {booking.boarder.email} • {booking.boarder.phone}
               </p>
               <div className="flex items-center gap-4 text-sm">
@@ -156,21 +203,23 @@ function BookingCard({ booking, onAction }: { booking: Booking; onAction: (actio
                 </span>
               </div>
               {booking.message && (
-                <p className="mt-2 text-sm text-muted-foreground bg-muted/50 rounded p-2">
+                <p className="text-muted-foreground bg-muted/50 mt-2 rounded p-2 text-sm">
                   &quot;{booking.message}&quot;
                 </p>
               )}
             </div>
           </div>
-          <div className="text-right space-y-2">
-            <p className="text-lg font-bold">₱{booking.totalPrice.toLocaleString()}</p>
-            <p className="text-xs text-muted-foreground">per month</p>
-            <p className="text-xs text-muted-foreground">
+          <div className="space-y-2 text-right">
+            <p className="text-lg font-bold">
+              ₱{booking.totalPrice.toLocaleString()}
+            </p>
+            <p className="text-muted-foreground text-xs">per month</p>
+            <p className="text-muted-foreground text-xs">
               Check-in: {new Date(booking.checkInDate).toLocaleDateString()}
             </p>
           </div>
         </div>
-        
+
         {/* Actions */}
         {booking.status === "pending" && (
           <div className="mt-4 flex gap-2 border-t pt-4">
@@ -196,19 +245,23 @@ function BookingCard({ booking, onAction }: { booking: Booking; onAction: (actio
             </Button>
           </div>
         )}
-        
+
         {booking.status === "confirmed" && (
           <div className="mt-4 flex gap-2 border-t pt-4">
             <Button size="sm" variant="outline" className="flex-1">
               <MessageSquare className="mr-2 h-4 w-4" />
               Message
             </Button>
-            <Button size="sm" className="flex-1" onClick={() => onAction("activate", booking.id)}>
+            <Button
+              size="sm"
+              className="flex-1"
+              onClick={() => onAction("activate", booking.id)}
+            >
               Mark as Checked In
             </Button>
           </div>
         )}
-        
+
         {booking.status === "active" && (
           <div className="mt-4 flex gap-2 border-t pt-4">
             <Button size="sm" variant="outline" className="flex-1">
@@ -242,20 +295,21 @@ export default function BookingsPage() {
       booking.boarder.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
       booking.property.toLowerCase().includes(searchQuery.toLowerCase());
 
-    const matchesProperty = propertyFilter === "all" || booking.property === propertyFilter;
-    
+    const matchesProperty =
+      propertyFilter === "all" || booking.property === propertyFilter;
+
     const matchesTab = activeTab === "all" || booking.status === activeTab;
 
     return matchesSearch && matchesProperty && matchesTab;
   });
 
   const properties = [...new Set(mockBookings.map((b) => b.property))];
-  
+
   const counts = {
     all: mockBookings.length,
-    pending: mockBookings.filter(b => b.status === "pending").length,
-    confirmed: mockBookings.filter(b => b.status === "confirmed").length,
-    active: mockBookings.filter(b => b.status === "active").length,
+    pending: mockBookings.filter((b) => b.status === "pending").length,
+    confirmed: mockBookings.filter((b) => b.status === "confirmed").length,
+    active: mockBookings.filter((b) => b.status === "active").length,
   };
 
   return (
@@ -272,8 +326,8 @@ export default function BookingsPage() {
 
       {/* Filters */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div className="relative flex-1 max-w-sm">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+        <div className="relative max-w-sm flex-1">
+          <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
           <Input
             placeholder="Search by name, email, or property..."
             className="pl-10"
@@ -302,19 +356,33 @@ export default function BookingsPage() {
         <TabsList>
           <TabsTrigger value="all">
             All
-            <Badge variant="secondary" className="ml-2">{counts.all}</Badge>
+            <Badge variant="secondary" className="ml-2">
+              {counts.all}
+            </Badge>
           </TabsTrigger>
           <TabsTrigger value="pending">
             Pending
-            <Badge variant="secondary" className="ml-2 bg-yellow-100 text-yellow-800">{counts.pending}</Badge>
+            <Badge
+              variant="secondary"
+              className="ml-2 bg-yellow-100 text-yellow-800"
+            >
+              {counts.pending}
+            </Badge>
           </TabsTrigger>
           <TabsTrigger value="confirmed">
             Confirmed
-            <Badge variant="secondary" className="ml-2">{counts.confirmed}</Badge>
+            <Badge variant="secondary" className="ml-2">
+              {counts.confirmed}
+            </Badge>
           </TabsTrigger>
           <TabsTrigger value="active">
             Active
-            <Badge variant="secondary" className="ml-2 bg-green-100 text-green-800">{counts.active}</Badge>
+            <Badge
+              variant="secondary"
+              className="ml-2 bg-green-100 text-green-800"
+            >
+              {counts.active}
+            </Badge>
           </TabsTrigger>
         </TabsList>
 
@@ -331,9 +399,11 @@ export default function BookingsPage() {
             ) : (
               <Card>
                 <CardContent className="flex flex-col items-center justify-center py-12">
-                  <CalendarCheck className="h-12 w-12 text-muted-foreground" />
-                  <h3 className="mt-4 text-lg font-semibold">No bookings found</h3>
-                  <p className="text-sm text-muted-foreground">
+                  <CalendarCheck className="text-muted-foreground h-12 w-12" />
+                  <h3 className="mt-4 text-lg font-semibold">
+                    No bookings found
+                  </h3>
+                  <p className="text-muted-foreground text-sm">
                     {searchQuery || propertyFilter !== "all"
                       ? "Try adjusting your filters"
                       : "You don't have any bookings yet"}

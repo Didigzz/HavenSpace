@@ -31,7 +31,8 @@ import { mockNotifications } from "@/lib/mock-data";
 
 export function Header() {
   const { theme, setTheme } = useTheme();
-  const { currentProperty, properties, setCurrentProperty, isLoading } = useProperty();
+  const { currentProperty, properties, setCurrentProperty, isLoading } =
+    useProperty();
   const [mounted, setMounted] = React.useState(false);
 
   // Prevent hydration mismatch
@@ -42,11 +43,11 @@ export function Header() {
   const unreadNotifications = mockNotifications.filter((n) => !n.isRead);
 
   return (
-    <header className="sticky top-0 z-50 flex h-16 items-center justify-between border-b bg-background px-4 lg:px-6">
+    <header className="bg-background sticky top-0 z-50 flex h-16 items-center justify-between border-b px-4 lg:px-6">
       {/* Search */}
       <div className="flex flex-1 items-center gap-4">
         <div className="relative hidden w-full max-w-md lg:block">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
           <Input
             placeholder="Search tenants, rooms, payments..."
             className="pl-10"
@@ -62,7 +63,9 @@ export function Header() {
             <Button variant="outline" className="gap-2" disabled={isLoading}>
               <Building2 className="h-4 w-4" />
               <span className="hidden md:inline">
-                {isLoading ? "Loading..." : currentProperty?.name || "Select Property"}
+                {isLoading
+                  ? "Loading..."
+                  : currentProperty?.name || "Select Property"}
               </span>
               <ChevronDown className="h-4 w-4" />
             </Button>
@@ -78,10 +81,12 @@ export function Header() {
               >
                 <div>
                   <p className="font-medium">{property.name}</p>
-                  <p className="text-xs text-muted-foreground">{property.address}</p>
+                  <p className="text-muted-foreground text-xs">
+                    {property.address}
+                  </p>
                 </div>
                 {currentProperty?.id === property.id && (
-                  <Check className="h-4 w-4 text-primary" />
+                  <Check className="text-primary h-4 w-4" />
                 )}
               </DropdownMenuItem>
             ))}
@@ -114,7 +119,7 @@ export function Header() {
             <Button variant="ghost" size="icon" className="relative">
               <Bell className="h-5 w-5" />
               {unreadNotifications.length > 0 && (
-                <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-destructive text-xs text-destructive-foreground">
+                <span className="bg-destructive text-destructive-foreground absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full text-xs">
                   {unreadNotifications.length}
                 </span>
               )}
@@ -139,16 +144,16 @@ export function Header() {
                 <div className="flex w-full items-center justify-between">
                   <span className="font-medium">{notification.title}</span>
                   {!notification.isRead && (
-                    <span className="h-2 w-2 rounded-full bg-primary" />
+                    <span className="bg-primary h-2 w-2 rounded-full" />
                   )}
                 </div>
-                <span className="text-sm text-muted-foreground">
+                <span className="text-muted-foreground text-sm">
                   {notification.message}
                 </span>
               </DropdownMenuItem>
             ))}
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="justify-center text-primary">
+            <DropdownMenuItem className="text-primary justify-center">
               View all notifications
             </DropdownMenuItem>
           </DropdownMenuContent>
@@ -164,7 +169,9 @@ export function Header() {
               </Avatar>
               <div className="hidden flex-col items-start md:flex">
                 <span className="text-sm font-medium">Admin User</span>
-                <span className="text-xs text-muted-foreground">Administrator</span>
+                <span className="text-muted-foreground text-xs">
+                  Administrator
+                </span>
               </div>
               <ChevronDown className="h-4 w-4" />
             </Button>

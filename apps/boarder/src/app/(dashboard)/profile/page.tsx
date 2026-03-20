@@ -87,7 +87,9 @@ export default function ProfilePage() {
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold tracking-tight md:text-3xl">Profile</h1>
+        <h1 className="text-2xl font-bold tracking-tight md:text-3xl">
+          Profile
+        </h1>
         <p className="text-muted-foreground">
           Manage your personal information and account settings.
         </p>
@@ -101,13 +103,15 @@ export default function ProfilePage() {
               <Avatar className="h-24 w-24">
                 <AvatarImage src="/avatars/user.jpg" />
                 <AvatarFallback className="text-lg">
-                  {getInitials(`${mockUserData.firstName} ${mockUserData.lastName}`)}
+                  {getInitials(
+                    `${mockUserData.firstName} ${mockUserData.lastName}`
+                  )}
                 </AvatarFallback>
               </Avatar>
               <Button
                 size="icon"
                 variant="outline"
-                className="absolute -bottom-1 -right-1 h-8 w-8 rounded-full"
+                className="absolute -right-1 -bottom-1 h-8 w-8 rounded-full"
               >
                 <Camera className="h-4 w-4" />
               </Button>
@@ -120,15 +124,15 @@ export default function ProfilePage() {
           <CardContent className="space-y-4">
             <div className="space-y-2">
               <div className="flex items-center gap-2 text-sm">
-                <MapPin className="h-4 w-4 text-muted-foreground" />
+                <MapPin className="text-muted-foreground h-4 w-4" />
                 <span>{mockUserData.city}</span>
               </div>
               <div className="flex items-center gap-2 text-sm">
-                <Phone className="h-4 w-4 text-muted-foreground" />
+                <Phone className="text-muted-foreground h-4 w-4" />
                 <span>{mockUserData.phone}</span>
               </div>
               <div className="flex items-center gap-2 text-sm">
-                <Calendar className="h-4 w-4 text-muted-foreground" />
+                <Calendar className="text-muted-foreground h-4 w-4" />
                 <span>Member since Jan 2025</span>
               </div>
             </div>
@@ -139,47 +143,56 @@ export default function ProfilePage() {
               <h4 className="text-sm font-medium">Verification Status</h4>
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm flex items-center gap-2">
+                  <span className="flex items-center gap-2 text-sm">
                     <Mail className="h-4 w-4" />
                     Email
                   </span>
                   {verificationStatus.email ? (
-                    <Badge variant="default" className="bg-green-100 text-green-800">
-                      <CheckCircle className="h-3 w-3 mr-1" />
+                    <Badge
+                      variant="default"
+                      className="bg-green-100 text-green-800"
+                    >
+                      <CheckCircle className="mr-1 h-3 w-3" />
                       Verified
                     </Badge>
                   ) : (
                     <Badge variant="secondary">
-                      <AlertCircle className="h-3 w-3 mr-1" />
+                      <AlertCircle className="mr-1 h-3 w-3" />
                       Pending
                     </Badge>
                   )}
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm flex items-center gap-2">
+                  <span className="flex items-center gap-2 text-sm">
                     <Phone className="h-4 w-4" />
                     Phone
                   </span>
                   {verificationStatus.phone ? (
-                    <Badge variant="default" className="bg-green-100 text-green-800">
-                      <CheckCircle className="h-3 w-3 mr-1" />
+                    <Badge
+                      variant="default"
+                      className="bg-green-100 text-green-800"
+                    >
+                      <CheckCircle className="mr-1 h-3 w-3" />
                       Verified
                     </Badge>
                   ) : (
                     <Badge variant="secondary">
-                      <AlertCircle className="h-3 w-3 mr-1" />
+                      <AlertCircle className="mr-1 h-3 w-3" />
                       Pending
                     </Badge>
                   )}
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm flex items-center gap-2">
+                  <span className="flex items-center gap-2 text-sm">
                     <Shield className="h-4 w-4" />
                     Identity
                   </span>
                   {verificationStatus.identity ? (
-                    <Badge variant="default" className="bg-green-100 text-green-800">
-                      <CheckCircle className="h-3 w-3 mr-1" />
+                    <Badge
+                      variant="default"
+                      className="bg-green-100 text-green-800"
+                    >
+                      <CheckCircle className="mr-1 h-3 w-3" />
                       Verified
                     </Badge>
                   ) : (

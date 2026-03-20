@@ -76,7 +76,10 @@ export function getRelativeTime(date: Date | string): string {
   return formatShortDate(date);
 }
 
-export function calculateOccupancyRate(occupied: number, total: number): number {
+export function calculateOccupancyRate(
+  occupied: number,
+  total: number
+): number {
   if (total === 0) return 0;
   return Math.round((occupied / total) * 100);
 }
@@ -92,24 +95,52 @@ export function getStatusColor(status: string): {
     case "COMPLETED":
     case "APPROVED":
     case "PAID":
-      return { color: "text-green-700", bg: "bg-green-50", border: "border-green-200" };
+      return {
+        color: "text-green-700",
+        bg: "bg-green-50",
+        border: "border-green-200",
+      };
     case "INACTIVE":
     case "OCCUPIED":
     case "PENDING":
     case "PROCESSING":
-      return { color: "text-yellow-700", bg: "bg-yellow-50", border: "border-yellow-200" };
+      return {
+        color: "text-yellow-700",
+        bg: "bg-yellow-50",
+        border: "border-yellow-200",
+      };
     case "MAINTENANCE":
     case "CANCELLED":
     case "REJECTED":
-      return { color: "text-orange-700", bg: "bg-orange-50", border: "border-orange-200" };
+      return {
+        color: "text-orange-700",
+        bg: "bg-orange-50",
+        border: "border-orange-200",
+      };
     case "HIGH":
     case "URGENT":
-      return { color: "text-red-700", bg: "bg-red-50", border: "border-red-200" };
+      return {
+        color: "text-red-700",
+        bg: "bg-red-50",
+        border: "border-red-200",
+      };
     case "MEDIUM":
-      return { color: "text-blue-700", bg: "bg-blue-50", border: "border-blue-200" };
+      return {
+        color: "text-blue-700",
+        bg: "bg-blue-50",
+        border: "border-blue-200",
+      };
     case "LOW":
-      return { color: "text-gray-700", bg: "bg-gray-50", border: "border-gray-200" };
+      return {
+        color: "text-gray-700",
+        bg: "bg-gray-50",
+        border: "border-gray-200",
+      };
     default:
-      return { color: "text-gray-700", bg: "bg-gray-50", border: "border-gray-200" };
+      return {
+        color: "text-gray-700",
+        bg: "bg-gray-50",
+        border: "border-gray-200",
+      };
   }
 }

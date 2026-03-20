@@ -57,7 +57,8 @@ import { formatCurrency, formatDate } from "@/lib/utils";
 import type { Payment, PaymentStatus } from "@/types";
 
 const statusColors: Record<PaymentStatus, string> = {
-  PENDING: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300",
+  PENDING:
+    "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300",
   PAID: "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300",
   OVERDUE: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300",
   CANCELLED: "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300",
@@ -79,16 +80,16 @@ const columns: ColumnDef<Payment>[] = [
     cell: ({ row }) => (
       <div>
         <p className="font-medium">{row.original.tenantName}</p>
-        <p className="text-sm text-muted-foreground">Room {row.original.roomNumber}</p>
+        <p className="text-muted-foreground text-sm">
+          Room {row.original.roomNumber}
+        </p>
       </div>
     ),
   },
   {
     accessorKey: "type",
     header: "Type",
-    cell: ({ row }) => (
-      <Badge variant="outline">{row.original.type}</Badge>
-    ),
+    cell: ({ row }) => <Badge variant="outline">{row.original.type}</Badge>,
   },
   {
     accessorKey: "amount",
@@ -165,20 +166,23 @@ function PaymentsContent() {
   const { currentProperty } = useProperty();
   const searchParams = useSearchParams();
   const statusFilter = searchParams.get("status");
-  
+
   const [sorting, setSorting] = React.useState<SortingState>([
     { id: "dueDate", desc: true },
   ]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+    []
+  );
   const [activeTab, setActiveTab] = React.useState(statusFilter || "all");
 
   const allPayments = currentProperty
     ? getPaymentsByProperty(currentProperty.id)
     : mockPayments;
 
-  const filteredPayments = activeTab === "all"
-    ? allPayments
-    : allPayments.filter((p) => p.status.toLowerCase() === activeTab);
+  const filteredPayments =
+    activeTab === "all"
+      ? allPayments
+      : allPayments.filter((p) => p.status.toLowerCase() === activeTab);
 
   // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable({
@@ -237,7 +241,7 @@ function PaymentsContent() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-muted-foreground text-xs">
               {stats.paid.length} payments
             </p>
           </CardContent>
@@ -250,7 +254,7 @@ function PaymentsContent() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-muted-foreground text-xs">
               {stats.pending.length} payments
             </p>
           </CardContent>
@@ -263,7 +267,7 @@ function PaymentsContent() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-muted-foreground text-xs">
               {stats.overdue.length} payments
             </p>
           </CardContent>
@@ -274,12 +278,14 @@ function PaymentsContent() {
             <CardTitle className="text-3xl">
               {stats.totalAmount > 0
                 ? Math.round((paidAmount / stats.totalAmount) * 100)
-                : 0}%
+                : 0}
+              %
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-xs text-muted-foreground">
-              {formatCurrency(paidAmount)} of {formatCurrency(stats.totalAmount)}
+            <p className="text-muted-foreground text-xs">
+              {formatCurrency(paidAmount)} of{" "}
+              {formatCurrency(stats.totalAmount)}
             </p>
           </CardContent>
         </Card>
@@ -291,19 +297,32 @@ function PaymentsContent() {
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <Tabs value={activeTab} onValueChange={setActiveTab}>
               <TabsList>
-                <TabsTrigger value="all">All ({allPayments.length})</TabsTrigger>
-                <TabsTrigger value="paid">Paid ({stats.paid.length})</TabsTrigger>
-                <TabsTrigger value="pending">Pending ({stats.pending.length})</TabsTrigger>
-                <TabsTrigger value="overdue">Overdue ({stats.overdue.length})</TabsTrigger>
+                <TabsTrigger value="all">
+                  All ({allPayments.length})
+                </TabsTrigger>
+                <TabsTrigger value="paid">
+                  Paid ({stats.paid.length})
+                </TabsTrigger>
+                <TabsTrigger value="pending">
+                  Pending ({stats.pending.length})
+                </TabsTrigger>
+                <TabsTrigger value="overdue">
+                  Overdue ({stats.overdue.length})
+                </TabsTrigger>
               </TabsList>
             </Tabs>
             <div className="relative w-full sm:w-64">
-              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+              <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
               <Input
                 placeholder="Search payments..."
-                value={(table.getColumn("tenantName")?.getFilterValue() as string) ?? ""}
+                value={
+                  (table.getColumn("tenantName")?.getFilterValue() as string) ??
+                  ""
+                }
                 onChange={(event) =>
-                  table.getColumn("tenantName")?.setFilterValue(event.target.value)
+                  table
+                    .getColumn("tenantName")
+                    ?.setFilterValue(event.target.value)
                 }
                 className="pl-10"
               />
@@ -358,8 +377,9 @@ function PaymentsContent() {
           </div>
           {/* Pagination */}
           <div className="flex items-center justify-between px-2 py-4">
-            <div className="text-sm text-muted-foreground">
-              Showing {table.getRowModel().rows.length} of {filteredPayments.length} payments
+            <div className="text-muted-foreground text-sm">
+              Showing {table.getRowModel().rows.length} of{" "}
+              {filteredPayments.length} payments
             </div>
             <div className="flex items-center space-x-2">
               <Button
@@ -388,7 +408,11 @@ function PaymentsContent() {
 
 export default function PaymentsPage() {
   return (
-    <Suspense fallback={<div className="flex items-center justify-center h-96">Loading...</div>}>
+    <Suspense
+      fallback={
+        <div className="flex h-96 items-center justify-center">Loading...</div>
+      }
+    >
       <PaymentsContent />
     </Suspense>
   );

@@ -34,17 +34,25 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { mockProperties } from "@/lib/mock-data";
-import { formatCurrency, cn, getStatusColor, calculateOccupancyRate } from "@/lib/utils";
+import {
+  formatCurrency,
+  cn,
+  getStatusColor,
+  calculateOccupancyRate,
+} from "@/lib/utils";
 import type { Property } from "@/types";
 
 function PropertyCard({ property }: { property: Property }) {
-  const occupancyRate = calculateOccupancyRate(property.occupiedRooms, property.totalRooms);
+  const occupancyRate = calculateOccupancyRate(
+    property.occupiedRooms,
+    property.totalRooms
+  );
 
   return (
     <Card className="relative overflow-hidden">
       <div
         className={cn(
-          "absolute left-0 top-0 h-full w-1",
+          "absolute top-0 left-0 h-full w-1",
           property.status === "active" && "bg-green-500",
           property.status === "inactive" && "bg-gray-500",
           property.status === "maintenance" && "bg-yellow-500"
@@ -53,8 +61,8 @@ function PropertyCard({ property }: { property: Property }) {
       <CardHeader className="pb-2">
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-3">
-            <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
-              <Building2 className="h-6 w-6 text-primary" />
+            <div className="bg-primary/10 flex h-12 w-12 items-center justify-center rounded-lg">
+              <Building2 className="text-primary h-6 w-6" />
             </div>
             <div>
               <CardTitle className="text-lg">{property.name}</CardTitle>
@@ -95,12 +103,17 @@ function PropertyCard({ property }: { property: Property }) {
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="flex items-center justify-between">
-          <Badge variant="secondary" className={getStatusColor(property.status)}>
+          <Badge
+            variant="secondary"
+            className={getStatusColor(property.status)}
+          >
             {property.status.charAt(0).toUpperCase() + property.status.slice(1)}
           </Badge>
           <div className="text-right">
-            <span className="text-lg font-bold">{formatCurrency(property.monthlyRevenue)}</span>
-            <p className="text-xs text-muted-foreground">Monthly Revenue</p>
+            <span className="text-lg font-bold">
+              {formatCurrency(property.monthlyRevenue)}
+            </span>
+            <p className="text-muted-foreground text-xs">Monthly Revenue</p>
           </div>
         </div>
 
@@ -111,26 +124,28 @@ function PropertyCard({ property }: { property: Property }) {
             <span className="font-medium">{occupancyRate}%</span>
           </div>
           <Progress value={occupancyRate} className="h-2" />
-          <div className="flex justify-between text-xs text-muted-foreground">
+          <div className="text-muted-foreground flex justify-between text-xs">
             <span>{property.occupiedRooms} occupied</span>
-            <span>{property.totalRooms - property.occupiedRooms} available</span>
+            <span>
+              {property.totalRooms - property.occupiedRooms} available
+            </span>
           </div>
         </div>
 
         {/* Quick Stats */}
-        <div className="grid grid-cols-2 gap-4 rounded-lg border bg-muted/30 p-3">
+        <div className="bg-muted/30 grid grid-cols-2 gap-4 rounded-lg border p-3">
           <div className="flex items-center gap-2">
-            <Users className="h-4 w-4 text-muted-foreground" />
+            <Users className="text-muted-foreground h-4 w-4" />
             <div>
               <p className="text-sm font-medium">{property.totalRooms}</p>
-              <p className="text-xs text-muted-foreground">Total Rooms</p>
+              <p className="text-muted-foreground text-xs">Total Rooms</p>
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <TrendingUp className="h-4 w-4 text-muted-foreground" />
+            <TrendingUp className="text-muted-foreground h-4 w-4" />
             <div>
               <p className="text-sm font-medium">{property.occupiedRooms}</p>
-              <p className="text-xs text-muted-foreground">Occupied</p>
+              <p className="text-muted-foreground text-xs">Occupied</p>
             </div>
           </div>
         </div>
@@ -142,10 +157,11 @@ function PropertyCard({ property }: { property: Property }) {
 export default function PropertiesPage() {
   const [searchQuery, setSearchQuery] = React.useState("");
 
-  const filteredProperties = mockProperties.filter((property) =>
-    property.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    property.address.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    property.city.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredProperties = mockProperties.filter(
+    (property) =>
+      property.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      property.address.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      property.city.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const stats = {
@@ -184,7 +200,9 @@ export default function PropertiesPage() {
         <Card>
           <CardHeader className="pb-2">
             <CardDescription>Active Properties</CardDescription>
-            <CardTitle className="text-3xl text-green-600">{stats.active}</CardTitle>
+            <CardTitle className="text-3xl text-green-600">
+              {stats.active}
+            </CardTitle>
           </CardHeader>
         </Card>
         <Card>
@@ -196,15 +214,17 @@ export default function PropertiesPage() {
         <Card>
           <CardHeader className="pb-2">
             <CardDescription>Total Monthly Revenue</CardDescription>
-            <CardTitle className="text-3xl">{formatCurrency(stats.totalRevenue)}</CardTitle>
+            <CardTitle className="text-3xl">
+              {formatCurrency(stats.totalRevenue)}
+            </CardTitle>
           </CardHeader>
         </Card>
       </div>
 
       {/* Search */}
       <div className="flex items-center gap-4">
-        <div className="relative flex-1 max-w-md">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+        <div className="relative max-w-md flex-1">
+          <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
           <Input
             placeholder="Search properties..."
             value={searchQuery}
@@ -224,7 +244,7 @@ export default function PropertiesPage() {
       {filteredProperties.length === 0 && (
         <Card className="py-12">
           <CardContent className="text-center">
-            <Building2 className="mx-auto h-12 w-12 text-muted-foreground" />
+            <Building2 className="text-muted-foreground mx-auto h-12 w-12" />
             <h3 className="mt-4 text-lg font-medium">No properties found</h3>
             <p className="text-muted-foreground">
               {searchQuery

@@ -28,7 +28,12 @@ import {
 import { Button } from "@havenspace/shared/ui";
 import { Input } from "@havenspace/shared/ui";
 import { Badge } from "@havenspace/shared/ui";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@havenspace/shared/ui";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@havenspace/shared/ui";
 import {
   Select,
   SelectContent,
@@ -235,7 +240,9 @@ export default function HistoryPage() {
     .reduce((sum, p) => sum + p.amount, 0);
 
   const totalRefunds = Math.abs(
-    mockPaymentHistory.filter((p) => p.amount < 0).reduce((sum, p) => sum + p.amount, 0)
+    mockPaymentHistory
+      .filter((p) => p.amount < 0)
+      .reduce((sum, p) => sum + p.amount, 0)
   );
 
   const formatTimeAgo = (timestamp: string) => {
@@ -282,40 +289,44 @@ export default function HistoryPage() {
       <div className="grid gap-4 md:grid-cols-4">
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
+            <CardTitle className="text-muted-foreground text-sm font-medium">
               Total Stays
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{mockBookingHistory.length}</div>
-            <p className="text-xs text-muted-foreground">Completed bookings</p>
+            <div className="text-2xl font-bold">
+              {mockBookingHistory.length}
+            </div>
+            <p className="text-muted-foreground text-xs">Completed bookings</p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
+            <CardTitle className="text-muted-foreground text-sm font-medium">
               Total Months
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">16</div>
-            <p className="text-xs text-muted-foreground">Time as boarder</p>
+            <p className="text-muted-foreground text-xs">Time as boarder</p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
+            <CardTitle className="text-muted-foreground text-sm font-medium">
               Total Spent
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{formatCurrency(totalSpent)}</div>
-            <p className="text-xs text-muted-foreground">All time payments</p>
+            <div className="text-2xl font-bold">
+              {formatCurrency(totalSpent)}
+            </div>
+            <p className="text-muted-foreground text-xs">All time payments</p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
+            <CardTitle className="text-muted-foreground text-sm font-medium">
               Refunds
             </CardTitle>
           </CardHeader>
@@ -323,7 +334,7 @@ export default function HistoryPage() {
             <div className="text-2xl font-bold text-green-600">
               {formatCurrency(totalRefunds)}
             </div>
-            <p className="text-xs text-muted-foreground">Deposit refunds</p>
+            <p className="text-muted-foreground text-xs">Deposit refunds</p>
           </CardContent>
         </Card>
       </div>
@@ -339,12 +350,12 @@ export default function HistoryPage() {
 
           <div className="flex gap-2">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+              <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
               <Input
                 placeholder="Search..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 w-[200px]"
+                className="w-[200px] pl-10"
               />
             </div>
             <Select value={yearFilter} onValueChange={setYearFilter}>
@@ -367,9 +378,9 @@ export default function HistoryPage() {
           {filteredBookings.length === 0 ? (
             <Card>
               <CardContent className="flex flex-col items-center justify-center py-12">
-                <Clock className="h-12 w-12 text-muted-foreground mb-4" />
+                <Clock className="text-muted-foreground mb-4 h-12 w-12" />
                 <h3 className="text-lg font-semibold">No booking history</h3>
-                <p className="text-muted-foreground text-center mt-2">
+                <p className="text-muted-foreground mt-2 text-center">
                   Your completed bookings will appear here.
                 </p>
               </CardContent>
@@ -378,16 +389,16 @@ export default function HistoryPage() {
             filteredBookings.map((booking) => (
               <Card key={booking.id} className="overflow-hidden">
                 <div className="flex flex-col sm:flex-row">
-                  <div className="h-32 sm:h-auto sm:w-48 bg-muted flex items-center justify-center flex-shrink-0">
-                    <Home className="h-10 w-10 text-muted-foreground" />
+                  <div className="bg-muted flex h-32 flex-shrink-0 items-center justify-center sm:h-auto sm:w-48">
+                    <Home className="text-muted-foreground h-10 w-10" />
                   </div>
                   <CardContent className="flex-1 p-4">
                     <div className="flex items-start justify-between gap-2">
                       <div>
-                        <h3 className="font-semibold text-lg">
+                        <h3 className="text-lg font-semibold">
                           {booking.propertyName}
                         </h3>
-                        <p className="text-sm text-muted-foreground flex items-center gap-1">
+                        <p className="text-muted-foreground flex items-center gap-1 text-sm">
                           <MapPin className="h-3 w-3" />
                           {booking.location}
                         </p>
@@ -400,7 +411,7 @@ export default function HistoryPage() {
                       )}
                     </div>
 
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-4 text-sm">
+                    <div className="mt-4 grid grid-cols-2 gap-4 text-sm sm:grid-cols-4">
                       <div>
                         <p className="text-muted-foreground">Duration</p>
                         <p className="font-medium">{booking.duration}</p>
@@ -423,24 +434,27 @@ export default function HistoryPage() {
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-2 mt-4 text-sm text-muted-foreground">
+                    <div className="text-muted-foreground mt-4 flex items-center gap-2 text-sm">
                       <Calendar className="h-4 w-4" />
-                      {formatDate(booking.checkIn)} - {formatDate(booking.checkOut)}
+                      {formatDate(booking.checkIn)} -{" "}
+                      {formatDate(booking.checkOut)}
                     </div>
 
                     {booking.review && (
-                      <div className="mt-4 p-3 bg-muted/50 rounded-lg">
-                        <p className="text-sm italic">&quot;{booking.review}&quot;</p>
+                      <div className="bg-muted/50 mt-4 rounded-lg p-3">
+                        <p className="text-sm italic">
+                          &quot;{booking.review}&quot;
+                        </p>
                       </div>
                     )}
 
-                    <div className="flex items-center gap-2 mt-4">
+                    <div className="mt-4 flex items-center gap-2">
                       <Button
                         variant="outline"
                         size="sm"
                         onClick={() => setSelectedBooking(booking.id)}
                       >
-                        <Eye className="h-4 w-4 mr-1" />
+                        <Eye className="mr-1 h-4 w-4" />
                         View Details
                       </Button>
                       {!booking.review && (
@@ -452,13 +466,13 @@ export default function HistoryPage() {
                             setShowRatingDialog(true);
                           }}
                         >
-                          <Star className="h-4 w-4 mr-1" />
+                          <Star className="mr-1 h-4 w-4" />
                           Leave Review
                         </Button>
                       )}
                       <Button variant="outline" size="sm" asChild>
                         <Link href={`/browse?similar=${booking.id}`}>
-                          <ChevronRight className="h-4 w-4 mr-1" />
+                          <ChevronRight className="mr-1 h-4 w-4" />
                           Book Again
                         </Link>
                       </Button>
@@ -474,27 +488,27 @@ export default function HistoryPage() {
         <TabsContent value="payments">
           <Card>
             <CardContent className="pt-6">
-              <div className="rounded-lg border overflow-hidden">
+              <div className="overflow-hidden rounded-lg border">
                 <div className="overflow-x-auto">
                   <table className="w-full">
                     <thead className="bg-muted/50">
                       <tr>
-                        <th className="text-left p-4 font-medium text-sm">
+                        <th className="p-4 text-left text-sm font-medium">
                           Transaction
                         </th>
-                        <th className="text-left p-4 font-medium text-sm">
+                        <th className="p-4 text-left text-sm font-medium">
                           Property
                         </th>
-                        <th className="text-left p-4 font-medium text-sm">
+                        <th className="p-4 text-left text-sm font-medium">
                           Period
                         </th>
-                        <th className="text-left p-4 font-medium text-sm">
+                        <th className="p-4 text-left text-sm font-medium">
                           Amount
                         </th>
-                        <th className="text-left p-4 font-medium text-sm">
+                        <th className="p-4 text-left text-sm font-medium">
                           Method
                         </th>
-                        <th className="text-left p-4 font-medium text-sm">
+                        <th className="p-4 text-left text-sm font-medium">
                           Date
                         </th>
                       </tr>
@@ -504,7 +518,7 @@ export default function HistoryPage() {
                         <tr key={payment.id} className="hover:bg-muted/30">
                           <td className="p-4">
                             <p className="font-medium">{payment.id}</p>
-                            <p className="text-sm text-muted-foreground capitalize">
+                            <p className="text-muted-foreground text-sm capitalize">
                               {payment.type}
                             </p>
                           </td>
@@ -517,9 +531,7 @@ export default function HistoryPage() {
                           <td className="p-4">
                             <p
                               className={`font-semibold ${
-                                payment.amount < 0
-                                  ? "text-green-600"
-                                  : ""
+                                payment.amount < 0 ? "text-green-600" : ""
                               }`}
                             >
                               {payment.amount < 0 ? "+" : ""}
@@ -557,20 +569,20 @@ export default function HistoryPage() {
                   <div key={activity.id} className="flex gap-4">
                     <div className="relative">
                       <div
-                        className={`p-2 rounded-full bg-muted ${activity.iconColor}`}
+                        className={`bg-muted rounded-full p-2 ${activity.iconColor}`}
                       >
                         <activity.icon className="h-4 w-4" />
                       </div>
                       {index !== mockActivityLog.length - 1 && (
-                        <div className="absolute left-1/2 top-10 h-full w-px bg-border -translate-x-1/2" />
+                        <div className="bg-border absolute top-10 left-1/2 h-full w-px -translate-x-1/2" />
                       )}
                     </div>
                     <div className="flex-1 pb-4">
                       <p className="font-medium">{activity.title}</p>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-muted-foreground text-sm">
                         {activity.description}
                       </p>
-                      <p className="text-xs text-muted-foreground mt-1">
+                      <p className="text-muted-foreground mt-1 text-xs">
                         {formatTimeAgo(activity.timestamp)}
                       </p>
                     </div>
@@ -592,49 +604,61 @@ export default function HistoryPage() {
             <>
               <DialogHeader>
                 <DialogTitle>{selectedBookingData.propertyName}</DialogTitle>
-                <DialogDescription>Booking #{selectedBookingData.id}</DialogDescription>
+                <DialogDescription>
+                  Booking #{selectedBookingData.id}
+                </DialogDescription>
               </DialogHeader>
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <p className="text-sm text-muted-foreground">Location</p>
-                    <p className="font-medium">{selectedBookingData.location}</p>
+                    <p className="text-muted-foreground text-sm">Location</p>
+                    <p className="font-medium">
+                      {selectedBookingData.location}
+                    </p>
                   </div>
                   <div>
-                    <p className="text-sm text-muted-foreground">Room Type</p>
-                    <p className="font-medium">{selectedBookingData.roomType}</p>
+                    <p className="text-muted-foreground text-sm">Room Type</p>
+                    <p className="font-medium">
+                      {selectedBookingData.roomType}
+                    </p>
                   </div>
                   <div>
-                    <p className="text-sm text-muted-foreground">Landlord</p>
-                    <p className="font-medium">{selectedBookingData.landlord}</p>
+                    <p className="text-muted-foreground text-sm">Landlord</p>
+                    <p className="font-medium">
+                      {selectedBookingData.landlord}
+                    </p>
                   </div>
                   <div>
-                    <p className="text-sm text-muted-foreground">Duration</p>
-                    <p className="font-medium">{selectedBookingData.duration}</p>
+                    <p className="text-muted-foreground text-sm">Duration</p>
+                    <p className="font-medium">
+                      {selectedBookingData.duration}
+                    </p>
                   </div>
                 </div>
                 <Separator />
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <p className="text-sm text-muted-foreground">Check-in</p>
+                    <p className="text-muted-foreground text-sm">Check-in</p>
                     <p className="font-medium">
                       {formatDate(selectedBookingData.checkIn)}
                     </p>
                   </div>
                   <div>
-                    <p className="text-sm text-muted-foreground">Check-out</p>
+                    <p className="text-muted-foreground text-sm">Check-out</p>
                     <p className="font-medium">
                       {formatDate(selectedBookingData.checkOut)}
                     </p>
                   </div>
                   <div>
-                    <p className="text-sm text-muted-foreground">Monthly Rate</p>
+                    <p className="text-muted-foreground text-sm">
+                      Monthly Rate
+                    </p>
                     <p className="font-medium">
                       {formatCurrency(selectedBookingData.monthlyRate)}
                     </p>
                   </div>
                   <div>
-                    <p className="text-sm text-muted-foreground">Total Paid</p>
+                    <p className="text-muted-foreground text-sm">Total Paid</p>
                     <p className="font-medium text-green-600">
                       {formatCurrency(selectedBookingData.totalPaid)}
                     </p>
@@ -644,10 +668,10 @@ export default function HistoryPage() {
                   <>
                     <Separator />
                     <div>
-                      <p className="text-sm text-muted-foreground mb-2">
+                      <p className="text-muted-foreground mb-2 text-sm">
                         Your Review
                       </p>
-                      <div className="flex items-center gap-2 mb-2">
+                      <div className="mb-2 flex items-center gap-2">
                         {Array.from({ length: 5 }).map((_, i) => (
                           <Star
                             key={i}

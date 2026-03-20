@@ -36,13 +36,21 @@ import {
   SelectValue,
 } from "@havenspace/shared/ui";
 import { useProperty } from "@/lib/property-context";
-import { mockTenants, mockRooms, getTenantsByProperty, getRoomsByProperty } from "@/lib/mock-data";
+import {
+  mockTenants,
+  mockRooms,
+  getTenantsByProperty,
+  getRoomsByProperty,
+} from "@/lib/mock-data";
 import { formatCurrency } from "@/lib/utils";
 import { useToast } from "@havenspace/shared/ui";
 
 const paymentSchema = z.object({
   tenantId: z.string().min(1, "Please select a tenant"),
-  amount: z.preprocess((val) => (val === "" || val === undefined ? 0 : Number(val)), z.number().min(1, "Amount must be greater than 0")),
+  amount: z.preprocess(
+    (val) => (val === "" || val === undefined ? 0 : Number(val)),
+    z.number().min(1, "Amount must be greater than 0")
+  ),
   type: z.enum(["RENT", "UTILITY", "DEPOSIT", "OTHER"]),
   dueDate: z.string().min(1, "Due date is required"),
   description: z.string().optional(),
@@ -84,7 +92,9 @@ export default function NewPaymentPage() {
     watch,
     formState: { errors },
   } = useForm<PaymentFormData>({
-    resolver: zodResolver(paymentSchema) as unknown as Resolver<PaymentFormData>,
+    resolver: zodResolver(
+      paymentSchema
+    ) as unknown as Resolver<PaymentFormData>,
     defaultValues: {
       tenantId: tenantIdParam || "",
       amount: 0,
@@ -120,7 +130,9 @@ export default function NewPaymentPage() {
       roomNumber: room?.roomNumber || "N/A",
       status: markAsPaid ? "PAID" : "PENDING",
       paidDate: markAsPaid ? new Date().toISOString() : undefined,
-      receiptNumber: markAsPaid ? `RCP-${Date.now().toString().slice(-8)}` : undefined,
+      receiptNumber: markAsPaid
+        ? `RCP-${Date.now().toString().slice(-8)}`
+        : undefined,
       createdAt: new Date().toISOString(),
     };
 
@@ -146,7 +158,9 @@ export default function NewPaymentPage() {
     const type = watch("type") || "RENT";
 
     return {
-      tenant: tenant ? `${tenant.firstName} ${tenant.lastName}` : "Select a tenant",
+      tenant: tenant
+        ? `${tenant.firstName} ${tenant.lastName}`
+        : "Select a tenant",
       room: tenantRoom?.roomNumber || "N/A",
       amount: formatCurrency(Number(amount)),
       type,
@@ -185,7 +199,7 @@ export default function NewPaymentPage() {
 
       <div className="grid gap-6 lg:grid-cols-3">
         {/* Main Form */}
-        <div className="lg:col-span-2 space-y-6">
+        <div className="space-y-6 lg:col-span-2">
           {/* Payment Details */}
           <Card>
             <CardHeader>
@@ -193,9 +207,7 @@ export default function NewPaymentPage() {
                 <CreditCard className="h-5 w-5" />
                 Payment Details
               </CardTitle>
-              <CardDescription>
-                Enter the payment information
-              </CardDescription>
+              <CardDescription>Enter the payment information</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid gap-4 sm:grid-cols-2">
@@ -224,7 +236,9 @@ export default function NewPaymentPage() {
                     </SelectContent>
                   </Select>
                   {errors.tenantId && (
-                    <p className="text-sm text-destructive">{errors.tenantId.message}</p>
+                    <p className="text-destructive text-sm">
+                      {errors.tenantId.message}
+                    </p>
                   )}
                 </div>
 
@@ -232,7 +246,9 @@ export default function NewPaymentPage() {
                   <Label htmlFor="type">Payment Type *</Label>
                   <Select
                     value={paymentType}
-                    onValueChange={(value: "RENT" | "UTILITY" | "DEPOSIT" | "OTHER") => {
+                    onValueChange={(
+                      value: "RENT" | "UTILITY" | "DEPOSIT" | "OTHER"
+                    ) => {
                       setValue("type", value);
                     }}
                   >
@@ -260,24 +276,26 @@ export default function NewPaymentPage() {
                     {...register("amount")}
                   />
                   {errors.amount && (
-                    <p className="text-sm text-destructive">{errors.amount.message}</p>
+                    <p className="text-destructive text-sm">
+                      {errors.amount.message}
+                    </p>
                   )}
                   {selectedTenant && paymentType === "RENT" && (
-                    <p className="text-xs text-muted-foreground">
-                      Suggested: {formatCurrency(selectedTenant.monthlyRent ?? 0)} (monthly rent)
+                    <p className="text-muted-foreground text-xs">
+                      Suggested:{" "}
+                      {formatCurrency(selectedTenant.monthlyRent ?? 0)} (monthly
+                      rent)
                     </p>
                   )}
                 </div>
 
                 <div className="space-y-2">
                   <Label htmlFor="dueDate">Due Date *</Label>
-                  <Input
-                    id="dueDate"
-                    type="date"
-                    {...register("dueDate")}
-                  />
+                  <Input id="dueDate" type="date" {...register("dueDate")} />
                   {errors.dueDate && (
-                    <p className="text-sm text-destructive">{errors.dueDate.message}</p>
+                    <p className="text-destructive text-sm">
+                      {errors.dueDate.message}
+                    </p>
                   )}
                 </div>
               </div>
@@ -287,7 +305,7 @@ export default function NewPaymentPage() {
                 <textarea
                   id="description"
                   {...register("description")}
-                  className="min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                  className="border-input bg-background min-h-[80px] w-full rounded-md border px-3 py-2 text-sm"
                   placeholder="Additional notes about this payment..."
                 />
               </div>
@@ -303,7 +321,7 @@ export default function NewPaymentPage() {
               <div className="flex items-center justify-between rounded-lg border p-4">
                 <div>
                   <p className="font-medium">Mark as Paid</p>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-muted-foreground text-sm">
                     Record this as a completed payment with a receipt
                   </p>
                 </div>
@@ -314,7 +332,7 @@ export default function NewPaymentPage() {
                     onChange={(e) => setMarkAsPaid(e.target.checked)}
                     className="peer sr-only"
                   />
-                  <div className="peer h-6 w-11 rounded-full bg-gray-200 after:absolute after:left-[2px] after:top-0.5 after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-primary peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:ring-4 peer-focus:ring-primary/20 dark:border-gray-600 dark:bg-gray-700"></div>
+                  <div className="peer peer-checked:bg-primary peer-focus:ring-primary/20 h-6 w-11 rounded-full bg-gray-200 peer-focus:ring-4 after:absolute after:top-0.5 after:left-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:after:translate-x-full peer-checked:after:border-white dark:border-gray-600 dark:bg-gray-700"></div>
                 </label>
               </div>
 
@@ -322,7 +340,9 @@ export default function NewPaymentPage() {
                 <div className="space-y-2">
                   <Label>Payment Method</Label>
                   <Select
-                    onValueChange={(value: "CASH" | "BANK_TRANSFER" | "GCASH" | "OTHER") => {
+                    onValueChange={(
+                      value: "CASH" | "BANK_TRANSFER" | "GCASH" | "OTHER"
+                    ) => {
                       setValue("paymentMethod", value);
                     }}
                   >
@@ -331,7 +351,9 @@ export default function NewPaymentPage() {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem value="CASH">Cash</SelectItem>
-                      <SelectItem value="BANK_TRANSFER">Bank Transfer</SelectItem>
+                      <SelectItem value="BANK_TRANSFER">
+                        Bank Transfer
+                      </SelectItem>
                       <SelectItem value="GCASH">GCash</SelectItem>
                       <SelectItem value="OTHER">Other</SelectItem>
                     </SelectContent>
@@ -353,10 +375,12 @@ export default function NewPaymentPage() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="rounded-lg border bg-muted/30 p-4 space-y-3">
-                <div className="text-center border-b pb-3">
+              <div className="bg-muted/30 space-y-3 rounded-lg border p-4">
+                <div className="border-b pb-3 text-center">
                   <h3 className="font-semibold">Haven Space Payment Receipt</h3>
-                  <p className="text-xs text-muted-foreground">{preview.date}</p>
+                  <p className="text-muted-foreground text-xs">
+                    {preview.date}
+                  </p>
                 </div>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between">
@@ -373,12 +397,12 @@ export default function NewPaymentPage() {
                   </div>
                 </div>
                 <div className="border-t pt-3">
-                  <div className="flex justify-between items-center">
+                  <div className="flex items-center justify-between">
                     <span className="font-medium">Amount:</span>
                     <span className="text-xl font-bold">{preview.amount}</span>
                   </div>
                 </div>
-                <div className="text-center pt-2">
+                <div className="pt-2 text-center">
                   <Badge variant={markAsPaid ? "default" : "secondary"}>
                     {markAsPaid ? "PAID" : "PENDING"}
                   </Badge>
@@ -398,26 +422,28 @@ export default function NewPaymentPage() {
               </CardHeader>
               <CardContent className="space-y-3">
                 <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
-                    <User className="h-5 w-5 text-primary" />
+                  <div className="bg-primary/10 flex h-10 w-10 items-center justify-center rounded-full">
+                    <User className="text-primary h-5 w-5" />
                   </div>
                   <div>
                     <p className="font-medium">
                       {selectedTenant.firstName} {selectedTenant.lastName}
                     </p>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-muted-foreground text-sm">
                       {selectedTenant.email}
                     </p>
                   </div>
                 </div>
                 {tenantRoom && (
                   <div className="flex items-center gap-3">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-muted">
+                    <div className="bg-muted flex h-10 w-10 items-center justify-center rounded-lg">
                       <DoorOpen className="h-5 w-5" />
                     </div>
                     <div>
-                      <p className="font-medium">Room {tenantRoom.roomNumber}</p>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="font-medium">
+                        Room {tenantRoom.roomNumber}
+                      </p>
+                      <p className="text-muted-foreground text-sm">
                         Floor {tenantRoom.floor}
                       </p>
                     </div>
@@ -426,11 +452,19 @@ export default function NewPaymentPage() {
                 <div className="space-y-2 pt-2 text-sm">
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Monthly Rent:</span>
-                    <span>{formatCurrency(selectedTenant.monthlyRent ?? 0)}</span>
+                    <span>
+                      {formatCurrency(selectedTenant.monthlyRent ?? 0)}
+                    </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Balance:</span>
-                    <span className={selectedTenant.balance && selectedTenant.balance > 0 ? "text-red-600" : "text-green-600"}>
+                    <span
+                      className={
+                        selectedTenant.balance && selectedTenant.balance > 0
+                          ? "text-red-600"
+                          : "text-green-600"
+                      }
+                    >
                       {formatCurrency(selectedTenant.balance ?? 0)}
                     </span>
                   </div>
@@ -445,13 +479,21 @@ export default function NewPaymentPage() {
               <CardTitle>Quick Actions</CardTitle>
             </CardHeader>
             <CardContent className="space-y-2">
-              <Button variant="outline" className="w-full justify-start" asChild>
+              <Button
+                variant="outline"
+                className="w-full justify-start"
+                asChild
+              >
                 <Link href="/tenants">
                   <User className="mr-2 h-4 w-4" />
                   View All Tenants
                 </Link>
               </Button>
-              <Button variant="outline" className="w-full justify-start" asChild>
+              <Button
+                variant="outline"
+                className="w-full justify-start"
+                asChild
+              >
                 <Link href="/payments">
                   <Calendar className="mr-2 h-4 w-4" />
                   View All Payments

@@ -58,9 +58,21 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { cn, formatDate, formatCurrency, getInitials, getRelativeTime, formatDateTime } from "@/lib/utils";
+import {
+  cn,
+  formatDate,
+  formatCurrency,
+  getInitials,
+  getRelativeTime,
+  formatDateTime,
+} from "@/lib/utils";
 
-type BookingStatus = "pending" | "confirmed" | "active" | "completed" | "cancelled";
+type BookingStatus =
+  | "pending"
+  | "confirmed"
+  | "active"
+  | "completed"
+  | "cancelled";
 
 interface BookingData {
   id: string;
@@ -229,7 +241,8 @@ const mockBookings: BookingData[] = [
 ];
 
 const statusColors: Record<BookingStatus, string> = {
-  pending: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300",
+  pending:
+    "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300",
   confirmed: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300",
   active: "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300",
   completed: "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-300",
@@ -238,11 +251,15 @@ const statusColors: Record<BookingStatus, string> = {
 
 const paymentStatusColors: Record<string, string> = {
   paid: "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300",
-  pending: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300",
+  pending:
+    "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300",
   overdue: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300",
 };
 
-const statusIcons: Record<BookingStatus, React.ComponentType<{ className?: string }>> = {
+const statusIcons: Record<
+  BookingStatus,
+  React.ComponentType<{ className?: string }>
+> = {
   pending: Clock,
   confirmed: CalendarCheck,
   active: CheckCircle,
@@ -253,7 +270,8 @@ const statusIcons: Record<BookingStatus, React.ComponentType<{ className?: strin
 export default function BookingsPage() {
   const [filter, setFilter] = React.useState<"all" | BookingStatus>("all");
   const [searchQuery, setSearchQuery] = React.useState("");
-  const [selectedBooking, setSelectedBooking] = React.useState<BookingData | null>(null);
+  const [selectedBooking, setSelectedBooking] =
+    React.useState<BookingData | null>(null);
 
   const filteredBookings = mockBookings.filter((booking) => {
     const matchesFilter = filter === "all" || booking.status === filter;
@@ -278,7 +296,9 @@ export default function BookingsPage() {
       {/* Page Header */}
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Bookings Overview</h1>
+          <h1 className="text-3xl font-bold tracking-tight">
+            Bookings Overview
+          </h1>
           <p className="text-muted-foreground">
             Monitor all bookings across the platform
           </p>
@@ -293,8 +313,10 @@ export default function BookingsPage() {
       <div className="grid gap-4 md:grid-cols-5">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Bookings</CardTitle>
-            <Calendar className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium">
+              Total Bookings
+            </CardTitle>
+            <Calendar className="text-muted-foreground h-4 w-4" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{bookingCounts.all}</div>
@@ -342,7 +364,10 @@ export default function BookingsPage() {
       <Card>
         <CardHeader>
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-            <Tabs value={filter} onValueChange={(v) => setFilter(v as typeof filter)}>
+            <Tabs
+              value={filter}
+              onValueChange={(v) => setFilter(v as typeof filter)}
+            >
               <TabsList>
                 <TabsTrigger value="all">All</TabsTrigger>
                 <TabsTrigger value="pending">Pending</TabsTrigger>
@@ -353,7 +378,7 @@ export default function BookingsPage() {
               </TabsList>
             </Tabs>
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+              <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
               <Input
                 placeholder="Search bookings..."
                 className="w-full pl-9 md:w-72"
@@ -401,8 +426,10 @@ export default function BookingsPage() {
                             </AvatarFallback>
                           </Avatar>
                           <div>
-                            <p className="font-medium text-sm">{booking.boarder.name}</p>
-                            <p className="text-xs text-muted-foreground">
+                            <p className="text-sm font-medium">
+                              {booking.boarder.name}
+                            </p>
+                            <p className="text-muted-foreground text-xs">
                               {booking.boarder.email}
                             </p>
                           </div>
@@ -410,10 +437,10 @@ export default function BookingsPage() {
                       </TableCell>
                       <TableCell>
                         <div>
-                          <p className="font-medium text-sm line-clamp-1">
+                          <p className="line-clamp-1 text-sm font-medium">
                             {booking.listing.title}
                           </p>
-                          <p className="text-xs text-muted-foreground">
+                          <p className="text-muted-foreground text-xs">
                             {booking.listing.landlord}
                           </p>
                         </div>
@@ -423,17 +450,27 @@ export default function BookingsPage() {
                         {formatCurrency(booking.monthlyRent)}
                       </TableCell>
                       <TableCell>
-                        <Badge className={cn("text-xs", statusColors[booking.status])}>
+                        <Badge
+                          className={cn(
+                            "text-xs",
+                            statusColors[booking.status]
+                          )}
+                        >
                           <StatusIcon className="mr-1 h-3 w-3" />
                           {booking.status}
                         </Badge>
                       </TableCell>
                       <TableCell>
-                        <Badge className={cn("text-xs", paymentStatusColors[booking.paymentStatus])}>
+                        <Badge
+                          className={cn(
+                            "text-xs",
+                            paymentStatusColors[booking.paymentStatus]
+                          )}
+                        >
                           {booking.paymentStatus}
                         </Badge>
                       </TableCell>
-                      <TableCell className="text-sm text-muted-foreground">
+                      <TableCell className="text-muted-foreground text-sm">
                         {formatDate(booking.startDate)}
                       </TableCell>
                       <TableCell className="text-right">
@@ -474,14 +511,18 @@ export default function BookingsPage() {
                   <Badge className={cn(statusColors[selectedBooking.status])}>
                     {selectedBooking.status}
                   </Badge>
-                  <Badge className={cn(paymentStatusColors[selectedBooking.paymentStatus])}>
+                  <Badge
+                    className={cn(
+                      paymentStatusColors[selectedBooking.paymentStatus]
+                    )}
+                  >
                     Payment: {selectedBooking.paymentStatus}
                   </Badge>
                 </div>
 
                 {/* Boarder Info */}
                 <div>
-                  <h4 className="font-semibold mb-2 flex items-center gap-2">
+                  <h4 className="mb-2 flex items-center gap-2 font-semibold">
                     <User className="h-4 w-4" />
                     Boarder Information
                   </h4>
@@ -493,11 +534,13 @@ export default function BookingsPage() {
                         </AvatarFallback>
                       </Avatar>
                       <div>
-                        <p className="font-medium">{selectedBooking.boarder.name}</p>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="font-medium">
+                          {selectedBooking.boarder.name}
+                        </p>
+                        <p className="text-muted-foreground text-sm">
                           {selectedBooking.boarder.email}
                         </p>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-muted-foreground text-sm">
                           {selectedBooking.boarder.phone}
                         </p>
                       </div>
@@ -507,16 +550,18 @@ export default function BookingsPage() {
 
                 {/* Listing Info */}
                 <div>
-                  <h4 className="font-semibold mb-2 flex items-center gap-2">
+                  <h4 className="mb-2 flex items-center gap-2 font-semibold">
                     <Building2 className="h-4 w-4" />
                     Listing Information
                   </h4>
-                  <div className="rounded-lg border p-4 space-y-2">
-                    <p className="font-medium">{selectedBooking.listing.title}</p>
-                    <p className="text-sm text-muted-foreground">
+                  <div className="space-y-2 rounded-lg border p-4">
+                    <p className="font-medium">
+                      {selectedBooking.listing.title}
+                    </p>
+                    <p className="text-muted-foreground text-sm">
                       {selectedBooking.listing.address}
                     </p>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-muted-foreground text-sm">
                       Landlord: {selectedBooking.listing.landlord}
                     </p>
                   </div>
@@ -525,19 +570,25 @@ export default function BookingsPage() {
                 {/* Booking Details */}
                 <div className="grid gap-4 md:grid-cols-2">
                   <div className="rounded-lg border p-4">
-                    <p className="text-sm text-muted-foreground">Room</p>
+                    <p className="text-muted-foreground text-sm">Room</p>
                     <p className="font-medium">{selectedBooking.room}</p>
                   </div>
                   <div className="rounded-lg border p-4">
-                    <p className="text-sm text-muted-foreground">Monthly Rent</p>
-                    <p className="font-medium">{formatCurrency(selectedBooking.monthlyRent)}</p>
+                    <p className="text-muted-foreground text-sm">
+                      Monthly Rent
+                    </p>
+                    <p className="font-medium">
+                      {formatCurrency(selectedBooking.monthlyRent)}
+                    </p>
                   </div>
                   <div className="rounded-lg border p-4">
-                    <p className="text-sm text-muted-foreground">Start Date</p>
-                    <p className="font-medium">{formatDate(selectedBooking.startDate)}</p>
+                    <p className="text-muted-foreground text-sm">Start Date</p>
+                    <p className="font-medium">
+                      {formatDate(selectedBooking.startDate)}
+                    </p>
                   </div>
                   <div className="rounded-lg border p-4">
-                    <p className="text-sm text-muted-foreground">End Date</p>
+                    <p className="text-muted-foreground text-sm">End Date</p>
                     <p className="font-medium">
                       {selectedBooking.endDate
                         ? formatDate(selectedBooking.endDate)
@@ -547,12 +598,15 @@ export default function BookingsPage() {
                 </div>
 
                 {/* Created */}
-                <div className="text-sm text-muted-foreground">
+                <div className="text-muted-foreground text-sm">
                   <p>Created: {formatDateTime(selectedBooking.createdAt)}</p>
                 </div>
               </div>
               <DialogFooter>
-                <Button variant="outline" onClick={() => setSelectedBooking(null)}>
+                <Button
+                  variant="outline"
+                  onClick={() => setSelectedBooking(null)}
+                >
                   Close
                 </Button>
               </DialogFooter>

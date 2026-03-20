@@ -16,7 +16,12 @@ import {
   MapPin,
   Bell,
 } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@havenspace/shared/ui";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@havenspace/shared/ui";
 import { Button } from "@havenspace/shared/ui";
 import { Badge } from "@havenspace/shared/ui";
 import { formatCurrency } from "@/lib/utils";
@@ -203,7 +208,7 @@ export default function DashboardPage() {
         {stats.map((stat) => (
           <Card key={stat.title}>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium text-muted-foreground">
+              <CardTitle className="text-muted-foreground text-sm font-medium">
                 {stat.title}
               </CardTitle>
               <div className={`${stat.bgColor} ${stat.color} rounded-full p-2`}>
@@ -212,7 +217,9 @@ export default function DashboardPage() {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{stat.value}</div>
-              <p className="text-xs text-muted-foreground">{stat.description}</p>
+              <p className="text-muted-foreground text-xs">
+                {stat.description}
+              </p>
             </CardContent>
           </Card>
         ))}
@@ -239,25 +246,29 @@ export default function DashboardPage() {
                 key={booking.id}
                 className="flex items-center gap-4 rounded-lg border p-4"
               >
-                <div className="h-16 w-16 rounded-lg bg-muted flex items-center justify-center">
-                  <Home className="h-8 w-8 text-muted-foreground" />
+                <div className="bg-muted flex h-16 w-16 items-center justify-center rounded-lg">
+                  <Home className="text-muted-foreground h-8 w-8" />
                 </div>
-                <div className="flex-1 min-w-0">
+                <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2">
-                    <h4 className="font-semibold truncate">{booking.propertyName}</h4>
+                    <h4 className="truncate font-semibold">
+                      {booking.propertyName}
+                    </h4>
                     {getStatusBadge(booking.status)}
                   </div>
-                  <p className="text-sm text-muted-foreground flex items-center gap-1">
+                  <p className="text-muted-foreground flex items-center gap-1 text-sm">
                     <MapPin className="h-3 w-3" />
                     {booking.location}
                   </p>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-muted-foreground text-sm">
                     Check-in: {booking.checkIn}
                   </p>
                 </div>
                 <div className="text-right">
-                  <p className="font-semibold">{formatCurrency(booking.monthlyRate)}</p>
-                  <p className="text-xs text-muted-foreground">/month</p>
+                  <p className="font-semibold">
+                    {formatCurrency(booking.monthlyRate)}
+                  </p>
+                  <p className="text-muted-foreground text-xs">/month</p>
                 </div>
               </div>
             ))}
@@ -284,22 +295,22 @@ export default function DashboardPage() {
                 className="flex items-center justify-between rounded-lg border p-3"
               >
                 <div>
-                  <p className="font-medium text-sm">{payment.property}</p>
-                  <p className="text-xs text-muted-foreground flex items-center gap-1">
+                  <p className="text-sm font-medium">{payment.property}</p>
+                  <p className="text-muted-foreground flex items-center gap-1 text-xs">
                     <Clock className="h-3 w-3" />
                     Due: {payment.dueDate}
                   </p>
                 </div>
                 <div className="text-right">
-                  <p className="font-semibold">{formatCurrency(payment.amount)}</p>
+                  <p className="font-semibold">
+                    {formatCurrency(payment.amount)}
+                  </p>
                   {getStatusBadge(payment.status)}
                 </div>
               </div>
             ))}
             <Button className="w-full" variant="outline" asChild>
-              <Link href="/payments">
-                Pay Now
-              </Link>
+              <Link href="/payments">Pay Now</Link>
             </Button>
           </CardContent>
         </Card>
@@ -326,22 +337,24 @@ export default function DashboardPage() {
                 <Link
                   key={listing.id}
                   href={`/browse/${listing.id}`}
-                  className="group rounded-lg border overflow-hidden hover:shadow-md transition-shadow"
+                  className="group overflow-hidden rounded-lg border transition-shadow hover:shadow-md"
                 >
-                  <div className="h-24 bg-muted flex items-center justify-center">
-                    <Home className="h-8 w-8 text-muted-foreground group-hover:scale-110 transition-transform" />
+                  <div className="bg-muted flex h-24 items-center justify-center">
+                    <Home className="text-muted-foreground h-8 w-8 transition-transform group-hover:scale-110" />
                   </div>
                   <div className="p-3">
-                    <h4 className="font-medium text-sm truncate">{listing.name}</h4>
-                    <p className="text-xs text-muted-foreground flex items-center gap-1">
+                    <h4 className="truncate text-sm font-medium">
+                      {listing.name}
+                    </h4>
+                    <p className="text-muted-foreground flex items-center gap-1 text-xs">
                       <MapPin className="h-3 w-3" />
                       {listing.location}
                     </p>
-                    <div className="flex items-center justify-between mt-2">
-                      <span className="font-semibold text-sm">
+                    <div className="mt-2 flex items-center justify-between">
+                      <span className="text-sm font-semibold">
                         {formatCurrency(listing.price)}
                       </span>
-                      <span className="text-xs flex items-center gap-1">
+                      <span className="flex items-center gap-1 text-xs">
                         <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
                         {listing.rating}
                       </span>
@@ -371,20 +384,22 @@ export default function DashboardPage() {
               <Link
                 key={message.id}
                 href={`/messages/${message.id}`}
-                className="block rounded-lg border p-3 hover:bg-accent transition-colors"
+                className="hover:bg-accent block rounded-lg border p-3 transition-colors"
               >
                 <div className="flex items-start gap-2">
-                  <div className="flex-1 min-w-0">
+                  <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2">
-                      <p className="font-medium text-sm truncate">{message.from}</p>
+                      <p className="truncate text-sm font-medium">
+                        {message.from}
+                      </p>
                       {message.unread && (
                         <span className="h-2 w-2 rounded-full bg-blue-500" />
                       )}
                     </div>
-                    <p className="text-xs text-muted-foreground truncate">
+                    <p className="text-muted-foreground truncate text-xs">
                       {message.message}
                     </p>
-                    <p className="text-xs text-muted-foreground mt-1">
+                    <p className="text-muted-foreground mt-1 text-xs">
                       {message.time}
                     </p>
                   </div>
@@ -409,19 +424,28 @@ export default function DashboardPage() {
               </Link>
             </Button>
             <Button variant="outline" className="h-auto py-4" asChild>
-              <Link href="/profile" className="flex flex-col items-center gap-2">
+              <Link
+                href="/profile"
+                className="flex flex-col items-center gap-2"
+              >
                 <TrendingUp className="h-5 w-5" />
                 <span>Update Profile</span>
               </Link>
             </Button>
             <Button variant="outline" className="h-auto py-4" asChild>
-              <Link href="/history" className="flex flex-col items-center gap-2">
+              <Link
+                href="/history"
+                className="flex flex-col items-center gap-2"
+              >
                 <Clock className="h-5 w-5" />
                 <span>View History</span>
               </Link>
             </Button>
             <Button variant="outline" className="h-auto py-4" asChild>
-              <Link href="/settings" className="flex flex-col items-center gap-2">
+              <Link
+                href="/settings"
+                className="flex flex-col items-center gap-2"
+              >
                 <Bell className="h-5 w-5" />
                 <span>Notifications</span>
               </Link>

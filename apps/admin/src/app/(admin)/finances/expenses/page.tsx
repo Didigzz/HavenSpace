@@ -51,7 +51,11 @@ import {
 } from "@havenspace/shared/ui";
 import { Label } from "@havenspace/shared/ui";
 import { useProperty } from "@/lib/property-context";
-import { getExpensesByProperty, mockExpenses, type MockExpense } from "@/lib/mock-data";
+import {
+  getExpensesByProperty,
+  mockExpenses,
+  type MockExpense,
+} from "@/lib/mock-data";
 import { formatCurrency, formatDate, cn } from "@/lib/utils";
 import { useToast } from "@havenspace/shared/ui";
 
@@ -95,7 +99,10 @@ export default function ExpensesPage() {
     return matchesSearch && matchesCategory;
   });
 
-  const totalExpenses = filteredExpenses.reduce((sum: number, e: MockExpense) => sum + e.amount, 0);
+  const totalExpenses = filteredExpenses.reduce(
+    (sum: number, e: MockExpense) => sum + e.amount,
+    0
+  );
 
   const handleAddExpense = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -202,13 +209,17 @@ export default function ExpensesPage() {
                     <textarea
                       id="notes"
                       name="notes"
-                      className="min-h-[60px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                      className="border-input bg-background min-h-[60px] w-full rounded-md border px-3 py-2 text-sm"
                       placeholder="Additional notes..."
                     />
                   </div>
                 </div>
                 <DialogFooter>
-                  <Button type="button" variant="outline" onClick={() => setIsAddDialogOpen(false)}>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => setIsAddDialogOpen(false)}
+                  >
                     Cancel
                   </Button>
                   <Button type="submit">Add Expense</Button>
@@ -252,7 +263,9 @@ export default function ExpensesPage() {
           <CardHeader className="pb-2">
             <CardDescription>Largest Expense</CardDescription>
             <CardTitle className="text-2xl">
-              {formatCurrency(Math.max(...expenses.map((e: MockExpense) => e.amount), 0))}
+              {formatCurrency(
+                Math.max(...expenses.map((e: MockExpense) => e.amount), 0)
+              )}
             </CardTitle>
           </CardHeader>
         </Card>
@@ -268,7 +281,7 @@ export default function ExpensesPage() {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex gap-2">
           <div className="relative w-full sm:w-64">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
             <Input
               placeholder="Search expenses..."
               value={searchQuery}
@@ -300,7 +313,7 @@ export default function ExpensesPage() {
             {filteredExpenses.map((expense: MockExpense) => (
               <div
                 key={expense.id}
-                className="flex items-center justify-between p-4 hover:bg-muted/50"
+                className="hover:bg-muted/50 flex items-center justify-between p-4"
               >
                 <div className="flex items-center gap-4">
                   <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-red-100">
@@ -308,7 +321,7 @@ export default function ExpensesPage() {
                   </div>
                   <div>
                     <p className="font-medium">{expense.description}</p>
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <div className="text-muted-foreground flex items-center gap-2 text-sm">
                       <Calendar className="h-3 w-3" />
                       {formatDate(expense.date)}
                       {expense.vendor && <span>• {expense.vendor}</span>}
@@ -358,7 +371,7 @@ export default function ExpensesPage() {
       {filteredExpenses.length === 0 && (
         <Card className="py-12">
           <CardContent className="text-center">
-            <Receipt className="mx-auto h-12 w-12 text-muted-foreground" />
+            <Receipt className="text-muted-foreground mx-auto h-12 w-12" />
             <h3 className="mt-4 text-lg font-medium">No expenses found</h3>
             <p className="text-muted-foreground">
               {searchQuery || selectedCategory !== "all"

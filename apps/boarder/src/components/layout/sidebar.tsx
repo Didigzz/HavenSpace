@@ -93,15 +93,15 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
   return (
     <aside
       className={cn(
-        "relative flex h-full flex-col border-r bg-sidebar transition-all duration-300",
+        "bg-sidebar relative flex h-full flex-col border-r transition-all duration-300",
         isCollapsed ? "w-16" : "w-64"
       )}
     >
       {/* Logo */}
       <div className="flex h-16 items-center border-b px-4">
         <Link href="/dashboard" className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
-            <Home className="h-5 w-5 text-primary-foreground" />
+          <div className="bg-primary flex h-8 w-8 items-center justify-center rounded-lg">
+            <Home className="text-primary-foreground h-5 w-5" />
           </div>
           {!isCollapsed && (
             <span className="text-lg font-semibold">BoardingHouse</span>
@@ -113,7 +113,7 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
       <Button
         variant="ghost"
         size="icon"
-        className="absolute -right-3 top-20 z-10 h-6 w-6 rounded-full border bg-background shadow-sm"
+        className="bg-background absolute top-20 -right-3 z-10 h-6 w-6 rounded-full border shadow-sm"
         onClick={onToggle}
       >
         {isCollapsed ? (
@@ -127,7 +127,8 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
       <ScrollArea className="flex-1 py-4">
         <nav className="space-y-1 px-2">
           {navItems.map((item) => {
-            const isActive = pathname === item.href || pathname.startsWith(item.href + "/");
+            const isActive =
+              pathname === item.href || pathname.startsWith(item.href + "/");
             return (
               <Link
                 key={item.href}
@@ -145,7 +146,7 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
                   <>
                     <span className="flex-1">{item.title}</span>
                     {item.badge && (
-                      <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-primary px-1.5 text-xs text-primary-foreground">
+                      <span className="bg-primary text-primary-foreground flex h-5 min-w-5 items-center justify-center rounded-full px-1.5 text-xs">
                         {item.badge}
                       </span>
                     )}
@@ -181,7 +182,7 @@ export function Sidebar({ isCollapsed, onToggle }: SidebarProps) {
           })}
           <button
             className={cn(
-              "flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-destructive transition-colors hover:bg-destructive/10",
+              "text-destructive hover:bg-destructive/10 flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
               isCollapsed && "justify-center"
             )}
           >

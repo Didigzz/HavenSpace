@@ -54,7 +54,8 @@ const mockListings = [
   {
     id: "1",
     name: "Sunrise Dormitory",
-    description: "Modern dormitory with complete amenities near universities. Quiet study environment.",
+    description:
+      "Modern dormitory with complete amenities near universities. Quiet study environment.",
     location: "Sampaloc, Manila",
     price: 5500,
     rating: 4.8,
@@ -69,7 +70,8 @@ const mockListings = [
   {
     id: "2",
     name: "Green Valley Boarding House",
-    description: "Spacious rooms with private bathroom. Garden views and peaceful environment.",
+    description:
+      "Spacious rooms with private bathroom. Garden views and peaceful environment.",
     location: "Diliman, Quezon City",
     price: 6500,
     rating: 4.9,
@@ -84,7 +86,8 @@ const mockListings = [
   {
     id: "3",
     name: "Metro Residences",
-    description: "Prime location with easy access to MRT. Modern facilities and 24/7 security.",
+    description:
+      "Prime location with easy access to MRT. Modern facilities and 24/7 security.",
     location: "Cubao, Quezon City",
     price: 5000,
     rating: 4.5,
@@ -99,7 +102,8 @@ const mockListings = [
   {
     id: "4",
     name: "University Residence",
-    description: "Budget-friendly option for students. Walking distance to major universities.",
+    description:
+      "Budget-friendly option for students. Walking distance to major universities.",
     location: "España, Manila",
     price: 4500,
     rating: 4.7,
@@ -114,7 +118,8 @@ const mockListings = [
   {
     id: "5",
     name: "City Center Dorm",
-    description: "Newly renovated rooms in the heart of Makati. Perfect for young professionals.",
+    description:
+      "Newly renovated rooms in the heart of Makati. Perfect for young professionals.",
     location: "Makati City",
     price: 7000,
     rating: 4.6,
@@ -129,7 +134,8 @@ const mockListings = [
   {
     id: "6",
     name: "Cozy Student Haven",
-    description: "Affordable accommodation with study areas. Great community atmosphere.",
+    description:
+      "Affordable accommodation with study areas. Great community atmosphere.",
     location: "Taft Ave, Manila",
     price: 4000,
     rating: 4.4,
@@ -144,7 +150,8 @@ const mockListings = [
   {
     id: "7",
     name: "Premium Suites",
-    description: "Luxury furnished units with premium amenities. Gym and pool access included.",
+    description:
+      "Luxury furnished units with premium amenities. Gym and pool access included.",
     location: "BGC, Taguig",
     price: 12000,
     rating: 4.9,
@@ -159,7 +166,8 @@ const mockListings = [
   {
     id: "8",
     name: "Budget Dorm",
-    description: "No-frills accommodation for budget-conscious boarders. Basic but clean.",
+    description:
+      "No-frills accommodation for budget-conscious boarders. Basic but clean.",
     location: "Pasay City",
     price: 3500,
     rating: 4.2,
@@ -310,8 +318,8 @@ export default function BrowsePage() {
       <Card>
         <CardContent className="pt-6">
           <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-            <div className="relative flex-1 max-w-xl">
-              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <div className="relative max-w-xl flex-1">
+              <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
               <Input
                 placeholder="Search by name, location, or description..."
                 value={searchQuery}
@@ -321,7 +329,12 @@ export default function BrowsePage() {
             </div>
 
             <div className="flex flex-wrap items-center gap-2">
-              <Select value={filters.location} onValueChange={(v) => setFilters((prev) => ({ ...prev, location: v }))}>
+              <Select
+                value={filters.location}
+                onValueChange={(v) =>
+                  setFilters((prev) => ({ ...prev, location: v }))
+                }
+              >
                 <SelectTrigger className="w-[160px]">
                   <MapPin className="mr-2 h-4 w-4" />
                   <SelectValue />
@@ -335,7 +348,12 @@ export default function BrowsePage() {
                 </SelectContent>
               </Select>
 
-              <Select value={filters.type} onValueChange={(v) => setFilters((prev) => ({ ...prev, type: v }))}>
+              <Select
+                value={filters.type}
+                onValueChange={(v) =>
+                  setFilters((prev) => ({ ...prev, type: v }))
+                }
+              >
                 <SelectTrigger className="w-[150px]">
                   <Home className="mr-2 h-4 w-4" />
                   <SelectValue />
@@ -369,7 +387,7 @@ export default function BrowsePage() {
                     <SlidersHorizontal className="mr-2 h-4 w-4" />
                     Filters
                     {activeFiltersCount > 0 && (
-                      <Badge className="ml-2 h-5 w-5 rounded-full p-0 flex items-center justify-center">
+                      <Badge className="ml-2 flex h-5 w-5 items-center justify-center rounded-full p-0">
                         {activeFiltersCount}
                       </Badge>
                     )}
@@ -419,18 +437,24 @@ export default function BrowsePage() {
                     <div className="space-y-2">
                       <Label>Amenities</Label>
                       <div className="grid grid-cols-2 gap-2">
-                        {Object.entries(amenityIcons).map(([key, { icon, label }]) => (
-                          <Button
-                            key={key}
-                            variant={filters.amenities.includes(key) ? "secondary" : "outline"}
-                            size="sm"
-                            className="justify-start"
-                            onClick={() => toggleAmenity(key)}
-                          >
-                            {icon}
-                            <span className="ml-2">{label}</span>
-                          </Button>
-                        ))}
+                        {Object.entries(amenityIcons).map(
+                          ([key, { icon, label }]) => (
+                            <Button
+                              key={key}
+                              variant={
+                                filters.amenities.includes(key)
+                                  ? "secondary"
+                                  : "outline"
+                              }
+                              size="sm"
+                              className="justify-start"
+                              onClick={() => toggleAmenity(key)}
+                            >
+                              {icon}
+                              <span className="ml-2">{label}</span>
+                            </Button>
+                          )
+                        )}
                       </div>
                     </div>
 
@@ -440,7 +464,9 @@ export default function BrowsePage() {
                     <div className="flex items-center justify-between">
                       <Label>Show available only</Label>
                       <Button
-                        variant={filters.availableOnly ? "secondary" : "outline"}
+                        variant={
+                          filters.availableOnly ? "secondary" : "outline"
+                        }
                         size="sm"
                         onClick={() =>
                           setFilters((prev) => ({
@@ -455,7 +481,11 @@ export default function BrowsePage() {
 
                     <Separator />
 
-                    <Button variant="outline" className="w-full" onClick={clearFilters}>
+                    <Button
+                      variant="outline"
+                      className="w-full"
+                      onClick={clearFilters}
+                    >
                       Clear All Filters
                     </Button>
                   </div>
@@ -463,7 +493,7 @@ export default function BrowsePage() {
               </Sheet>
 
               {/* View Mode Toggle */}
-              <div className="flex border rounded-lg">
+              <div className="flex rounded-lg border">
                 <Button
                   variant={viewMode === "grid" ? "secondary" : "ghost"}
                   size="icon"
@@ -484,14 +514,21 @@ export default function BrowsePage() {
 
           {/* Active Filters */}
           {activeFiltersCount > 0 && (
-            <div className="flex flex-wrap items-center gap-2 mt-4 pt-4 border-t">
-              <span className="text-sm text-muted-foreground">Active filters:</span>
+            <div className="mt-4 flex flex-wrap items-center gap-2 border-t pt-4">
+              <span className="text-muted-foreground text-sm">
+                Active filters:
+              </span>
               {filters.location !== "All Locations" && (
                 <Badge variant="secondary" className="gap-1">
                   {filters.location}
                   <X
                     className="h-3 w-3 cursor-pointer"
-                    onClick={() => setFilters((prev) => ({ ...prev, location: "All Locations" }))}
+                    onClick={() =>
+                      setFilters((prev) => ({
+                        ...prev,
+                        location: "All Locations",
+                      }))
+                    }
                   />
                 </Badge>
               )}
@@ -500,7 +537,9 @@ export default function BrowsePage() {
                   {filters.type}
                   <X
                     className="h-3 w-3 cursor-pointer"
-                    onClick={() => setFilters((prev) => ({ ...prev, type: "All Types" }))}
+                    onClick={() =>
+                      setFilters((prev) => ({ ...prev, type: "All Types" }))
+                    }
                   />
                 </Badge>
               )}
@@ -532,9 +571,9 @@ export default function BrowsePage() {
       {filteredListings.length === 0 ? (
         <Card>
           <CardContent className="flex flex-col items-center justify-center py-12">
-            <Search className="h-12 w-12 text-muted-foreground mb-4" />
+            <Search className="text-muted-foreground mb-4 h-12 w-12" />
             <h3 className="text-lg font-semibold">No listings found</h3>
-            <p className="text-muted-foreground text-center mt-2">
+            <p className="text-muted-foreground mt-2 text-center">
               Try adjusting your filters or search query.
             </p>
             <Button className="mt-4" onClick={clearFilters}>
@@ -545,13 +584,13 @@ export default function BrowsePage() {
       ) : viewMode === "grid" ? (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {filteredListings.map((listing) => (
-            <Card key={listing.id} className="overflow-hidden group">
-              <div className="relative h-48 bg-muted">
+            <Card key={listing.id} className="group overflow-hidden">
+              <div className="bg-muted relative h-48">
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <Home className="h-12 w-12 text-muted-foreground" />
+                  <Home className="text-muted-foreground h-12 w-12" />
                 </div>
                 {!listing.available && (
-                  <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/50">
                     <Badge variant="secondary">Not Available</Badge>
                   </div>
                 )}
@@ -578,38 +617,38 @@ export default function BrowsePage() {
               <CardContent className="p-4">
                 <div className="flex items-start justify-between gap-2">
                   <div className="min-w-0">
-                    <h3 className="font-semibold truncate">{listing.name}</h3>
-                    <p className="text-sm text-muted-foreground flex items-center gap-1">
+                    <h3 className="truncate font-semibold">{listing.name}</h3>
+                    <p className="text-muted-foreground flex items-center gap-1 text-sm">
                       <MapPin className="h-3 w-3 flex-shrink-0" />
                       <span className="truncate">{listing.location}</span>
                     </p>
                   </div>
                   <Badge variant="outline">{listing.type}</Badge>
                 </div>
-                <div className="flex items-center gap-2 mt-2">
+                <div className="mt-2 flex items-center gap-2">
                   <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
                   <span className="font-medium">{listing.rating}</span>
                   <span className="text-muted-foreground">
                     ({listing.reviews} reviews)
                   </span>
                 </div>
-                <div className="flex items-center gap-2 mt-3">
+                <div className="mt-3 flex items-center gap-2">
                   {listing.amenities.slice(0, 4).map((amenity) => (
                     <div
                       key={amenity}
-                      className="p-1.5 rounded-md bg-muted text-muted-foreground"
+                      className="bg-muted text-muted-foreground rounded-md p-1.5"
                       title={amenityIcons[amenity]?.label}
                     >
                       {amenityIcons[amenity]?.icon}
                     </div>
                   ))}
                   {listing.amenities.length > 4 && (
-                    <span className="text-xs text-muted-foreground">
+                    <span className="text-muted-foreground text-xs">
                       +{listing.amenities.length - 4}
                     </span>
                   )}
                 </div>
-                <div className="flex items-center justify-between mt-4 pt-4 border-t">
+                <div className="mt-4 flex items-center justify-between border-t pt-4">
                   <div>
                     <span className="text-lg font-bold">
                       {formatCurrency(listing.price)}
@@ -618,7 +657,7 @@ export default function BrowsePage() {
                   </div>
                   <Button size="sm" disabled={!listing.available} asChild>
                     <Link href={`/browse/${listing.id}`}>
-                      <Eye className="h-4 w-4 mr-1" />
+                      <Eye className="mr-1 h-4 w-4" />
                       View
                     </Link>
                   </Button>
@@ -632,12 +671,12 @@ export default function BrowsePage() {
           {filteredListings.map((listing) => (
             <Card key={listing.id} className="overflow-hidden">
               <div className="flex flex-col md:flex-row">
-                <div className="relative h-48 md:h-auto md:w-64 bg-muted flex-shrink-0">
+                <div className="bg-muted relative h-48 flex-shrink-0 md:h-auto md:w-64">
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <Home className="h-12 w-12 text-muted-foreground" />
+                    <Home className="text-muted-foreground h-12 w-12" />
                   </div>
                   {!listing.available && (
-                    <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/50">
                       <Badge variant="secondary">Not Available</Badge>
                     </div>
                   )}
@@ -651,10 +690,12 @@ export default function BrowsePage() {
                   <div className="flex items-start justify-between gap-4">
                     <div>
                       <div className="flex items-center gap-2">
-                        <h3 className="font-semibold text-lg">{listing.name}</h3>
+                        <h3 className="text-lg font-semibold">
+                          {listing.name}
+                        </h3>
                         <Badge variant="outline">{listing.type}</Badge>
                       </div>
-                      <p className="text-sm text-muted-foreground flex items-center gap-1 mt-1">
+                      <p className="text-muted-foreground mt-1 flex items-center gap-1 text-sm">
                         <MapPin className="h-3 w-3" />
                         {listing.location}
                       </p>
@@ -676,31 +717,32 @@ export default function BrowsePage() {
                   <p className="text-muted-foreground mt-2 line-clamp-2">
                     {listing.description}
                   </p>
-                  <div className="flex items-center gap-4 mt-3">
+                  <div className="mt-3 flex items-center gap-4">
                     <div className="flex items-center gap-1">
                       <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
                       <span className="font-medium">{listing.rating}</span>
-                      <span className="text-sm text-muted-foreground">
+                      <span className="text-muted-foreground text-sm">
                         ({listing.reviews} reviews)
                       </span>
                     </div>
-                    <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                    <div className="text-muted-foreground flex items-center gap-1 text-sm">
                       <Users className="h-4 w-4" />
-                      {listing.capacity} {listing.capacity > 1 ? "persons" : "person"}
+                      {listing.capacity}{" "}
+                      {listing.capacity > 1 ? "persons" : "person"}
                     </div>
                   </div>
-                  <div className="flex items-center gap-2 mt-3">
+                  <div className="mt-3 flex items-center gap-2">
                     {listing.amenities.map((amenity) => (
                       <div
                         key={amenity}
-                        className="p-1.5 rounded-md bg-muted text-muted-foreground"
+                        className="bg-muted text-muted-foreground rounded-md p-1.5"
                         title={amenityIcons[amenity]?.label}
                       >
                         {amenityIcons[amenity]?.icon}
                       </div>
                     ))}
                   </div>
-                  <div className="flex items-center justify-between mt-4 pt-4 border-t">
+                  <div className="mt-4 flex items-center justify-between border-t pt-4">
                     <div>
                       <span className="text-xl font-bold">
                         {formatCurrency(listing.price)}
@@ -710,7 +752,7 @@ export default function BrowsePage() {
                     <div className="flex gap-2">
                       <Button variant="outline" size="sm" asChild>
                         <Link href={`/browse/${listing.id}`}>
-                          <Eye className="h-4 w-4 mr-1" />
+                          <Eye className="mr-1 h-4 w-4" />
                           View Details
                         </Link>
                       </Button>

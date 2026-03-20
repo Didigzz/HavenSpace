@@ -30,7 +30,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@havenspace/shared/ui";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@havenspace/shared/ui";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@havenspace/shared/ui";
 import {
   AreaChart,
   Area,
@@ -102,12 +107,18 @@ export default function ReportsPage() {
   const totalRevenue = payments
     .filter((p: MockPayment) => p.status === "PAID")
     .reduce((sum: number, p: MockPayment) => sum + p.amount, 0);
-  const totalExpenses = expenses.reduce((sum: number, e: MockExpense) => sum + e.amount, 0);
+  const totalExpenses = expenses.reduce(
+    (sum: number, e: MockExpense) => sum + e.amount,
+    0
+  );
   const netIncome = totalRevenue - totalExpenses;
 
   const totalRooms = rooms.length;
-  const occupiedRooms = rooms.filter((r: MockRoom) => r.status === "OCCUPIED").length;
-  const occupancyRate = totalRooms > 0 ? Math.round((occupiedRooms / totalRooms) * 100) : 0;
+  const occupiedRooms = rooms.filter(
+    (r: MockRoom) => r.status === "OCCUPIED"
+  ).length;
+  const occupancyRate =
+    totalRooms > 0 ? Math.round((occupiedRooms / totalRooms) * 100) : 0;
 
   const activeTenants = tenants.filter((t: MockTenant) => t.isActive).length;
 
@@ -123,22 +134,40 @@ export default function ReportsPage() {
 
   // Room status distribution
   const roomStatusData = [
-    { name: "Occupied", value: rooms.filter((r: MockRoom) => r.status === "OCCUPIED").length },
-    { name: "Available", value: rooms.filter((r: MockRoom) => r.status === "AVAILABLE").length },
-    { name: "Maintenance", value: rooms.filter((r: MockRoom) => r.status === "MAINTENANCE").length },
+    {
+      name: "Occupied",
+      value: rooms.filter((r: MockRoom) => r.status === "OCCUPIED").length,
+    },
+    {
+      name: "Available",
+      value: rooms.filter((r: MockRoom) => r.status === "AVAILABLE").length,
+    },
+    {
+      name: "Maintenance",
+      value: rooms.filter((r: MockRoom) => r.status === "MAINTENANCE").length,
+    },
   ].filter((d: { name: string; value: number }) => d.value > 0);
 
   // Payment status distribution
   const paymentStatusData = [
-    { name: "Paid", value: payments.filter((p: MockPayment) => p.status === "PAID").length },
-    { name: "Pending", value: payments.filter((p: MockPayment) => p.status === "PENDING").length },
-    { name: "Overdue", value: payments.filter((p: MockPayment) => p.status === "OVERDUE").length },
+    {
+      name: "Paid",
+      value: payments.filter((p: MockPayment) => p.status === "PAID").length,
+    },
+    {
+      name: "Pending",
+      value: payments.filter((p: MockPayment) => p.status === "PENDING").length,
+    },
+    {
+      name: "Overdue",
+      value: payments.filter((p: MockPayment) => p.status === "OVERDUE").length,
+    },
   ].filter((d: { name: string; value: number }) => d.value > 0);
 
   // Collection efficiency - use deterministic values for rendering
   const collectionData = revenueData.map((d: MockRevenueData, i: number) => ({
     ...d,
-    collected: d.revenue * (0.85 + (i * 0.02)),
+    collected: d.revenue * (0.85 + i * 0.02),
     target: d.revenue * 1.1,
   }));
 
@@ -191,45 +220,56 @@ export default function ReportsPage() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Net Income</CardTitle>
-            <DollarSign className="h-4 w-4 text-muted-foreground" />
+            <DollarSign className="text-muted-foreground h-4 w-4" />
           </CardHeader>
           <CardContent>
-            <div className={cn("text-2xl font-bold", netIncome >= 0 ? "text-green-600" : "text-red-600")}>
+            <div
+              className={cn(
+                "text-2xl font-bold",
+                netIncome >= 0 ? "text-green-600" : "text-red-600"
+              )}
+            >
               {formatCurrency(netIncome)}
             </div>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-muted-foreground text-xs">
               {Math.round((netIncome / totalRevenue) * 100) || 0}% margin
             </p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Occupancy Rate</CardTitle>
-            <DoorOpen className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium">
+              Occupancy Rate
+            </CardTitle>
+            <DoorOpen className="text-muted-foreground h-4 w-4" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{occupancyRate}%</div>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-muted-foreground text-xs">
               {occupiedRooms} of {totalRooms} rooms occupied
             </p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Active Tenants</CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium">
+              Active Tenants
+            </CardTitle>
+            <Users className="text-muted-foreground h-4 w-4" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{activeTenants}</div>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-muted-foreground text-xs">
               Across {currentProperty ? "1" : mockProperties.length} properties
             </p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Collection Rate</CardTitle>
-            <TrendingUp className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium">
+              Collection Rate
+            </CardTitle>
+            <TrendingUp className="text-muted-foreground h-4 w-4" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
@@ -240,15 +280,20 @@ export default function ReportsPage() {
               ) || 0}
               %
             </div>
-            <p className="text-xs text-muted-foreground">
-              {payments.filter((p) => p.status === "PAID").length} of {payments.length} collected
+            <p className="text-muted-foreground text-xs">
+              {payments.filter((p) => p.status === "PAID").length} of{" "}
+              {payments.length} collected
             </p>
           </CardContent>
         </Card>
       </div>
 
       {/* Report Tabs */}
-      <Tabs value={selectedReportType} onValueChange={setSelectedReportType} className="space-y-6">
+      <Tabs
+        value={selectedReportType}
+        onValueChange={setSelectedReportType}
+        className="space-y-6"
+      >
         <TabsList>
           <TabsTrigger value="financial">
             <DollarSign className="mr-2 h-4 w-4" />
@@ -277,27 +322,66 @@ export default function ReportsPage() {
                   <ResponsiveContainer width="100%" height="100%">
                     <AreaChart data={revenueData}>
                       <defs>
-                        <linearGradient id="colorRevenueReport" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="hsl(var(--chart-1))" stopOpacity={0.3} />
-                          <stop offset="95%" stopColor="hsl(var(--chart-1))" stopOpacity={0} />
+                        <linearGradient
+                          id="colorRevenueReport"
+                          x1="0"
+                          y1="0"
+                          x2="0"
+                          y2="1"
+                        >
+                          <stop
+                            offset="5%"
+                            stopColor="hsl(var(--chart-1))"
+                            stopOpacity={0.3}
+                          />
+                          <stop
+                            offset="95%"
+                            stopColor="hsl(var(--chart-1))"
+                            stopOpacity={0}
+                          />
                         </linearGradient>
-                        <linearGradient id="colorExpensesReport" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="hsl(var(--chart-2))" stopOpacity={0.3} />
-                          <stop offset="95%" stopColor="hsl(var(--chart-2))" stopOpacity={0} />
+                        <linearGradient
+                          id="colorExpensesReport"
+                          x1="0"
+                          y1="0"
+                          x2="0"
+                          y2="1"
+                        >
+                          <stop
+                            offset="5%"
+                            stopColor="hsl(var(--chart-2))"
+                            stopOpacity={0.3}
+                          />
+                          <stop
+                            offset="95%"
+                            stopColor="hsl(var(--chart-2))"
+                            stopOpacity={0}
+                          />
                         </linearGradient>
                       </defs>
-                      <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+                      <CartesianGrid
+                        strokeDasharray="3 3"
+                        className="stroke-muted"
+                      />
                       <XAxis dataKey="month" tick={{ fontSize: 12 }} />
-                      <YAxis tick={{ fontSize: 12 }} tickFormatter={(v) => `₱${(v / 1000).toFixed(0)}k`} />
+                      <YAxis
+                        tick={{ fontSize: 12 }}
+                        tickFormatter={(v) => `₱${(v / 1000).toFixed(0)}k`}
+                      />
                       <Tooltip
                         content={({ active, payload, label }) => {
                           if (active && payload && payload.length) {
                             return (
-                              <div className="rounded-lg border bg-background p-3 shadow-md">
+                              <div className="bg-background rounded-lg border p-3 shadow-md">
                                 <p className="font-medium">{label}</p>
                                 {payload.map((entry, index) => (
-                                  <p key={index} className="text-sm" style={{ color: entry.color }}>
-                                    {entry.name}: {formatCurrency(entry.value as number)}
+                                  <p
+                                    key={index}
+                                    className="text-sm"
+                                    style={{ color: entry.color }}
+                                  >
+                                    {entry.name}:{" "}
+                                    {formatCurrency(entry.value as number)}
                                   </p>
                                 ))}
                               </div>
@@ -332,7 +416,9 @@ export default function ReportsPage() {
             <Card>
               <CardHeader>
                 <CardTitle>Payment Status</CardTitle>
-                <CardDescription>Distribution of payment statuses</CardDescription>
+                <CardDescription>
+                  Distribution of payment statuses
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="h-[350px]">
@@ -346,10 +432,15 @@ export default function ReportsPage() {
                         outerRadius={100}
                         paddingAngle={5}
                         dataKey="value"
-                        label={({ name, percent }) => `${name} ${((percent ?? 0) * 100).toFixed(0)}%`}
+                        label={({ name, percent }) =>
+                          `${name} ${((percent ?? 0) * 100).toFixed(0)}%`
+                        }
                       >
                         {paymentStatusData.map((entry, index) => (
-                          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                          <Cell
+                            key={`cell-${index}`}
+                            fill={COLORS[index % COLORS.length]}
+                          />
                         ))}
                       </Pie>
                       <Tooltip />
@@ -361,7 +452,9 @@ export default function ReportsPage() {
                     <div key={entry.name} className="flex items-center gap-2">
                       <div
                         className="h-3 w-3 rounded-full"
-                        style={{ backgroundColor: COLORS[index % COLORS.length] }}
+                        style={{
+                          backgroundColor: COLORS[index % COLORS.length],
+                        }}
                       />
                       <span className="text-sm">
                         {entry.name}: {entry.value}
@@ -377,35 +470,47 @@ export default function ReportsPage() {
           <Card>
             <CardHeader>
               <CardTitle>Financial Summary</CardTitle>
-              <CardDescription>Detailed breakdown of income and expenses</CardDescription>
+              <CardDescription>
+                Detailed breakdown of income and expenses
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 <div className="rounded-lg border">
-                  <div className="grid grid-cols-3 gap-4 border-b bg-muted/50 p-4 font-medium">
+                  <div className="bg-muted/50 grid grid-cols-3 gap-4 border-b p-4 font-medium">
                     <span>Category</span>
                     <span className="text-right">Amount</span>
                     <span className="text-right">% of Total</span>
                   </div>
                   <div className="divide-y">
                     <div className="grid grid-cols-3 gap-4 p-4">
-                      <span className="font-medium text-green-600">Revenue</span>
-                      <span className="text-right text-green-600">{formatCurrency(totalRevenue)}</span>
+                      <span className="font-medium text-green-600">
+                        Revenue
+                      </span>
+                      <span className="text-right text-green-600">
+                        {formatCurrency(totalRevenue)}
+                      </span>
                       <span className="text-right">100%</span>
                     </div>
                     <div className="grid grid-cols-3 gap-4 p-4 pl-8">
-                      <span className="text-muted-foreground">Rent Payments</span>
+                      <span className="text-muted-foreground">
+                        Rent Payments
+                      </span>
                       <span className="text-right">
                         {formatCurrency(
                           payments
-                            .filter((p) => p.type === "RENT" && p.status === "PAID")
+                            .filter(
+                              (p) => p.type === "RENT" && p.status === "PAID"
+                            )
                             .reduce((sum, p) => sum + p.amount, 0)
                         )}
                       </span>
-                      <span className="text-right text-muted-foreground">
+                      <span className="text-muted-foreground text-right">
                         {Math.round(
                           (payments
-                            .filter((p) => p.type === "RENT" && p.status === "PAID")
+                            .filter(
+                              (p) => p.type === "RENT" && p.status === "PAID"
+                            )
                             .reduce((sum, p) => sum + p.amount, 0) /
                             totalRevenue) *
                             100
@@ -418,14 +523,18 @@ export default function ReportsPage() {
                       <span className="text-right">
                         {formatCurrency(
                           payments
-                            .filter((p) => p.type === "UTILITY" && p.status === "PAID")
+                            .filter(
+                              (p) => p.type === "UTILITY" && p.status === "PAID"
+                            )
                             .reduce((sum, p) => sum + p.amount, 0)
                         )}
                       </span>
-                      <span className="text-right text-muted-foreground">
+                      <span className="text-muted-foreground text-right">
                         {Math.round(
                           (payments
-                            .filter((p) => p.type === "UTILITY" && p.status === "PAID")
+                            .filter(
+                              (p) => p.type === "UTILITY" && p.status === "PAID"
+                            )
                             .reduce((sum, p) => sum + p.amount, 0) /
                             totalRevenue) *
                             100
@@ -435,12 +544,14 @@ export default function ReportsPage() {
                     </div>
                     <div className="grid grid-cols-3 gap-4 p-4">
                       <span className="font-medium text-red-600">Expenses</span>
-                      <span className="text-right text-red-600">{formatCurrency(totalExpenses)}</span>
+                      <span className="text-right text-red-600">
+                        {formatCurrency(totalExpenses)}
+                      </span>
                       <span className="text-right">
                         {Math.round((totalExpenses / totalRevenue) * 100) || 0}%
                       </span>
                     </div>
-                    <div className="grid grid-cols-3 gap-4 border-t-2 bg-muted/30 p-4">
+                    <div className="bg-muted/30 grid grid-cols-3 gap-4 border-t-2 p-4">
                       <span className="font-semibold">Net Income</span>
                       <span
                         className={cn(
@@ -467,24 +578,41 @@ export default function ReportsPage() {
             <Card>
               <CardHeader>
                 <CardTitle>Occupancy Trend</CardTitle>
-                <CardDescription>Monthly occupancy rate and tenant count</CardDescription>
+                <CardDescription>
+                  Monthly occupancy rate and tenant count
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="h-[350px]">
                   <ResponsiveContainer width="100%" height="100%">
                     <LineChart data={occupancyTrendData}>
-                      <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+                      <CartesianGrid
+                        strokeDasharray="3 3"
+                        className="stroke-muted"
+                      />
                       <XAxis dataKey="month" tick={{ fontSize: 12 }} />
-                      <YAxis yAxisId="left" tick={{ fontSize: 12 }} tickFormatter={(v) => `${v}%`} />
-                      <YAxis yAxisId="right" orientation="right" tick={{ fontSize: 12 }} />
+                      <YAxis
+                        yAxisId="left"
+                        tick={{ fontSize: 12 }}
+                        tickFormatter={(v) => `${v}%`}
+                      />
+                      <YAxis
+                        yAxisId="right"
+                        orientation="right"
+                        tick={{ fontSize: 12 }}
+                      />
                       <Tooltip
                         content={({ active, payload, label }) => {
                           if (active && payload && payload.length) {
                             return (
-                              <div className="rounded-lg border bg-background p-3 shadow-md">
+                              <div className="bg-background rounded-lg border p-3 shadow-md">
                                 <p className="font-medium">{label}</p>
                                 {payload.map((entry, index) => (
-                                  <p key={index} className="text-sm" style={{ color: entry.color }}>
+                                  <p
+                                    key={index}
+                                    className="text-sm"
+                                    style={{ color: entry.color }}
+                                  >
                                     {entry.name}: {entry.value}
                                     {entry.name === "Occupancy Rate" ? "%" : ""}
                                   </p>
@@ -537,7 +665,9 @@ export default function ReportsPage() {
                         outerRadius={100}
                         paddingAngle={5}
                         dataKey="value"
-                        label={({ name, percent }) => `${name} ${((percent ?? 0) * 100).toFixed(0)}%`}
+                        label={({ name, percent }) =>
+                          `${name} ${((percent ?? 0) * 100).toFixed(0)}%`
+                        }
                       >
                         {roomStatusData.map((entry, index) => (
                           <Cell
@@ -546,8 +676,8 @@ export default function ReportsPage() {
                               entry.name === "Occupied"
                                 ? "hsl(var(--chart-1))"
                                 : entry.name === "Available"
-                                ? "hsl(var(--chart-3))"
-                                : "hsl(var(--chart-4))"
+                                  ? "hsl(var(--chart-3))"
+                                  : "hsl(var(--chart-4))"
                             }
                           />
                         ))}
@@ -565,8 +695,8 @@ export default function ReportsPage() {
                           entry.name === "Occupied"
                             ? "bg-[hsl(var(--chart-1))]"
                             : entry.name === "Available"
-                            ? "bg-[hsl(var(--chart-3))]"
-                            : "bg-[hsl(var(--chart-4))]"
+                              ? "bg-[hsl(var(--chart-3))]"
+                              : "bg-[hsl(var(--chart-4))]"
                         )}
                       />
                       <span className="text-sm">
@@ -585,24 +715,37 @@ export default function ReportsPage() {
           <Card>
             <CardHeader>
               <CardTitle>Collection Performance</CardTitle>
-              <CardDescription>Target vs Actual collection comparison</CardDescription>
+              <CardDescription>
+                Target vs Actual collection comparison
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="h-[400px]">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={collectionData}>
-                    <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+                    <CartesianGrid
+                      strokeDasharray="3 3"
+                      className="stroke-muted"
+                    />
                     <XAxis dataKey="month" tick={{ fontSize: 12 }} />
-                    <YAxis tick={{ fontSize: 12 }} tickFormatter={(v) => `₱${(v / 1000).toFixed(0)}k`} />
+                    <YAxis
+                      tick={{ fontSize: 12 }}
+                      tickFormatter={(v) => `₱${(v / 1000).toFixed(0)}k`}
+                    />
                     <Tooltip
                       content={({ active, payload, label }) => {
                         if (active && payload && payload.length) {
                           return (
-                            <div className="rounded-lg border bg-background p-3 shadow-md">
+                            <div className="bg-background rounded-lg border p-3 shadow-md">
                               <p className="font-medium">{label}</p>
                               {payload.map((entry, index) => (
-                                <p key={index} className="text-sm" style={{ color: entry.color }}>
-                                  {entry.name}: {formatCurrency(entry.value as number)}
+                                <p
+                                  key={index}
+                                  className="text-sm"
+                                  style={{ color: entry.color }}
+                                >
+                                  {entry.name}:{" "}
+                                  {formatCurrency(entry.value as number)}
                                 </p>
                               ))}
                             </div>
@@ -612,8 +755,18 @@ export default function ReportsPage() {
                       }}
                     />
                     <Legend />
-                    <Bar dataKey="target" name="Target" fill="hsl(var(--chart-3))" radius={[4, 4, 0, 0]} />
-                    <Bar dataKey="collected" name="Collected" fill="hsl(var(--chart-1))" radius={[4, 4, 0, 0]} />
+                    <Bar
+                      dataKey="target"
+                      name="Target"
+                      fill="hsl(var(--chart-3))"
+                      radius={[4, 4, 0, 0]}
+                    />
+                    <Bar
+                      dataKey="collected"
+                      name="Collected"
+                      fill="hsl(var(--chart-1))"
+                      radius={[4, 4, 0, 0]}
+                    />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
@@ -626,7 +779,9 @@ export default function ReportsPage() {
               <CardHeader className="pb-2">
                 <CardDescription>Total Billed</CardDescription>
                 <CardTitle className="text-2xl">
-                  {formatCurrency(payments.reduce((sum, p) => sum + p.amount, 0))}
+                  {formatCurrency(
+                    payments.reduce((sum, p) => sum + p.amount, 0)
+                  )}
                 </CardTitle>
               </CardHeader>
             </Card>
@@ -662,7 +817,9 @@ export default function ReportsPage() {
       <Card>
         <CardHeader>
           <CardTitle>Quick Reports</CardTitle>
-          <CardDescription>Generate common reports with one click</CardDescription>
+          <CardDescription>
+            Generate common reports with one click
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -690,16 +847,18 @@ export default function ReportsPage() {
             ].map((report) => (
               <Card
                 key={report.name}
-                className="cursor-pointer transition-colors hover:bg-muted/50"
+                className="hover:bg-muted/50 cursor-pointer transition-colors"
                 onClick={() => handleExport(report.name)}
               >
                 <CardContent className="flex items-start gap-4 pt-6">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
-                    <report.icon className="h-5 w-5 text-primary" />
+                  <div className="bg-primary/10 flex h-10 w-10 items-center justify-center rounded-lg">
+                    <report.icon className="text-primary h-5 w-5" />
                   </div>
                   <div>
                     <p className="font-medium">{report.name}</p>
-                    <p className="text-sm text-muted-foreground">{report.description}</p>
+                    <p className="text-muted-foreground text-sm">
+                      {report.description}
+                    </p>
                   </div>
                 </CardContent>
               </Card>

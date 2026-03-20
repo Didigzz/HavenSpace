@@ -25,7 +25,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@havenspace/shared/ui";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@havenspace/shared/ui";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@havenspace/shared/ui";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -37,7 +42,12 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@havenspace/shared/ui";
-import { mockRooms, mockTenants, mockMaintenanceRequests, mockProperties } from "@/lib/mock-data";
+import {
+  mockRooms,
+  mockTenants,
+  mockMaintenanceRequests,
+  mockProperties,
+} from "@/lib/mock-data";
 import { formatCurrency, formatDate, cn, getStatusColor } from "@/lib/utils";
 import { useToast } from "@havenspace/shared/ui";
 
@@ -86,9 +96,11 @@ export default function RoomDetailPage({
     return (
       <div className="flex h-[50vh] items-center justify-center">
         <div className="text-center">
-          <DoorOpen className="mx-auto h-12 w-12 text-muted-foreground" />
+          <DoorOpen className="text-muted-foreground mx-auto h-12 w-12" />
           <h2 className="mt-4 text-xl font-semibold">Room not found</h2>
-          <p className="text-muted-foreground">The room you&apos;re looking for doesn&apos;t exist.</p>
+          <p className="text-muted-foreground">
+            The room you&apos;re looking for doesn&apos;t exist.
+          </p>
           <Button className="mt-4" asChild>
             <Link href="/rooms">Back to Rooms</Link>
           </Button>
@@ -99,7 +111,9 @@ export default function RoomDetailPage({
 
   const statusInfo = statusConfig[room.status];
   const StatusIcon = statusInfo.icon;
-  const occupancyRate = Math.round(((room.currentTenants?.length || 0) / room.capacity) * 100);
+  const occupancyRate = Math.round(
+    ((room.currentTenants?.length || 0) / room.capacity) * 100
+  );
 
   const handleDelete = () => {
     // In production, this would be an API call
@@ -128,7 +142,10 @@ export default function RoomDetailPage({
               </h1>
               <Badge
                 variant="secondary"
-                className={cn("gap-1", getStatusColor(room.status.toLowerCase()))}
+                className={cn(
+                  "gap-1",
+                  getStatusColor(room.status.toLowerCase())
+                )}
               >
                 <StatusIcon className="h-3 w-3" />
                 {statusInfo.label}
@@ -155,15 +172,19 @@ export default function RoomDetailPage({
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>
-                <AlertDialogTitle>Delete Room {room.roomNumber}?</AlertDialogTitle>
+                <AlertDialogTitle>
+                  Delete Room {room.roomNumber}?
+                </AlertDialogTitle>
                 <AlertDialogDescription>
-                  This action cannot be undone. All data associated with this room
-                  will be permanently deleted.
+                  This action cannot be undone. All data associated with this
+                  room will be permanently deleted.
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <AlertDialogAction onClick={handleDelete}>Delete</AlertDialogAction>
+                <AlertDialogAction onClick={handleDelete}>
+                  Delete
+                </AlertDialogAction>
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
@@ -172,7 +193,7 @@ export default function RoomDetailPage({
 
       <div className="grid gap-6 lg:grid-cols-3">
         {/* Main Content */}
-        <div className="lg:col-span-2 space-y-6">
+        <div className="space-y-6 lg:col-span-2">
           {/* Quick Stats */}
           <div className="grid gap-4 sm:grid-cols-3">
             <Card>
@@ -191,7 +212,7 @@ export default function RoomDetailPage({
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="h-2 rounded-full bg-muted">
+                <div className="bg-muted h-2 rounded-full">
                   <div
                     className={cn(
                       "h-full rounded-full",
@@ -241,14 +262,14 @@ export default function RoomDetailPage({
                           className="flex items-center justify-between rounded-lg border p-4"
                         >
                           <div className="flex items-center gap-4">
-                            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
-                              <Users className="h-5 w-5 text-primary" />
+                            <div className="bg-primary/10 flex h-10 w-10 items-center justify-center rounded-full">
+                              <Users className="text-primary h-5 w-5" />
                             </div>
                             <div>
                               <p className="font-medium">
                                 {tenant.firstName} {tenant.lastName}
                               </p>
-                              <p className="text-sm text-muted-foreground">
+                              <p className="text-muted-foreground text-sm">
                                 {tenant.email}
                               </p>
                             </div>
@@ -257,7 +278,7 @@ export default function RoomDetailPage({
                             <p className="font-medium">
                               {formatCurrency(tenant.monthlyRent ?? 0)}
                             </p>
-                            <p className="text-sm text-muted-foreground">
+                            <p className="text-muted-foreground text-sm">
                               Since {formatDate(tenant.moveInDate)}
                             </p>
                           </div>
@@ -266,9 +287,9 @@ export default function RoomDetailPage({
                     </div>
                   ) : (
                     <div className="py-8 text-center">
-                      <Users className="mx-auto h-12 w-12 text-muted-foreground" />
+                      <Users className="text-muted-foreground mx-auto h-12 w-12" />
                       <h3 className="mt-4 font-medium">No Tenants</h3>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-muted-foreground text-sm">
                         This room is currently vacant
                       </p>
                       <Button className="mt-4" variant="outline" asChild>
@@ -303,8 +324,8 @@ export default function RoomDetailPage({
                                 request.status === "COMPLETED"
                                   ? "bg-green-100"
                                   : request.status === "IN_PROGRESS"
-                                  ? "bg-blue-100"
-                                  : "bg-yellow-100"
+                                    ? "bg-blue-100"
+                                    : "bg-yellow-100"
                               )}
                             >
                               {request.status === "COMPLETED" ? (
@@ -317,10 +338,10 @@ export default function RoomDetailPage({
                             </div>
                             <div>
                               <p className="font-medium">{request.title}</p>
-                              <p className="text-sm text-muted-foreground">
+                              <p className="text-muted-foreground text-sm">
                                 {request.description}
                               </p>
-                              <p className="mt-1 text-xs text-muted-foreground">
+                              <p className="text-muted-foreground mt-1 text-xs">
                                 Reported: {formatDate(request.createdAt)}
                               </p>
                             </div>
@@ -328,9 +349,12 @@ export default function RoomDetailPage({
                           <Badge
                             variant="outline"
                             className={cn(
-                              request.priority === "HIGH" && "border-red-500 text-red-500",
-                              request.priority === "MEDIUM" && "border-yellow-500 text-yellow-500",
-                              request.priority === "LOW" && "border-green-500 text-green-500"
+                              request.priority === "HIGH" &&
+                                "border-red-500 text-red-500",
+                              request.priority === "MEDIUM" &&
+                                "border-yellow-500 text-yellow-500",
+                              request.priority === "LOW" &&
+                                "border-green-500 text-green-500"
                             )}
                           >
                             {request.priority}
@@ -340,10 +364,13 @@ export default function RoomDetailPage({
                     </div>
                   ) : (
                     <div className="py-8 text-center">
-                      <Wrench className="mx-auto h-12 w-12 text-muted-foreground" />
-                      <h3 className="mt-4 font-medium">No Maintenance Requests</h3>
-                      <p className="text-sm text-muted-foreground">
-                        No maintenance requests have been submitted for this room
+                      <Wrench className="text-muted-foreground mx-auto h-12 w-12" />
+                      <h3 className="mt-4 font-medium">
+                        No Maintenance Requests
+                      </h3>
+                      <p className="text-muted-foreground text-sm">
+                        No maintenance requests have been submitted for this
+                        room
                       </p>
                       <Button className="mt-4" variant="outline" asChild>
                         <Link href="/maintenance/new">Report Issue</Link>
@@ -370,7 +397,7 @@ export default function RoomDetailPage({
                       </div>
                       <div>
                         <p className="font-medium">Room Created</p>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-muted-foreground text-sm">
                           {formatDate(room.createdAt || new Date())}
                         </p>
                       </div>
@@ -381,7 +408,7 @@ export default function RoomDetailPage({
                       </div>
                       <div>
                         <p className="font-medium">Last Updated</p>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-muted-foreground text-sm">
                           {formatDate(room.updatedAt || new Date())}
                         </p>
                       </div>
@@ -415,13 +442,18 @@ export default function RoomDetailPage({
               </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Monthly Rate</span>
-                <span className="font-medium">{formatCurrency(room.monthlyRate)}</span>
+                <span className="font-medium">
+                  {formatCurrency(room.monthlyRate)}
+                </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Status</span>
                 <Badge
                   variant="outline"
-                  className={cn("gap-1", getStatusColor(room.status.toLowerCase()))}
+                  className={cn(
+                    "gap-1",
+                    getStatusColor(room.status.toLowerCase())
+                  )}
                 >
                   <StatusIcon className="h-3 w-3" />
                   {statusInfo.label}
@@ -445,7 +477,9 @@ export default function RoomDetailPage({
                   ))}
                 </div>
               ) : (
-                <p className="text-sm text-muted-foreground">No amenities listed</p>
+                <p className="text-muted-foreground text-sm">
+                  No amenities listed
+                </p>
               )}
             </CardContent>
           </Card>
@@ -457,7 +491,9 @@ export default function RoomDetailPage({
                 <CardTitle>Description</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-muted-foreground">{room.description}</p>
+                <p className="text-muted-foreground text-sm">
+                  {room.description}
+                </p>
               </CardContent>
             </Card>
           )}

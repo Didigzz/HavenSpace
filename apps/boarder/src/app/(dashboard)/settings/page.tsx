@@ -95,7 +95,7 @@ export default function SettingsPage() {
             <div className="flex items-center justify-between">
               <div>
                 <Label>Theme</Label>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-muted-foreground text-sm">
                   Select your preferred theme
                 </p>
               </div>
@@ -131,7 +131,7 @@ export default function SettingsPage() {
             <div className="flex items-center justify-between">
               <div>
                 <Label>Language</Label>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-muted-foreground text-sm">
                   Select your preferred language
                 </p>
               </div>
@@ -166,10 +166,10 @@ export default function SettingsPage() {
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <Mail className="h-4 w-4 text-muted-foreground" />
+                    <Mail className="text-muted-foreground h-4 w-4" />
                     <div>
                       <Label>Email Notifications</Label>
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-muted-foreground text-xs">
                         Receive updates via email
                       </p>
                     </div>
@@ -184,10 +184,10 @@ export default function SettingsPage() {
                 </div>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <Smartphone className="h-4 w-4 text-muted-foreground" />
+                    <Smartphone className="text-muted-foreground h-4 w-4" />
                     <div>
                       <Label>Push Notifications</Label>
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-muted-foreground text-xs">
                         Receive push notifications
                       </p>
                     </div>
@@ -202,10 +202,10 @@ export default function SettingsPage() {
                 </div>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <MessageSquare className="h-4 w-4 text-muted-foreground" />
+                    <MessageSquare className="text-muted-foreground h-4 w-4" />
                     <div>
                       <Label>SMS Notifications</Label>
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-muted-foreground text-xs">
                         Receive SMS for important updates
                       </p>
                     </div>
@@ -229,7 +229,9 @@ export default function SettingsPage() {
                 <div className="flex items-center justify-between">
                   <Label>Booking Updates</Label>
                   <Button
-                    variant={notifications.bookingUpdates ? "secondary" : "outline"}
+                    variant={
+                      notifications.bookingUpdates ? "secondary" : "outline"
+                    }
                     size="sm"
                     onClick={() => handleNotificationChange("bookingUpdates")}
                   >
@@ -239,7 +241,9 @@ export default function SettingsPage() {
                 <div className="flex items-center justify-between">
                   <Label>Payment Reminders</Label>
                   <Button
-                    variant={notifications.paymentReminders ? "secondary" : "outline"}
+                    variant={
+                      notifications.paymentReminders ? "secondary" : "outline"
+                    }
                     size="sm"
                     onClick={() => handleNotificationChange("paymentReminders")}
                   >
@@ -285,7 +289,7 @@ export default function SettingsPage() {
           <CardContent className="space-y-4">
             <div className="space-y-4">
               <h4 className="text-sm font-medium">Change Password</h4>
-              <div className="grid gap-4 max-w-md">
+              <div className="grid max-w-md gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="current-password">Current Password</Label>
                   <div className="relative">
@@ -298,7 +302,7 @@ export default function SettingsPage() {
                       type="button"
                       variant="ghost"
                       size="icon"
-                      className="absolute right-0 top-0 h-full"
+                      className="absolute top-0 right-0 h-full"
                       onClick={() => setShowPassword(!showPassword)}
                     >
                       {showPassword ? (
@@ -338,7 +342,7 @@ export default function SettingsPage() {
                   <p className="text-sm">
                     Add an extra layer of security to your account
                   </p>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="text-muted-foreground text-xs">
                     Status: <span className="text-yellow-600">Not enabled</span>
                   </p>
                 </div>
@@ -351,12 +355,12 @@ export default function SettingsPage() {
             <div className="space-y-4">
               <h4 className="text-sm font-medium">Active Sessions</h4>
               <div className="space-y-3">
-                <div className="flex items-center justify-between p-3 rounded-lg border">
+                <div className="flex items-center justify-between rounded-lg border p-3">
                   <div className="flex items-center gap-3">
                     <Smartphone className="h-5 w-5" />
                     <div>
                       <p className="text-sm font-medium">Current Device</p>
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-muted-foreground text-xs">
                         Windows • Chrome • Manila, PH
                       </p>
                     </div>
@@ -385,14 +389,12 @@ export default function SettingsPage() {
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="space-y-3">
-              <div className="flex items-center justify-between p-3 rounded-lg border">
+              <div className="flex items-center justify-between rounded-lg border p-3">
                 <div className="flex items-center gap-3">
                   <span className="text-2xl">📱</span>
                   <div>
                     <p className="font-medium">GCash</p>
-                    <p className="text-sm text-muted-foreground">
-                      091*****567
-                    </p>
+                    <p className="text-muted-foreground text-sm">091*****567</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
@@ -402,14 +404,12 @@ export default function SettingsPage() {
                   </Button>
                 </div>
               </div>
-              <div className="flex items-center justify-between p-3 rounded-lg border">
+              <div className="flex items-center justify-between rounded-lg border p-3">
                 <div className="flex items-center gap-3">
                   <span className="text-2xl">🏦</span>
                   <div>
                     <p className="font-medium">BDO Savings</p>
-                    <p className="text-sm text-muted-foreground">
-                      ****1234
-                    </p>
+                    <p className="text-muted-foreground text-sm">****1234</p>
                   </div>
                 </div>
                 <Button variant="ghost" size="sm">
@@ -439,7 +439,7 @@ export default function SettingsPage() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="font-medium">Delete Account</p>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-muted-foreground text-sm">
                   Permanently delete your account and all data
                 </p>
               </div>
@@ -460,23 +460,22 @@ export default function SettingsPage() {
           <DialogHeader>
             <DialogTitle>Delete Account</DialogTitle>
             <DialogDescription>
-              Are you sure you want to delete your account? This action cannot be
-              undone. All your data including bookings, payments, and messages
-              will be permanently deleted.
+              Are you sure you want to delete your account? This action cannot
+              be undone. All your data including bookings, payments, and
+              messages will be permanently deleted.
             </DialogDescription>
           </DialogHeader>
           <div className="py-4">
             <Label htmlFor="confirm-delete">
               Type &quot;DELETE&quot; to confirm
             </Label>
-            <Input
-              id="confirm-delete"
-              className="mt-2"
-              placeholder="DELETE"
-            />
+            <Input id="confirm-delete" className="mt-2" placeholder="DELETE" />
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setShowDeleteDialog(false)}>
+            <Button
+              variant="outline"
+              onClick={() => setShowDeleteDialog(false)}
+            >
               Cancel
             </Button>
             <Button variant="destructive">Delete Account</Button>

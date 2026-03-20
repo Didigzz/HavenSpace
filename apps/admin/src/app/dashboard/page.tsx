@@ -13,7 +13,14 @@ import {
   ArrowRight,
 } from "lucide-react";
 import Link from "next/link";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle, Button } from "@havenspace/shared/ui";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  Button,
+} from "@havenspace/shared/ui";
 import { cn, formatNumber, formatCurrency, getRelativeTime } from "@/lib/utils";
 import {
   AreaChart,
@@ -149,10 +156,8 @@ export default function DashboardPage() {
         {stats.map((stat) => (
           <Card key={stat.name}>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">
-                {stat.name}
-              </CardTitle>
-              <stat.icon className="h-4 w-4 text-muted-foreground" />
+              <CardTitle className="text-sm font-medium">{stat.name}</CardTitle>
+              <stat.icon className="text-muted-foreground h-4 w-4" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{stat.value}</div>
@@ -174,7 +179,7 @@ export default function DashboardPage() {
                 </span>
                 <span className="text-muted-foreground">from last month</span>
               </div>
-              <p className="mt-1 text-xs text-muted-foreground">
+              <p className="text-muted-foreground mt-1 text-xs">
                 {stat.description}
               </p>
             </CardContent>
@@ -197,12 +202,21 @@ export default function DashboardPage() {
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart data={revenueData}>
                   <defs>
-                    <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
+                    <linearGradient
+                      id="colorRevenue"
+                      x1="0"
+                      y1="0"
+                      x2="0"
+                      y2="1"
+                    >
                       <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.3} />
                       <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0} />
                     </linearGradient>
                   </defs>
-                  <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+                  <CartesianGrid
+                    strokeDasharray="3 3"
+                    className="stroke-muted"
+                  />
                   <XAxis
                     dataKey="month"
                     className="text-xs"
@@ -219,7 +233,12 @@ export default function DashboardPage() {
                       border: "1px solid hsl(var(--border))",
                       borderRadius: "8px",
                     }}
-                    formatter={(value: number | undefined) => [formatCurrency(value ?? 0), "Revenue"] as [string, string]}
+                    formatter={(value: number | undefined) =>
+                      [formatCurrency(value ?? 0), "Revenue"] as [
+                        string,
+                        string,
+                      ]
+                    }
                   />
                   <Area
                     type="monotone"
@@ -263,7 +282,9 @@ export default function DashboardPage() {
                       border: "1px solid hsl(var(--border))",
                       borderRadius: "8px",
                     }}
-                    formatter={(value: number | undefined) => [formatNumber(value ?? 0), "Users"] as [string, string]}
+                    formatter={(value: number | undefined) =>
+                      [formatNumber(value ?? 0), "Users"] as [string, string]
+                    }
                   />
                 </PieChart>
               </ResponsiveContainer>
@@ -275,7 +296,7 @@ export default function DashboardPage() {
                     className="h-3 w-3 rounded-full"
                     style={{ backgroundColor: item.color }}
                   />
-                  <span className="text-sm text-muted-foreground">
+                  <span className="text-muted-foreground text-sm">
                     {item.name}
                   </span>
                 </div>
@@ -297,7 +318,10 @@ export default function DashboardPage() {
             <div className="h-[250px]">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={bookingsByStatus}>
-                  <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+                  <CartesianGrid
+                    strokeDasharray="3 3"
+                    className="stroke-muted"
+                  />
                   <XAxis
                     dataKey="status"
                     className="text-xs"
@@ -313,7 +337,9 @@ export default function DashboardPage() {
                       border: "1px solid hsl(var(--border))",
                       borderRadius: "8px",
                     }}
-                    formatter={(value: number | undefined) => [formatNumber(value ?? 0), "Bookings"] as [string, string]}
+                    formatter={(value: number | undefined) =>
+                      [formatNumber(value ?? 0), "Bookings"] as [string, string]
+                    }
                   />
                   <Bar dataKey="count" fill="#8b5cf6" radius={[4, 4, 0, 0]} />
                 </BarChart>
@@ -333,12 +359,12 @@ export default function DashboardPage() {
             <div className="rounded-lg border p-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
-                    <FileCheck className="h-5 w-5 text-primary" />
+                  <div className="bg-primary/10 flex h-10 w-10 items-center justify-center rounded-lg">
+                    <FileCheck className="text-primary h-5 w-5" />
                   </div>
                   <div>
                     <p className="font-medium">Landlord Applications</p>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-muted-foreground text-sm">
                       {pendingApplications.length} pending review
                     </p>
                   </div>
@@ -356,12 +382,12 @@ export default function DashboardPage() {
             <div className="rounded-lg border p-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-destructive/10">
-                    <AlertTriangle className="h-5 w-5 text-destructive" />
+                  <div className="bg-destructive/10 flex h-10 w-10 items-center justify-center rounded-lg">
+                    <AlertTriangle className="text-destructive h-5 w-5" />
                   </div>
                   <div>
                     <p className="font-medium">Flagged Items</p>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-muted-foreground text-sm">
                       {flaggedItems.length} items to review
                     </p>
                   </div>
@@ -384,7 +410,7 @@ export default function DashboardPage() {
                   </div>
                   <div>
                     <p className="font-medium">Payment Disputes</p>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-muted-foreground text-sm">
                       2 disputes awaiting resolution
                     </p>
                   </div>
@@ -422,20 +448,21 @@ export default function DashboardPage() {
                 className="flex items-center justify-between rounded-lg border p-4"
               >
                 <div className="flex items-center gap-4">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary font-medium">
+                  <div className="bg-primary/10 text-primary flex h-10 w-10 items-center justify-center rounded-full font-medium">
                     {app.name.charAt(0)}
                   </div>
                   <div>
                     <p className="font-medium">{app.name}</p>
-                    <p className="text-sm text-muted-foreground">{app.email}</p>
+                    <p className="text-muted-foreground text-sm">{app.email}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-6">
                   <div className="text-right">
                     <p className="text-sm">
-                      {app.properties} {app.properties === 1 ? "property" : "properties"}
+                      {app.properties}{" "}
+                      {app.properties === 1 ? "property" : "properties"}
                     </p>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-muted-foreground text-xs">
                       {getRelativeTime(app.submittedAt)}
                     </p>
                   </div>

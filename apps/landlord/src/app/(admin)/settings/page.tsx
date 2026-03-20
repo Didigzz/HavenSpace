@@ -21,7 +21,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@havenspace/shared/ui";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@havenspace/shared/ui";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@havenspace/shared/ui";
 import {
   Select,
   SelectContent,
@@ -81,16 +86,26 @@ export default function SettingsPage() {
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
                   <Label htmlFor="orgName">Organization Name</Label>
-                  <Input id="orgName" defaultValue="Haven Space Administration" />
+                  <Input
+                    id="orgName"
+                    defaultValue="Haven Space Administration"
+                  />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="orgEmail">Organization Email</Label>
-                  <Input id="orgEmail" type="email" defaultValue="admin@bhms.com" />
+                  <Input
+                    id="orgEmail"
+                    type="email"
+                    defaultValue="admin@bhms.com"
+                  />
                 </div>
               </div>
               <div className="space-y-2">
                 <Label htmlFor="orgAddress">Address</Label>
-                <Input id="orgAddress" defaultValue="123 Main Street, Metro Manila" />
+                <Input
+                  id="orgAddress"
+                  defaultValue="123 Main Street, Metro Manila"
+                />
               </div>
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="space-y-2">
@@ -104,9 +119,15 @@ export default function SettingsPage() {
                       <SelectValue placeholder="Select timezone" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="asia-manila">Asia/Manila (GMT+8)</SelectItem>
-                      <SelectItem value="asia-singapore">Asia/Singapore (GMT+8)</SelectItem>
-                      <SelectItem value="asia-tokyo">Asia/Tokyo (GMT+9)</SelectItem>
+                      <SelectItem value="asia-manila">
+                        Asia/Manila (GMT+8)
+                      </SelectItem>
+                      <SelectItem value="asia-singapore">
+                        Asia/Singapore (GMT+8)
+                      </SelectItem>
+                      <SelectItem value="asia-tokyo">
+                        Asia/Tokyo (GMT+9)
+                      </SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -179,7 +200,7 @@ export default function SettingsPage() {
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5">
                   <Label>Payment Reminders</Label>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-muted-foreground text-sm">
                     Send email reminders for upcoming and overdue payments
                   </p>
                 </div>
@@ -189,7 +210,7 @@ export default function SettingsPage() {
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5">
                   <Label>Lease Expiration Alerts</Label>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-muted-foreground text-sm">
                     Notify when tenant leases are about to expire
                   </p>
                 </div>
@@ -199,7 +220,7 @@ export default function SettingsPage() {
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5">
                   <Label>Maintenance Updates</Label>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-muted-foreground text-sm">
                     Send updates on maintenance request status changes
                   </p>
                 </div>
@@ -209,7 +230,7 @@ export default function SettingsPage() {
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5">
                   <Label>New Tenant Notifications</Label>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-muted-foreground text-sm">
                     Notify when new tenants are added to the system
                   </p>
                 </div>
@@ -219,7 +240,7 @@ export default function SettingsPage() {
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5">
                   <Label>Weekly Reports</Label>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-muted-foreground text-sm">
                     Receive weekly summary reports via email
                   </p>
                 </div>
@@ -285,7 +306,7 @@ export default function SettingsPage() {
               <div className="space-y-2">
                 <Label>Color Theme</Label>
                 <div className="grid grid-cols-3 gap-4">
-                  <div className="cursor-pointer rounded-lg border-2 border-primary p-4 text-center">
+                  <div className="border-primary cursor-pointer rounded-lg border-2 p-4 text-center">
                     <div className="mb-2 h-8 w-full rounded bg-gradient-to-r from-gray-100 to-gray-200" />
                     <span className="text-sm font-medium">Light</span>
                   </div>
@@ -303,7 +324,7 @@ export default function SettingsPage() {
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5">
                   <Label>Compact Mode</Label>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-muted-foreground text-sm">
                     Use a more compact layout for denser information display
                   </p>
                 </div>
@@ -313,7 +334,7 @@ export default function SettingsPage() {
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5">
                   <Label>Sidebar Always Expanded</Label>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-muted-foreground text-sm">
                     Keep the sidebar expanded by default
                   </p>
                 </div>
@@ -372,7 +393,7 @@ export default function SettingsPage() {
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5">
                   <Label>Enable 2FA</Label>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-muted-foreground text-sm">
                     Require a verification code when signing in
                   </p>
                 </div>
@@ -393,7 +414,7 @@ export default function SettingsPage() {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="font-medium">Current Session</p>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-muted-foreground text-sm">
                       Windows • Chrome • Manila, Philippines
                     </p>
                   </div>
@@ -415,17 +436,17 @@ export default function SettingsPage() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="rounded-lg border bg-muted/50 p-4">
+              <div className="bg-muted/50 rounded-lg border p-4">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-lg font-semibold">Professional Plan</p>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-muted-foreground text-sm">
                       Up to 10 properties • Unlimited tenants • Priority support
                     </p>
                   </div>
                   <div className="text-right">
                     <p className="text-2xl font-bold">₱2,999</p>
-                    <p className="text-sm text-muted-foreground">/month</p>
+                    <p className="text-muted-foreground text-sm">/month</p>
                   </div>
                 </div>
               </div>
@@ -447,11 +468,15 @@ export default function SettingsPage() {
               <div className="rounded-lg border p-4">
                 <div className="flex items-center gap-4">
                   <div className="flex h-10 w-14 items-center justify-center rounded border bg-white">
-                    <span className="text-sm font-bold text-blue-600">VISA</span>
+                    <span className="text-sm font-bold text-blue-600">
+                      VISA
+                    </span>
                   </div>
                   <div>
                     <p className="font-medium">•••• •••• •••• 4242</p>
-                    <p className="text-sm text-muted-foreground">Expires 12/2027</p>
+                    <p className="text-muted-foreground text-sm">
+                      Expires 12/2027
+                    </p>
                   </div>
                 </div>
               </div>

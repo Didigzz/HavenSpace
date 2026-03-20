@@ -25,7 +25,9 @@ interface PropertyContextType {
   setProperties: (properties: Property[]) => void;
 }
 
-const PropertyContext = createContext<PropertyContextType | undefined>(undefined);
+const PropertyContext = createContext<PropertyContextType | undefined>(
+  undefined
+);
 
 export function PropertyProvider({ children }: { children: ReactNode }) {
   const [currentProperty, setCurrentProperty] = useState<Property | null>(null);

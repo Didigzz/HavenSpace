@@ -7,14 +7,7 @@ import { useRouter } from "next/navigation";
 import { useForm, type Resolver } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import {
-  ArrowLeft,
-  Save,
-  DoorOpen,
-  Loader2,
-  Plus,
-  X,
-} from "lucide-react";
+import { ArrowLeft, Save, DoorOpen, Loader2, Plus, X } from "lucide-react";
 import { Button } from "@havenspace/shared/ui";
 import { Input } from "@havenspace/shared/ui";
 import { Label } from "@havenspace/shared/ui";
@@ -54,9 +47,18 @@ const commonAmenities = [
 
 const roomSchema = z.object({
   roomNumber: z.string().min(1, "Room number is required"),
-  floor: z.preprocess((val) => (val === "" || val === undefined ? 1 : Number(val)), z.number().min(1, "Floor must be at least 1")),
-  capacity: z.preprocess((val) => (val === "" || val === undefined ? 1 : Number(val)), z.number().min(1, "Capacity must be at least 1")),
-  monthlyRate: z.preprocess((val) => (val === "" || val === undefined ? 0 : Number(val)), z.number().min(0, "Monthly rate must be a positive number")),
+  floor: z.preprocess(
+    (val) => (val === "" || val === undefined ? 1 : Number(val)),
+    z.number().min(1, "Floor must be at least 1")
+  ),
+  capacity: z.preprocess(
+    (val) => (val === "" || val === undefined ? 1 : Number(val)),
+    z.number().min(1, "Capacity must be at least 1")
+  ),
+  monthlyRate: z.preprocess(
+    (val) => (val === "" || val === undefined ? 0 : Number(val)),
+    z.number().min(0, "Monthly rate must be a positive number")
+  ),
   description: z.string().optional(),
   status: z.enum(["AVAILABLE", "OCCUPIED", "MAINTENANCE"]),
 });
@@ -115,9 +117,11 @@ export default function EditRoomPage({
     return (
       <div className="flex h-[50vh] items-center justify-center">
         <div className="text-center">
-          <DoorOpen className="mx-auto h-12 w-12 text-muted-foreground" />
+          <DoorOpen className="text-muted-foreground mx-auto h-12 w-12" />
           <h2 className="mt-4 text-xl font-semibold">Room not found</h2>
-          <p className="text-muted-foreground">The room you&apos;re looking for doesn&apos;t exist.</p>
+          <p className="text-muted-foreground">
+            The room you&apos;re looking for doesn&apos;t exist.
+          </p>
           <Button className="mt-4" asChild>
             <Link href="/rooms">Back to Rooms</Link>
           </Button>
@@ -160,7 +164,10 @@ export default function EditRoomPage({
   };
 
   const addCustomAmenity = () => {
-    if (customAmenity.trim() && !selectedAmenities.includes(customAmenity.trim())) {
+    if (
+      customAmenity.trim() &&
+      !selectedAmenities.includes(customAmenity.trim())
+    ) {
       setSelectedAmenities((prev) => [...prev, customAmenity.trim()]);
       setCustomAmenity("");
     }
@@ -223,19 +230,18 @@ export default function EditRoomPage({
                 placeholder="e.g., 101, A-1"
               />
               {errors.roomNumber && (
-                <p className="text-sm text-destructive">{errors.roomNumber.message}</p>
+                <p className="text-destructive text-sm">
+                  {errors.roomNumber.message}
+                </p>
               )}
             </div>
             <div className="space-y-2">
               <Label htmlFor="floor">Floor *</Label>
-              <Input
-                id="floor"
-                type="number"
-                min="1"
-                {...register("floor")}
-              />
+              <Input id="floor" type="number" min="1" {...register("floor")} />
               {errors.floor && (
-                <p className="text-sm text-destructive">{errors.floor.message}</p>
+                <p className="text-destructive text-sm">
+                  {errors.floor.message}
+                </p>
               )}
             </div>
             <div className="space-y-2">
@@ -247,7 +253,9 @@ export default function EditRoomPage({
                 {...register("capacity")}
               />
               {errors.capacity && (
-                <p className="text-sm text-destructive">{errors.capacity.message}</p>
+                <p className="text-destructive text-sm">
+                  {errors.capacity.message}
+                </p>
               )}
             </div>
             <div className="space-y-2">
@@ -260,7 +268,9 @@ export default function EditRoomPage({
                 {...register("monthlyRate")}
               />
               {errors.monthlyRate && (
-                <p className="text-sm text-destructive">{errors.monthlyRate.message}</p>
+                <p className="text-destructive text-sm">
+                  {errors.monthlyRate.message}
+                </p>
               )}
             </div>
           </div>
@@ -270,7 +280,9 @@ export default function EditRoomPage({
               <Label htmlFor="status">Status</Label>
               <Select
                 value={status}
-                onValueChange={(value: "AVAILABLE" | "OCCUPIED" | "MAINTENANCE") => {
+                onValueChange={(
+                  value: "AVAILABLE" | "OCCUPIED" | "MAINTENANCE"
+                ) => {
                   setValue("status", value);
                 }}
               >
@@ -291,7 +303,7 @@ export default function EditRoomPage({
             <textarea
               id="description"
               {...register("description")}
-              className="min-h-[100px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              className="border-input bg-background ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring min-h-[100px] w-full rounded-md border px-3 py-2 text-sm focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
               placeholder="Enter room description, special features, etc."
             />
           </div>
@@ -313,13 +325,17 @@ export default function EditRoomPage({
               <Label>Selected Amenities</Label>
               <div className="flex flex-wrap gap-2">
                 {selectedAmenities.map((amenity) => (
-                  <Badge key={amenity} variant="secondary" className="gap-1 pr-1">
+                  <Badge
+                    key={amenity}
+                    variant="secondary"
+                    className="gap-1 pr-1"
+                  >
                     {amenity}
                     <Button
                       type="button"
                       variant="ghost"
                       size="icon"
-                      className="h-4 w-4 hover:bg-destructive/20"
+                      className="hover:bg-destructive/20 h-4 w-4"
                       onClick={() => removeAmenity(amenity)}
                     >
                       <X className="h-3 w-3" />
@@ -337,7 +353,9 @@ export default function EditRoomPage({
               {commonAmenities.map((amenity) => (
                 <Badge
                   key={amenity}
-                  variant={selectedAmenities.includes(amenity) ? "default" : "outline"}
+                  variant={
+                    selectedAmenities.includes(amenity) ? "default" : "outline"
+                  }
                   className="cursor-pointer"
                   onClick={() => toggleAmenity(amenity)}
                 >
@@ -362,7 +380,11 @@ export default function EditRoomPage({
                   }
                 }}
               />
-              <Button type="button" variant="outline" onClick={addCustomAmenity}>
+              <Button
+                type="button"
+                variant="outline"
+                onClick={addCustomAmenity}
+              >
                 <Plus className="h-4 w-4" />
               </Button>
             </div>
@@ -376,8 +398,9 @@ export default function EditRoomPage({
           <CardHeader>
             <CardTitle className="text-blue-700">Active Tenants</CardTitle>
             <CardDescription className="text-blue-600">
-              This room currently has {room.currentTenants.length} tenant(s). Changing the
-              status to &quot;Maintenance&quot; may require tenant coordination.
+              This room currently has {room.currentTenants.length} tenant(s).
+              Changing the status to &quot;Maintenance&quot; may require tenant
+              coordination.
             </CardDescription>
           </CardHeader>
         </Card>

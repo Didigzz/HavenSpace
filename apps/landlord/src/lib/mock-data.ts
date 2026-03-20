@@ -456,7 +456,8 @@ export const mockMaintenanceRequests: MaintenanceRequest[] = [
     roomId: "room-5",
     roomNumber: "202",
     title: "Air conditioning unit not working",
-    description: "The AC unit is making strange noises and not cooling properly",
+    description:
+      "The AC unit is making strange noises and not cooling properly",
     priority: "HIGH",
     status: "IN_PROGRESS",
     assignedTo: "Technician A",
@@ -722,9 +723,15 @@ export function getDashboardStats(propertyId?: string): DashboardStats {
     ? mockMaintenanceRequests.filter((m) => m.propertyId === propertyId)
     : mockMaintenanceRequests;
 
-  const occupiedRooms = filteredRooms.filter((r) => r.status === "OCCUPIED").length;
-  const availableRooms = filteredRooms.filter((r) => r.status === "AVAILABLE").length;
-  const maintenanceRooms = filteredRooms.filter((r) => r.status === "MAINTENANCE").length;
+  const occupiedRooms = filteredRooms.filter(
+    (r) => r.status === "OCCUPIED"
+  ).length;
+  const availableRooms = filteredRooms.filter(
+    (r) => r.status === "AVAILABLE"
+  ).length;
+  const maintenanceRooms = filteredRooms.filter(
+    (r) => r.status === "MAINTENANCE"
+  ).length;
 
   const paidPayments = filteredPayments.filter((p) => p.status === "PAID");
   const monthlyRevenue = paidPayments
@@ -742,7 +749,8 @@ export function getDashboardStats(propertyId?: string): DashboardStats {
   const expiringSoonLeases = filteredTenants.filter((t) => {
     if (!t.leaseEndDate) return false;
     const daysUntilExpiry = Math.ceil(
-      (new Date(t.leaseEndDate).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)
+      (new Date(t.leaseEndDate).getTime() - new Date().getTime()) /
+        (1000 * 60 * 60 * 24)
     );
     return daysUntilExpiry > 0 && daysUntilExpiry <= 30;
   }).length;
@@ -753,14 +761,19 @@ export function getDashboardStats(propertyId?: string): DashboardStats {
     occupiedRooms,
     availableRooms,
     maintenanceRooms,
-    occupancyRate: filteredRooms.length > 0 ? Math.round((occupiedRooms / filteredRooms.length) * 100) : 0,
+    occupancyRate:
+      filteredRooms.length > 0
+        ? Math.round((occupiedRooms / filteredRooms.length) * 100)
+        : 0,
     totalTenants: filteredTenants.length,
     activeTenants: filteredTenants.filter((t) => t.isActive).length,
     monthlyRevenue,
     yearlyRevenue: monthlyRevenue * 12,
     outstandingPayments,
     overduePayments,
-    pendingMaintenance: filteredMaintenance.filter((m) => m.status === "PENDING").length,
+    pendingMaintenance: filteredMaintenance.filter(
+      (m) => m.status === "PENDING"
+    ).length,
     expiringSoonLeases,
   };
 }
@@ -769,9 +782,7 @@ export function getDashboardStats(propertyId?: string): DashboardStats {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function getRevenueData(propertyId?: string): RevenueData[] {
-  const months = [
-    "Aug", "Sep", "Oct", "Nov", "Dec", "Jan"
-  ];
+  const months = ["Aug", "Sep", "Oct", "Nov", "Dec", "Jan"];
 
   return months.map((month) => ({
     month,
@@ -783,10 +794,8 @@ export function getRevenueData(propertyId?: string): RevenueData[] {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function getOccupancyData(propertyId?: string): OccupancyData[] {
-  const months = [
-    "Aug", "Sep", "Oct", "Nov", "Dec", "Jan"
-  ];
-  
+  const months = ["Aug", "Sep", "Oct", "Nov", "Dec", "Jan"];
+
   return months.map((month) => ({
     month,
     occupied: Math.floor(15 + Math.random() * 10),
@@ -809,7 +818,9 @@ export function getPaymentsByProperty(propertyId: string): Payment[] {
   return mockPayments.filter((p) => p.propertyId === propertyId);
 }
 
-export function getMaintenanceByProperty(propertyId: string): MaintenanceRequest[] {
+export function getMaintenanceByProperty(
+  propertyId: string
+): MaintenanceRequest[] {
   return mockMaintenanceRequests.filter((m) => m.propertyId === propertyId);
 }
 

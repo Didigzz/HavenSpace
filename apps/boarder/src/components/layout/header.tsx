@@ -18,11 +18,11 @@ export function Header() {
   const { setTheme, theme } = useTheme();
 
   return (
-    <header className="flex h-16 items-center justify-between border-b bg-background px-4 lg:px-6">
+    <header className="bg-background flex h-16 items-center justify-between border-b px-4 lg:px-6">
       {/* Search */}
       <div className="flex flex-1 items-center gap-4">
         <div className="relative hidden w-full max-w-md md:block">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
           <Input
             placeholder="Search listings, bookings..."
             className="w-full pl-10"
@@ -51,7 +51,7 @@ export function Header() {
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" size="icon" className="relative">
               <Bell className="h-5 w-5" />
-              <span className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-[10px] text-primary-foreground">
+              <span className="bg-primary text-primary-foreground absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full text-[10px]">
                 2
               </span>
             </Button>
@@ -61,21 +61,24 @@ export function Header() {
             <DropdownMenuSeparator />
             <DropdownMenuItem className="flex flex-col items-start gap-1 p-3">
               <span className="font-medium">Booking Confirmed</span>
-              <span className="text-sm text-muted-foreground">
+              <span className="text-muted-foreground text-sm">
                 Your booking at Sunrise Boarding House has been confirmed.
               </span>
-              <span className="text-xs text-muted-foreground">2 hours ago</span>
+              <span className="text-muted-foreground text-xs">2 hours ago</span>
             </DropdownMenuItem>
             <DropdownMenuItem className="flex flex-col items-start gap-1 p-3">
               <span className="font-medium">New Message</span>
-              <span className="text-sm text-muted-foreground">
+              <span className="text-muted-foreground text-sm">
                 Maria Santos sent you a message about your inquiry.
               </span>
-              <span className="text-xs text-muted-foreground">5 hours ago</span>
+              <span className="text-muted-foreground text-xs">5 hours ago</span>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
-              <Link href="/notifications" className="w-full text-center text-primary">
+              <Link
+                href="/notifications"
+                className="text-primary w-full text-center"
+              >
                 View all notifications
               </Link>
             </DropdownMenuItem>
@@ -96,7 +99,7 @@ export function Header() {
             <DropdownMenuLabel>
               <div className="flex flex-col space-y-1">
                 <p className="text-sm font-medium">John Doe</p>
-                <p className="text-xs text-muted-foreground">
+                <p className="text-muted-foreground text-xs">
                   john.doe@example.com
                 </p>
               </div>

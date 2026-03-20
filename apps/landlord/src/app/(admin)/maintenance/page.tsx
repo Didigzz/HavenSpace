@@ -51,9 +51,16 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Tabs, TabsList, TabsTrigger } from "@havenspace/shared/ui";
 import { useProperty } from "@/lib/property-context";
-import { getMaintenanceByProperty, mockMaintenanceRequests } from "@/lib/mock-data";
+import {
+  getMaintenanceByProperty,
+  mockMaintenanceRequests,
+} from "@/lib/mock-data";
 import { formatCurrency, formatDate, cn } from "@/lib/utils";
-import type { MaintenanceRequest, MaintenancePriority, MaintenanceStatus } from "@/types";
+import type {
+  MaintenanceRequest,
+  MaintenancePriority,
+  MaintenanceStatus,
+} from "@/types";
 
 const priorityColors: Record<MaintenancePriority, string> = {
   LOW: "bg-gray-100 text-gray-800",
@@ -82,8 +89,8 @@ const columns: ColumnDef<MaintenanceRequest>[] = [
     header: "Request",
     cell: ({ row }) => (
       <div className="max-w-[300px]">
-        <p className="font-medium truncate">{row.original.title}</p>
-        <p className="text-sm text-muted-foreground truncate">
+        <p className="truncate font-medium">{row.original.title}</p>
+        <p className="text-muted-foreground truncate text-sm">
           {row.original.description}
         </p>
       </div>
@@ -96,7 +103,9 @@ const columns: ColumnDef<MaintenanceRequest>[] = [
       <div>
         <p className="font-medium">Room {row.original.roomNumber}</p>
         {row.original.tenantName && (
-          <p className="text-sm text-muted-foreground">{row.original.tenantName}</p>
+          <p className="text-muted-foreground text-sm">
+            {row.original.tenantName}
+          </p>
         )}
       </div>
     ),
@@ -107,7 +116,10 @@ const columns: ColumnDef<MaintenanceRequest>[] = [
     cell: ({ row }) => {
       const Icon = priorityIcons[row.original.priority];
       return (
-        <Badge variant="secondary" className={cn("gap-1", priorityColors[row.original.priority])}>
+        <Badge
+          variant="secondary"
+          className={cn("gap-1", priorityColors[row.original.priority])}
+        >
           <Icon className="h-3 w-3" />
           {row.original.priority}
         </Badge>
@@ -192,9 +204,12 @@ export default function MaintenancePage() {
     ? getMaintenanceByProperty(currentProperty.id)
     : mockMaintenanceRequests;
 
-  const filteredByTab = activeTab === "all"
-    ? allRequests
-    : allRequests.filter((r) => r.status.toLowerCase().replace("_", "-") === activeTab);
+  const filteredByTab =
+    activeTab === "all"
+      ? allRequests
+      : allRequests.filter(
+          (r) => r.status.toLowerCase().replace("_", "-") === activeTab
+        );
 
   const filteredRequests = filteredByTab.filter(
     (r) =>
@@ -222,7 +237,9 @@ export default function MaintenancePage() {
     pending: allRequests.filter((r) => r.status === "PENDING").length,
     inProgress: allRequests.filter((r) => r.status === "IN_PROGRESS").length,
     completed: allRequests.filter((r) => r.status === "COMPLETED").length,
-    urgent: allRequests.filter((r) => r.priority === "URGENT" && r.status !== "COMPLETED").length,
+    urgent: allRequests.filter(
+      (r) => r.priority === "URGENT" && r.status !== "COMPLETED"
+    ).length,
   };
 
   return (
@@ -257,7 +274,9 @@ export default function MaintenancePage() {
               <Clock className="h-4 w-4 text-yellow-500" />
               Pending
             </CardDescription>
-            <CardTitle className="text-3xl text-yellow-600">{stats.pending}</CardTitle>
+            <CardTitle className="text-3xl text-yellow-600">
+              {stats.pending}
+            </CardTitle>
           </CardHeader>
         </Card>
         <Card>
@@ -266,7 +285,9 @@ export default function MaintenancePage() {
               <Wrench className="h-4 w-4 text-blue-500" />
               In Progress
             </CardDescription>
-            <CardTitle className="text-3xl text-blue-600">{stats.inProgress}</CardTitle>
+            <CardTitle className="text-3xl text-blue-600">
+              {stats.inProgress}
+            </CardTitle>
           </CardHeader>
         </Card>
         <Card>
@@ -275,7 +296,9 @@ export default function MaintenancePage() {
               <CheckCircle className="h-4 w-4 text-green-500" />
               Completed
             </CardDescription>
-            <CardTitle className="text-3xl text-green-600">{stats.completed}</CardTitle>
+            <CardTitle className="text-3xl text-green-600">
+              {stats.completed}
+            </CardTitle>
           </CardHeader>
         </Card>
         <Card className={cn(stats.urgent > 0 && "border-red-500")}>
@@ -284,7 +307,9 @@ export default function MaintenancePage() {
               <AlertCircle className="h-4 w-4 text-red-500" />
               Urgent
             </CardDescription>
-            <CardTitle className="text-3xl text-red-600">{stats.urgent}</CardTitle>
+            <CardTitle className="text-3xl text-red-600">
+              {stats.urgent}
+            </CardTitle>
           </CardHeader>
         </Card>
       </div>
@@ -302,7 +327,7 @@ export default function MaintenancePage() {
               </TabsList>
             </Tabs>
             <div className="relative w-full sm:w-64">
-              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+              <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
               <Input
                 placeholder="Search requests..."
                 value={searchQuery}
@@ -360,8 +385,9 @@ export default function MaintenancePage() {
           </div>
           {/* Pagination */}
           <div className="flex items-center justify-between px-2 py-4">
-            <div className="text-sm text-muted-foreground">
-              Showing {table.getRowModel().rows.length} of {filteredRequests.length} requests
+            <div className="text-muted-foreground text-sm">
+              Showing {table.getRowModel().rows.length} of{" "}
+              {filteredRequests.length} requests
             </div>
             <div className="flex items-center space-x-2">
               <Button

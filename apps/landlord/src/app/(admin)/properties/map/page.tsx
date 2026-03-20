@@ -21,10 +21,7 @@ import {
 import { Button } from "@havenspace/shared/ui";
 import { Input } from "@havenspace/shared/ui";
 import { Badge } from "@havenspace/shared/ui";
-import {
-  Card,
-  CardContent,
-} from "@havenspace/shared/ui";
+import { Card, CardContent } from "@havenspace/shared/ui";
 import {
   Select,
   SelectContent,
@@ -39,7 +36,7 @@ import { MALAYBALAY_BOUNDS } from "@/components/map/map-picker";
 const MapPicker = dynamic(() => import("@/components/map/map-picker"), {
   ssr: false,
   loading: () => (
-    <div className="h-full w-full bg-muted animate-pulse flex items-center justify-center rounded-lg">
+    <div className="bg-muted flex h-full w-full animate-pulse items-center justify-center rounded-lg">
       <div className="text-muted-foreground text-sm">Loading map...</div>
     </div>
   ),
@@ -83,8 +80,8 @@ const mockProperties: Property[] = [
     name: "Green Valley BH",
     address: "Sayre Highway, Brgy. Sumpong",
     city: "Malaybalay City",
-    latitude: 8.1610,
-    longitude: 125.1310,
+    latitude: 8.161,
+    longitude: 125.131,
     rooms: { total: 12, occupied: 11 },
     priceRange: { min: 3500, max: 5500 },
     status: "active",
@@ -95,8 +92,8 @@ const mockProperties: Property[] = [
     name: "Hilltop Living Spaces",
     address: "Brgy. Bangcud, Near Capitol",
     city: "Malaybalay City",
-    latitude: 8.1520,
-    longitude: 125.1340,
+    latitude: 8.152,
+    longitude: 125.134,
     rooms: { total: 15, occupied: 12 },
     priceRange: { min: 3000, max: 5000 },
     status: "active",
@@ -108,7 +105,7 @@ const mockProperties: Property[] = [
     address: "Brgy. Sumpong, Near BSU Gate",
     city: "Malaybalay City",
     latitude: 8.1635,
-    longitude: 125.1290,
+    longitude: 125.129,
     rooms: { total: 25, occupied: 20 },
     priceRange: { min: 2000, max: 3500 },
     status: "active",
@@ -155,10 +152,8 @@ function Toast({
   return (
     <div
       className={cn(
-        "fixed bottom-4 right-4 z-[2000] flex items-center gap-2 rounded-lg px-4 py-3 shadow-lg text-sm font-medium animate-in slide-in-from-bottom-5",
-        type === "success"
-          ? "bg-green-600 text-white"
-          : "bg-red-600 text-white"
+        "animate-in slide-in-from-bottom-5 fixed right-4 bottom-4 z-[2000] flex items-center gap-2 rounded-lg px-4 py-3 text-sm font-medium shadow-lg",
+        type === "success" ? "bg-green-600 text-white" : "bg-red-600 text-white"
       )}
     >
       {type === "success" ? (
@@ -191,45 +186,44 @@ function PropertyCard({
     (property.rooms.occupied / property.rooms.total) * 100
   );
   const status = statusConfig[property.status];
-  const hasLocation =
-    property.latitude !== null && property.longitude !== null;
+  const hasLocation = property.latitude !== null && property.longitude !== null;
 
   return (
     <Card
       className={cn(
         "cursor-pointer transition-all hover:shadow-md",
-        isSelected && "ring-2 ring-primary",
+        isSelected && "ring-primary ring-2",
         isEditing && "ring-2 ring-orange-400"
       )}
       onClick={onClick}
     >
       <CardContent className="p-4">
         <div className="flex items-start justify-between">
-          <div className="space-y-1 flex-1 min-w-0">
-            <div className="flex items-center gap-2 flex-wrap">
-              <h4 className="font-semibold truncate">{property.name}</h4>
-              <Badge className={cn("text-xs shrink-0", status.color)}>
+          <div className="min-w-0 flex-1 space-y-1">
+            <div className="flex flex-wrap items-center gap-2">
+              <h4 className="truncate font-semibold">{property.name}</h4>
+              <Badge className={cn("shrink-0 text-xs", status.color)}>
                 {status.label}
               </Badge>
             </div>
-            <p className="text-sm text-muted-foreground truncate">
+            <p className="text-muted-foreground truncate text-sm">
               {property.address}
             </p>
-            <p className="text-xs text-muted-foreground">{property.city}</p>
+            <p className="text-muted-foreground text-xs">{property.city}</p>
           </div>
         </div>
 
         <div className="mt-3 grid grid-cols-3 gap-2 text-sm">
           <div className="flex items-center gap-1">
-            <Building2 className="h-3 w-3 text-muted-foreground" />
+            <Building2 className="text-muted-foreground h-3 w-3" />
             <span>{property.rooms.total} rooms</span>
           </div>
           <div className="flex items-center gap-1">
-            <Users className="h-3 w-3 text-muted-foreground" />
+            <Users className="text-muted-foreground h-3 w-3" />
             <span>{occupancyRate}%</span>
           </div>
           <div className="flex items-center gap-1">
-            <DollarSign className="h-3 w-3 text-muted-foreground" />
+            <DollarSign className="text-muted-foreground h-3 w-3" />
             <span>₱{property.priceRange.min.toLocaleString()}</span>
           </div>
         </div>
@@ -314,13 +308,13 @@ export default function MapViewPage() {
 
   // Get the lat/lng to show on the map
   const displayLat = editingProperty
-    ? pendingLat ?? editingProperty.latitude
+    ? (pendingLat ?? editingProperty.latitude)
     : selectedProperty
       ? selectedProperty.latitude
       : null;
 
   const displayLng = editingProperty
-    ? pendingLng ?? editingProperty.longitude
+    ? (pendingLng ?? editingProperty.longitude)
     : selectedProperty
       ? selectedProperty.longitude
       : null;
@@ -447,7 +441,7 @@ export default function MapViewPage() {
       {/* Editing Banner */}
       {editingProperty && (
         <div className="flex items-center gap-3 rounded-lg border border-orange-200 bg-orange-50 p-4">
-          <MapPin className="h-5 w-5 text-orange-600 shrink-0" />
+          <MapPin className="h-5 w-5 shrink-0 text-orange-600" />
           <div className="flex-1">
             <p className="font-medium text-orange-800">
               Pinning location for: {editingProperty.name}
@@ -458,12 +452,12 @@ export default function MapViewPage() {
               rectangle).
             </p>
             {pendingLat !== null && pendingLng !== null && (
-              <p className="text-xs text-orange-500 mt-1">
+              <p className="mt-1 text-xs text-orange-500">
                 Coordinates: {pendingLat.toFixed(6)}, {pendingLng.toFixed(6)}
               </p>
             )}
           </div>
-          <div className="flex gap-2 shrink-0">
+          <div className="flex shrink-0 gap-2">
             <Button
               size="sm"
               onClick={handleSaveLocation}
@@ -481,8 +475,8 @@ export default function MapViewPage() {
 
       {/* Filters */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
-        <div className="relative flex-1 max-w-sm">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+        <div className="relative max-w-sm flex-1">
+          <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
           <Input
             placeholder="Search properties..."
             className="pl-10"
@@ -507,8 +501,8 @@ export default function MapViewPage() {
       {/* Main Content */}
       <div className="grid gap-6 lg:grid-cols-3">
         {/* Property List */}
-        <div className="lg:col-span-1 space-y-4 max-h-[calc(100vh-300px)] overflow-y-auto">
-          <p className="text-sm text-muted-foreground">
+        <div className="max-h-[calc(100vh-300px)] space-y-4 overflow-y-auto lg:col-span-1">
+          <p className="text-muted-foreground text-sm">
             {filteredProperties.length}{" "}
             {filteredProperties.length === 1 ? "property" : "properties"} found
           </p>
@@ -530,11 +524,11 @@ export default function MapViewPage() {
           {filteredProperties.length === 0 && (
             <Card>
               <CardContent className="flex flex-col items-center justify-center py-12">
-                <MapPin className="h-12 w-12 text-muted-foreground" />
+                <MapPin className="text-muted-foreground h-12 w-12" />
                 <h3 className="mt-4 text-lg font-semibold">
                   No properties found
                 </h3>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-muted-foreground text-sm">
                   Try adjusting your search or filters
                 </p>
               </CardContent>
@@ -543,8 +537,8 @@ export default function MapViewPage() {
         </div>
 
         {/* Map */}
-        <Card className="lg:col-span-2 overflow-hidden">
-          <CardContent className="p-0 h-[calc(100vh-300px)] min-h-[400px]">
+        <Card className="overflow-hidden lg:col-span-2">
+          <CardContent className="h-[calc(100vh-300px)] min-h-[400px] p-0">
             <MapPicker
               latitude={displayLat}
               longitude={displayLng}

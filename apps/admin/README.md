@@ -11,30 +11,35 @@ The platform administration interface for the Haven Space platform. This applica
 ## âœ¨ Features
 
 ### User Management
+
 - **User Overview**: View all platform users
 - **Role Management**: Assign and modify user roles
 - **Account Status**: Activate, suspend, or deactivate accounts
 - **User Analytics**: User behavior and engagement metrics
 
 ### Landlord Management
+
 - **Application Review**: Review and approve/reject landlord applications
 - **Verification Process**: Document verification and background checks
 - **Performance Monitoring**: Track landlord performance metrics
 - **Compliance Management**: Ensure policy compliance
 
 ### Content Moderation
+
 - **Listing Review**: Moderate property listings
 - **Content Flagging**: Handle reported content
 - **Image Moderation**: Review uploaded images
 - **Policy Enforcement**: Enforce platform policies
 
 ### Platform Analytics
+
 - **System Metrics**: Platform performance and usage
 - **Financial Overview**: Revenue and transaction monitoring
 - **Growth Analytics**: User acquisition and retention
 - **Performance Reports**: Detailed analytics reports
 
 ### System Administration
+
 - **Configuration Management**: Platform settings and configuration
 - **Security Monitoring**: Security alerts and monitoring
 - **Backup Management**: Data backup and recovery
@@ -43,6 +48,7 @@ The platform administration interface for the Haven Space platform. This applica
 ## ðŸ—ï¸ Architecture
 
 ### Pages Structure
+
 ```
 src/app/
 â”œâ”€â”€ page.tsx                           # Dashboard redirect
@@ -59,6 +65,7 @@ src/app/
 ```
 
 ### Components Structure
+
 ```
 src/components/
 â”œâ”€â”€ layout/
@@ -77,6 +84,7 @@ src/components/
 ## ðŸš€ Getting Started
 
 ### Prerequisites
+
 - Node.js 18+
 - Bun package manager
 - Admin account with appropriate permissions
@@ -121,57 +129,67 @@ SENTRY_DSN=your-sentry-dsn
 ## ðŸ” Authentication & Authorization
 
 ### Access Control
+
 - **Role Requirement**: User must have `admin` role
 - **Permission Levels**: Different admin permission levels
 - **Audit Logging**: All admin actions are logged
 
 ### Route Protection
+
 ```typescript
 // middleware.ts
 export default withAuth(
   function middleware(req) {
-    const { pathname } = req.nextUrl
-    const { token } = req.nextauth
-    
+    const { pathname } = req.nextUrl;
+    const { token } = req.nextauth;
+
     // Check if user is an admin
-    if (token?.role !== 'admin') {
-      return NextResponse.redirect(new URL('/unauthorized', req.url))
+    if (token?.role !== "admin") {
+      return NextResponse.redirect(new URL("/unauthorized", req.url));
     }
-    
+
     // Check specific permissions for sensitive operations
-    if (pathname.includes('/settings') && !token?.permissions?.includes('system_config')) {
-      return NextResponse.redirect(new URL('/insufficient-permissions', req.url))
+    if (
+      pathname.includes("/settings") &&
+      !token?.permissions?.includes("system_config")
+    ) {
+      return NextResponse.redirect(
+        new URL("/insufficient-permissions", req.url)
+      );
     }
   },
   {
     callbacks: {
-      authorized: ({ token }) => !!token
-    }
+      authorized: ({ token }) => !!token,
+    },
   }
-)
+);
 ```
 
 ### Permission System
+
 ```typescript
 interface AdminPermissions {
-  user_management: boolean
-  landlord_approval: boolean
-  content_moderation: boolean
-  system_config: boolean
-  financial_oversight: boolean
-  analytics_access: boolean
+  user_management: boolean;
+  landlord_approval: boolean;
+  content_moderation: boolean;
+  system_config: boolean;
+  financial_oversight: boolean;
+  analytics_access: boolean;
 }
 ```
 
 ## ðŸ‘¥ User Management
 
 ### User Overview
+
 - **User List**: Paginated list of all users
 - **Search & Filter**: Find users by various criteria
 - **Bulk Operations**: Perform actions on multiple users
 - **User Details**: Comprehensive user information
 
 ### User Management Component
+
 ```typescript
 const UserManagement = () => {
   const { data: users, isLoading } = api.admin.getUsers.useQuery({
@@ -179,9 +197,9 @@ const UserManagement = () => {
     limit: 50,
     filters: searchFilters
   })
-  
+
   const updateUserStatus = api.admin.updateUserStatus.useMutation()
-  
+
   const handleStatusChange = (userId: string, status: UserStatus) => {
     updateUserStatus.mutate({
       userId,
@@ -189,7 +207,7 @@ const UserManagement = () => {
       reason: 'Admin action'
     })
   }
-  
+
   return (
     <div className="user-management">
       <UserFilters onFiltersChange={setSearchFilters} />
@@ -211,6 +229,7 @@ const UserManagement = () => {
 ## ðŸ  Landlord Application Review
 
 ### Application Process
+
 1. **Application Submission**: Landlord submits application
 2. **Document Review**: Admin reviews submitted documents
 3. **Background Check**: Verify landlord credentials
@@ -218,18 +237,19 @@ const UserManagement = () => {
 5. **Notification**: Inform landlord of decision
 
 ### Application Review Interface
+
 ```typescript
 const ApplicationReview = ({ application }: { application: LandlordApplication }) => {
   const approveApplication = api.admin.approveApplication.useMutation()
   const rejectApplication = api.admin.rejectApplication.useMutation()
-  
+
   const handleApprove = () => {
     approveApplication.mutate({
       applicationId: application.id,
       notes: 'Application approved after document verification'
     })
   }
-  
+
   const handleReject = (reason: string) => {
     rejectApplication.mutate({
       applicationId: application.id,
@@ -237,7 +257,7 @@ const ApplicationReview = ({ application }: { application: LandlordApplication }
       feedback: 'Please resubmit with correct documentation'
     })
   }
-  
+
   return (
     <Card>
       <CardHeader>
@@ -266,16 +286,18 @@ const ApplicationReview = ({ application }: { application: LandlordApplication }
 ## ðŸ“Š Platform Analytics
 
 ### Dashboard Metrics
+
 - **User Growth**: Registration and activation trends
 - **Revenue Analytics**: Platform revenue and commission tracking
 - **Booking Analytics**: Booking patterns and success rates
 - **Performance Metrics**: System performance and uptime
 
 ### Analytics Dashboard
+
 ```typescript
 const AnalyticsDashboard = () => {
   const { data: stats } = api.admin.getPlatformStats.useQuery()
-  
+
   return (
     <div className="analytics-dashboard">
       <div className="stats-grid">
@@ -299,7 +321,7 @@ const AnalyticsDashboard = () => {
           value={`$${stats?.platformCommission || 0}`}
         />
       </div>
-      
+
       <div className="charts-grid">
         <UserGrowthChart data={stats?.userGrowthData} />
         <RevenueChart data={stats?.revenueData} />
@@ -314,17 +336,19 @@ const AnalyticsDashboard = () => {
 ## ðŸ›¡ï¸ Content Moderation
 
 ### Moderation Features
+
 - **Automated Flagging**: AI-powered content detection
 - **Manual Review**: Human moderation workflow
 - **Report Handling**: User-reported content management
 - **Policy Enforcement**: Automated policy compliance
 
 ### Moderation Queue
+
 ```typescript
 const ModerationQueue = () => {
   const { data: flaggedContent } = api.admin.getFlaggedContent.useQuery()
   const moderateContent = api.admin.moderateContent.useMutation()
-  
+
   const handleModeration = (contentId: string, action: 'approve' | 'reject' | 'flag') => {
     moderateContent.mutate({
       contentId,
@@ -332,7 +356,7 @@ const ModerationQueue = () => {
       moderatorNotes: 'Reviewed by admin'
     })
   }
-  
+
   return (
     <div className="moderation-queue">
       {flaggedContent?.map(content => (
@@ -350,16 +374,18 @@ const ModerationQueue = () => {
 ## ðŸ’° Financial Oversight
 
 ### Financial Monitoring
+
 - **Transaction Tracking**: Monitor all platform transactions
 - **Commission Management**: Track platform commissions
 - **Payout Oversight**: Manage landlord payouts
 - **Financial Reports**: Generate financial reports
 
 ### Financial Dashboard
+
 ```typescript
 const FinancialOverview = () => {
   const { data: financials } = api.admin.getFinancialOverview.useQuery()
-  
+
   return (
     <div className="financial-overview">
       <div className="financial-stats">
@@ -376,7 +402,7 @@ const FinancialOverview = () => {
           value={`$${financials?.pendingPayouts || 0}`}
         />
       </div>
-      
+
       <TransactionTable transactions={financials?.recentTransactions} />
       <PayoutQueue payouts={financials?.pendingPayoutRequests} />
     </div>
@@ -387,21 +413,23 @@ const FinancialOverview = () => {
 ## ðŸ”§ System Configuration
 
 ### Configuration Management
+
 - **Platform Settings**: Core platform configuration
 - **Feature Flags**: Enable/disable features
 - **Rate Limits**: API rate limiting configuration
 - **Maintenance Mode**: System maintenance controls
 
 ### Settings Interface
+
 ```typescript
 const SystemSettings = () => {
   const { data: settings } = api.admin.getSystemSettings.useQuery()
   const updateSettings = api.admin.updateSystemSettings.useMutation()
-  
+
   const handleSettingsUpdate = (newSettings: SystemSettings) => {
     updateSettings.mutate(newSettings)
   }
-  
+
   return (
     <div className="system-settings">
       <SettingsSection title="Platform Configuration">
@@ -417,7 +445,7 @@ const SystemSettings = () => {
           onChange={(value) => handleSettingsUpdate({ ...settings, commissionRate: value })}
         />
       </SettingsSection>
-      
+
       <SettingsSection title="Feature Flags">
         <ToggleField
           label="Enable New Registrations"
@@ -438,16 +466,18 @@ const SystemSettings = () => {
 ## ðŸ“ˆ Reporting System
 
 ### Report Types
+
 - **User Reports**: User activity and engagement
 - **Financial Reports**: Revenue and transaction reports
 - **Performance Reports**: System performance metrics
 - **Compliance Reports**: Regulatory compliance reports
 
 ### Report Generation
+
 ```typescript
 const ReportGenerator = () => {
   const generateReport = api.admin.generateReport.useMutation()
-  
+
   const handleGenerateReport = (type: ReportType, dateRange: DateRange) => {
     generateReport.mutate({
       type,
@@ -455,7 +485,7 @@ const ReportGenerator = () => {
       format: 'pdf'
     })
   }
-  
+
   return (
     <div className="report-generator">
       <ReportTypeSelector onSelect={setReportType} />
@@ -471,6 +501,7 @@ const ReportGenerator = () => {
 ## ðŸ§ª Testing
 
 ### Test Structure
+
 ```
 src/__tests__/
 â”œâ”€â”€ components/
@@ -487,6 +518,7 @@ src/__tests__/
 ```
 
 ### Running Tests
+
 ```bash
 # Unit tests
 bun test
@@ -504,6 +536,7 @@ bun run test:coverage
 ## ðŸš€ Deployment
 
 ### Build Process
+
 ```bash
 # Build for production
 bun run build
@@ -513,6 +546,7 @@ bun start
 ```
 
 ### Environment Variables (Production)
+
 ```env
 NEXTAUTH_URL=https://admin.yourdomain.com
 NEXTAUTH_SECRET=production-secret
@@ -530,30 +564,33 @@ NEXT_PUBLIC_ANALYTICS_ID=production-analytics-id
 ## ðŸ”’ Security Considerations
 
 ### Security Features
+
 - **Multi-factor Authentication**: Required for admin accounts
 - **IP Whitelisting**: Restrict admin access by IP
 - **Audit Logging**: Log all admin actions
 - **Session Management**: Secure session handling
 
 ### Audit Trail
+
 ```typescript
 const auditLog = {
   userId: admin.id,
-  action: 'USER_STATUS_CHANGED',
+  action: "USER_STATUS_CHANGED",
   targetId: user.id,
   details: {
-    oldStatus: 'active',
-    newStatus: 'suspended',
-    reason: 'Policy violation'
+    oldStatus: "active",
+    newStatus: "suspended",
+    reason: "Policy violation",
   },
   timestamp: new Date(),
-  ipAddress: req.ip
-}
+  ipAddress: req.ip,
+};
 ```
 
 ## ðŸ“Š Performance
 
 ### Optimization Strategies
+
 - **Data Pagination**: Efficient data loading
 - **Caching**: Redis caching for frequently accessed data
 - **Background Jobs**: Async processing for heavy operations
@@ -573,4 +610,3 @@ const auditLog = {
 - [API Documentation](../api/README.md)
 - [Security Guidelines](../../docs/SECURITY.md)
 - [Development Guidelines](../../docs/DEVELOPMENT.md)
-

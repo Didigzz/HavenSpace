@@ -10,7 +10,11 @@ export type PaymentStatus = "PENDING" | "PAID" | "OVERDUE" | "CANCELLED";
 
 export type PaymentType = "RENT" | "UTILITY" | "DEPOSIT" | "OTHER";
 
-export type MaintenanceStatus = "PENDING" | "IN_PROGRESS" | "COMPLETED" | "CANCELLED";
+export type MaintenanceStatus =
+  | "PENDING"
+  | "IN_PROGRESS"
+  | "COMPLETED"
+  | "CANCELLED";
 
 export type MaintenancePriority = "LOW" | "MEDIUM" | "HIGH" | "URGENT";
 

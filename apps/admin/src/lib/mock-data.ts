@@ -78,7 +78,14 @@ export interface MockPayment {
 export interface MockExpense {
   id: string;
   propertyId: string;
-  category: "UTILITIES" | "MAINTENANCE" | "SUPPLIES" | "SALARY" | "TAXES" | "INSURANCE" | "OTHER";
+  category:
+    | "UTILITIES"
+    | "MAINTENANCE"
+    | "SUPPLIES"
+    | "SALARY"
+    | "TAXES"
+    | "INSURANCE"
+    | "OTHER";
   amount: number;
   description: string;
   date: string;
@@ -93,7 +100,13 @@ export interface MockMaintenanceRequest {
   title: string;
   description: string;
   priority: "LOW" | "MEDIUM" | "HIGH";
-  category: "PLUMBING" | "ELECTRICAL" | "HVAC" | "APPLIANCE" | "STRUCTURAL" | "OTHER";
+  category:
+    | "PLUMBING"
+    | "ELECTRICAL"
+    | "HVAC"
+    | "APPLIANCE"
+    | "STRUCTURAL"
+    | "OTHER";
   status: "PENDING" | "IN_PROGRESS" | "COMPLETED" | "CANCELLED";
   createdAt: string;
   estimatedCost?: number;
@@ -124,19 +137,30 @@ export const mockProperties: MockProperty[] = [
     amenities: ["WiFi", "CCTV", "Laundry"],
     imageCount: 12,
     images: ["/images/prop1-1.jpg", "/images/prop1-2.jpg"],
-    location: { latitude: 14.5995, longitude: 120.9842, address: "123 Main Street, Manila" },
+    location: {
+      latitude: 14.5995,
+      longitude: 120.9842,
+      address: "123 Main Street, Manila",
+    },
     rules: [
-      { id: "rule-1", title: "No Smoking", description: "Smoking is not allowed inside the premises", icon: "🚭" },
-      { id: "rule-2", title: "Quiet Hours", description: "Quiet hours from 10 PM to 6 AM", icon: "🤫" },
+      {
+        id: "rule-1",
+        title: "No Smoking",
+        description: "Smoking is not allowed inside the premises",
+        icon: "🚭",
+      },
+      {
+        id: "rule-2",
+        title: "Quiet Hours",
+        description: "Quiet hours from 10 PM to 6 AM",
+        icon: "🤫",
+      },
     ],
     nearbyLandmarks: [
       "University of the Philippines - 0.5 km",
       "SM City Manila - 1.2 km",
     ],
-    publicTransport: [
-      "Jeepney Stop",
-      "LRT Central Station",
-    ],
+    publicTransport: ["Jeepney Stop", "LRT Central Station"],
     totalRooms: 20,
     occupiedRooms: 15,
     monthlyRevenue: 125000,
@@ -161,19 +185,30 @@ export const mockProperties: MockProperty[] = [
     amenities: ["WiFi", "Pool", "Gym"],
     imageCount: 8,
     images: ["/images/prop2-1.jpg", "/images/prop2-2.jpg"],
-    location: { latitude: 14.6760, longitude: 121.0437, address: "456 Oak Avenue, Quezon City" },
+    location: {
+      latitude: 14.676,
+      longitude: 121.0437,
+      address: "456 Oak Avenue, Quezon City",
+    },
     rules: [
-      { id: "rule-3", title: "No Pets", description: "Pets are not allowed", icon: "🚫" },
-      { id: "rule-4", title: "Visitor Policy", description: "Visitors allowed until 9 PM", icon: "👥" },
+      {
+        id: "rule-3",
+        title: "No Pets",
+        description: "Pets are not allowed",
+        icon: "🚫",
+      },
+      {
+        id: "rule-4",
+        title: "Visitor Policy",
+        description: "Visitors allowed until 9 PM",
+        icon: "👥",
+      },
     ],
     nearbyLandmarks: [
       "Ayala Malls - 0.3 km",
       "Quezon City Medical Center - 0.8 km",
     ],
-    publicTransport: [
-      "Bus Stop",
-      "MRT North Station",
-    ],
+    publicTransport: ["Bus Stop", "MRT North Station"],
     totalRooms: 30,
     occupiedRooms: 28,
     monthlyRevenue: 210000,
@@ -198,17 +233,24 @@ export const mockProperties: MockProperty[] = [
     amenities: ["WiFi", "Garden"],
     imageCount: 6,
     images: ["/images/prop3-1.jpg"],
-    location: { latitude: 14.5547, longitude: 121.0244, address: "789 Pine Road, Makati" },
+    location: {
+      latitude: 14.5547,
+      longitude: 121.0244,
+      address: "789 Pine Road, Makati",
+    },
     rules: [
-      { id: "rule-5", title: "Garden Hours", description: "Garden access from 6 AM to 8 PM", icon: "🌳" },
+      {
+        id: "rule-5",
+        title: "Garden Hours",
+        description: "Garden access from 6 AM to 8 PM",
+        icon: "🌳",
+      },
     ],
     nearbyLandmarks: [
       "Glorietta Mall - 0.4 km",
       "Makati Medical Center - 1.0 km",
     ],
-    publicTransport: [
-      "Jeepney Terminal",
-    ],
+    publicTransport: ["Jeepney Terminal"],
     totalRooms: 15,
     occupiedRooms: 10,
     monthlyRevenue: 75000,
@@ -498,20 +540,35 @@ export function getExpensesByProperty(propertyId: string): MockExpense[] {
   return mockExpenses.filter((e) => e.propertyId === propertyId);
 }
 
-export function getMaintenanceByProperty(propertyId: string): MockMaintenanceRequest[] {
+export function getMaintenanceByProperty(
+  propertyId: string
+): MockMaintenanceRequest[] {
   return mockMaintenanceRequests.filter((m) => m.propertyId === propertyId);
 }
 
 // Revenue data generator
 export function getRevenueData(propertyId?: string): MockRevenueData[] {
-  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
   const currentMonth = new Date().getMonth();
-  
+
   return months.slice(0, currentMonth + 1).map((month, index) => {
     const baseRevenue = propertyId ? 15000 : 45000;
     const baseExpenses = propertyId ? 5000 : 15000;
     const variation = Math.random() * 0.3 + 0.85;
-    
+
     return {
       month,
       revenue: Math.round(baseRevenue * variation),

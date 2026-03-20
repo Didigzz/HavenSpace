@@ -30,12 +30,17 @@ export function OccupancyChart({ propertyId }: OccupancyChartProps) {
     <Card>
       <CardHeader>
         <CardTitle>Occupancy Trends</CardTitle>
-        <CardDescription>Room occupancy status over the last 6 months</CardDescription>
+        <CardDescription>
+          Room occupancy status over the last 6 months
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <div className="h-[350px]">
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={data} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+            <BarChart
+              data={data}
+              margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+            >
               <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
               <XAxis
                 dataKey="month"
@@ -52,7 +57,7 @@ export function OccupancyChart({ propertyId }: OccupancyChartProps) {
                 content={({ active, payload, label }) => {
                   if (active && payload && payload.length) {
                     return (
-                      <div className="rounded-lg border bg-background p-3 shadow-md">
+                      <div className="bg-background rounded-lg border p-3 shadow-md">
                         <p className="font-medium">{label}</p>
                         {payload.map((entry, index) => (
                           <p

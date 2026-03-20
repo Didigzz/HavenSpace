@@ -114,12 +114,19 @@ interface StatCardProps {
   description?: string;
 }
 
-function StatCard({ title, value, change, changeType, icon: Icon, description }: StatCardProps) {
+function StatCard({
+  title,
+  value,
+  change,
+  changeType,
+  icon: Icon,
+  description,
+}: StatCardProps) {
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-sm font-medium">{title}</CardTitle>
-        <Icon className="h-4 w-4 text-muted-foreground" />
+        <Icon className="text-muted-foreground h-4 w-4" />
       </CardHeader>
       <CardContent>
         <div className="text-2xl font-bold">{value}</div>
@@ -140,7 +147,7 @@ function StatCard({ title, value, change, changeType, icon: Icon, description }:
           <span className="text-muted-foreground">vs last period</span>
         </div>
         {description && (
-          <p className="mt-1 text-xs text-muted-foreground">{description}</p>
+          <p className="text-muted-foreground mt-1 text-xs">{description}</p>
         )}
       </CardContent>
     </Card>
@@ -155,7 +162,9 @@ export default function ReportsPage() {
       {/* Page Header */}
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Reports & Analytics</h1>
+          <h1 className="text-3xl font-bold tracking-tight">
+            Reports & Analytics
+          </h1>
           <p className="text-muted-foreground">
             Platform performance insights and analytics
           </p>
@@ -242,19 +251,38 @@ export default function ReportsPage() {
             <Card className="lg:col-span-5">
               <CardHeader>
                 <CardTitle>Revenue Trend</CardTitle>
-                <CardDescription>Monthly revenue and booking volume</CardDescription>
+                <CardDescription>
+                  Monthly revenue and booking volume
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="h-[350px]">
                   <ResponsiveContainer width="100%" height="100%">
                     <AreaChart data={monthlyRevenueData}>
                       <defs>
-                        <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.3} />
-                          <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0} />
+                        <linearGradient
+                          id="colorRevenue"
+                          x1="0"
+                          y1="0"
+                          x2="0"
+                          y2="1"
+                        >
+                          <stop
+                            offset="5%"
+                            stopColor="#8b5cf6"
+                            stopOpacity={0.3}
+                          />
+                          <stop
+                            offset="95%"
+                            stopColor="#8b5cf6"
+                            stopOpacity={0}
+                          />
                         </linearGradient>
                       </defs>
-                      <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+                      <CartesianGrid
+                        strokeDasharray="3 3"
+                        className="stroke-muted"
+                      />
                       <XAxis
                         dataKey="month"
                         className="text-xs"
@@ -271,10 +299,17 @@ export default function ReportsPage() {
                           border: "1px solid hsl(var(--border))",
                           borderRadius: "8px",
                         }}
-                        formatter={(value: number | undefined, name: string | undefined) => [
-                          name === "revenue" ? formatCurrency(value ?? 0) : value ?? 0,
-                          name === "revenue" ? "Revenue" : "Bookings",
-                        ] as [string | number, string]}
+                        formatter={(
+                          value: number | undefined,
+                          name: string | undefined
+                        ) =>
+                          [
+                            name === "revenue"
+                              ? formatCurrency(value ?? 0)
+                              : (value ?? 0),
+                            name === "revenue" ? "Revenue" : "Bookings",
+                          ] as [string | number, string]
+                        }
                       />
                       <Area
                         type="monotone"
@@ -317,19 +352,21 @@ export default function ReportsPage() {
                           border: "1px solid hsl(var(--border))",
                           borderRadius: "8px",
                         }}
-                        formatter={(value: number | undefined) => [`${value ?? 0}%`, "Share"] as [string, string]}
+                        formatter={(value: number | undefined) =>
+                          [`${value ?? 0}%`, "Share"] as [string, string]
+                        }
                       />
                     </PieChart>
                   </ResponsiveContainer>
                 </div>
-                <div className="grid grid-cols-2 gap-2 mt-4">
+                <div className="mt-4 grid grid-cols-2 gap-2">
                   {paymentMethodsData.map((item) => (
                     <div key={item.name} className="flex items-center gap-2">
                       <div
                         className="h-3 w-3 rounded-full"
                         style={{ backgroundColor: item.color }}
                       />
-                      <span className="text-xs text-muted-foreground">
+                      <span className="text-muted-foreground text-xs">
                         {item.name} ({item.value}%)
                       </span>
                     </div>
@@ -353,7 +390,10 @@ export default function ReportsPage() {
               <div className="h-[350px]">
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={userGrowthData}>
-                    <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+                    <CartesianGrid
+                      strokeDasharray="3 3"
+                      className="stroke-muted"
+                    />
                     <XAxis
                       dataKey="month"
                       className="text-xs"
@@ -424,7 +464,12 @@ export default function ReportsPage() {
                           border: "1px solid hsl(var(--border))",
                           borderRadius: "8px",
                         }}
-                        formatter={(value: number | undefined) => [formatNumber(value ?? 0), "Bookings"] as [string, string]}
+                        formatter={(value: number | undefined) =>
+                          [formatNumber(value ?? 0), "Bookings"] as [
+                            string,
+                            string,
+                          ]
+                        }
                       />
                     </PieChart>
                   </ResponsiveContainer>
@@ -435,13 +480,18 @@ export default function ReportsPage() {
             <Card>
               <CardHeader>
                 <CardTitle>Daily Booking Pattern</CardTitle>
-                <CardDescription>Average bookings by day of week</CardDescription>
+                <CardDescription>
+                  Average bookings by day of week
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="h-[300px]">
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={dailyBookingsData}>
-                      <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
+                      <CartesianGrid
+                        strokeDasharray="3 3"
+                        className="stroke-muted"
+                      />
                       <XAxis
                         dataKey="day"
                         className="text-xs"
@@ -458,7 +508,11 @@ export default function ReportsPage() {
                           borderRadius: "8px",
                         }}
                       />
-                      <Bar dataKey="bookings" fill="#8b5cf6" radius={[4, 4, 0, 0]} />
+                      <Bar
+                        dataKey="bookings"
+                        fill="#8b5cf6"
+                        radius={[4, 4, 0, 0]}
+                      />
                     </BarChart>
                   </ResponsiveContainer>
                 </div>
@@ -484,19 +538,23 @@ export default function ReportsPage() {
                     className="flex items-center justify-between rounded-lg border p-4"
                   >
                     <div className="flex items-center gap-4">
-                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 font-semibold text-primary">
+                      <div className="bg-primary/10 text-primary flex h-10 w-10 items-center justify-center rounded-full font-semibold">
                         {index + 1}
                       </div>
                       <div>
                         <p className="font-medium">{city.city}</p>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-muted-foreground text-sm">
                           {formatNumber(city.bookings)} bookings
                         </p>
                       </div>
                     </div>
                     <div className="text-right">
-                      <p className="font-semibold">{formatCurrency(city.revenue)}</p>
-                      <p className="text-sm text-muted-foreground">Total revenue</p>
+                      <p className="font-semibold">
+                        {formatCurrency(city.revenue)}
+                      </p>
+                      <p className="text-muted-foreground text-sm">
+                        Total revenue
+                      </p>
                     </div>
                   </div>
                 ))}
@@ -516,39 +574,39 @@ export default function ReportsPage() {
         </CardHeader>
         <CardContent>
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-            <button className="flex flex-col items-center gap-2 rounded-lg border p-4 text-center transition-colors hover:bg-muted">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-                <CreditCard className="h-6 w-6 text-primary" />
+            <button className="hover:bg-muted flex flex-col items-center gap-2 rounded-lg border p-4 text-center transition-colors">
+              <div className="bg-primary/10 flex h-12 w-12 items-center justify-center rounded-full">
+                <CreditCard className="text-primary h-6 w-6" />
               </div>
               <span className="font-medium">Revenue Report</span>
-              <span className="text-xs text-muted-foreground">
+              <span className="text-muted-foreground text-xs">
                 Detailed financial breakdown
               </span>
             </button>
-            <button className="flex flex-col items-center gap-2 rounded-lg border p-4 text-center transition-colors hover:bg-muted">
+            <button className="hover:bg-muted flex flex-col items-center gap-2 rounded-lg border p-4 text-center transition-colors">
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-blue-500/10">
                 <Users className="h-6 w-6 text-blue-500" />
               </div>
               <span className="font-medium">User Report</span>
-              <span className="text-xs text-muted-foreground">
+              <span className="text-muted-foreground text-xs">
                 User demographics & activity
               </span>
             </button>
-            <button className="flex flex-col items-center gap-2 rounded-lg border p-4 text-center transition-colors hover:bg-muted">
+            <button className="hover:bg-muted flex flex-col items-center gap-2 rounded-lg border p-4 text-center transition-colors">
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-green-500/10">
                 <Building2 className="h-6 w-6 text-green-500" />
               </div>
               <span className="font-medium">Listings Report</span>
-              <span className="text-xs text-muted-foreground">
+              <span className="text-muted-foreground text-xs">
                 Property performance metrics
               </span>
             </button>
-            <button className="flex flex-col items-center gap-2 rounded-lg border p-4 text-center transition-colors hover:bg-muted">
+            <button className="hover:bg-muted flex flex-col items-center gap-2 rounded-lg border p-4 text-center transition-colors">
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-orange-500/10">
                 <Activity className="h-6 w-6 text-orange-500" />
               </div>
               <span className="font-medium">Activity Report</span>
-              <span className="text-xs text-muted-foreground">
+              <span className="text-muted-foreground text-xs">
                 Platform activity logs
               </span>
             </button>

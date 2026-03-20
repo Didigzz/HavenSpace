@@ -17,7 +17,12 @@ import {
   Check,
   CheckCheck,
 } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@havenspace/shared/ui";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@havenspace/shared/ui";
 import { Button } from "@havenspace/shared/ui";
 import { Input } from "@havenspace/shared/ui";
 import { Badge } from "@havenspace/shared/ui";
@@ -88,13 +93,16 @@ const mockConversations = [
 ];
 
 // Mock messages data
-const mockMessages: Record<string, Array<{
-  id: string;
-  senderId: string;
-  content: string;
-  timestamp: Date;
-  status: "sent" | "delivered" | "read";
-}>> = {
+const mockMessages: Record<
+  string,
+  Array<{
+    id: string;
+    senderId: string;
+    content: string;
+    timestamp: Date;
+    status: "sent" | "delivered" | "read";
+  }>
+> = {
   "1": [
     {
       id: "m1",
@@ -113,14 +121,16 @@ const mockMessages: Record<string, Array<{
     {
       id: "m3",
       senderId: "landlord",
-      content: "We have a few rooms available starting next month. Would you like to schedule a visit?",
+      content:
+        "We have a few rooms available starting next month. Would you like to schedule a visit?",
       timestamp: new Date(Date.now() - 24 * 60 * 60 * 1000),
       status: "read",
     },
     {
       id: "m4",
       senderId: "me",
-      content: "Yes, that would be great! I've already made the booking payment.",
+      content:
+        "Yes, that would be great! I've already made the booking payment.",
       timestamp: new Date(Date.now() - 23 * 60 * 60 * 1000),
       status: "read",
     },
@@ -167,7 +177,9 @@ const mockMessages: Record<string, Array<{
 };
 
 export default function MessagesPage() {
-  const [selectedConversation, setSelectedConversation] = useState<string | null>("1");
+  const [selectedConversation, setSelectedConversation] = useState<
+    string | null
+  >("1");
   const [searchQuery, setSearchQuery] = useState("");
   const [messageInput, setMessageInput] = useState("");
   const [showMobileList, setShowMobileList] = useState(true);
@@ -179,8 +191,12 @@ export default function MessagesPage() {
       conv.property.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const selectedConv = mockConversations.find((c) => c.id === selectedConversation);
-  const messages = selectedConversation ? mockMessages[selectedConversation] || [] : [];
+  const selectedConv = mockConversations.find(
+    (c) => c.id === selectedConversation
+  );
+  const messages = selectedConversation
+    ? mockMessages[selectedConversation] || []
+    : [];
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -224,9 +240,9 @@ export default function MessagesPage() {
   const getStatusIcon = (status: "sent" | "delivered" | "read") => {
     switch (status) {
       case "sent":
-        return <Check className="h-3 w-3 text-muted-foreground" />;
+        return <Check className="text-muted-foreground h-3 w-3" />;
       case "delivered":
-        return <CheckCheck className="h-3 w-3 text-muted-foreground" />;
+        return <CheckCheck className="text-muted-foreground h-3 w-3" />;
       case "read":
         return <CheckCheck className="h-3 w-3 text-blue-500" />;
     }
@@ -239,14 +255,14 @@ export default function MessagesPage() {
           {/* Conversations List */}
           <div
             className={cn(
-              "w-full md:w-80 lg:w-96 border-r flex flex-col",
+              "flex w-full flex-col border-r md:w-80 lg:w-96",
               !showMobileList && "hidden md:flex"
             )}
           >
-            <div className="p-4 border-b">
-              <h2 className="text-lg font-semibold mb-3">Messages</h2>
+            <div className="border-b p-4">
+              <h2 className="mb-3 text-lg font-semibold">Messages</h2>
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
                 <Input
                   placeholder="Search conversations..."
                   value={searchQuery}
@@ -257,7 +273,7 @@ export default function MessagesPage() {
             </div>
             <ScrollArea className="flex-1">
               {filteredConversations.length === 0 ? (
-                <div className="p-4 text-center text-muted-foreground">
+                <div className="text-muted-foreground p-4 text-center">
                   No conversations found
                 </div>
               ) : (
@@ -267,7 +283,7 @@ export default function MessagesPage() {
                       key={conv.id}
                       onClick={() => handleSelectConversation(conv.id)}
                       className={cn(
-                        "w-full p-4 text-left hover:bg-accent transition-colors",
+                        "hover:bg-accent w-full p-4 text-left transition-colors",
                         selectedConversation === conv.id && "bg-accent"
                       )}
                     >
@@ -275,28 +291,32 @@ export default function MessagesPage() {
                         <div className="relative">
                           <Avatar className="h-12 w-12">
                             <AvatarImage src={conv.avatar} />
-                            <AvatarFallback>{getInitials(conv.name)}</AvatarFallback>
+                            <AvatarFallback>
+                              {getInitials(conv.name)}
+                            </AvatarFallback>
                           </Avatar>
                           {conv.online && (
-                            <Circle className="absolute bottom-0 right-0 h-3 w-3 fill-green-500 text-green-500" />
+                            <Circle className="absolute right-0 bottom-0 h-3 w-3 fill-green-500 text-green-500" />
                           )}
                         </div>
-                        <div className="flex-1 min-w-0">
+                        <div className="min-w-0 flex-1">
                           <div className="flex items-center justify-between">
-                            <span className="font-medium truncate">{conv.name}</span>
-                            <span className="text-xs text-muted-foreground">
+                            <span className="truncate font-medium">
+                              {conv.name}
+                            </span>
+                            <span className="text-muted-foreground text-xs">
                               {formatTime(conv.timestamp)}
                             </span>
                           </div>
-                          <p className="text-xs text-muted-foreground truncate">
+                          <p className="text-muted-foreground truncate text-xs">
                             {conv.property}
                           </p>
-                          <p className="text-sm text-muted-foreground truncate mt-1">
+                          <p className="text-muted-foreground mt-1 truncate text-sm">
                             {conv.lastMessage}
                           </p>
                         </div>
                         {conv.unread > 0 && (
-                          <Badge className="ml-2 h-5 min-w-5 flex items-center justify-center">
+                          <Badge className="ml-2 flex h-5 min-w-5 items-center justify-center">
                             {conv.unread}
                           </Badge>
                         )}
@@ -311,14 +331,14 @@ export default function MessagesPage() {
           {/* Chat Area */}
           <div
             className={cn(
-              "flex-1 flex flex-col",
+              "flex flex-1 flex-col",
               showMobileList && "hidden md:flex"
             )}
           >
             {selectedConv ? (
               <>
                 {/* Chat Header */}
-                <div className="p-4 border-b flex items-center justify-between">
+                <div className="flex items-center justify-between border-b p-4">
                   <div className="flex items-center gap-3">
                     <Button
                       variant="ghost"
@@ -336,7 +356,7 @@ export default function MessagesPage() {
                     </Avatar>
                     <div>
                       <h3 className="font-medium">{selectedConv.name}</h3>
-                      <p className="text-xs text-muted-foreground flex items-center gap-1">
+                      <p className="text-muted-foreground flex items-center gap-1 text-xs">
                         {selectedConv.online ? (
                           <>
                             <Circle className="h-2 w-2 fill-green-500 text-green-500" />
@@ -396,13 +416,16 @@ export default function MessagesPage() {
                       return (
                         <div key={message.id}>
                           {showDate && (
-                            <div className="flex justify-center my-4">
-                              <span className="text-xs text-muted-foreground bg-muted px-3 py-1 rounded-full">
-                                {new Date(message.timestamp).toLocaleDateString("en-US", {
-                                  weekday: "long",
-                                  month: "long",
-                                  day: "numeric",
-                                })}
+                            <div className="my-4 flex justify-center">
+                              <span className="text-muted-foreground bg-muted rounded-full px-3 py-1 text-xs">
+                                {new Date(message.timestamp).toLocaleDateString(
+                                  "en-US",
+                                  {
+                                    weekday: "long",
+                                    month: "long",
+                                    day: "numeric",
+                                  }
+                                )}
                               </span>
                             </div>
                           )}
@@ -431,7 +454,7 @@ export default function MessagesPage() {
                               <p className="text-sm">{message.content}</p>
                               <div
                                 className={cn(
-                                  "flex items-center gap-1 mt-1",
+                                  "mt-1 flex items-center gap-1",
                                   isMe ? "justify-end" : "justify-start"
                                 )}
                               >
@@ -457,7 +480,7 @@ export default function MessagesPage() {
                 </ScrollArea>
 
                 {/* Message Input */}
-                <div className="p-4 border-t">
+                <div className="border-t p-4">
                   <form
                     onSubmit={(e) => {
                       e.preventDefault();
@@ -480,15 +503,19 @@ export default function MessagesPage() {
                     <Button type="button" variant="ghost" size="icon">
                       <Smile className="h-5 w-5" />
                     </Button>
-                    <Button type="submit" size="icon" disabled={!messageInput.trim()}>
+                    <Button
+                      type="submit"
+                      size="icon"
+                      disabled={!messageInput.trim()}
+                    >
                       <Send className="h-5 w-5" />
                     </Button>
                   </form>
                 </div>
               </>
             ) : (
-              <div className="flex-1 flex flex-col items-center justify-center text-muted-foreground">
-                <MessageSquare className="h-12 w-12 mb-4" />
+              <div className="text-muted-foreground flex flex-1 flex-col items-center justify-center">
+                <MessageSquare className="mb-4 h-12 w-12" />
                 <h3 className="text-lg font-medium">Select a conversation</h3>
                 <p className="text-sm">Choose a chat to start messaging</p>
               </div>

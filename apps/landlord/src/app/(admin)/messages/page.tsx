@@ -68,10 +68,34 @@ const mockConversations: Conversation[] = [
     },
     unreadCount: 2,
     messages: [
-      { id: "m1", senderId: "b1", content: "Good morning! I have a question about the utilities.", timestamp: "2024-01-15T10:00:00", read: true },
-      { id: "m2", senderId: "landlord", content: "Good morning Maria! Sure, what would you like to know?", timestamp: "2024-01-15T10:15:00", read: true },
-      { id: "m3", senderId: "b1", content: "Hi! Is it possible to have the Wi-Fi password changed?", timestamp: "2024-01-15T10:30:00", read: false },
-      { id: "m4", senderId: "b1", content: "I think someone else might have access to it.", timestamp: "2024-01-15T10:31:00", read: false },
+      {
+        id: "m1",
+        senderId: "b1",
+        content: "Good morning! I have a question about the utilities.",
+        timestamp: "2024-01-15T10:00:00",
+        read: true,
+      },
+      {
+        id: "m2",
+        senderId: "landlord",
+        content: "Good morning Maria! Sure, what would you like to know?",
+        timestamp: "2024-01-15T10:15:00",
+        read: true,
+      },
+      {
+        id: "m3",
+        senderId: "b1",
+        content: "Hi! Is it possible to have the Wi-Fi password changed?",
+        timestamp: "2024-01-15T10:30:00",
+        read: false,
+      },
+      {
+        id: "m4",
+        senderId: "b1",
+        content: "I think someone else might have access to it.",
+        timestamp: "2024-01-15T10:31:00",
+        read: false,
+      },
     ],
   },
   {
@@ -90,11 +114,42 @@ const mockConversations: Conversation[] = [
     },
     unreadCount: 0,
     messages: [
-      { id: "m1", senderId: "b2", content: "Hi, I saw your listing. Is the room still available?", timestamp: "2024-01-14T14:00:00", read: true },
-      { id: "m2", senderId: "landlord", content: "Hello Juan! Yes, Room 102 is still available. Would you like to schedule a viewing?", timestamp: "2024-01-14T14:30:00", read: true },
-      { id: "m3", senderId: "b2", content: "That would be great! Can I come tomorrow afternoon?", timestamp: "2024-01-14T15:00:00", read: true },
-      { id: "m4", senderId: "landlord", content: "Sure! 2 PM works for me. The deposit is ₱4,500.", timestamp: "2024-01-14T16:00:00", read: true },
-      { id: "m5", senderId: "b2", content: "Thank you! I'll prepare the deposit.", timestamp: "2024-01-14T16:45:00", read: true },
+      {
+        id: "m1",
+        senderId: "b2",
+        content: "Hi, I saw your listing. Is the room still available?",
+        timestamp: "2024-01-14T14:00:00",
+        read: true,
+      },
+      {
+        id: "m2",
+        senderId: "landlord",
+        content:
+          "Hello Juan! Yes, Room 102 is still available. Would you like to schedule a viewing?",
+        timestamp: "2024-01-14T14:30:00",
+        read: true,
+      },
+      {
+        id: "m3",
+        senderId: "b2",
+        content: "That would be great! Can I come tomorrow afternoon?",
+        timestamp: "2024-01-14T15:00:00",
+        read: true,
+      },
+      {
+        id: "m4",
+        senderId: "landlord",
+        content: "Sure! 2 PM works for me. The deposit is ₱4,500.",
+        timestamp: "2024-01-14T16:00:00",
+        read: true,
+      },
+      {
+        id: "m5",
+        senderId: "b2",
+        content: "Thank you! I'll prepare the deposit.",
+        timestamp: "2024-01-14T16:45:00",
+        read: true,
+      },
     ],
   },
   {
@@ -113,9 +168,28 @@ const mockConversations: Conversation[] = [
     },
     unreadCount: 0,
     messages: [
-      { id: "m1", senderId: "b3", content: "Hi, the faucet in the bathroom is leaking.", timestamp: "2024-01-12T18:00:00", read: true },
-      { id: "m2", senderId: "landlord", content: "Thanks for letting me know, Carlos. I'll arrange for someone to fix it.", timestamp: "2024-01-12T19:00:00", read: true },
-      { id: "m3", senderId: "landlord", content: "The maintenance team will come by tomorrow at 10 AM.", timestamp: "2024-01-13T09:00:00", read: true },
+      {
+        id: "m1",
+        senderId: "b3",
+        content: "Hi, the faucet in the bathroom is leaking.",
+        timestamp: "2024-01-12T18:00:00",
+        read: true,
+      },
+      {
+        id: "m2",
+        senderId: "landlord",
+        content:
+          "Thanks for letting me know, Carlos. I'll arrange for someone to fix it.",
+        timestamp: "2024-01-12T19:00:00",
+        read: true,
+      },
+      {
+        id: "m3",
+        senderId: "landlord",
+        content: "The maintenance team will come by tomorrow at 10 AM.",
+        timestamp: "2024-01-13T09:00:00",
+        read: true,
+      },
     ],
   },
   {
@@ -134,10 +208,35 @@ const mockConversations: Conversation[] = [
     },
     unreadCount: 0,
     messages: [
-      { id: "m1", senderId: "b4", content: "Hi, I wanted to thank you for everything during my stay.", timestamp: "2024-01-10T12:00:00", read: true },
-      { id: "m2", senderId: "landlord", content: "Thank you Lisa! It was a pleasure having you. Your deposit will be refunded within 3 days.", timestamp: "2024-01-10T13:00:00", read: true },
-      { id: "m3", senderId: "b4", content: "That's great! I really enjoyed my time here.", timestamp: "2024-01-10T13:30:00", read: true },
-      { id: "m4", senderId: "landlord", content: "Take care and good luck with your studies!", timestamp: "2024-01-10T14:00:00", read: true },
+      {
+        id: "m1",
+        senderId: "b4",
+        content: "Hi, I wanted to thank you for everything during my stay.",
+        timestamp: "2024-01-10T12:00:00",
+        read: true,
+      },
+      {
+        id: "m2",
+        senderId: "landlord",
+        content:
+          "Thank you Lisa! It was a pleasure having you. Your deposit will be refunded within 3 days.",
+        timestamp: "2024-01-10T13:00:00",
+        read: true,
+      },
+      {
+        id: "m3",
+        senderId: "b4",
+        content: "That's great! I really enjoyed my time here.",
+        timestamp: "2024-01-10T13:30:00",
+        read: true,
+      },
+      {
+        id: "m4",
+        senderId: "landlord",
+        content: "Take care and good luck with your studies!",
+        timestamp: "2024-01-10T14:00:00",
+        read: true,
+      },
     ],
   },
 ];
@@ -167,22 +266,27 @@ function formatTime(timestamp: string) {
 
 export default function MessagesPage() {
   const [searchQuery, setSearchQuery] = React.useState("");
-  const [selectedConversation, setSelectedConversation] = React.useState<Conversation | null>(
-    mockConversations[0] ?? null
-  );
+  const [selectedConversation, setSelectedConversation] =
+    React.useState<Conversation | null>(mockConversations[0] ?? null);
   const [newMessage, setNewMessage] = React.useState("");
 
-  const filteredConversations = mockConversations.filter((conv) =>
-    conv.boarder.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    conv.boarder.property.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredConversations = mockConversations.filter(
+    (conv) =>
+      conv.boarder.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      conv.boarder.property.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const totalUnread = mockConversations.reduce((sum, conv) => sum + conv.unreadCount, 0);
+  const totalUnread = mockConversations.reduce(
+    (sum, conv) => sum + conv.unreadCount,
+    0
+  );
 
   const handleSendMessage = () => {
     if (!newMessage.trim() || !selectedConversation) return;
-    
-    console.log(`Sending message to ${selectedConversation.boarder.name}: ${newMessage}`);
+
+    console.log(
+      `Sending message to ${selectedConversation.boarder.name}: ${newMessage}`
+    );
     setNewMessage("");
     // TODO: Implement API call to send message
   };
@@ -190,7 +294,7 @@ export default function MessagesPage() {
   return (
     <div className="flex h-[calc(100vh-8rem)] gap-4">
       {/* Conversations List */}
-      <Card className="w-80 flex-shrink-0 flex flex-col">
+      <Card className="flex w-80 flex-shrink-0 flex-col">
         <CardHeader className="border-b pb-4">
           <div className="flex items-center justify-between">
             <CardTitle className="text-lg">Messages</CardTitle>
@@ -199,7 +303,7 @@ export default function MessagesPage() {
             )}
           </div>
           <div className="relative mt-2">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
             <Input
               placeholder="Search conversations..."
               className="pl-10"
@@ -214,38 +318,45 @@ export default function MessagesPage() {
               <button
                 key={conversation.id}
                 className={cn(
-                  "w-full p-4 text-left hover:bg-muted/50 transition-colors",
+                  "hover:bg-muted/50 w-full p-4 text-left transition-colors",
                   selectedConversation?.id === conversation.id && "bg-muted"
                 )}
                 onClick={() => setSelectedConversation(conversation)}
               >
                 <div className="flex items-start gap-3">
                   <div className="relative">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
-                      <span className="text-sm font-semibold text-primary">
+                    <div className="bg-primary/10 flex h-10 w-10 items-center justify-center rounded-full">
+                      <span className="text-primary text-sm font-semibold">
                         {conversation.boarder.name.charAt(0)}
                       </span>
                     </div>
                     {conversation.unreadCount > 0 && (
-                      <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-[10px] text-primary-foreground">
+                      <span className="bg-primary text-primary-foreground absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full text-[10px]">
                         {conversation.unreadCount}
                       </span>
                     )}
                   </div>
-                  <div className="flex-1 min-w-0">
+                  <div className="min-w-0 flex-1">
                     <div className="flex items-center justify-between">
-                      <span className="font-medium truncate">{conversation.boarder.name}</span>
-                      <span className="text-xs text-muted-foreground">
+                      <span className="truncate font-medium">
+                        {conversation.boarder.name}
+                      </span>
+                      <span className="text-muted-foreground text-xs">
                         {formatTime(conversation.lastMessage.timestamp)}
                       </span>
                     </div>
-                    <p className="text-xs text-muted-foreground truncate mt-0.5">
-                      {conversation.boarder.property} • {conversation.boarder.room}
+                    <p className="text-muted-foreground mt-0.5 truncate text-xs">
+                      {conversation.boarder.property} •{" "}
+                      {conversation.boarder.room}
                     </p>
-                    <p className={cn(
-                      "text-sm truncate mt-1",
-                      conversation.unreadCount > 0 ? "font-medium text-foreground" : "text-muted-foreground"
-                    )}>
+                    <p
+                      className={cn(
+                        "mt-1 truncate text-sm",
+                        conversation.unreadCount > 0
+                          ? "text-foreground font-medium"
+                          : "text-muted-foreground"
+                      )}
+                    >
                       {!conversation.lastMessage.isFromBoarder && "You: "}
                       {conversation.lastMessage.content}
                     </p>
@@ -255,8 +366,10 @@ export default function MessagesPage() {
             ))}
             {filteredConversations.length === 0 && (
               <div className="flex flex-col items-center justify-center py-12 text-center">
-                <MessageSquare className="h-12 w-12 text-muted-foreground" />
-                <p className="mt-2 text-sm text-muted-foreground">No conversations found</p>
+                <MessageSquare className="text-muted-foreground h-12 w-12" />
+                <p className="text-muted-foreground mt-2 text-sm">
+                  No conversations found
+                </p>
               </div>
             )}
           </div>
@@ -265,25 +378,33 @@ export default function MessagesPage() {
 
       {/* Chat Area */}
       {selectedConversation ? (
-        <Card className="flex-1 flex flex-col">
+        <Card className="flex flex-1 flex-col">
           {/* Chat Header */}
           <CardHeader className="border-b pb-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
-                  <span className="text-sm font-semibold text-primary">
+                <div className="bg-primary/10 flex h-10 w-10 items-center justify-center rounded-full">
+                  <span className="text-primary text-sm font-semibold">
                     {selectedConversation.boarder.name.charAt(0)}
                   </span>
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <h3 className="font-semibold">{selectedConversation.boarder.name}</h3>
-                    <Badge className={cn("text-xs", statusColors[selectedConversation.boarder.status])}>
+                    <h3 className="font-semibold">
+                      {selectedConversation.boarder.name}
+                    </h3>
+                    <Badge
+                      className={cn(
+                        "text-xs",
+                        statusColors[selectedConversation.boarder.status]
+                      )}
+                    >
                       {selectedConversation.boarder.status}
                     </Badge>
                   </div>
-                  <p className="text-sm text-muted-foreground">
-                    {selectedConversation.boarder.property} • {selectedConversation.boarder.room}
+                  <p className="text-muted-foreground text-sm">
+                    {selectedConversation.boarder.property} •{" "}
+                    {selectedConversation.boarder.room}
                   </p>
                 </div>
               </div>
@@ -302,7 +423,7 @@ export default function MessagesPage() {
           </CardHeader>
 
           {/* Messages */}
-          <CardContent className="flex-1 overflow-y-auto p-4 space-y-4">
+          <CardContent className="flex-1 space-y-4 overflow-y-auto p-4">
             {selectedConversation.messages.map((message) => {
               const isFromLandlord = message.senderId === "landlord";
               return (
@@ -322,23 +443,26 @@ export default function MessagesPage() {
                     )}
                   >
                     <p className="text-sm">{message.content}</p>
-                    <div className={cn(
-                      "flex items-center justify-end gap-1 mt-1",
-                      isFromLandlord ? "text-primary-foreground/70" : "text-muted-foreground"
-                    )}>
+                    <div
+                      className={cn(
+                        "mt-1 flex items-center justify-end gap-1",
+                        isFromLandlord
+                          ? "text-primary-foreground/70"
+                          : "text-muted-foreground"
+                      )}
+                    >
                       <span className="text-[10px]">
                         {new Date(message.timestamp).toLocaleTimeString([], {
                           hour: "2-digit",
                           minute: "2-digit",
                         })}
                       </span>
-                      {isFromLandlord && (
-                        message.read ? (
+                      {isFromLandlord &&
+                        (message.read ? (
                           <CheckCheck className="h-3 w-3" />
                         ) : (
                           <Check className="h-3 w-3" />
-                        )
-                      )}
+                        ))}
                     </div>
                   </div>
                 </div>
@@ -371,11 +495,13 @@ export default function MessagesPage() {
           </div>
         </Card>
       ) : (
-        <Card className="flex-1 flex items-center justify-center">
+        <Card className="flex flex-1 items-center justify-center">
           <div className="text-center">
-            <MessageSquare className="h-16 w-16 text-muted-foreground mx-auto" />
-            <h3 className="mt-4 text-lg font-semibold">No conversation selected</h3>
-            <p className="text-sm text-muted-foreground">
+            <MessageSquare className="text-muted-foreground mx-auto h-16 w-16" />
+            <h3 className="mt-4 text-lg font-semibold">
+              No conversation selected
+            </h3>
+            <p className="text-muted-foreground text-sm">
               Select a conversation from the list to start messaging
             </p>
           </div>

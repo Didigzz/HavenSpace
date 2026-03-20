@@ -11,24 +11,28 @@ The landlord management interface for the Haven Space platform. This application
 ## âœ¨ Features
 
 ### Property Management
+
 - **Property Listings**: Create, edit, and manage boarding house listings
 - **Photo Management**: Upload and organize property images
 - **Pricing Control**: Set rates, availability, and special offers
 - **Amenity Management**: Define property features and amenities
 
 ### Booking Operations
+
 - **Booking Requests**: Review and approve/reject booking requests
 - **Calendar Management**: View availability and booking schedules
 - **Guest Management**: Track current and past boarders
 - **Booking Analytics**: Performance metrics and insights
 
 ### Financial Management
+
 - **Revenue Tracking**: Monitor earnings and payment history
 - **Payout Management**: Request and track payouts
 - **Financial Reports**: Detailed financial analytics
 - **Tax Documentation**: Generate tax-related reports
 
 ### Communication
+
 - **Boarder Messaging**: Direct communication with guests
 - **Booking Notifications**: Real-time booking updates
 - **Support Channel**: Platform support access
@@ -36,6 +40,7 @@ The landlord management interface for the Haven Space platform. This application
 ## ðŸ—ï¸ Architecture
 
 ### Pages Structure
+
 ```
 src/app/
 â”œâ”€â”€ page.tsx                           # Dashboard redirect
@@ -59,6 +64,7 @@ src/app/
 ```
 
 ### Components Structure
+
 ```
 src/components/
 â”œâ”€â”€ dashboard/
@@ -82,6 +88,7 @@ src/components/
 ## ðŸš€ Getting Started
 
 ### Prerequisites
+
 - Node.js 18+
 - Bun package manager
 - Approved landlord account
@@ -126,64 +133,69 @@ NEXT_PUBLIC_ANALYTICS_ID=your-analytics-id
 ## ðŸ” Authentication & Authorization
 
 ### Access Control
+
 - **Role Requirement**: User must have `landlord` role
 - **Status Check**: Account must be `approved`
 - **Tenant Isolation**: Access only to own properties and data
 
 ### Route Protection
+
 ```typescript
 // middleware.ts
 export default withAuth(
   function middleware(req) {
-    const { pathname } = req.nextUrl
-    const { token } = req.nextauth
-    
+    const { pathname } = req.nextUrl;
+    const { token } = req.nextauth;
+
     // Check if user is an approved landlord
-    if (token?.role !== 'landlord' || token?.status !== 'approved') {
-      return NextResponse.redirect(new URL('/unauthorized', req.url))
+    if (token?.role !== "landlord" || token?.status !== "approved") {
+      return NextResponse.redirect(new URL("/unauthorized", req.url));
     }
   },
   {
     callbacks: {
-      authorized: ({ token }) => !!token
-    }
+      authorized: ({ token }) => !!token,
+    },
   }
-)
+);
 ```
 
 ### Data Isolation
+
 ```typescript
 // All queries automatically filter by landlord ID
 const getProperties = async (landlordId: string) => {
   return await db.boardingHouse.findMany({
     where: {
-      landlordId: landlordId  // Tenant isolation
-    }
-  })
-}
+      landlordId: landlordId, // Tenant isolation
+    },
+  });
+};
 ```
 
 ## ðŸ  Property Management
 
 ### Property Creation
+
 ```typescript
 interface PropertyData {
-  name: string
-  description: string
-  address: string
-  latitude: number
-  longitude: number
-  pricePerMonth: number
-  totalRooms: number
-  availableRooms: number
-  amenities: string[]
-  images: File[]
-  rules?: string
-  policies?: string
+  name: string;
+  description: string;
+  address: string;
+  latitude: number;
+  longitude: number;
+  pricePerMonth: number;
+  totalRooms: number;
+  availableRooms: number;
+  amenities: string[];
+  images: File[];
+  rules?: string;
+  policies?: string;
 }
 ```
 
 ### Property Features
+
 - **Image Gallery**: Multiple property photos
 - **Location Mapping**: Interactive map integration
 - **Amenity Selection**: Predefined amenity options
@@ -191,29 +203,30 @@ interface PropertyData {
 - **Availability Calendar**: Room availability tracking
 
 ### Implementation Example
+
 ```typescript
 const PropertyForm = () => {
   const createProperty = api.property.create.useMutation()
   const uploadImages = api.upload.images.useMutation()
-  
+
   const handleSubmit = async (data: PropertyData) => {
     try {
       // Upload images first
       const imageUrls = await uploadImages.mutateAsync(data.images)
-      
+
       // Create property with image URLs
       await createProperty.mutateAsync({
         ...data,
         images: imageUrls
       })
-      
+
       toast.success('Property created successfully!')
       router.push('/properties')
     } catch (error) {
       toast.error('Failed to create property')
     }
   }
-  
+
   return <PropertyFormComponent onSubmit={handleSubmit} />
 }
 ```
@@ -221,6 +234,7 @@ const PropertyForm = () => {
 ## ðŸ“… Booking Management
 
 ### Booking Workflow
+
 1. **Request Received**: Boarder submits booking request
 2. **Review Process**: Landlord reviews request details
 3. **Decision Making**: Approve or reject with reason
@@ -228,37 +242,39 @@ const PropertyForm = () => {
 5. **Check-in Management**: Coordinate guest arrival
 
 ### Booking States
+
 ```typescript
-type BookingStatus = 
-  | 'pending'     // Awaiting landlord decision
-  | 'approved'    // Approved by landlord
-  | 'confirmed'   // Payment completed
-  | 'rejected'    // Declined by landlord
-  | 'cancelled'   // Cancelled
-  | 'active'      // Currently occupied
-  | 'completed'   // Stay finished
+type BookingStatus =
+  | "pending" // Awaiting landlord decision
+  | "approved" // Approved by landlord
+  | "confirmed" // Payment completed
+  | "rejected" // Declined by landlord
+  | "cancelled" // Cancelled
+  | "active" // Currently occupied
+  | "completed"; // Stay finished
 ```
 
 ### Booking Management Component
+
 ```typescript
 const BookingRequestCard = ({ booking }: { booking: BookingRequest }) => {
   const approveBooking = api.booking.approve.useMutation()
   const rejectBooking = api.booking.reject.useMutation()
-  
+
   const handleApprove = () => {
     approveBooking.mutate({
       bookingId: booking.id,
       message: 'Welcome! Looking forward to hosting you.'
     })
   }
-  
+
   const handleReject = (reason: string) => {
     rejectBooking.mutate({
       bookingId: booking.id,
       reason
     })
   }
-  
+
   return (
     <Card>
       <CardHeader>
@@ -285,16 +301,18 @@ const BookingRequestCard = ({ booking }: { booking: BookingRequest }) => {
 ## ðŸ’° Financial Management
 
 ### Revenue Tracking
+
 - **Monthly Earnings**: Revenue by month
 - **Property Performance**: Earnings per property
 - **Occupancy Rates**: Utilization metrics
 - **Payment Status**: Outstanding and completed payments
 
 ### Financial Dashboard
+
 ```typescript
 const FinancialDashboard = () => {
   const { data: stats } = api.landlord.getFinancialStats.useQuery()
-  
+
   return (
     <div className="financial-grid">
       <StatsCard
@@ -318,11 +336,12 @@ const FinancialDashboard = () => {
 ```
 
 ### Payout Management
+
 ```typescript
 const PayoutRequest = () => {
   const requestPayout = api.payout.request.useMutation()
   const { data: balance } = api.landlord.getBalance.useQuery()
-  
+
   const handlePayout = (amount: number) => {
     requestPayout.mutate({
       amount,
@@ -330,7 +349,7 @@ const PayoutRequest = () => {
       accountDetails: landlord.bankAccount
     })
   }
-  
+
   return (
     <Card>
       <CardHeader>
@@ -350,12 +369,14 @@ const PayoutRequest = () => {
 ## ðŸ“Š Analytics & Reporting
 
 ### Dashboard Metrics
+
 - **Revenue Analytics**: Income trends and forecasts
 - **Occupancy Analytics**: Booking patterns and utilization
 - **Guest Analytics**: Boarder demographics and behavior
 - **Performance Metrics**: Property comparison and optimization
 
 ### Chart Components
+
 ```typescript
 const RevenueChart = ({ data }: { data: RevenueData[] }) => {
   return (
@@ -389,17 +410,19 @@ const OccupancyChart = ({ data }: { data: OccupancyData[] }) => {
 ## ðŸ’¬ Communication System
 
 ### Messaging Features
+
 - **Boarder Communication**: Direct messaging with guests
 - **Booking Context**: Messages linked to specific bookings
 - **Automated Messages**: Welcome messages and reminders
 - **Bulk Messaging**: Announcements to all boarders
 
 ### Message Management
+
 ```typescript
 const MessageCenter = () => {
   const { data: conversations } = api.message.getConversations.useQuery()
   const [selectedConversation, setSelectedConversation] = useState(null)
-  
+
   return (
     <div className="message-center">
       <ConversationList
@@ -417,19 +440,21 @@ const MessageCenter = () => {
 ## ðŸ”§ Maintenance Management
 
 ### Maintenance Features
+
 - **Request Tracking**: Monitor maintenance requests
 - **Vendor Management**: Coordinate with service providers
 - **Cost Tracking**: Track maintenance expenses
 - **Scheduling**: Plan and schedule maintenance work
 
 ### Maintenance Dashboard
+
 ```typescript
 const MaintenanceOverview = () => {
   const { data: requests } = api.maintenance.getRequests.useQuery()
-  
+
   const urgentRequests = requests?.filter(r => r.priority === 'urgent')
   const pendingRequests = requests?.filter(r => r.status === 'pending')
-  
+
   return (
     <div className="maintenance-overview">
       <StatsCard
@@ -451,6 +476,7 @@ const MaintenanceOverview = () => {
 ## ðŸ§ª Testing
 
 ### Test Structure
+
 ```
 src/__tests__/
 â”œâ”€â”€ components/
@@ -467,6 +493,7 @@ src/__tests__/
 ```
 
 ### Running Tests
+
 ```bash
 # Unit tests
 bun test
@@ -484,6 +511,7 @@ bun run test:coverage
 ## ðŸš€ Deployment
 
 ### Build Process
+
 ```bash
 # Build for production
 bun run build
@@ -493,6 +521,7 @@ bun start
 ```
 
 ### Environment Variables (Production)
+
 ```env
 NEXTAUTH_URL=https://landlord.yourdomain.com
 NEXTAUTH_SECRET=production-secret
@@ -512,6 +541,7 @@ NEXT_PUBLIC_ANALYTICS_ID=production-analytics-id
 ## ðŸ“± Mobile Optimization
 
 ### Mobile Features
+
 - **Responsive Design**: Optimized for mobile devices
 - **Touch Navigation**: Mobile-friendly interactions
 - **Image Optimization**: Fast loading property images
@@ -520,45 +550,49 @@ NEXT_PUBLIC_ANALYTICS_ID=production-analytics-id
 ## ðŸ”§ Configuration
 
 ### Next.js Configuration
+
 ```javascript
 // next.config.js
 module.exports = {
   images: {
-    domains: ['property-images.com', 'uploads.yourdomain.com'],
+    domains: ["property-images.com", "uploads.yourdomain.com"],
   },
   experimental: {
     appDir: true,
-  }
-}
+  },
+};
 ```
 
 ### Tailwind Configuration
+
 ```javascript
 // tailwind.config.ts
 export default {
-  content: ['./src/**/*.{js,ts,jsx,tsx}'],
+  content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
       colors: {
         landlord: {
-          primary: '#059669',
-          secondary: '#0D9488'
-        }
-      }
-    }
-  }
-}
+          primary: "#059669",
+          secondary: "#0D9488",
+        },
+      },
+    },
+  },
+};
 ```
 
 ## ðŸ“Š Performance
 
 ### Optimization Strategies
+
 - **Code Splitting**: Route-based code splitting
 - **Image Optimization**: Next.js Image component
 - **Data Caching**: React Query caching
 - **Lazy Loading**: Component lazy loading
 
 ### Performance Monitoring
+
 - **Core Web Vitals**: Performance metrics
 - **User Analytics**: Usage tracking
 - **Error Monitoring**: Error tracking and reporting
@@ -577,4 +611,3 @@ export default {
 - [API Documentation](../api/README.md)
 - [Boarder Dashboard](../boarder/README.md)
 - [Development Guidelines](../../docs/DEVELOPMENT.md)
-

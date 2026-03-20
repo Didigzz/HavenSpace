@@ -27,14 +27,14 @@ export function Header({ sidebarCollapsed }: HeaderProps) {
   return (
     <header
       className={cn(
-        "fixed right-0 top-0 z-30 flex h-16 items-center justify-between border-b bg-background/95 px-6 backdrop-blur supports-[backdrop-filter]:bg-background/60 transition-all duration-300",
+        "bg-background/95 supports-[backdrop-filter]:bg-background/60 fixed top-0 right-0 z-30 flex h-16 items-center justify-between border-b px-6 backdrop-blur transition-all duration-300",
         sidebarCollapsed ? "left-16" : "left-64"
       )}
     >
       {/* Search */}
       <div className="flex items-center gap-4">
         <div className="relative hidden md:block">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
           <Input
             type="search"
             placeholder="Search users, listings, bookings..."
@@ -50,7 +50,7 @@ export function Header({ sidebarCollapsed }: HeaderProps) {
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" size="icon" className="relative">
               <Bell className="h-5 w-5" />
-              <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-destructive text-[10px] font-medium text-destructive-foreground">
+              <span className="bg-destructive text-destructive-foreground absolute -top-0.5 -right-0.5 flex h-4 w-4 items-center justify-center rounded-full text-[10px] font-medium">
                 5
               </span>
             </Button>
@@ -59,34 +59,40 @@ export function Header({ sidebarCollapsed }: HeaderProps) {
             <div className="p-4">
               <h4 className="mb-2 font-semibold">Notifications</h4>
               <div className="space-y-3">
-                <div className="flex gap-3 rounded-lg p-2 hover:bg-muted">
-                  <div className="h-2 w-2 mt-2 rounded-full bg-primary" />
+                <div className="hover:bg-muted flex gap-3 rounded-lg p-2">
+                  <div className="bg-primary mt-2 h-2 w-2 rounded-full" />
                   <div className="flex-1">
                     <p className="text-sm">New landlord application</p>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-muted-foreground text-xs">
                       John Doe submitted an application
                     </p>
-                    <p className="text-xs text-muted-foreground mt-1">2 min ago</p>
+                    <p className="text-muted-foreground mt-1 text-xs">
+                      2 min ago
+                    </p>
                   </div>
                 </div>
-                <div className="flex gap-3 rounded-lg p-2 hover:bg-muted">
-                  <div className="h-2 w-2 mt-2 rounded-full bg-destructive" />
+                <div className="hover:bg-muted flex gap-3 rounded-lg p-2">
+                  <div className="bg-destructive mt-2 h-2 w-2 rounded-full" />
                   <div className="flex-1">
                     <p className="text-sm">Dispute reported</p>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-muted-foreground text-xs">
                       Payment dispute on booking #1234
                     </p>
-                    <p className="text-xs text-muted-foreground mt-1">15 min ago</p>
+                    <p className="text-muted-foreground mt-1 text-xs">
+                      15 min ago
+                    </p>
                   </div>
                 </div>
-                <div className="flex gap-3 rounded-lg p-2 hover:bg-muted">
-                  <div className="h-2 w-2 mt-2 rounded-full bg-yellow-500" />
+                <div className="hover:bg-muted flex gap-3 rounded-lg p-2">
+                  <div className="mt-2 h-2 w-2 rounded-full bg-yellow-500" />
                   <div className="flex-1">
                     <p className="text-sm">Listing flagged</p>
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-muted-foreground text-xs">
                       &quot;Sunny Room&quot; has been flagged for review
                     </p>
-                    <p className="text-xs text-muted-foreground mt-1">1 hour ago</p>
+                    <p className="text-muted-foreground mt-1 text-xs">
+                      1 hour ago
+                    </p>
                   </div>
                 </div>
               </div>

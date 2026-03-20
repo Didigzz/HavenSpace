@@ -25,13 +25,18 @@ const priorityColors: Record<string, string> = {
 };
 
 const statusColors: Record<string, string> = {
-  PENDING: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300",
+  PENDING:
+    "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300",
   IN_PROGRESS: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300",
-  COMPLETED: "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300",
+  COMPLETED:
+    "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300",
   CANCELLED: "bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300",
 };
 
-export function MaintenanceOverview({ propertyId, limit = 5 }: MaintenanceOverviewProps) {
+export function MaintenanceOverview({
+  propertyId,
+  limit = 5,
+}: MaintenanceOverviewProps) {
   const requests = propertyId
     ? mockMaintenanceRequests.filter((m) => m.propertyId === propertyId)
     : mockMaintenanceRequests;
@@ -41,7 +46,8 @@ export function MaintenanceOverview({ propertyId, limit = 5 }: MaintenanceOvervi
     .sort((a, b) => {
       // Sort by priority first, then by date
       const priorityOrder = { URGENT: 0, HIGH: 1, MEDIUM: 2, LOW: 3 };
-      const priorityDiff = priorityOrder[a.priority] - priorityOrder[b.priority];
+      const priorityDiff =
+        priorityOrder[a.priority] - priorityOrder[b.priority];
       if (priorityDiff !== 0) return priorityDiff;
       return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
     })
@@ -56,7 +62,7 @@ export function MaintenanceOverview({ propertyId, limit = 5 }: MaintenanceOvervi
         </div>
         <Link
           href="/maintenance"
-          className="text-sm text-primary hover:underline"
+          className="text-primary text-sm hover:underline"
         >
           View all
         </Link>
@@ -70,26 +76,32 @@ export function MaintenanceOverview({ propertyId, limit = 5 }: MaintenanceOvervi
             >
               <div className="space-y-1">
                 <p className="font-medium">{request.title}</p>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-muted-foreground text-sm">
                   Room {request.roomNumber}
                   {request.tenantName && ` • ${request.tenantName}`}
                 </p>
                 <div className="flex gap-2">
-                  <Badge variant="secondary" className={priorityColors[request.priority]}>
+                  <Badge
+                    variant="secondary"
+                    className={priorityColors[request.priority]}
+                  >
                     {request.priority}
                   </Badge>
-                  <Badge variant="secondary" className={statusColors[request.status]}>
+                  <Badge
+                    variant="secondary"
+                    className={statusColors[request.status]}
+                  >
                     {request.status.replace("_", " ")}
                   </Badge>
                 </div>
               </div>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-muted-foreground text-sm">
                 {formatDate(request.createdAt)}
               </p>
             </div>
           ))}
           {pendingRequests.length === 0 && (
-            <p className="text-center text-muted-foreground">
+            <p className="text-muted-foreground text-center">
               No pending maintenance requests
             </p>
           )}

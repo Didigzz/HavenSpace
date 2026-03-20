@@ -23,7 +23,11 @@ interface LocationPickerProps {
 // Dynamic import for Leaflet to avoid SSR issues
 const MapComponent = React.lazy(() => import("./map-view"));
 
-export function LocationPicker({ value, onChange, height = "400px" }: LocationPickerProps) {
+export function LocationPicker({
+  value,
+  onChange,
+  height = "400px",
+}: LocationPickerProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearching, setIsSearching] = useState(false);
   const [isLocating, setIsLocating] = useState(false);
@@ -52,11 +56,13 @@ export function LocationPicker({ value, onChange, height = "400px" }: LocationPi
       );
       const data = await response.json();
 
-      const results: GeoLocation[] = data.map((item: { lat: string; lon: string; display_name: string }) => ({
-        latitude: parseFloat(item.lat),
-        longitude: parseFloat(item.lon),
-        address: item.display_name,
-      }));
+      const results: GeoLocation[] = data.map(
+        (item: { lat: string; lon: string; display_name: string }) => ({
+          latitude: parseFloat(item.lat),
+          longitude: parseFloat(item.lon),
+          address: item.display_name,
+        })
+      );
 
       setSearchResults(results);
     } catch (error) {
@@ -95,7 +101,9 @@ export function LocationPicker({ value, onChange, height = "400px" }: LocationPi
           onChange({
             latitude,
             longitude,
-            address: data.display_name || `${latitude.toFixed(6)}, ${longitude.toFixed(6)}`,
+            address:
+              data.display_name ||
+              `${latitude.toFixed(6)}, ${longitude.toFixed(6)}`,
           });
         } catch {
           onChange({
@@ -152,7 +160,7 @@ export function LocationPicker({ value, onChange, height = "400px" }: LocationPi
         {/* Search Bar */}
         <div className="flex gap-2">
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
             <Input
               placeholder="Search for an address..."
               value={searchQuery}
@@ -162,15 +170,15 @@ export function LocationPicker({ value, onChange, height = "400px" }: LocationPi
             />
             {/* Search Results Dropdown */}
             {showResults && searchResults.length > 0 && (
-              <div className="absolute top-full left-0 right-0 z-50 mt-1 max-h-60 overflow-auto rounded-md border bg-popover shadow-lg">
+              <div className="bg-popover absolute top-full right-0 left-0 z-50 mt-1 max-h-60 overflow-auto rounded-md border shadow-lg">
                 {searchResults.map((result, index) => (
                   <button
                     key={index}
                     type="button"
-                    className="w-full px-4 py-2 text-left text-sm hover:bg-accent"
+                    className="hover:bg-accent w-full px-4 py-2 text-left text-sm"
                     onClick={() => handleSelectResult(result)}
                   >
-                    <MapPin className="mr-2 inline-block h-4 w-4 text-muted-foreground" />
+                    <MapPin className="text-muted-foreground mr-2 inline-block h-4 w-4" />
                     {result.address}
                   </button>
                 ))}
@@ -178,7 +186,11 @@ export function LocationPicker({ value, onChange, height = "400px" }: LocationPi
             )}
           </div>
           <Button type="button" onClick={handleSearch} disabled={isSearching}>
-            {isSearching ? <Loader2 className="h-4 w-4 animate-spin" /> : "Search"}
+            {isSearching ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              "Search"
+            )}
           </Button>
           <Button
             type="button"
@@ -195,17 +207,23 @@ export function LocationPicker({ value, onChange, height = "400px" }: LocationPi
         </div>
 
         {/* Map */}
-        <div className="relative overflow-hidden rounded-lg border" style={{ height }}>
+        <div
+          className="relative overflow-hidden rounded-lg border"
+          style={{ height }}
+        >
           <React.Suspense
             fallback={
-              <div className="flex h-full items-center justify-center bg-muted">
-                <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+              <div className="bg-muted flex h-full items-center justify-center">
+                <Loader2 className="text-muted-foreground h-8 w-8 animate-spin" />
               </div>
             }
           >
             <MapComponent
               center={[currentLocation.latitude, currentLocation.longitude]}
-              markerPosition={[currentLocation.latitude, currentLocation.longitude]}
+              markerPosition={[
+                currentLocation.latitude,
+                currentLocation.longitude,
+              ]}
               onMapClick={handleMapClick}
               zoom={15}
             />
@@ -214,11 +232,14 @@ export function LocationPicker({ value, onChange, height = "400px" }: LocationPi
 
         {/* Current Location Display */}
         {currentLocation.address && (
-          <div className="rounded-lg border bg-muted/50 p-3">
+          <div className="bg-muted/50 rounded-lg border p-3">
             <p className="text-sm font-medium">Selected Location:</p>
-            <p className="text-sm text-muted-foreground">{currentLocation.address}</p>
-            <p className="text-xs text-muted-foreground mt-1">
-              Coordinates: {currentLocation.latitude.toFixed(6)}, {currentLocation.longitude.toFixed(6)}
+            <p className="text-muted-foreground text-sm">
+              {currentLocation.address}
+            </p>
+            <p className="text-muted-foreground mt-1 text-xs">
+              Coordinates: {currentLocation.latitude.toFixed(6)},{" "}
+              {currentLocation.longitude.toFixed(6)}
             </p>
           </div>
         )}

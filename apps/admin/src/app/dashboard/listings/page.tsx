@@ -51,7 +51,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { cn, formatDate, formatCurrency, getInitials, getRelativeTime } from "@/lib/utils";
+import {
+  cn,
+  formatDate,
+  formatCurrency,
+  getInitials,
+  getRelativeTime,
+} from "@/lib/utils";
 
 type ListingStatus = "active" | "pending" | "suspended" | "flagged";
 
@@ -85,7 +91,8 @@ const mockListings: ListingData[] = [
   {
     id: "1",
     title: "Sunny View Boarding House",
-    description: "A modern boarding house with excellent amenities, near universities and commercial areas.",
+    description:
+      "A modern boarding house with excellent amenities, near universities and commercial areas.",
     address: "123 Main Street",
     city: "Manila",
     price: 5000,
@@ -106,7 +113,8 @@ const mockListings: ListingData[] = [
   {
     id: "2",
     title: "Green Residence Dormitory",
-    description: "Peaceful dormitory in a quiet neighborhood with lush garden surroundings.",
+    description:
+      "Peaceful dormitory in a quiet neighborhood with lush garden surroundings.",
     address: "456 Oak Avenue",
     city: "Quezon City",
     price: 4500,
@@ -127,7 +135,8 @@ const mockListings: ListingData[] = [
   {
     id: "3",
     title: "Budget Friendly BH",
-    description: "Affordable accommodation for students and young professionals.",
+    description:
+      "Affordable accommodation for students and young professionals.",
     address: "789 Pine Road",
     city: "Makati",
     price: 3000,
@@ -144,7 +153,8 @@ const mockListings: ListingData[] = [
     },
     createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 90),
     updatedAt: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2),
-    flagReason: "Misleading photos - actual property looks different from images",
+    flagReason:
+      "Misleading photos - actual property looks different from images",
     flaggedAt: new Date(Date.now() - 1000 * 60 * 60 * 24),
     flaggedBy: "Anonymous User",
   },
@@ -194,12 +204,17 @@ const mockListings: ListingData[] = [
 
 const statusColors: Record<ListingStatus, string> = {
   active: "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300",
-  pending: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300",
+  pending:
+    "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300",
   suspended: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300",
-  flagged: "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-300",
+  flagged:
+    "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-300",
 };
 
-const statusIcons: Record<ListingStatus, React.ComponentType<{ className?: string }>> = {
+const statusIcons: Record<
+  ListingStatus,
+  React.ComponentType<{ className?: string }>
+> = {
   active: CheckCircle,
   pending: AlertTriangle,
   suspended: Ban,
@@ -209,7 +224,8 @@ const statusIcons: Record<ListingStatus, React.ComponentType<{ className?: strin
 export default function ListingsPage() {
   const [filter, setFilter] = React.useState<"all" | ListingStatus>("all");
   const [searchQuery, setSearchQuery] = React.useState("");
-  const [selectedListing, setSelectedListing] = React.useState<ListingData | null>(null);
+  const [selectedListing, setSelectedListing] =
+    React.useState<ListingData | null>(null);
   const [actionDialog, setActionDialog] = React.useState<{
     type: "approve" | "suspend" | "unsuspend" | "dismiss" | null;
     listing: ListingData | null;
@@ -234,13 +250,18 @@ export default function ListingsPage() {
     suspended: mockListings.filter((l) => l.status === "suspended").length,
   };
 
-  const handleAction = (type: typeof actionDialog.type, listing: ListingData) => {
+  const handleAction = (
+    type: typeof actionDialog.type,
+    listing: ListingData
+  ) => {
     setActionDialog({ type, listing });
     setActionNotes("");
   };
 
   const confirmAction = () => {
-    console.log(`${actionDialog.type} listing ${actionDialog.listing?.id} with notes: ${actionNotes}`);
+    console.log(
+      `${actionDialog.type} listing ${actionDialog.listing?.id} with notes: ${actionNotes}`
+    );
     setActionDialog({ type: null, listing: null });
     setActionNotes("");
   };
@@ -250,7 +271,9 @@ export default function ListingsPage() {
       {/* Page Header */}
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Listings Moderation</h1>
+          <h1 className="text-3xl font-bold tracking-tight">
+            Listings Moderation
+          </h1>
           <p className="text-muted-foreground">
             Review and moderate boarding house listings
           </p>
@@ -261,22 +284,28 @@ export default function ListingsPage() {
       <div className="grid gap-4 md:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Listings</CardTitle>
-            <Building2 className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium">
+              Total Listings
+            </CardTitle>
+            <Building2 className="text-muted-foreground h-4 w-4" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{listingCounts.all}</div>
-            <p className="text-xs text-muted-foreground">All registered listings</p>
+            <p className="text-muted-foreground text-xs">
+              All registered listings
+            </p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Pending Review</CardTitle>
+            <CardTitle className="text-sm font-medium">
+              Pending Review
+            </CardTitle>
             <AlertTriangle className="h-4 w-4 text-yellow-500" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{listingCounts.pending}</div>
-            <p className="text-xs text-muted-foreground">Awaiting approval</p>
+            <p className="text-muted-foreground text-xs">Awaiting approval</p>
           </CardContent>
         </Card>
         <Card>
@@ -286,7 +315,7 @@ export default function ListingsPage() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{listingCounts.flagged}</div>
-            <p className="text-xs text-muted-foreground">Reported by users</p>
+            <p className="text-muted-foreground text-xs">Reported by users</p>
           </CardContent>
         </Card>
         <Card>
@@ -296,24 +325,35 @@ export default function ListingsPage() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{listingCounts.suspended}</div>
-            <p className="text-xs text-muted-foreground">Currently inactive</p>
+            <p className="text-muted-foreground text-xs">Currently inactive</p>
           </CardContent>
         </Card>
       </div>
 
       {/* Filters and Search */}
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-        <Tabs value={filter} onValueChange={(v) => setFilter(v as typeof filter)}>
+        <Tabs
+          value={filter}
+          onValueChange={(v) => setFilter(v as typeof filter)}
+        >
           <TabsList>
             <TabsTrigger value="all">All ({listingCounts.all})</TabsTrigger>
-            <TabsTrigger value="pending">Pending ({listingCounts.pending})</TabsTrigger>
-            <TabsTrigger value="flagged">Flagged ({listingCounts.flagged})</TabsTrigger>
-            <TabsTrigger value="active">Active ({listingCounts.active})</TabsTrigger>
-            <TabsTrigger value="suspended">Suspended ({listingCounts.suspended})</TabsTrigger>
+            <TabsTrigger value="pending">
+              Pending ({listingCounts.pending})
+            </TabsTrigger>
+            <TabsTrigger value="flagged">
+              Flagged ({listingCounts.flagged})
+            </TabsTrigger>
+            <TabsTrigger value="active">
+              Active ({listingCounts.active})
+            </TabsTrigger>
+            <TabsTrigger value="suspended">
+              Suspended ({listingCounts.suspended})
+            </TabsTrigger>
           </TabsList>
         </Tabs>
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
           <Input
             placeholder="Search listings..."
             className="w-full pl-9 md:w-80"
@@ -328,9 +368,9 @@ export default function ListingsPage() {
         {filteredListings.length === 0 ? (
           <Card className="col-span-full">
             <CardContent className="flex flex-col items-center justify-center py-12">
-              <Building2 className="h-12 w-12 text-muted-foreground/50" />
+              <Building2 className="text-muted-foreground/50 h-12 w-12" />
               <h3 className="mt-4 text-lg font-semibold">No listings found</h3>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-muted-foreground text-sm">
                 {searchQuery
                   ? "Try adjusting your search query"
                   : "No listings match the selected filter"}
@@ -343,13 +383,13 @@ export default function ListingsPage() {
             return (
               <Card key={listing.id} className="overflow-hidden">
                 {/* Image */}
-                <div className="relative h-40 bg-muted">
+                <div className="bg-muted relative h-40">
                   <div className="flex h-full items-center justify-center">
-                    <ImageIcon className="h-12 w-12 text-muted-foreground/50" />
+                    <ImageIcon className="text-muted-foreground/50 h-12 w-12" />
                   </div>
                   <Badge
                     className={cn(
-                      "absolute right-2 top-2",
+                      "absolute top-2 right-2",
                       statusColors[listing.status]
                     )}
                   >
@@ -362,8 +402,10 @@ export default function ListingsPage() {
                   <div className="space-y-3">
                     {/* Title and Rating */}
                     <div>
-                      <h3 className="font-semibold line-clamp-1">{listing.title}</h3>
-                      <div className="mt-1 flex items-center gap-2 text-sm text-muted-foreground">
+                      <h3 className="line-clamp-1 font-semibold">
+                        {listing.title}
+                      </h3>
+                      <div className="text-muted-foreground mt-1 flex items-center gap-2 text-sm">
                         <MapPin className="h-4 w-4" />
                         <span className="line-clamp-1">
                           {listing.address}, {listing.city}
@@ -373,7 +415,7 @@ export default function ListingsPage() {
 
                     {/* Price and Rating */}
                     <div className="flex items-center justify-between">
-                      <span className="font-semibold text-primary">
+                      <span className="text-primary font-semibold">
                         {formatCurrency(listing.price)}/mo
                       </span>
                       <div className="flex items-center gap-1 text-sm">
@@ -386,24 +428,24 @@ export default function ListingsPage() {
                     </div>
 
                     {/* Landlord */}
-                    <div className="flex items-center gap-2 pt-2 border-t">
+                    <div className="flex items-center gap-2 border-t pt-2">
                       <Avatar className="h-6 w-6">
-                        <AvatarFallback className="text-xs bg-primary/10 text-primary">
+                        <AvatarFallback className="bg-primary/10 text-primary text-xs">
                           {getInitials(listing.landlord.name)}
                         </AvatarFallback>
                       </Avatar>
-                      <span className="text-sm text-muted-foreground">
+                      <span className="text-muted-foreground text-sm">
                         {listing.landlord.name}
                       </span>
                     </div>
 
                     {/* Flag Reason */}
                     {listing.status === "flagged" && listing.flagReason && (
-                      <div className="rounded-lg bg-orange-50 dark:bg-orange-950 p-2 text-sm">
+                      <div className="rounded-lg bg-orange-50 p-2 text-sm dark:bg-orange-950">
                         <p className="font-medium text-orange-800 dark:text-orange-200">
                           Flagged Reason:
                         </p>
-                        <p className="text-orange-700 dark:text-orange-300 line-clamp-2">
+                        <p className="line-clamp-2 text-orange-700 dark:text-orange-300">
                           {listing.flagReason}
                         </p>
                       </div>
@@ -422,7 +464,11 @@ export default function ListingsPage() {
                       </Button>
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                          <Button variant="outline" size="icon" className="h-8 w-8">
+                          <Button
+                            variant="outline"
+                            size="icon"
+                            className="h-8 w-8"
+                          >
                             <MoreHorizontal className="h-4 w-4" />
                           </Button>
                         </DropdownMenuTrigger>
@@ -490,7 +536,7 @@ export default function ListingsPage() {
         open={!!selectedListing}
         onOpenChange={(open) => !open && setSelectedListing(null)}
       >
-        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+        <DialogContent className="max-h-[90vh] max-w-3xl overflow-y-auto">
           {selectedListing && (
             <>
               <DialogHeader>
@@ -505,45 +551,54 @@ export default function ListingsPage() {
                   <Badge className={cn(statusColors[selectedListing.status])}>
                     {selectedListing.status}
                   </Badge>
-                  <span className="text-sm text-muted-foreground">
+                  <span className="text-muted-foreground text-sm">
                     Last updated {getRelativeTime(selectedListing.updatedAt)}
                   </span>
                 </div>
 
                 {/* Description */}
                 <div>
-                  <h4 className="font-semibold mb-2">Description</h4>
-                  <p className="text-muted-foreground">{selectedListing.description}</p>
+                  <h4 className="mb-2 font-semibold">Description</h4>
+                  <p className="text-muted-foreground">
+                    {selectedListing.description}
+                  </p>
                 </div>
 
                 {/* Details Grid */}
                 <div className="grid gap-4 md:grid-cols-2">
                   <div className="rounded-lg border p-4">
-                    <p className="text-sm text-muted-foreground">Location</p>
+                    <p className="text-muted-foreground text-sm">Location</p>
                     <p className="font-medium">
                       {selectedListing.address}, {selectedListing.city}
                     </p>
                   </div>
                   <div className="rounded-lg border p-4">
-                    <p className="text-sm text-muted-foreground">Monthly Rent</p>
-                    <p className="font-medium">{formatCurrency(selectedListing.price)}</p>
+                    <p className="text-muted-foreground text-sm">
+                      Monthly Rent
+                    </p>
+                    <p className="font-medium">
+                      {formatCurrency(selectedListing.price)}
+                    </p>
                   </div>
                   <div className="rounded-lg border p-4">
-                    <p className="text-sm text-muted-foreground">Available Rooms</p>
+                    <p className="text-muted-foreground text-sm">
+                      Available Rooms
+                    </p>
                     <p className="font-medium">{selectedListing.rooms} rooms</p>
                   </div>
                   <div className="rounded-lg border p-4">
-                    <p className="text-sm text-muted-foreground">Rating</p>
-                    <p className="font-medium flex items-center gap-1">
+                    <p className="text-muted-foreground text-sm">Rating</p>
+                    <p className="flex items-center gap-1 font-medium">
                       <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                      {selectedListing.rating} ({selectedListing.reviewCount} reviews)
+                      {selectedListing.rating} ({selectedListing.reviewCount}{" "}
+                      reviews)
                     </p>
                   </div>
                 </div>
 
                 {/* Landlord Info */}
                 <div>
-                  <h4 className="font-semibold mb-2">Landlord</h4>
+                  <h4 className="mb-2 font-semibold">Landlord</h4>
                   <div className="flex items-center gap-3 rounded-lg border p-4">
                     <Avatar>
                       <AvatarFallback className="bg-primary text-primary-foreground">
@@ -551,8 +606,10 @@ export default function ListingsPage() {
                       </AvatarFallback>
                     </Avatar>
                     <div>
-                      <p className="font-medium">{selectedListing.landlord.name}</p>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="font-medium">
+                        {selectedListing.landlord.name}
+                      </p>
+                      <p className="text-muted-foreground text-sm">
                         {selectedListing.landlord.email}
                       </p>
                     </div>
@@ -560,29 +617,36 @@ export default function ListingsPage() {
                 </div>
 
                 {/* Flag Info */}
-                {selectedListing.status === "flagged" && selectedListing.flagReason && (
-                  <div>
-                    <h4 className="font-semibold mb-2 text-orange-600">Flag Details</h4>
-                    <div className="rounded-lg bg-orange-50 dark:bg-orange-950 p-4">
-                      <p className="text-orange-800 dark:text-orange-200">
-                        {selectedListing.flagReason}
-                      </p>
-                      <p className="text-sm text-orange-700 dark:text-orange-300 mt-2">
-                        Flagged by {selectedListing.flaggedBy}{" "}
-                        {selectedListing.flaggedAt && getRelativeTime(selectedListing.flaggedAt)}
-                      </p>
+                {selectedListing.status === "flagged" &&
+                  selectedListing.flagReason && (
+                    <div>
+                      <h4 className="mb-2 font-semibold text-orange-600">
+                        Flag Details
+                      </h4>
+                      <div className="rounded-lg bg-orange-50 p-4 dark:bg-orange-950">
+                        <p className="text-orange-800 dark:text-orange-200">
+                          {selectedListing.flagReason}
+                        </p>
+                        <p className="mt-2 text-sm text-orange-700 dark:text-orange-300">
+                          Flagged by {selectedListing.flaggedBy}{" "}
+                          {selectedListing.flaggedAt &&
+                            getRelativeTime(selectedListing.flaggedAt)}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                )}
+                  )}
 
                 {/* Timestamps */}
-                <div className="text-sm text-muted-foreground">
+                <div className="text-muted-foreground text-sm">
                   <p>Created: {formatDate(selectedListing.createdAt)}</p>
                   <p>Last updated: {formatDate(selectedListing.updatedAt)}</p>
                 </div>
               </div>
-              <DialogFooter className="flex-col sm:flex-row gap-2">
-                <Button variant="outline" onClick={() => setSelectedListing(null)}>
+              <DialogFooter className="flex-col gap-2 sm:flex-row">
+                <Button
+                  variant="outline"
+                  onClick={() => setSelectedListing(null)}
+                >
                   Close
                 </Button>
                 {selectedListing.status === "pending" && (
@@ -653,10 +717,12 @@ export default function ListingsPage() {
           <div className="space-y-4">
             <div>
               <label className="text-sm font-medium">
-                {actionDialog.type === "suspend" ? "Reason (required)" : "Notes (optional)"}
+                {actionDialog.type === "suspend"
+                  ? "Reason (required)"
+                  : "Notes (optional)"}
               </label>
               <textarea
-                className="mt-1.5 w-full rounded-md border bg-background px-3 py-2 text-sm"
+                className="bg-background mt-1.5 w-full rounded-md border px-3 py-2 text-sm"
                 rows={4}
                 placeholder={
                   actionDialog.type === "suspend"
@@ -679,10 +745,14 @@ export default function ListingsPage() {
               onClick={confirmAction}
               disabled={actionDialog.type === "suspend" && !actionNotes.trim()}
               className={cn(
-                actionDialog.type === "approve" && "bg-green-600 hover:bg-green-700",
-                actionDialog.type === "unsuspend" && "bg-green-600 hover:bg-green-700",
-                actionDialog.type === "dismiss" && "bg-green-600 hover:bg-green-700",
-                actionDialog.type === "suspend" && "bg-destructive hover:bg-destructive/90"
+                actionDialog.type === "approve" &&
+                  "bg-green-600 hover:bg-green-700",
+                actionDialog.type === "unsuspend" &&
+                  "bg-green-600 hover:bg-green-700",
+                actionDialog.type === "dismiss" &&
+                  "bg-green-600 hover:bg-green-700",
+                actionDialog.type === "suspend" &&
+                  "bg-destructive hover:bg-destructive/90"
               )}
             >
               Confirm

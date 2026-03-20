@@ -74,10 +74,17 @@ function NotificationCard({
       <div className="flex-1 space-y-1">
         <div className="flex items-start justify-between gap-2">
           <div>
-            <p className={cn("font-medium", !notification.isRead && "text-foreground")}>
+            <p
+              className={cn(
+                "font-medium",
+                !notification.isRead && "text-foreground"
+              )}
+            >
               {notification.title}
             </p>
-            <p className="text-sm text-muted-foreground">{notification.message}</p>
+            <p className="text-muted-foreground text-sm">
+              {notification.message}
+            </p>
           </div>
           {!notification.isRead && (
             <Button
@@ -91,13 +98,13 @@ function NotificationCard({
           )}
         </div>
         <div className="flex items-center gap-4">
-          <span className="text-xs text-muted-foreground">
+          <span className="text-muted-foreground text-xs">
             {formatDateTime(notification.createdAt)}
           </span>
           {notification.link && (
             <Link
               href={notification.link}
-              className="text-xs text-primary hover:underline"
+              className="text-primary text-xs hover:underline"
             >
               View details →
             </Link>
@@ -117,8 +124,8 @@ export default function NotificationsPage() {
     activeTab === "all"
       ? notifications
       : activeTab === "unread"
-      ? notifications.filter((n) => !n.isRead)
-      : notifications.filter((n) => n.isRead);
+        ? notifications.filter((n) => !n.isRead)
+        : notifications.filter((n) => n.isRead);
 
   const handleMarkAsRead = (id: string) => {
     setNotifications((prev) =>
@@ -168,7 +175,9 @@ export default function NotificationsPage() {
               <Bell className="h-4 w-4 text-blue-500" />
               Unread
             </CardDescription>
-            <CardTitle className="text-3xl text-blue-600">{unreadCount}</CardTitle>
+            <CardTitle className="text-3xl text-blue-600">
+              {unreadCount}
+            </CardTitle>
           </CardHeader>
         </Card>
         <Card>
@@ -201,7 +210,9 @@ export default function NotificationsPage() {
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <Tabs value={activeTab} onValueChange={setActiveTab}>
               <TabsList>
-                <TabsTrigger value="all">All ({notifications.length})</TabsTrigger>
+                <TabsTrigger value="all">
+                  All ({notifications.length})
+                </TabsTrigger>
                 <TabsTrigger value="unread">Unread ({unreadCount})</TabsTrigger>
                 <TabsTrigger value="read">
                   Read ({notifications.length - unreadCount})
@@ -243,7 +254,7 @@ export default function NotificationsPage() {
             </div>
           ) : (
             <div className="py-12 text-center">
-              <Bell className="mx-auto h-12 w-12 text-muted-foreground" />
+              <Bell className="text-muted-foreground mx-auto h-12 w-12" />
               <h3 className="mt-4 text-lg font-medium">No notifications</h3>
               <p className="text-muted-foreground">
                 {activeTab === "unread"
