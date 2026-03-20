@@ -5,6 +5,7 @@ import { GetUtilityReadingHandler } from './application/handlers/get-utility-rea
 import { ListUtilityReadingsHandler } from './application/handlers/list-utility-readings.handler';
 import { GetLatestReadingHandler } from './application/handlers/get-latest-reading.handler';
 import { GetConsumptionSummaryHandler } from './application/handlers/get-consumption-summary.handler';
+import type { PrismaClientType } from '@havenspace/database';
 
 export class UtilityModule {
   private static instance: UtilityModule;
@@ -18,7 +19,7 @@ export class UtilityModule {
     getConsumptionSummary: GetConsumptionSummaryHandler;
   };
 
-  private constructor(db: any) {
+  private constructor(db: PrismaClientType) {
     this.repository = new PrismaUtilityRepository(db);
     this.service = new UtilityService(this.repository);
     this.handlers = {
@@ -30,7 +31,7 @@ export class UtilityModule {
     };
   }
 
-  static initialize(db: any): UtilityModule {
+  static initialize(db: PrismaClientType): UtilityModule {
     if (!UtilityModule.instance) {
       UtilityModule.instance = new UtilityModule(db);
     }

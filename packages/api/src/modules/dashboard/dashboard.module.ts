@@ -2,6 +2,7 @@ import { AnalyticsService } from './domain/services/analytics.service';
 import { GetDashboardStatsHandler } from './application/handlers/get-dashboard-stats.handler';
 import { GetRecentActivityHandler } from './application/handlers/get-recent-activity.handler';
 import { GetUpcomingPaymentsHandler } from './application/handlers/get-upcoming-payments.handler';
+import type { PrismaClientType } from '@havenspace/database';
 
 export class DashboardModule {
   private static instance: DashboardModule;
@@ -12,7 +13,7 @@ export class DashboardModule {
     getUpcomingPayments: GetUpcomingPaymentsHandler;
   };
 
-  private constructor(db: any) {
+  private constructor(db: PrismaClientType) {
     this.service = new AnalyticsService();
     this.handlers = {
       getDashboardStats: new GetDashboardStatsHandler(db, this.service),
@@ -21,7 +22,7 @@ export class DashboardModule {
     };
   }
 
-  static initialize(db: any): DashboardModule {
+  static initialize(db: PrismaClientType): DashboardModule {
     if (!DashboardModule.instance) {
       DashboardModule.instance = new DashboardModule(db);
     }

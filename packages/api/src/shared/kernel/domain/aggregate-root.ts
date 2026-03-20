@@ -6,7 +6,7 @@ import { Entity } from './entity';
  * They maintain invariants and publish domain events
  */
 export abstract class AggregateRoot<TProps> extends Entity<TProps> {
-  private _domainEvents: any[] = [];
+  private _domainEvents: unknown[] = [];
   protected props: TProps;
 
   constructor(id: string, props: TProps) {
@@ -14,11 +14,11 @@ export abstract class AggregateRoot<TProps> extends Entity<TProps> {
     this.props = props;
   }
 
-  get domainEvents(): any[] {
+  get domainEvents(): unknown[] {
     return this._domainEvents;
   }
 
-  protected addDomainEvent(event: any): void {
+  protected addDomainEvent(event: unknown): void {
     this._domainEvents.push(event);
   }
 

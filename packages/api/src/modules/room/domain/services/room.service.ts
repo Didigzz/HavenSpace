@@ -1,5 +1,3 @@
-import { Room } from '../entities/room.entity';
-import { RoomStatus } from '../value-objects/room-status.vo';
 import { IRoomRepository } from '../repositories/room.repository.interface';
 
 /**

@@ -11,8 +11,15 @@ import { GetUtilityReadingHandler } from "../application/handlers/get-utility-re
 import { ListUtilityReadingsHandler } from "../application/handlers/list-utility-readings.handler";
 import { GetLatestReadingHandler } from "../application/handlers/get-latest-reading.handler";
 import { GetConsumptionSummaryHandler } from "../application/handlers/get-consumption-summary.handler";
+import type { PrismaClientType } from "@havenspace/database";
+import type { TRPCContext } from "../../../trpc";
 
-type ProtectedProcedure = any;
+type ProtectedProcedure = {
+  input: (schema: z.ZodType) => {
+    handler: (fn: (opts: { ctx: TRPCContext; input: unknown }) => Promise<unknown>) => unknown;
+  };
+  handler: (fn: (opts: { ctx: TRPCContext; input: unknown }) => Promise<unknown>) => unknown;
+};
 
 export const createUtilityRouter = (protectedProcedure: ProtectedProcedure) => {
   return {
@@ -27,34 +34,35 @@ export const createUtilityRouter = (protectedProcedure: ProtectedProcedure) => {
           })
           .optional()
       )
-      .handler(async ({ context, input }: { context: any; input?: any }) => {
-        const repository = new PrismaUtilityRepository(context.db);
+      .handler(async ({ ctx, input }: { ctx: { db: PrismaClientType }; input?: unknown }) => {
+        const repository = new PrismaUtilityRepository(ctx.db);
         const handler = new ListUtilityReadingsHandler(repository);
-        return handler.handle(input);
+        return handler.handle(input as { type?: "ELECTRICITY" | "WATER" | "INTERNET" | "OTHER"; roomId?: string; startDate?: Date; endDate?: Date } | undefined);
       }),
 
     getById: protectedProcedure
       .input(z.object({ id: z.string() }))
-      .handler(async ({ context, input }: { context: any; input: { id: string } }) => {
-        const repository = new PrismaUtilityRepository(context.db);
+      .handler(async ({ ctx, input }: { ctx: { db: PrismaClientType }; input: unknown }) => {
+        const inp = input as { id: string };
+        const repository = new PrismaUtilityRepository(ctx.db);
         const handler = new GetUtilityReadingHandler(repository);
-        return handler.handle(input);
+        return handler.handle(inp);
       }),
 
     create: protectedProcedure
       .input(createUtilityReadingSchema)
-      .handler(async ({ context, input }: { context: any; input: any }) => {
-        const repository = new PrismaUtilityRepository(context.db);
+      .handler(async ({ ctx, input }: { ctx: { db: PrismaClientType }; input: unknown }) => {
+        const repository = new PrismaUtilityRepository(ctx.db);
         const service = new UtilityService(repository);
         const handler = new CreateUtilityReadingHandler(repository, service);
-        return handler.handle(input);
+        return handler.handle(input as { roomId: string; type: "ELECTRICITY" | "WATER" | "INTERNET" | "OTHER"; previousReading: number; currentReading: number; ratePerUnit: number; readingDate: Date; billingPeriodStart: Date; billingPeriodEnd: Date });
       }),
 
     update: protectedProcedure
       .input(updateUtilityReadingSchema)
-      .handler(async ({ context, input }: { context: any; input: any }) => {
-        const { id, ...data } = input;
-        return context.db.utilityReading.update({
+      .handler(async ({ ctx, input }: { ctx: { db: PrismaClientType }; input: unknown }) => {
+        const { id, ...data } = input as { id: string } & Record<string, unknown>;
+        return ctx.db.utilityReading.update({
           where: { id },
           data,
         });
@@ -62,18 +70,19 @@ export const createUtilityRouter = (protectedProcedure: ProtectedProcedure) => {
 
     delete: protectedProcedure
       .input(z.object({ id: z.string() }))
-      .handler(async ({ context, input }: { context: any; input: { id: string } }) => {
-        return context.db.utilityReading.delete({
-          where: { id: input.id },
+      .handler(async ({ ctx, input }: { ctx: { db: PrismaClientType }; input: unknown }) => {
+        const inp = input as { id: string };
+        return ctx.db.utilityReading.delete({
+          where: { id: inp.id },
         });
       }),
 
     getLatestByRoom: protectedProcedure
       .input(z.object({ roomId: z.string(), type: UtilityTypeEnum }))
-      .handler(async ({ context, input }: { context: any; input: any }) => {
-        const repository = new PrismaUtilityRepository(context.db);
+      .handler(async ({ ctx, input }: { ctx: { db: PrismaClientType }; input: unknown }) => {
+        const repository = new PrismaUtilityRepository(ctx.db);
         const handler = new GetLatestReadingHandler(repository);
-        return handler.handle(input);
+        return handler.handle(input as { roomId: string; type: "ELECTRICITY" | "WATER" | "INTERNET" | "OTHER" });
       }),
 
     getConsumptionSummary: protectedProcedure
@@ -84,11 +93,12 @@ export const createUtilityRouter = (protectedProcedure: ProtectedProcedure) => {
           months: z.number().default(6),
         })
       )
-      .handler(async ({ context, input }: { context: any; input: any }) => {
-        const repository = new PrismaUtilityRepository(context.db);
+      .handler(async ({ ctx, input }: { ctx: TRPCContext; input: unknown }) => {
+        const inp = input as { roomId?: string; type?: "ELECTRICITY" | "WATER" | "INTERNET" | "OTHER"; months: number };
+        const repository = new PrismaUtilityRepository(ctx.db);
         const service = new UtilityService(repository);
         const handler = new GetConsumptionSummaryHandler(service);
-        return handler.handle(input);
+        return handler.handle(inp);
       }),
   };
 };

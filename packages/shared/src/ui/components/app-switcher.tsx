@@ -7,15 +7,7 @@ import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import { LayoutDashboard, Home, Building, Shield, ExternalLink } from 'lucide-react';
 
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@havenspace/ui/dropdown-menu';
-import { Button } from '@havenspace/ui/button';
+import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from './primitives';
 import { APP_URLS, type AppKey } from '@havenspace/config';
 
 /**

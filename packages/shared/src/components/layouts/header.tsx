@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Button } from "@havenspace/ui";
+import { Button } from "../../ui";
 import { Home, Menu, X, MapPin } from "lucide-react";
 import { useState } from "react";
 

@@ -45,16 +45,27 @@ export class User extends Entity<UserProps> {
     });
   }
 
-  static fromPrisma(data: any): User {
+  static fromPrisma(data: unknown): User {
+    const d = data as {
+      id: string;
+      email: string;
+      password: string;
+      name: string;
+      role: string;
+      image?: string | null;
+      createdAt: Date;
+      updatedAt: Date;
+    };
+
     return new User({
-      id: data.id,
-      email: data.email,
-      password: data.password,
-      name: data.name,
-      role: data.role,
-      image: data.image,
-      createdAt: data.createdAt,
-      updatedAt: data.updatedAt,
+      id: d.id,
+      email: d.email,
+      password: d.password,
+      name: d.name,
+      role: d.role,
+      image: d.image,
+      createdAt: d.createdAt,
+      updatedAt: d.updatedAt,
     });
   }
 

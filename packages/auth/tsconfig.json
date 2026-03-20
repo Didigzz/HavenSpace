@@ -1,8 +1,10 @@
 {
-    "extends": "@bhms/typescript-config/base.json",
+    "extends": "../config/typescript/base.json",
     "compilerOptions": {
         "outDir": "./dist",
-        "rootDir": "./src"
+        "rootDir": "./src",
+        "lib": ["ES2022", "DOM"],
+        "target": "ES2022"
     },
     "include": [
         "src"

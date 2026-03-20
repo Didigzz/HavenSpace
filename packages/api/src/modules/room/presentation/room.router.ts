@@ -7,8 +7,28 @@ import { DeleteRoomHandler } from '../application/handlers/delete-room.handler';
 import { GetRoomHandler } from '../application/handlers/get-room.handler';
 import { ListRoomsHandler } from '../application/handlers/list-rooms.handler';
 import { GetRoomStatsHandler } from '../application/handlers/get-room-stats.handler';
+import type { PrismaClientType } from '@havenspace/database';
+import type { TRPCContext } from '../../../trpc';
 
-type ProtectedProcedure = any;
+type ProtectedProcedure = {
+  input: (schema: z.ZodType) => {
+    handler: (fn: (opts: { ctx: TRPCContext; input: unknown }) => Promise<unknown>) => unknown;
+  };
+  handler: (fn: (opts: { ctx: TRPCContext; input: unknown }) => Promise<unknown>) => unknown;
+};
+
+interface RoomDTO {
+  id: string;
+  roomNumber: string;
+  floor: number;
+  capacity: number;
+  monthlyRate: number;
+  description: string | null;
+  amenities: string[];
+  status: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
 
 export const createRoomRouter = (protectedProcedure: ProtectedProcedure) => {
   return {
@@ -22,22 +42,22 @@ export const createRoomRouter = (protectedProcedure: ProtectedProcedure) => {
           })
           .optional()
       )
-      .handler(async ({ context, input }: { context: any; input?: any }) => {
+      .handler(async ({ ctx, input }: { ctx: { db: PrismaClientType }; input?: unknown }) => {
         // Initialize dependencies
-        const roomRepository = new PrismaRoomRepository(context.db);
+        const roomRepository = new PrismaRoomRepository(ctx.db);
         const listRoomsHandler = new ListRoomsHandler(roomRepository);
 
         // Execute query
-        const rooms = await listRoomsHandler.handle(input);
+        const rooms = await listRoomsHandler.handle(input as { status?: "AVAILABLE" | "OCCUPIED" | "MAINTENANCE"; search?: string; floor?: number } | undefined);
 
         // Convert to DTO format for response
-        return rooms.map((room: any) => ({
+        return rooms.map((room): RoomDTO => ({
           id: room.id,
           roomNumber: room.roomNumber,
           floor: room.floor,
           capacity: room.capacity,
           monthlyRate: room.monthlyRate,
-          description: room.description,
+          description: room.description ?? null,
           amenities: room.amenities,
           status: room.status.toString(),
           createdAt: room.createdAt,
@@ -47,13 +67,14 @@ export const createRoomRouter = (protectedProcedure: ProtectedProcedure) => {
 
     getById: protectedProcedure
       .input(z.object({ id: z.string() }))
-      .handler(async ({ context, input }: { context: any; input: { id: string } }) => {
+      .handler(async ({ ctx, input }: { ctx: { db: PrismaClientType }; input: unknown }) => {
+        const inp = input as { id: string };
         // Initialize dependencies
-        const roomRepository = new PrismaRoomRepository(context.db);
+        const roomRepository = new PrismaRoomRepository(ctx.db);
         const getRoomHandler = new GetRoomHandler(roomRepository);
 
         // Execute query
-        const room = await getRoomHandler.handle(input);
+        const room = await getRoomHandler.handle(inp);
 
         if (!room) {
           return null;
@@ -85,14 +106,14 @@ export const createRoomRouter = (protectedProcedure: ProtectedProcedure) => {
           amenities: z.array(z.string()).default([]),
         })
       )
-      .handler(async ({ context, input }: { context: any; input: any }) => {
+      .handler(async ({ ctx, input }: { ctx: { db: PrismaClientType }; input: unknown }) => {
         // Initialize dependencies
-        const roomRepository = new PrismaRoomRepository(context.db);
+        const roomRepository = new PrismaRoomRepository(ctx.db);
         const roomService = new RoomService(roomRepository);
         const createRoomHandler = new CreateRoomHandler(roomRepository, roomService);
 
         // Execute command
-        const room = await createRoomHandler.handle(input);
+        const room = await createRoomHandler.handle(input as { roomNumber: string; floor: number; capacity: number; monthlyRate: number; amenities: string[]; description?: string });
 
         // Convert to DTO format for response
         return {
@@ -122,14 +143,14 @@ export const createRoomRouter = (protectedProcedure: ProtectedProcedure) => {
           status: z.enum(['AVAILABLE', 'OCCUPIED', 'MAINTENANCE']).optional(),
         })
       )
-      .handler(async ({ context, input }: { context: any; input: any }) => {
+      .handler(async ({ ctx, input }: { ctx: { db: PrismaClientType }; input: unknown }) => {
         // Initialize dependencies
-        const roomRepository = new PrismaRoomRepository(context.db);
+        const roomRepository = new PrismaRoomRepository(ctx.db);
         const roomService = new RoomService(roomRepository);
         const updateRoomHandler = new UpdateRoomHandler(roomRepository, roomService);
 
         // Execute command
-        const room = await updateRoomHandler.handle(input);
+        const room = await updateRoomHandler.handle(input as { id: string; roomNumber?: string; floor?: number; capacity?: number; monthlyRate?: number; description?: string; amenities?: string[]; status?: "AVAILABLE" | "OCCUPIED" | "MAINTENANCE" });
 
         // Convert to DTO format for response
         return {
@@ -148,20 +169,21 @@ export const createRoomRouter = (protectedProcedure: ProtectedProcedure) => {
 
     delete: protectedProcedure
       .input(z.object({ id: z.string() }))
-      .handler(async ({ context, input }: { context: any; input: { id: string } }) => {
+      .handler(async ({ ctx, input }: { ctx: { db: PrismaClientType }; input: unknown }) => {
+        const inp = input as { id: string };
         // Initialize dependencies
-        const roomRepository = new PrismaRoomRepository(context.db);
+        const roomRepository = new PrismaRoomRepository(ctx.db);
         const deleteRoomHandler = new DeleteRoomHandler(roomRepository);
 
         // Execute command
-        await deleteRoomHandler.handle(input);
+        await deleteRoomHandler.handle(inp);
 
         return { success: true };
       }),
 
-    getStats: protectedProcedure.handler(async ({ context }: { context: any }) => {
+    getStats: protectedProcedure.handler(async ({ ctx }: { ctx: { db: PrismaClientType } }) => {
       // Initialize dependencies
-      const roomRepository = new PrismaRoomRepository(context.db);
+      const roomRepository = new PrismaRoomRepository(ctx.db);
       const getRoomStatsHandler = new GetRoomStatsHandler(roomRepository);
 
       // Execute query

@@ -10,5 +10,6 @@ export type {
 import type { HavenSession } from "@havenspace/api";
 
 declare module "next-auth" {
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type
   interface Session extends HavenSession {}
 }

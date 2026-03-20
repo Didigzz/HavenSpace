@@ -68,19 +68,33 @@ export class UtilityReading extends Entity<UtilityReadingProps> {
     });
   }
 
-  static fromPrisma(data: any): UtilityReading {
+  static fromPrisma(data: unknown): UtilityReading {
+    const d = data as {
+      id: string;
+      roomId: string;
+      type: string;
+      previousReading: number | string;
+      currentReading: number | string;
+      ratePerUnit: number | string;
+      readingDate: Date;
+      billingPeriodStart: Date;
+      billingPeriodEnd: Date;
+      createdAt: Date;
+      updatedAt: Date;
+    };
+
     return new UtilityReading({
-      id: data.id,
-      roomId: data.roomId,
-      type: data.type,
-      previousReading: Number(data.previousReading),
-      currentReading: Number(data.currentReading),
-      ratePerUnit: Number(data.ratePerUnit),
-      readingDate: data.readingDate,
-      billingPeriodStart: data.billingPeriodStart,
-      billingPeriodEnd: data.billingPeriodEnd,
-      createdAt: data.createdAt,
-      updatedAt: data.updatedAt,
+      id: d.id,
+      roomId: d.roomId,
+      type: d.type,
+      previousReading: Number(d.previousReading),
+      currentReading: Number(d.currentReading),
+      ratePerUnit: Number(d.ratePerUnit),
+      readingDate: d.readingDate,
+      billingPeriodStart: d.billingPeriodStart,
+      billingPeriodEnd: d.billingPeriodEnd,
+      createdAt: d.createdAt,
+      updatedAt: d.updatedAt,
     });
   }
 

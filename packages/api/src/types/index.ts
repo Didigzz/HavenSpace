@@ -9,12 +9,7 @@
  */
 
 import { TRPCError } from "@trpc/server";
-
-// Import Prisma types conditionally - using any to avoid compilation errors
-type PrismaClient = any;
-
-// Import next-auth types conditionally
-type Session = any;
+import type { PrismaClientType } from "@havenspace/database";
 
 /**
  * User role and status types
@@ -30,18 +25,18 @@ export interface HavenSession {
     id: string;
     role: UserRole;
     status: UserStatus;
-    email?: string | null;
-    name?: string | null;
-    image?: string | null;
+    email?: string;
+    name?: string;
+    image?: string;
   };
-  csrfSecret?: string | null;
+  csrfSecret?: string;
 }
 
 /**
  * TRPC context type - available in all procedures
  */
 export interface TRPCContext {
-  db: PrismaClient;
+  db: PrismaClientType;
   session: HavenSession | null;
   headers: Headers;
   csrfSecret?: string | null; // CSRF secret from server-side session
@@ -151,7 +146,7 @@ export function handleTRPCError(error: unknown): never {
  * Type-safe procedure context builder
  */
 export function createProcedureContext(opts: {
-  db: PrismaClient;
+  db: PrismaClientType;
   session: HavenSession | null;
   headers: Headers;
 }): TRPCContext {
@@ -202,7 +197,7 @@ export function assertStatus(
     ? requiredStatus
     : [requiredStatus];
 
-  if (!allowedStatuses.includes(session.user.status)) {
+  if ((allowedStatuses as string[]).indexOf(session.user.status) === -1) {
     throw new TRPCError({
       code: "FORBIDDEN",
       message: `This action requires one of these statuses: ${allowedStatuses.join(", ")}`,

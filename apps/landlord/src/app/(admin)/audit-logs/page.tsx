@@ -146,6 +146,7 @@ export default function AuditLogsPage() {
     return matchesSearch && matchesAction && matchesResource;
   });
 
+  // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable({
     data: filteredLogs,
     columns,

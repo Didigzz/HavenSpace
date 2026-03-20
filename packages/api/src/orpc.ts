@@ -1,5 +1,4 @@
-import { os, ORPCError } from "@orpc/server";
-import { ZodError } from "zod";
+import { os } from "@orpc/server";
 import { db } from "@havenspace/database";
 
 export const createORPCContext = async (opts: { headers: Headers }) => {
@@ -16,9 +15,7 @@ export type ORPCContext = Awaited<ReturnType<typeof createORPCContext>>;
 
 const o = os.$context<ORPCContext>();
 
-const timingMiddleware = o.middleware(async ({ next, path }) => {
-  const start = Date.now();
-
+const timingMiddleware = o.middleware(async ({ next }) => {
   if (process.env.NODE_ENV === "development") {
     const waitMs = Math.floor(Math.random() * 400) + 100;
     await new Promise((resolve) => setTimeout(resolve, waitMs));
@@ -26,15 +23,12 @@ const timingMiddleware = o.middleware(async ({ next, path }) => {
 
   const result = await next();
 
-  const end = Date.now();
-  console.log(`[oRPC] ${path} took ${end - start}ms to execute`);
-
   return result;
 });
 
 export const publicProcedure = o.use(timingMiddleware);
 
 // Base protected procedure - platforms can extend this with their auth
-export const createProtectedProcedure = (authMiddleware: any) => {
-  return o.use(timingMiddleware).use(authMiddleware) as ReturnType<typeof o.use>;
+export const createProtectedProcedure = <T extends ReturnType<typeof os.middleware>>(authMiddleware: T) => {
+  return o.use(timingMiddleware).use(authMiddleware);
 };

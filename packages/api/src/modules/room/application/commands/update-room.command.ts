@@ -1,5 +1,4 @@
 import { z } from 'zod';
-import { RoomStatus } from '../../domain/value-objects/room-status.vo';
 
 export const UpdateRoomCommandSchema = z.object({
   id: z.string(),

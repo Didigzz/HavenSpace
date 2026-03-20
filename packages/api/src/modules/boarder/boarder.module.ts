@@ -7,6 +7,7 @@ import { AssignRoomHandler } from './application/handlers/assign-room.handler';
 import { GetBoarderHandler } from './application/handlers/get-boarder.handler';
 import { ListBoardersHandler } from './application/handlers/list-boarders.handler';
 import { GetBoarderStatsHandler } from './application/handlers/get-boarder-stats.handler';
+import type { PrismaClientType } from '@havenspace/database';
 
 export class BoarderModule {
   private static instance: BoarderModule;
@@ -22,7 +23,7 @@ export class BoarderModule {
     getBoarderStats: GetBoarderStatsHandler;
   };
 
-  private constructor(db: any) {
+  private constructor(db: PrismaClientType) {
     this.repository = new PrismaBoarderRepository(db);
     this.service = new BoarderService(this.repository);
     this.handlers = {
@@ -36,7 +37,7 @@ export class BoarderModule {
     };
   }
 
-  static initialize(db: any): BoarderModule {
+  static initialize(db: PrismaClientType): BoarderModule {
     if (!BoarderModule.instance) {
       BoarderModule.instance = new BoarderModule(db);
     }

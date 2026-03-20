@@ -37,13 +37,13 @@ export abstract class ValueObject<TProps = unknown> {
       return false;
     }
 
-    return this.shallowEqual(this.props, vo.props);
+    return this.shallowEqual(this.props as Record<string, unknown>, vo.props as Record<string, unknown>);
   }
 
   /**
    * Shallow equality check for objects
    */
-  private shallowEqual(obj1: unknown, obj2: unknown): boolean {
+  private shallowEqual(obj1: Record<string, unknown>, obj2: Record<string, unknown>): boolean {
     if (obj1 === obj2) {
       return true;
     }
@@ -56,8 +56,8 @@ export abstract class ValueObject<TProps = unknown> {
       return false;
     }
 
-    const keys1 = Object.keys(obj1) as Array<keyof typeof obj1>;
-    const keys2 = Object.keys(obj2) as Array<keyof typeof obj2>;
+    const keys1 = Object.keys(obj1) as string[];
+    const keys2 = Object.keys(obj2) as string[];
 
     if (keys1.length !== keys2.length) {
       return false;

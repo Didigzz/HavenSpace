@@ -180,6 +180,7 @@ function PaymentsContent() {
     ? allPayments
     : allPayments.filter((p) => p.status.toLowerCase() === activeTab);
 
+  // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable({
     data: filteredPayments,
     columns,

@@ -6,6 +6,7 @@ import { GetPaymentHandler } from './application/handlers/get-payment.handler';
 import { ListPaymentsHandler } from './application/handlers/list-payments.handler';
 import { GetPaymentStatsHandler } from './application/handlers/get-payment-stats.handler';
 import { GetMonthlyRevenueHandler } from './application/handlers/get-monthly-revenue.handler';
+import type { PrismaClientType } from '@havenspace/database';
 
 export class PaymentModule {
   private static instance: PaymentModule;
@@ -20,7 +21,7 @@ export class PaymentModule {
     getMonthlyRevenue: GetMonthlyRevenueHandler;
   };
 
-  private constructor(db: any) {
+  private constructor(db: PrismaClientType) {
     this.repository = new PrismaPaymentRepository(db);
     this.service = new PaymentService(this.repository);
     this.handlers = {
@@ -33,7 +34,7 @@ export class PaymentModule {
     };
   }
 
-  static initialize(db: any): PaymentModule {
+  static initialize(db: PrismaClientType): PaymentModule {
     if (!PaymentModule.instance) {
       PaymentModule.instance = new PaymentModule(db);
     }

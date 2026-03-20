@@ -5,6 +5,7 @@
 Haven Space is a comprehensive **multi-tenant monorepo platform** for managing boarding houses, connecting landlords with boarders through modern web interfaces. Built with **Next.js 16**, **React 18**, **TypeScript**, **tRPC**, **Prisma**, and **PostgreSQL**, the platform follows a phased architecture serving multiple user roles.
 
 ### Core User Roles
+
 | Role | Access Level | Status Required |
 |------|-------------|-----------------|
 | **Boarder** | Browse, book, message, pay | Active (no approval) |
@@ -12,6 +13,7 @@ Haven Space is a comprehensive **multi-tenant monorepo platform** for managing b
 | **Admin** | Full platform oversight, user management | Admin role |
 
 ### Technology Stack
+
 - **Frontend**: Next.js 16, React 18, TypeScript, Tailwind CSS, Radix UI
 - **Backend**: tRPC, Express.js, Next.js API Routes
 - **Database**: PostgreSQL 15 with Prisma ORM
@@ -46,8 +48,8 @@ HavenSpace/
 │   └── validation/                # Zod validation schemas
 │
 ├── docs/                          # Documentation
-│   ├── PLAN.md                    # System specification
-│   └── APPS.md                    # Application documentation
+│   ├── GUIDELINES.md              # Presentation guidelines
+│   └── PRESENTATION.md            # Presentation deck content
 │
 ├── nginx/                         # Nginx configuration
 ├── .github/workflows/             # CI/CD pipelines
@@ -59,6 +61,7 @@ HavenSpace/
 ## Building & Running
 
 ### Prerequisites
+
 - **Node.js** 18+
 - **Bun** 1.1+
 - **PostgreSQL** 14+ (or use Docker)
@@ -177,16 +180,27 @@ Pre-commit hooks automatically run on staged files:
 | `**/*.{ts,tsx}` | TypeScript type check |
 
 ### ESLint Configuration
+
 - Extends: `eslint:recommended`
-- Parser: Default ESLint parser
-- Environment: Node.js, ES2022
-- Ignores: `node_modules/`, `.next/`, `dist/`, `.turbo/`, `apps/`
+- Parser: `@typescript-eslint/parser` for TypeScript files
+- Environment: Node.js, ES2022, Browser
+- Ignores: `node_modules/`, `.next/`, `dist/`, `.turbo/`
+- Rules:
+  - `no-unused-vars`: Warn, allows args starting with `_`
+  - `no-console`: Warn, allows `warn` and `error`
+  - `@typescript-eslint/no-explicit-any`: Warn
 
 ### Prettier Configuration
+
+- Semi: `true`
+- Single Quote: `false`
+- Tab Width: `2`
+- Trailing Comma: `es5`
+- Print Width: `80`
 - Plugins: `prettier-plugin-prisma`, `prettier-plugin-tailwindcss`
-- Configured via `.prettierrc`
 
 ### TypeScript Configuration
+
 - **Target**: ES2022
 - **Strict mode**: Enabled
 - **Module resolution**: `bundler`
@@ -233,6 +247,7 @@ Automated dependency updates for:
 | **Phase 4** | Admin Dashboard (Platform Management) | Core |
 
 ### Authentication Flow
+
 1. Authentication handled via `packages/auth/` (NextAuth.js configuration)
 2. Auth endpoints served through `apps/server/` API routes
 3. Role-based redirect to appropriate dashboard after login
@@ -240,13 +255,29 @@ Automated dependency updates for:
 5. API enforces role-based access control via tRPC middleware
 
 ### tRPC API Architecture
+
 - All apps communicate with API server via tRPC
 - Type-safe end-to-end communication
 - Routers defined in `packages/api/`
 - API server runs on port 3006
 
 ### Database Schema
-Key entities: Users, Boarding Houses, Bookings, Payments, Messages, Reviews, Applications. See `packages/database/schema.prisma` for full schema.
+
+Key entities defined in `packages/database/prisma/schema.prisma`:
+
+| Entity | Description |
+|--------|-------------|
+| `User` | Unified user table with roles (LANDLORD, BOARDER, ADMIN) |
+| `LandlordProfile` | Landlord-specific profile with verification status |
+| `Boarder` | Boarder-specific profile with room assignments |
+| `Property` | Boarding house listings with amenities and pricing |
+| `Room` | Individual rooms with capacity and status |
+| `Booking` | Reservation system with status tracking |
+| `Payment` | Transaction processing with status |
+| `UtilityReading` | Utility meter readings for billing |
+| `SavedListing` | User-saved properties |
+| `AuditLog` | Activity logging for admin actions |
+| `Setting` | Platform configuration key-value store |
 
 ---
 
@@ -271,8 +302,9 @@ Key entities: Users, Boarding Houses, Bookings, Payments, Messages, Reviews, App
 
 | Document | Location |
 |----------|----------|
-| System Specification | `docs/PLAN.md` |
 | Application Documentation | `docs/APPS.md` |
+| Presentation Guidelines | `docs/GUIDELINES.md` |
+| Presentation Deck | `docs/PRESENTATION.md` |
 | Apps Documentation | `apps/README.md` |
 | Packages Documentation | `packages/README.md` |
 

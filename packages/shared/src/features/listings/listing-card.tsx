@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Card, CardContent, CardFooter } from "@havenspace/ui";
+import { Card, CardContent, CardFooter } from "../../ui/components/primitives/card";
 import { MapPin, Users, Wifi, Car, Utensils, Bath, Star } from "lucide-react";
-import { Badge } from "@havenspace/ui";
-import { formatCurrency } from "../../lib/utils";
+import { Badge } from "../../ui/components/primitives/badge";
+import { formatCurrency } from "../../lib/formatters";
 
 export interface BoardingHouse {
   id: string;
@@ -53,7 +53,7 @@ export function ListingCard({ listing }: ListingCardProps) {
               Fully Occupied
             </Badge>
           )}
-          if (listing.rating) {
+          {listing.rating && (
             <div className="absolute right-3 top-3 flex items-center gap-1 rounded-md bg-white/90 px-2 py-1 text-sm font-medium">
               <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
               {listing.rating.toFixed(1)}

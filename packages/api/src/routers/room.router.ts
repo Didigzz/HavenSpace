@@ -5,13 +5,15 @@ import {
   updateRoomSchema,
   RoomStatusEnum
 } from "@havenspace/validation";
-import type { TRPCContext, HavenSession, ProtectedTRPCContext } from "../types/index";
+import type { ProtectedTRPCContext } from "../types/index";
 
 // Type helpers
 interface AuthenticatedCtx<TInput = unknown> {
   ctx: ProtectedTRPCContext;
   input: TInput;
 }
+
+type Procedure = ReturnType<typeof createTRPCRouter>;
 
 type GetAllInput = z.infer<typeof getAllRoomsSchema>;
 type GetByIdInput = z.infer<typeof getRoomByIdSchema>;
@@ -32,7 +34,7 @@ const deleteRoomSchema = z.object({
   id: z.string(),
 });
 
-export const createRoomRouter = (protectedProcedure: any) => {
+export const createRoomRouter = (protectedProcedure: Procedure) => {
   return createTRPCRouter({
     getAll: protectedProcedure
       .input(getAllRoomsSchema.optional())

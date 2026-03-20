@@ -1,7 +1,21 @@
 import { Room } from '../../domain/entities/room.entity';
 import { RoomStatus } from '../../domain/value-objects/room-status.vo';
 import { IRoomRepository, RoomFilters, RoomStats } from '../../domain/repositories/room.repository.interface';
-import { PrismaClientType } from '@havenspace/database';
+import type { PrismaClientType } from '@havenspace/database';
+import { Prisma } from '@prisma/client';
+
+interface RoomData {
+  id: string;
+  roomNumber: string;
+  floor: number;
+  capacity: number;
+  monthlyRate: Prisma.Decimal | number;
+  description: string | null;
+  amenities: string[];
+  status: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
 
 export class PrismaRoomRepository implements IRoomRepository {
   constructor(private prisma: PrismaClientType) {}
@@ -21,7 +35,7 @@ export class PrismaRoomRepository implements IRoomRepository {
   async findAll(filters?: RoomFilters): Promise<Room[]> {
     const roomsData = await this.prisma.room.findMany({
       where: {
-        status: filters?.status ? filters.status.toString() as any : undefined,
+        status: filters?.status ? filters.status.value : undefined,
         roomNumber: filters?.search
           ? { contains: filters.search, mode: 'insensitive' }
           : undefined,
@@ -39,7 +53,7 @@ export class PrismaRoomRepository implements IRoomRepository {
       orderBy: { roomNumber: 'asc' },
     });
 
-    return roomsData.map((room: any) => this.mapToDomain(room));
+    return roomsData.map((room) => this.mapToDomain(room));
   }
 
   async save(room: Room): Promise<Room> {
@@ -50,9 +64,9 @@ export class PrismaRoomRepository implements IRoomRepository {
         floor: room.floor,
         capacity: room.capacity,
         monthlyRate: room.monthlyRate,
-        description: room.description,
+        description: room.description ?? null,
         amenities: room.amenities,
-        status: room.status.toString() as any,
+        status: room.status.value,
         updatedAt: room.updatedAt,
       },
       create: {
@@ -61,9 +75,9 @@ export class PrismaRoomRepository implements IRoomRepository {
         floor: room.floor,
         capacity: room.capacity,
         monthlyRate: room.monthlyRate,
-        description: room.description,
+        description: room.description ?? null,
         amenities: room.amenities,
-        status: room.status.toString() as any,
+        status: room.status.value,
         createdAt: room.createdAt,
         updatedAt: room.updatedAt,
       },
@@ -103,14 +117,14 @@ export class PrismaRoomRepository implements IRoomRepository {
     return room !== null;
   }
 
-  private mapToDomain(data: any): Room {
+  private mapToDomain(data: RoomData): Room {
     return new Room({
       id: data.id,
       roomNumber: data.roomNumber,
       floor: data.floor,
       capacity: data.capacity,
-      monthlyRate: data.monthlyRate,
-      description: data.description,
+      monthlyRate: data.monthlyRate instanceof Prisma.Decimal ? data.monthlyRate.toNumber() : data.monthlyRate,
+      description: data.description ?? undefined,
       amenities: data.amenities,
       status: RoomStatus.fromString(data.status),
       createdAt: data.createdAt,

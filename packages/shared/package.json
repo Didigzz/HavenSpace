@@ -23,8 +23,10 @@
     "test:coverage": "vitest --coverage"
   },
   "dependencies": {
+    "@havenspace/auth": "workspace:*",
     "@havenspace/database": "workspace:*",
     "@havenspace/validation": "workspace:*",
+    "@hookform/resolvers/zod": "^3.3.4",
     "@prisma/client": "^7.4.2",
     "@radix-ui/react-alert-dialog": "^1.0.5",
     "@radix-ui/react-avatar": "^1.0.4",

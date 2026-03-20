@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Button, Input, Label } from "@havenspace/ui";
+import { Button, Input, Label } from "../../ui";
 import { Search, SlidersHorizontal, X, MapPin } from "lucide-react";
 
 const AMENITIES = [
@@ -39,7 +39,7 @@ export function SearchFilters({ onSearch, compact = false }: SearchFiltersProps)
     location: searchParams.get("location") || "",
     priceMin: searchParams.get("priceMin") || "",
     priceMax: searchParams.get("priceMax") || "",
-    amenities: searchParams.get("amenities")?.split(",").filter(Boolean) || [],
+    amenities: (searchParams.get("amenities")?.split(",") as string[]) || [],
   });
 
   const handleSearch = () => {
@@ -95,8 +95,8 @@ export function SearchFilters({ onSearch, compact = false }: SearchFiltersProps)
             placeholder="Search boarding houses..."
             className="flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground"
             value={filters.query}
-            onChange={(e) => setFilters({ ...filters, query: e.target.value })}
-            onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFilters({ ...filters, query: e.target.value })}
+            onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => e.key === "Enter" && handleSearch()}
           />
         </div>
         <div className="hidden h-8 w-px bg-border sm:block" />
@@ -107,8 +107,8 @@ export function SearchFilters({ onSearch, compact = false }: SearchFiltersProps)
             placeholder="Location"
             className="flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground"
             value={filters.location}
-            onChange={(e) => setFilters({ ...filters, location: e.target.value })}
-            onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFilters({ ...filters, location: e.target.value })}
+            onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => e.key === "Enter" && handleSearch()}
           />
         </div>
         <Button onClick={handleSearch} className="rounded-full" size="sm">
@@ -129,8 +129,8 @@ export function SearchFilters({ onSearch, compact = false }: SearchFiltersProps)
             placeholder="Search boarding houses..."
             className="pl-10"
             value={filters.query}
-            onChange={(e) => setFilters({ ...filters, query: e.target.value })}
-            onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFilters({ ...filters, query: e.target.value })}
+            onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => e.key === "Enter" && handleSearch()}
           />
         </div>
         <div className="relative flex-1">
@@ -139,8 +139,8 @@ export function SearchFilters({ onSearch, compact = false }: SearchFiltersProps)
             placeholder="Location"
             className="pl-10"
             value={filters.location}
-            onChange={(e) => setFilters({ ...filters, location: e.target.value })}
-            onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFilters({ ...filters, location: e.target.value })}
+            onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => e.key === "Enter" && handleSearch()}
           />
         </div>
         <div className="flex gap-2">
@@ -175,7 +175,7 @@ export function SearchFilters({ onSearch, compact = false }: SearchFiltersProps)
                   type="number"
                   placeholder="Min"
                   value={filters.priceMin}
-                  onChange={(e) =>
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     setFilters({ ...filters, priceMin: e.target.value })
                   }
                 />
@@ -186,7 +186,7 @@ export function SearchFilters({ onSearch, compact = false }: SearchFiltersProps)
                   type="number"
                   placeholder="Max"
                   value={filters.priceMax}
-                  onChange={(e) =>
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     setFilters({ ...filters, priceMax: e.target.value })
                   }
                 />

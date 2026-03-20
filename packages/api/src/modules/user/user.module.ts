@@ -1,17 +1,18 @@
 import { PrismaUserRepository } from './infrastructure/persistence/prisma-user.repository';
 import { UserService } from './domain/services/user.service';
+import type { PrismaClientType } from '@havenspace/database';
 
 export class UserModule {
   private static instance: UserModule;
   private repository: PrismaUserRepository;
   private service: UserService;
 
-  private constructor(db: any) {
+  private constructor(db: PrismaClientType) {
     this.repository = new PrismaUserRepository(db);
     this.service = new UserService(this.repository);
   }
 
-  static initialize(db: any): UserModule {
+  static initialize(db: PrismaClientType): UserModule {
     if (!UserModule.instance) {
       UserModule.instance = new UserModule(db);
     }

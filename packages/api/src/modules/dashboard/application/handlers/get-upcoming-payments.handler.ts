@@ -1,7 +1,8 @@
 import { GetUpcomingPaymentsQuery } from "../queries/get-upcoming-payments.query";
+import type { PrismaClientType } from "@havenspace/database";
 
 export class GetUpcomingPaymentsHandler {
-  constructor(private readonly db: any) {}
+  constructor(private readonly db: PrismaClientType) {}
 
   async handle(_query: GetUpcomingPaymentsQuery) {
     const nextWeek = new Date();

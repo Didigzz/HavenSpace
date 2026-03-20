@@ -1,6 +1,22 @@
 {
   "name": "haven-space",
   "version": "1.0.0",
+  "devDependencies": {
+    "@commitlint/cli": "^20.3.1",
+    "@commitlint/config-conventional": "^20.3.1",
+    "@eslint/eslintrc": "3.3.5",
+    "@typescript-eslint/eslint-plugin": "^8.0.0",
+    "@typescript-eslint/parser": "^8.0.0",
+    "eslint": "^8.57.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
+    "prettier": "^3.2.5",
+    "prettier-plugin-prisma": "^5.0.0",
+    "prettier-plugin-tailwindcss": "^0.7.2",
+    "turbo": "^2.0.0",
+    "typescript": "^5.6.3"
+  },
+  "packageManager": "bun@1.1.0",
   "private": true,
   "scripts": {
     "dev": "turbo run dev",
@@ -46,24 +62,12 @@
     "docker:build:api": "docker build -f apps/server/Dockerfile -t havenspace-api .",
     "docker:clean": "docker system prune -f"
   },
-  "devDependencies": {
-    "@commitlint/cli": "^20.3.1",
-    "@commitlint/config-conventional": "^20.3.1",
-    "@eslint/eslintrc": "3.3.5",
-    "@typescript-eslint/eslint-plugin": "^8.0.0",
-    "@typescript-eslint/parser": "^8.0.0",
-    "eslint": "^8.57.0",
-    "husky": "^9.1.7",
-    "lint-staged": "^16.2.7",
-    "prettier": "^3.2.5",
-    "prettier-plugin-prisma": "^5.0.0",
-    "prettier-plugin-tailwindcss": "^0.7.2",
-    "turbo": "^2.0.0",
-    "typescript": "^5.6.3"
-  },
-  "packageManager": "bun@1.1.0",
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "@hookform/resolvers": "3.9.0",
+    "zod": "3.25.0"
+  }
 }

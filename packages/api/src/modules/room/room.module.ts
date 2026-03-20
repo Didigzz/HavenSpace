@@ -6,6 +6,7 @@ import { DeleteRoomHandler } from './application/handlers/delete-room.handler';
 import { GetRoomHandler } from './application/handlers/get-room.handler';
 import { ListRoomsHandler } from './application/handlers/list-rooms.handler';
 import { GetRoomStatsHandler } from './application/handlers/get-room-stats.handler';
+import type { PrismaClientType } from '@havenspace/database';
 
 export class RoomModule {
   private static instance: RoomModule;
@@ -20,7 +21,7 @@ export class RoomModule {
     getRoomStats: GetRoomStatsHandler;
   };
 
-  private constructor(db: any) {
+  private constructor(db: PrismaClientType) {
     this.repository = new PrismaRoomRepository(db);
     this.service = new RoomService(this.repository);
     this.handlers = {
@@ -33,7 +34,7 @@ export class RoomModule {
     };
   }
 
-  static initialize(db: any): RoomModule {
+  static initialize(db: PrismaClientType): RoomModule {
     if (!RoomModule.instance) {
       RoomModule.instance = new RoomModule(db);
     }

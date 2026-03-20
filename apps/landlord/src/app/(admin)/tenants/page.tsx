@@ -205,17 +205,18 @@ export default function TenantsPage() {
     ? getTenantsByProperty(currentProperty.id)
     : mockTenants;
 
+  // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable({
     data,
     columns,
-    onSortingChange: setSorting,
-    onColumnFiltersChange: setColumnFilters,
+    onSortingChange: ( updater ) => setSorting(updater),
+    onColumnFiltersChange: ( updater ) => setColumnFilters(updater),
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-    onColumnVisibilityChange: setColumnVisibility,
-    onRowSelectionChange: setRowSelection,
+    onColumnVisibilityChange: ( updater ) => setColumnVisibility(updater),
+    onRowSelectionChange: ( updater ) => setRowSelection(updater),
     state: {
       sorting,
       columnFilters,

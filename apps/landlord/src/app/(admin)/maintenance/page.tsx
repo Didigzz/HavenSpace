@@ -202,6 +202,7 @@ export default function MaintenancePage() {
       r.roomNumber.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable({
     data: filteredRequests,
     columns,

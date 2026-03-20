@@ -19,7 +19,7 @@ describe('Rate Limit Middleware', () => {
     });
 
     const next = vi.fn().mockResolvedValue({ success: true });
-    const ctx = { session: null };
+    const ctx = { session: null, db: {} as never, headers: new Headers() };
 
     // Should allow first 5 requests
     for (let i = 0; i < 5; i++) {
@@ -42,7 +42,7 @@ describe('Rate Limit Middleware', () => {
     });
 
     const next = vi.fn().mockResolvedValue({ success: true });
-    const ctx = { session: { user: { id: 'user1' } } };
+    const ctx = { session: { user: { id: 'user1', role: 'BOARDER' as const, status: 'APPROVED' as const } }, db: {} as never, headers: new Headers() };
 
     // Make 3 successful requests
     for (let i = 0; i < 3; i++) {
@@ -81,7 +81,7 @@ describe('Rate Limit Middleware', () => {
     });
 
     const next = vi.fn().mockResolvedValue({ success: true });
-    const ctx = { session: { user: { id: 'user2' } } };
+    const ctx = { session: { user: { id: 'user2', role: 'BOARDER' as const, status: 'APPROVED' as const } }, db: {} as never, headers: new Headers() };
 
     // Make 2 requests
     await middleware({
@@ -121,13 +121,13 @@ describe('Rate Limit Middleware', () => {
 
     // User 1 makes 2 requests
     await middleware({
-      ctx: { session: { user: { id: 'user1' } } },
+      ctx: { session: { user: { id: 'user1', role: 'BOARDER' as const, status: 'APPROVED' as const } }, db: {} as never, headers: new Headers() },
       path: 'test.procedure',
       type: 'query',
       next,
     });
     await middleware({
-      ctx: { session: { user: { id: 'user1' } } },
+      ctx: { session: { user: { id: 'user1', role: 'BOARDER' as const, status: 'APPROVED' as const } }, db: {} as never, headers: new Headers() },
       path: 'test.procedure',
       type: 'query',
       next,
@@ -135,7 +135,7 @@ describe('Rate Limit Middleware', () => {
 
     // User 2 should still be able to make requests
     await middleware({
-      ctx: { session: { user: { id: 'user2' } } },
+      ctx: { session: { user: { id: 'user2', role: 'BOARDER' as const, status: 'APPROVED' as const } }, db: {} as never, headers: new Headers() },
       path: 'test.procedure',
       type: 'query',
       next,
@@ -154,7 +154,7 @@ describe('Rate Limit Middleware', () => {
     });
 
     const next = vi.fn().mockResolvedValue({ success: true });
-    const ctx = { session: null };
+    const ctx = { session: null, db: {} as never, headers: new Headers() };
 
     // Should allow unlimited requests in development
     for (let i = 0; i < 10; i++) {
@@ -188,15 +188,16 @@ describe('Rate Limit Middleware', () => {
 
   it('should cleanup old entries', () => {
     vi.useRealTimers();
-    
-    // Add some entries
+
+    // Add some entries - middleware not used in this test
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const middleware = createRateLimitMiddleware({
       windowMs: 1000,
       maxRequests: 5,
     });
 
     cleanupRateLimitStore();
-    
+
     // Should not throw
     expect(() => cleanupRateLimitStore()).not.toThrow();
   });

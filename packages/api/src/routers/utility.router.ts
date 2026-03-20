@@ -5,7 +5,9 @@ import {
   updateUtilityReadingSchema,
   UtilityTypeEnum
 } from "@havenspace/validation";
-import type { TRPCContext, HavenSession, ProtectedTRPCContext } from "../types/index";
+import type { ProtectedTRPCContext } from "../types/index";
+
+type Procedure = ReturnType<typeof createTRPCRouter>;
 
 // Type helpers
 interface AuthenticatedCtx<TInput = unknown> {
@@ -47,7 +49,7 @@ const getConsumptionSummarySchema = z.object({
   months: z.number().default(6),
 });
 
-export const createUtilityRouter = (protectedProcedure: any) => {
+export const createUtilityRouter = (protectedProcedure: Procedure) => {
   return createTRPCRouter({
     getAll: protectedProcedure
       .input(getAllUtilityReadingsSchema.optional())
@@ -133,7 +135,7 @@ export const createUtilityRouter = (protectedProcedure: any) => {
           orderBy: { readingDate: "asc" },
         });
 
-        return readings.map((reading: any) => ({
+        return readings.map((reading) => ({
           id: reading.id,
           room: reading.room.roomNumber,
           type: reading.type,

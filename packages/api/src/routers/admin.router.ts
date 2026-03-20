@@ -1,7 +1,11 @@
 import { z } from "zod";
-import { createTRPCRouter, publicProcedure } from "../trpc";
+import { createTRPCRouter } from "../trpc";
 import { TRPCError } from "@trpc/server";
-import type { TRPCContext, HavenSession, AdminTRPCContext } from "../types/index";
+import type { AdminTRPCContext } from "../types/index";
+
+// tRPC procedure type - using any due to complex generic requirements
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Procedure = any;
 
 // Type helpers
 interface AdminCtx<TInput = unknown> {
@@ -50,8 +54,8 @@ const getUserByIdSchema = z.object({
  * Admin router for managing users and platform operations
  */
 export const createAdminRouter = (
-  protectedProcedure: any,
-  adminProcedure: any
+  protectedProcedure: Procedure,
+  adminProcedure: Procedure
 ) => {
   return createTRPCRouter({
     // Get all users with pagination and filtering

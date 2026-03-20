@@ -1,14 +1,16 @@
 import { IUserRepository } from "../../domain/repositories/user.repository.interface";
 import { User } from "../../domain/entities/user.entity";
+import type { PrismaClientType } from "@havenspace/database";
+import type { UserRole as PrismaUserRole } from "@prisma/client";
 
 export class PrismaUserRepository implements IUserRepository {
-  constructor(private readonly db: any) {}
+  constructor(private readonly db: PrismaClientType) {}
 
   async findById(id: string): Promise<User | null> {
     const data = await this.db.user.findUnique({
       where: { id },
     });
-    
+
     return data ? User.fromPrisma(data) : null;
   }
 
@@ -16,24 +18,38 @@ export class PrismaUserRepository implements IUserRepository {
     const data = await this.db.user.findUnique({
       where: { email },
     });
-    
+
     return data ? User.fromPrisma(data) : null;
   }
 
   async save(user: User): Promise<User> {
+    const prismaData = user.toPrisma();
     const data = await this.db.user.create({
-      data: user.toPrisma(),
+      data: {
+        ...prismaData,
+        role: prismaData.role as PrismaUserRole,
+      },
     });
-    
+
     return User.fromPrisma(data);
   }
 
   async update(id: string, data: Partial<User>): Promise<User> {
+    const prismaData = data.toPrisma ? data.toPrisma() : data;
     const updated = await this.db.user.update({
       where: { id },
-      data: data.toPrisma ? data.toPrisma() : data,
+      data: {
+        ...prismaData,
+        role: prismaData.role ? (prismaData.role as PrismaUserRole) : undefined,
+      } as {
+        email?: string;
+        name?: string;
+        password?: string;
+        role?: PrismaUserRole;
+        image?: string | null;
+      },
     });
-    
+
     return User.fromPrisma(updated);
   }
 

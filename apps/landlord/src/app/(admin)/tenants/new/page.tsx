@@ -70,6 +70,7 @@ export default function NewTenantPage() {
     },
   });
 
+  // eslint-disable-next-line react-hooks/incompatible-library
   const selectedRoomId = watch("roomId");
   const selectedRoom = rooms.find((r) => r.id === selectedRoomId);
 

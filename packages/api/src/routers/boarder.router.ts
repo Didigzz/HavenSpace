@@ -1,12 +1,12 @@
 import { z } from "zod";
-import { createTRPCRouter, publicProcedure, createProtectedProcedure } from "../trpc";
+import { createTRPCRouter } from "../trpc";
 import {
   createBoarderSchema,
-  updateBoarderSchema,
-  searchSchema
+  updateBoarderSchema
 } from "@havenspace/validation";
 import { TRPCError } from "@trpc/server";
-import type { TRPCContext, HavenSession, ProtectedTRPCContext } from "../types/index";
+import type { ProtectedTRPCContext } from "../types/index";
+// tRPC procedure type
 
 // Type helpers
 type GetAllInput = z.infer<typeof getAllBoardersSchema>;
@@ -15,6 +15,9 @@ type CreateBoarderInput = z.infer<typeof createBoarderSchema>;
 type UpdateBoarderInput = z.infer<typeof updateBoarderSchema>;
 type DeleteBoarderInput = z.infer<typeof deleteBoarderSchema>;
 type AssignRoomInput = z.infer<typeof assignRoomSchema>;
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Procedure = any;
 
 const getAllBoardersSchema = z.object({
   isActive: z.boolean().optional(),
@@ -37,7 +40,7 @@ const assignRoomSchema = z.object({
 
 // This will be provided by the platform-specific implementation
 // For Next.js, this will include NextAuth session middleware
-export const createBoarderRouter = (protectedProcedure: any) => {
+export const createBoarderRouter = (protectedProcedure: Procedure) => {
   return createTRPCRouter({
     getCurrent: protectedProcedure.query(async ({ ctx }: { ctx: ProtectedTRPCContext }) => {
       if (!ctx.session?.user?.id) {

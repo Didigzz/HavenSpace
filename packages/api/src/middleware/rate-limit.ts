@@ -1,5 +1,6 @@
 import { TRPCError } from "@trpc/server";
 import { Redis } from "ioredis";
+import type { TRPCContext } from "../trpc";
 
 interface RateLimitOptions {
   windowMs: number; // Time window in milliseconds
@@ -21,7 +22,7 @@ let redisClient: Redis | null = null;
 function getRedisClient(): Redis | null {
   if (!redisClient) {
     const redisUrl = process.env.REDIS_URL;
-    
+
     // Only initialize Redis if URL is provided
     if (redisUrl) {
       try {
@@ -41,14 +42,16 @@ function getRedisClient(): Redis | null {
         });
 
         redisClient.on("connect", () => {
+          // eslint-disable-next-line no-console
           console.log("[Rate Limit] Connected to Redis");
         });
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("[Rate Limit] Failed to initialize Redis:", error);
       }
     }
   }
-  
+
   return redisClient;
 }
 
@@ -64,9 +67,9 @@ const rateLimitStore = new Map<string, RateLimitData>();
 export function createRateLimitMiddleware(options: RateLimitOptions) {
   const { windowMs, maxRequests, message = "Too many requests, please try again later." } = options;
 
-  return async (opts: { next: () => Promise<any>; ctx: any; path: string; type: string }) => {
+  return async (opts: { next: () => Promise<unknown>; ctx: TRPCContext; path: string; type: string }) => {
     const { next, ctx, path } = opts;
-    
+
     // Skip rate limiting in development
     if (process.env.NODE_ENV === "development") {
       return next();
@@ -83,7 +86,7 @@ export function createRateLimitMiddleware(options: RateLimitOptions) {
     if (redis) {
       try {
         const currentCount = await redis.incr(key);
-        
+
         if (currentCount === 1) {
           // First request in window, set expiration
           await redis.pexpire(key, windowMs);
@@ -93,7 +96,7 @@ export function createRateLimitMiddleware(options: RateLimitOptions) {
         if (currentCount > maxRequests) {
           const ttl = await redis.pttl(key);
           const retryAfter = Math.ceil(ttl / 1000);
-          
+
           throw new TRPCError({
             code: "TOO_MANY_REQUESTS",
             message,
@@ -110,7 +113,7 @@ export function createRateLimitMiddleware(options: RateLimitOptions) {
         if (error instanceof TRPCError) {
           throw error;
         }
-        
+
         // Redis error, fall back to memory
         console.warn("[Rate Limit] Redis failed, falling back to memory:", error);
       }

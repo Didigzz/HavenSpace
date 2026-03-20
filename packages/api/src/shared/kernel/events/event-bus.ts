@@ -2,7 +2,7 @@ import { IEventBus } from '../infrastructure/messaging/event-bus.interface';
 
 export class EventBus implements IEventBus {
   private static instance: EventBus;
-  private handlers: Map<string, Set<(event: any) => Promise<void>>>;
+  private handlers: Map<string, Set<(event: unknown) => Promise<void>>>;
 
   private constructor() {
     this.handlers = new Map();
@@ -15,8 +15,8 @@ export class EventBus implements IEventBus {
     return EventBus.instance;
   }
 
-  async publish(event: any): Promise<void> {
-    const eventType = event.type;
+  async publish(event: unknown): Promise<void> {
+    const eventType = (event as { type: string }).type;
     const handlers = this.handlers.get(eventType);
 
     if (handlers) {
@@ -26,14 +26,14 @@ export class EventBus implements IEventBus {
     }
   }
 
-  public subscribe(eventType: string, handler: (event: any) => Promise<void>): void {
+  public subscribe(eventType: string, handler: (event: unknown) => Promise<void>): void {
     if (!this.handlers.has(eventType)) {
       this.handlers.set(eventType, new Set());
     }
     this.handlers.get(eventType)!.add(handler);
   }
 
-  public unsubscribe(eventType: string, handler: (event: any) => Promise<void>): void {
+  public unsubscribe(eventType: string, handler: (event: unknown) => Promise<void>): void {
     const handlers = this.handlers.get(eventType);
     if (handlers) {
       handlers.delete(handler);

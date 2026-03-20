@@ -20,7 +20,7 @@ export class UtilityService {
     roomId?: string,
     type?: string,
     months: number = 6
-  ): Promise<any[]> {
+  ): Promise<unknown[]> {
     return this.repository.findConsumptionSummary(roomId, type, months);
   }
 

@@ -1,15 +1,17 @@
 import { IUtilityRepository } from "../../domain/repositories/utility.repository.interface";
 import { UtilityReading } from "../../domain/entities/utility-reading.entity";
+import type { PrismaClientType } from "@havenspace/database";
+import { UtilityType } from "../../domain/value-objects/utility-type.vo";
 
 export class PrismaUtilityRepository implements IUtilityRepository {
-  constructor(private readonly db: any) {}
+  constructor(private readonly db: PrismaClientType) {}
 
   async findById(id: string): Promise<UtilityReading | null> {
     const data = await this.db.utilityReading.findUnique({
       where: { id },
       include: { room: true },
     });
-    
+
     return data ? UtilityReading.fromPrisma(data) : null;
   }
 
@@ -18,26 +20,26 @@ export class PrismaUtilityRepository implements IUtilityRepository {
       where: { roomId },
       orderBy: { readingDate: "desc" },
     });
-    
-    return data.map((item: any) => UtilityReading.fromPrisma(item));
+
+    return data.map((item: unknown) => UtilityReading.fromPrisma(item));
   }
 
   async findByType(type: string): Promise<UtilityReading[]> {
     const data = await this.db.utilityReading.findMany({
-      where: { type },
+      where: { type: type as "ELECTRICITY" | "WATER" | "INTERNET" | "OTHER" },
       orderBy: { readingDate: "desc" },
     });
-    
-    return data.map((item: any) => UtilityReading.fromPrisma(item));
+
+    return data.map((item: unknown) => UtilityReading.fromPrisma(item));
   }
 
   async findByRoomAndType(roomId: string, type: string): Promise<UtilityReading[]> {
     const data = await this.db.utilityReading.findMany({
-      where: { roomId, type },
+      where: { roomId, type: type as "ELECTRICITY" | "WATER" | "INTERNET" | "OTHER" },
       orderBy: { readingDate: "desc" },
     });
-    
-    return data.map((item: any) => UtilityReading.fromPrisma(item));
+
+    return data.map((item: unknown) => UtilityReading.fromPrisma(item));
   }
 
   async findLatestByRoomAndType(
@@ -45,10 +47,10 @@ export class PrismaUtilityRepository implements IUtilityRepository {
     type: string
   ): Promise<UtilityReading | null> {
     const data = await this.db.utilityReading.findFirst({
-      where: { roomId, type },
+      where: { roomId, type: type as "ELECTRICITY" | "WATER" | "INTERNET" | "OTHER" },
       orderBy: { readingDate: "desc" },
     });
-    
+
     return data ? UtilityReading.fromPrisma(data) : null;
   }
 
@@ -56,30 +58,42 @@ export class PrismaUtilityRepository implements IUtilityRepository {
     roomId?: string,
     type?: string,
     months: number = 6
-  ): Promise<any[]> {
+  ): Promise<unknown[]> {
     const startDate = new Date();
     startDate.setMonth(startDate.getMonth() - months);
 
     const readings = await this.db.utilityReading.findMany({
       where: {
         roomId,
-        type,
+        type: type as "ELECTRICITY" | "WATER" | "INTERNET" | "OTHER" | undefined,
         readingDate: { gte: startDate },
       },
       include: { room: { select: { roomNumber: true } } },
       orderBy: { readingDate: "asc" },
     });
 
-    return readings.map((reading: any) => ({
-      id: reading.id,
-      room: reading.room.roomNumber,
-      type: reading.type,
-      consumption: Number(reading.currentReading) - Number(reading.previousReading),
-      cost:
-        (Number(reading.currentReading) - Number(reading.previousReading)) *
-        Number(reading.ratePerUnit),
-      date: reading.readingDate,
-    }));
+    return readings.map((reading: unknown) => {
+      const r = reading as {
+        id: string;
+        room: { roomNumber: string };
+        type: string;
+        previousReading: number | string;
+        currentReading: number | string;
+        ratePerUnit: number | string;
+        readingDate: Date;
+      };
+
+      return {
+        id: r.id,
+        room: r.room.roomNumber,
+        type: r.type,
+        consumption: Number(r.currentReading) - Number(r.previousReading),
+        cost:
+          (Number(r.currentReading) - Number(r.previousReading)) *
+          Number(r.ratePerUnit),
+        date: r.readingDate,
+      };
+    });
   }
 
   async findAll(filters?: {
@@ -90,7 +104,7 @@ export class PrismaUtilityRepository implements IUtilityRepository {
   }): Promise<UtilityReading[]> {
     const data = await this.db.utilityReading.findMany({
       where: {
-        type: filters?.type,
+        type: filters?.type as "ELECTRICITY" | "WATER" | "INTERNET" | "OTHER" | undefined,
         roomId: filters?.roomId,
         readingDate: {
           gte: filters?.startDate,
@@ -104,24 +118,33 @@ export class PrismaUtilityRepository implements IUtilityRepository {
       },
       orderBy: { readingDate: "desc" },
     });
-    
-    return data.map((item: any) => UtilityReading.fromPrisma(item));
+
+    return data.map((item: unknown) => UtilityReading.fromPrisma(item));
   }
 
   async save(reading: UtilityReading): Promise<UtilityReading> {
+    const prismaData = reading.toPrisma();
     const data = await this.db.utilityReading.create({
-      data: reading.toPrisma(),
+      data: {
+        ...prismaData,
+        type: prismaData.type as "ELECTRICITY" | "WATER" | "INTERNET" | "OTHER",
+      },
     });
-    
+
     return UtilityReading.fromPrisma(data);
   }
 
   async update(id: string, data: Partial<UtilityReading>): Promise<UtilityReading> {
+    const prismaData = data.toPrisma ? data.toPrisma() : data;
     const updated = await this.db.utilityReading.update({
       where: { id },
-      data: data.toPrisma ? data.toPrisma() : data,
+      data: {
+        ...prismaData,
+        type: prismaData.type ? (prismaData.type as "ELECTRICITY" | "WATER" | "INTERNET" | "OTHER") : undefined,
+        roomId: prismaData.roomId ?? undefined,
+      },
     });
-    
+
     return UtilityReading.fromPrisma(updated);
   }
 

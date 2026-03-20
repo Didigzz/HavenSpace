@@ -10,7 +10,7 @@ export interface IUtilityRepository {
     roomId?: string,
     type?: string,
     months?: number
-  ): Promise<any[]>;
+  ): Promise<unknown[]>;
   findAll(filters?: {
     type?: string;
     roomId?: string;

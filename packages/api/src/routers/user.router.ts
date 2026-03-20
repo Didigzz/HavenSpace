@@ -1,44 +1,31 @@
 import { z } from "zod";
-import { createTRPCRouter, publicProcedure, createSensitiveProcedure } from "../trpc";
+import { createTRPCRouter, publicProcedure } from "../trpc";
 import {
   loginSchema,
   registerSchema,
-  updateUserSchema,
   changePasswordSchema
 } from "@havenspace/validation";
 import bcrypt from "bcryptjs";
 import { TRPCError } from "@trpc/server";
 import { generateToken } from "../lib/jwt";
 import { createAuthError } from "../lib/errors";
+import type { TRPCContext, ProtectedTRPCContext } from "../types/index";
 
 // Type helpers
-type UserCreateInput = z.infer<typeof registerSchema>;
 type LoginInput = z.infer<typeof loginSchema>;
+type RegisterInput = z.infer<typeof registerSchema>;
 type ChangePasswordInput = z.infer<typeof changePasswordSchema>;
 
-interface AuthenticatedCtx {
-  ctx: {
-    db: any;
-    session: {
-      user: {
-        id: string;
-        email?: string | null;
-        role: string;
-      };
-    };
-    headers: Headers;
-  };
-  input?: any;
+interface AuthenticatedCtx<TInput = unknown> {
+  ctx: ProtectedTRPCContext;
+  input: TInput;
 }
 
-export const createUserRouter = (protectedProcedure: any, authMiddleware: any) => {
-  // Sensitive procedure for password changes with strict rate limiting
-  const sensitiveProcedure = createSensitiveProcedure(authMiddleware);
-  
+export const createUserRouter = (protectedProcedure: ReturnType<typeof createTRPCRouter>) => {
   return createTRPCRouter({
     login: publicProcedure
       .input(loginSchema)
-      .mutation(async ({ ctx, input }: { ctx: any; input: LoginInput }) => {
+      .mutation(async ({ ctx, input }: { ctx: TRPCContext; input: LoginInput }) => {
         const user = await ctx.db.user.findUnique({
           where: { email: input.email },
         });
@@ -54,6 +41,7 @@ export const createUserRouter = (protectedProcedure: any, authMiddleware: any) =
         }
 
         // Return user data without password
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { password, ...userWithoutPassword } = user;
 
         // Generate secure JWT token
@@ -71,7 +59,7 @@ export const createUserRouter = (protectedProcedure: any, authMiddleware: any) =
 
     register: publicProcedure
       .input(registerSchema)
-      .mutation(async ({ ctx, input }: { ctx: any; input: UserCreateInput }) => {
+      .mutation(async ({ ctx, input }: { ctx: TRPCContext; input: RegisterInput }) => {
         const existingUser = await ctx.db.user.findUnique({
           where: { email: input.email },
         });
@@ -107,19 +95,20 @@ export const createUserRouter = (protectedProcedure: any, authMiddleware: any) =
         };
       }),
 
-    getProfile: protectedProcedure.query(async ({ ctx }: { ctx: any }) => {
-      return ctx.db.user.findUnique({
-        where: { id: ctx.session.user.id },
-        select: {
-          id: true,
-          email: true,
-          name: true,
-          role: true,
-          image: true,
-          createdAt: true,
-        },
-      });
-    }),
+    getProfile: protectedProcedure
+      .query(async ({ ctx }: { ctx: ProtectedTRPCContext }) => {
+        return ctx.db.user.findUnique({
+          where: { id: ctx.session.user.id },
+          select: {
+            id: true,
+            email: true,
+            name: true,
+            role: true,
+            image: true,
+            createdAt: true,
+          },
+        });
+      }),
 
     updateProfile: protectedProcedure
       .input(
@@ -128,16 +117,16 @@ export const createUserRouter = (protectedProcedure: any, authMiddleware: any) =
           image: z.string().optional(),
         })
       )
-      .mutation(async ({ ctx, input }: { ctx: any; input: any }) => {
+      .mutation(async ({ ctx, input }: { ctx: ProtectedTRPCContext; input: { name?: string; image?: string } }) => {
         return ctx.db.user.update({
           where: { id: ctx.session.user.id },
           data: input,
         });
       }),
 
-    changePassword: sensitiveProcedure
+    changePassword: protectedProcedure
       .input(changePasswordSchema)
-      .mutation(async ({ ctx, input }: { ctx: any; input: ChangePasswordInput }) => {
+      .mutation(async ({ ctx, input }: { ctx: ProtectedTRPCContext; input: ChangePasswordInput }) => {
         const user = await ctx.db.user.findUnique({
           where: { id: ctx.session.user.id },
         });

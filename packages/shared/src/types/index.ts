@@ -86,7 +86,7 @@ export interface AsyncState<T> extends LoadingState {
 }
 
 // Form types
-export interface FormField<T = any> {
+export interface FormFieldState<T = any> {
   value: T;
   error?: string;
   touched?: boolean;
@@ -94,7 +94,7 @@ export interface FormField<T = any> {
 }
 
 export interface FormState<T extends Record<string, any>> {
-  fields: { [K in keyof T]: FormField<T[K]> };
+  fields: { [K in keyof T]: FormFieldState<T[K]> };
   isValid: boolean;
   isSubmitting: boolean;
   isDirty: boolean;

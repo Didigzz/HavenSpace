@@ -1,12 +1,13 @@
 import { z } from "zod";
-import { TRPCError } from "@trpc/server";
-import { createTRPCRouter, publicProcedure } from "../trpc";
+import { createTRPCRouter } from "../trpc";
 import { db } from "@havenspace/database";
-import type { TRPCContext, HavenSession, AdminTRPCContext } from "../types/index";
+
+// tRPC procedure type - using any due to complex generic requirements
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Procedure = any;
 
 // Type helpers
 interface AdminCtx<TInput = unknown> {
-  ctx: AdminTRPCContext;
   input: TInput;
 }
 
@@ -49,19 +50,6 @@ const getRecentSchema = z.object({
 });
 
 // Type definitions for audit log types
-interface AuditLog {
-  id: string;
-  userId: string | null;
-  action: string;
-  entity: string;
-  entityId: string | null;
-  oldValue: unknown | null;
-  newValue: unknown | null;
-  timestamp: Date;
-  ipAddress: string | null;
-  userAgent: string | null;
-}
-
 interface AuditLogStats {
   total: number;
   byAction: Array<{ action: string; count: number }>;
@@ -74,8 +62,8 @@ interface AuditLogStats {
  * Provides endpoints for viewing and querying audit logs
  */
 export const createAuditLogRouter = (
-  protectedProcedure: any,
-  adminProcedure: any
+  protectedProcedure: Procedure,
+  adminProcedure: Procedure
 ) => {
   return createTRPCRouter({
     /**
@@ -83,7 +71,7 @@ export const createAuditLogRouter = (
      */
     list: adminProcedure
       .input(listAuditLogsSchema)
-      .query(async ({ input, ctx }: AdminCtx<ListAuditLogsInput>) => {
+      .query(async ({ input }: AdminCtx<ListAuditLogsInput>) => {
         const { page, limit, userId, action, entity, entityId, startDate, endDate } = input;
         const skip = (page - 1) * limit;
 
@@ -135,7 +123,7 @@ export const createAuditLogRouter = (
      */
     getByEntity: adminProcedure
       .input(getByEntitySchema)
-      .query(async ({ input, ctx }: AdminCtx<GetByEntityInput>) => {
+      .query(async ({ input }: AdminCtx<GetByEntityInput>) => {
         const { entity, entityId, limit } = input;
 
         const logs = await db.auditLog.findMany({
@@ -155,7 +143,7 @@ export const createAuditLogRouter = (
      */
     getByUser: adminProcedure
       .input(getByUserSchema)
-      .query(async ({ input, ctx }: AdminCtx<GetByUserInput>) => {
+      .query(async ({ input }: AdminCtx<GetByUserInput>) => {
         const { userId, limit } = input;
 
         const logs = await db.auditLog.findMany({
@@ -172,7 +160,7 @@ export const createAuditLogRouter = (
      */
     getStats: adminProcedure
       .input(getStatsSchema)
-      .query(async ({ input, ctx }: AdminCtx<GetStatsInput>): Promise<AuditLogStats> => {
+      .query(async ({ input }: AdminCtx<GetStatsInput>): Promise<AuditLogStats> => {
         const { startDate, endDate } = input;
 
         const where: {
@@ -228,7 +216,7 @@ export const createAuditLogRouter = (
      */
     getRecent: adminProcedure
       .input(getRecentSchema)
-      .query(async ({ input, ctx }: AdminCtx<GetRecentInput>) => {
+      .query(async ({ input }: AdminCtx<GetRecentInput>) => {
         const { hours, limit } = input;
         const startDate = new Date(Date.now() - hours * 60 * 60 * 1000);
 

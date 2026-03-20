@@ -13,6 +13,10 @@ import {
 } from './routers/index';
 import type { MiddlewareFn } from './types/index';
 
+// tRPC procedure type - using any due to complex generic requirements
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Procedure = any;
+
 /**
  * Factory function to create the app router with platform-specific procedures
  *
@@ -23,18 +27,18 @@ import type { MiddlewareFn } from './types/index';
  * @param authMiddleware - Auth middleware for user router (optional, defaults to defaultAuthMiddleware)
  */
 export const createAppRouter = (
-  protectedProcedure: any,
-  adminProcedure?: any,
-  landlordProcedure?: any,
-  boarderProcedure?: any,
-  authMiddleware?: MiddlewareFn
+  protectedProcedure: Procedure,
+  adminProcedure?: Procedure,
+  landlordProcedure?: Procedure,
+  boarderProcedure?: Procedure,
+  _authMiddleware?: MiddlewareFn
 ): AnyRouter => {
   return createTRPCRouter({
     boarder: createBoarderRouter(protectedProcedure),
     payment: createPaymentRouter(protectedProcedure),
     room: createRoomRouter(protectedProcedure),
     utility: createUtilityRouter(protectedProcedure),
-    user: createUserRouter(protectedProcedure, authMiddleware || defaultAuthMiddleware),
+    user: createUserRouter(protectedProcedure),
     dashboard: createDashboardRouter(protectedProcedure),
     admin: createAdminRouter(protectedProcedure, adminProcedure || protectedProcedure),
     property: createPropertyRouter(protectedProcedure, landlordProcedure),
