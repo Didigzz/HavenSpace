@@ -122,14 +122,14 @@ export const createDashboardRouter = (protectedProcedure: Procedure) => {
         ]);
 
         const activities: Activity[] = [
-          ...recentPayments.map((p) => ({
+          ...recentPayments.map((p: typeof recentPayments[number]) => ({
             id: p.id,
             type: "payment" as const,
             title: `Payment ${p.status.toLowerCase()}`,
             description: `${p.boarder.firstName} ${p.boarder.lastName} - ₱${p.amount.toNumber().toLocaleString()}`,
             date: p.createdAt,
           })),
-          ...recentBoarders.map((b) => ({
+          ...recentBoarders.map((b: typeof recentBoarders[number]) => ({
             id: b.id,
             type: "boarder" as const,
             title: "New boarder",

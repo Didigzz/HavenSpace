@@ -206,15 +206,15 @@ export const createAuditLogRouter = (
 
           return {
             total,
-            byAction: byAction.map((item) => ({
+            byAction: byAction.map((item: { action: string; _count: number }) => ({
               action: item.action,
               count: item._count,
             })),
-            byEntity: byEntity.map((item) => ({
+            byEntity: byEntity.map((item: { entity: string; _count: number }) => ({
               entity: item.entity,
               count: item._count,
             })),
-            byUser: byUser.map((item) => ({
+            byUser: byUser.map((item: { userId: string; _count: number }) => ({
               userId: item.userId,
               count: item._count,
             })),

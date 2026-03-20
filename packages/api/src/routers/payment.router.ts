@@ -202,7 +202,7 @@ export const createPaymentRouter = (protectedProcedure: Procedure) => {
             revenue: 0,
           })) as Array<{ month: string; revenue: number }>;
 
-          payments.forEach((payment) => {
+          payments.forEach((payment: typeof payments[number]) => {
             if (payment.paidDate) {
               const month = payment.paidDate.getMonth();
               const monthData = monthlyData[month];
