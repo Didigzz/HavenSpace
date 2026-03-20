@@ -1,6 +1,6 @@
-import { z } from 'zod';
-import { paginationSchema, idSchema, emailSchema } from './common.schemas';
-import { UserRoleEnum, UserStatusEnum } from './user.schemas';
+import { z } from "zod";
+import { paginationSchema, idSchema, emailSchema } from "./common.schemas";
+import { UserRoleEnum, UserStatusEnum } from "./user.schemas";
 
 /**
  * Admin-specific validation schemas
@@ -70,27 +70,29 @@ export const getAuditLogsSchema = paginationSchema.extend({
 
 // Dashboard stats schema
 export const getDashboardStatsSchema = z.object({
-  timeframe: z.enum(['today', 'week', 'month', 'year']).default('month'),
+  timeframe: z.enum(["today", "week", "month", "year"]).default("month"),
 });
 
 // Landlord application review
-export const reviewLandlordApplicationSchema = z.object({
-  applicationId: idSchema,
-  approved: z.boolean(),
-  notes: z.string().optional(),
-  rejectionReason: z.string().optional(),
-}).refine(
-  (data) => {
-    if (!data.approved && !data.rejectionReason) {
-      return false;
+export const reviewLandlordApplicationSchema = z
+  .object({
+    applicationId: idSchema,
+    approved: z.boolean(),
+    notes: z.string().optional(),
+    rejectionReason: z.string().optional(),
+  })
+  .refine(
+    (data) => {
+      if (!data.approved && !data.rejectionReason) {
+        return false;
+      }
+      return true;
+    },
+    {
+      message: "Rejection reason is required when rejecting an application",
+      path: ["rejectionReason"],
     }
-    return true;
-  },
-  {
-    message: "Rejection reason is required when rejecting an application",
-    path: ["rejectionReason"],
-  }
-);
+  );
 
 // Property verification
 export const verifyPropertySchema = z.object({
@@ -102,13 +104,13 @@ export const verifyPropertySchema = z.object({
 // Bulk operations
 export const bulkUserActionSchema = z.object({
   userIds: z.array(idSchema).min(1, "At least one user ID is required"),
-  action: z.enum(['suspend', 'reactivate', 'delete']),
+  action: z.enum(["suspend", "reactivate", "delete"]),
   reason: z.string().optional(),
 });
 
 export const bulkPropertyActionSchema = z.object({
   propertyIds: z.array(idSchema).min(1, "At least one property ID is required"),
-  action: z.enum(['verify', 'unverify', 'remove']),
+  action: z.enum(["verify", "unverify", "remove"]),
   reason: z.string().optional(),
 });
 
@@ -121,10 +123,14 @@ export type ReactivateUserInput = z.infer<typeof reactivateUserSchema>;
 export type GetUserByIdInput = z.infer<typeof getUserByIdSchema>;
 export type UpdateUserRoleInput = z.infer<typeof updateUserRoleSchema>;
 export type UpdateUserStatusInput = z.infer<typeof updateUserStatusSchema>;
-export type UpdatePlatformSettingsInput = z.infer<typeof updatePlatformSettingsSchema>;
+export type UpdatePlatformSettingsInput = z.infer<
+  typeof updatePlatformSettingsSchema
+>;
 export type GetAuditLogsInput = z.infer<typeof getAuditLogsSchema>;
 export type GetDashboardStatsInput = z.infer<typeof getDashboardStatsSchema>;
-export type ReviewLandlordApplicationInput = z.infer<typeof reviewLandlordApplicationSchema>;
+export type ReviewLandlordApplicationInput = z.infer<
+  typeof reviewLandlordApplicationSchema
+>;
 export type VerifyPropertyInput = z.infer<typeof verifyPropertySchema>;
 export type BulkUserActionInput = z.infer<typeof bulkUserActionSchema>;
 export type BulkPropertyActionInput = z.infer<typeof bulkPropertyActionSchema>;

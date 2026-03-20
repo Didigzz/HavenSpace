@@ -1,7 +1,12 @@
-import { z } from 'zod';
+import { z } from "zod";
 
-export const PaymentStatusEnum = z.enum(['PENDING', 'PAID', 'OVERDUE', 'CANCELLED']);
-export const PaymentTypeEnum = z.enum(['RENT', 'UTILITY', 'DEPOSIT', 'OTHER']);
+export const PaymentStatusEnum = z.enum([
+  "PENDING",
+  "PAID",
+  "OVERDUE",
+  "CANCELLED",
+]);
+export const PaymentTypeEnum = z.enum(["RENT", "UTILITY", "DEPOSIT", "OTHER"]);
 
 export const createPaymentSchema = z.object({
   boarderId: z.string().min(1, "Boarder is required"),
@@ -11,13 +16,11 @@ export const createPaymentSchema = z.object({
   description: z.string().optional(),
 });
 
-export const updatePaymentSchema = createPaymentSchema
-  .partial()
-  .extend({
-    id: z.string(),
-    status: PaymentStatusEnum.optional(),
-    paidDate: z.date().optional(),
-  });
+export const updatePaymentSchema = createPaymentSchema.partial().extend({
+  id: z.string(),
+  status: PaymentStatusEnum.optional(),
+  paidDate: z.date().optional(),
+});
 
 export const markPaymentPaidSchema = z.object({
   id: z.string(),

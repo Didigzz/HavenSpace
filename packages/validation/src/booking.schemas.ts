@@ -1,5 +1,10 @@
-import { z } from 'zod';
-import { paginationSchema, idSchema, dateSchema, currencySchema } from './common.schemas';
+import { z } from "zod";
+import {
+  paginationSchema,
+  idSchema,
+  dateSchema,
+  currencySchema,
+} from "./common.schemas";
 
 /**
  * Booking validation schemas
@@ -7,30 +12,40 @@ import { paginationSchema, idSchema, dateSchema, currencySchema } from './common
  */
 
 // Create booking schema
-export const createBookingSchema = z.object({
-  propertyId: idSchema,
-  checkInDate: dateSchema.refine(
-    (date) => date > new Date(),
-    "Check-in date must be in the future"
-  ),
-  checkOutDate: dateSchema.optional().refine(
-    (date) => !date || date > new Date(),
-    "Check-out date must be in the future"
-  ),
-  message: z.string().max(500, "Message cannot exceed 500 characters").optional(),
-  specialRequests: z.string().max(1000, "Special requests cannot exceed 1000 characters").optional(),
-}).refine(
-  (data) => {
-    if (data.checkOutDate && data.checkInDate) {
-      return data.checkOutDate > data.checkInDate;
+export const createBookingSchema = z
+  .object({
+    propertyId: idSchema,
+    checkInDate: dateSchema.refine(
+      (date) => date > new Date(),
+      "Check-in date must be in the future"
+    ),
+    checkOutDate: dateSchema
+      .optional()
+      .refine(
+        (date) => !date || date > new Date(),
+        "Check-out date must be in the future"
+      ),
+    message: z
+      .string()
+      .max(500, "Message cannot exceed 500 characters")
+      .optional(),
+    specialRequests: z
+      .string()
+      .max(1000, "Special requests cannot exceed 1000 characters")
+      .optional(),
+  })
+  .refine(
+    (data) => {
+      if (data.checkOutDate && data.checkInDate) {
+        return data.checkOutDate > data.checkInDate;
+      }
+      return true;
+    },
+    {
+      message: "Check-out date must be after check-in date",
+      path: ["checkOutDate"],
     }
-    return true;
-  },
-  {
-    message: "Check-out date must be after check-in date",
-    path: ["checkOutDate"],
-  }
-);
+  );
 
 // Update booking schema
 export const updateBookingSchema = z.object({
@@ -39,13 +54,16 @@ export const updateBookingSchema = z.object({
   checkOutDate: dateSchema.optional(),
   message: z.string().max(500).optional(),
   specialRequests: z.string().max(1000).optional(),
-  status: z.enum(['PENDING', 'CONFIRMED', 'CANCELLED', 'COMPLETED']).optional(),
+  status: z.enum(["PENDING", "CONFIRMED", "CANCELLED", "COMPLETED"]).optional(),
 });
 
 // Cancel booking schema
 export const cancelBookingSchema = z.object({
   bookingId: idSchema,
-  reason: z.string().min(10, "Please provide a reason for cancellation").optional(),
+  reason: z
+    .string()
+    .min(10, "Please provide a reason for cancellation")
+    .optional(),
   refundRequested: z.boolean().default(false),
 });
 
@@ -53,7 +71,10 @@ export const cancelBookingSchema = z.object({
 export const confirmBookingSchema = z.object({
   bookingId: idSchema,
   notes: z.string().optional(),
-  customTerms: z.string().max(1000, "Custom terms cannot exceed 1000 characters").optional(),
+  customTerms: z
+    .string()
+    .max(1000, "Custom terms cannot exceed 1000 characters")
+    .optional(),
 });
 
 // Reject booking schema (landlord)
@@ -64,7 +85,7 @@ export const rejectBookingSchema = z.object({
 
 // Get bookings schema
 export const getBookingsSchema = paginationSchema.extend({
-  status: z.enum(['PENDING', 'CONFIRMED', 'CANCELLED', 'COMPLETED']).optional(),
+  status: z.enum(["PENDING", "CONFIRMED", "CANCELLED", "COMPLETED"]).optional(),
   propertyId: idSchema.optional(),
   startDate: z.string().optional(),
   endDate: z.string().optional(),
@@ -96,7 +117,13 @@ export const transferBookingSchema = z.object({
 export const bookingPaymentSchema = z.object({
   bookingId: idSchema,
   amount: currencySchema.positive("Amount must be positive"),
-  paymentMethod: z.enum(['CASH', 'BANK_TRANSFER', 'GCASH', 'PAYMAYA', 'CREDIT_CARD']),
+  paymentMethod: z.enum([
+    "CASH",
+    "BANK_TRANSFER",
+    "GCASH",
+    "PAYMAYA",
+    "CREDIT_CARD",
+  ]),
   referenceNumber: z.string().optional(),
 });
 

@@ -1,6 +1,6 @@
-import { z } from 'zod';
+import { z } from "zod";
 
-export const RoomStatusEnum = z.enum(['AVAILABLE', 'OCCUPIED', 'MAINTENANCE']);
+export const RoomStatusEnum = z.enum(["AVAILABLE", "OCCUPIED", "MAINTENANCE"]);
 
 export const createRoomSchema = z.object({
   roomNumber: z.string().min(1, "Room number is required"),
