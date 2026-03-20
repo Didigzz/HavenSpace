@@ -5,13 +5,15 @@
 Haven Space is a comprehensive **multi-tenant monorepo platform** for managing boarding houses, connecting landlords with boarders through modern web interfaces. Built with **Next.js 16**, **React 18**, **TypeScript**, **tRPC**, **Prisma**, and **PostgreSQL**, the platform follows a phased architecture serving multiple user roles.
 
 ### Core User Roles
-| Role | Access Level | Status Required |
-|------|-------------|-----------------|
-| **Boarder** | Browse, book, message, pay | Active (no approval) |
-| **Landlord** | Manage listings, bookings, earnings | Requires admin approval |
-| **Admin** | Full platform oversight, user management | Admin role |
+
+| Role         | Access Level                             | Status Required         |
+| ------------ | ---------------------------------------- | ----------------------- |
+| **Boarder**  | Browse, book, message, pay               | Active (no approval)    |
+| **Landlord** | Manage listings, bookings, earnings      | Requires admin approval |
+| **Admin**    | Full platform oversight, user management | Admin role              |
 
 ### Technology Stack
+
 - **Frontend**: Next.js 16, React 18, TypeScript, Tailwind CSS 4.x, Radix UI
 - **Backend**: tRPC v11, Next.js API Routes, ORPC
 - **Database**: PostgreSQL 15 with Prisma ORM v7, Neon Database support
@@ -77,6 +79,7 @@ HavenSpace/
 ## Building & Running
 
 ### Prerequisites
+
 - **Node.js** 18+
 - **Bun** 1.1+
 - **PostgreSQL** 14+ (or use Docker)
@@ -107,47 +110,52 @@ bun run dev
 ### Development Commands
 
 #### General Development
-| Command | Description |
-|---------|-------------|
-| `bun run dev` | Start all development servers (Turborepo) |
-| `bun run dev:full` | Start all apps (public + api + boarder + landlord + admin) |
-| `bun run dev:boarder` | Start boarder stack (public + api + boarder) |
-| `bun run dev:landlord` | Start landlord stack (public + api + landlord) |
-| `bun run dev:admin` | Start admin stack (public + api + admin) |
-| `bun run dev:public` | Start public stack (public + api) |
+
+| Command                | Description                                                |
+| ---------------------- | ---------------------------------------------------------- |
+| `bun run dev`          | Start all development servers (Turborepo)                  |
+| `bun run dev:full`     | Start all apps (public + api + boarder + landlord + admin) |
+| `bun run dev:boarder`  | Start boarder stack (public + api + boarder)               |
+| `bun run dev:landlord` | Start landlord stack (public + api + landlord)             |
+| `bun run dev:admin`    | Start admin stack (public + api + admin)                   |
+| `bun run dev:public`   | Start public stack (public + api)                          |
 
 #### Building
-| Command | Description |
-|---------|-------------|
-| `bun run build` | Build all applications |
-| `bun run build:all` | Build all apps explicitly |
-| `bun run build:boarder` | Build boarder app |
-| `bun run build:landlord` | Build landlord app |
-| `bun run build:admin` | Build admin app |
-| `bun run build:public` | Build public app |
+
+| Command                  | Description               |
+| ------------------------ | ------------------------- |
+| `bun run build`          | Build all applications    |
+| `bun run build:all`      | Build all apps explicitly |
+| `bun run build:boarder`  | Build boarder app         |
+| `bun run build:landlord` | Build landlord app        |
+| `bun run build:admin`    | Build admin app           |
+| `bun run build:public`   | Build public app          |
 
 #### Code Quality
-| Command | Description |
-|---------|-------------|
-| `bun run lint` | Run ESLint across all packages |
-| `bun run lint:fix` | Fix ESLint issues automatically |
-| `bun run typecheck` | Run TypeScript type checking |
-| `bun run test` | Run tests across all packages |
-| `bun run test:coverage` | Run tests with coverage reports |
-| `bun run format` | Format code with Prettier |
-| `bun run format:check` | Check code formatting |
-| `bun run check:all` | Run lint + typecheck + format check |
-| `bun run clean` | Clean node_modules and build artifacts |
+
+| Command                 | Description                            |
+| ----------------------- | -------------------------------------- |
+| `bun run lint`          | Run ESLint across all packages         |
+| `bun run lint:fix`      | Fix ESLint issues automatically        |
+| `bun run typecheck`     | Run TypeScript type checking           |
+| `bun run test`          | Run tests across all packages          |
+| `bun run test:coverage` | Run tests with coverage reports        |
+| `bun run format`        | Format code with Prettier              |
+| `bun run format:check`  | Check code formatting                  |
+| `bun run check:all`     | Run lint + typecheck + format check    |
+| `bun run clean`         | Clean node_modules and build artifacts |
 
 #### Database
-| Command | Description |
-|---------|-------------|
-| `bun run db:push` | Push schema changes to database |
-| `bun run db:studio` | Open Prisma Studio GUI |
-| `bun run db:seed` | Seed database with sample data |
-| `bun run db:migrate` | Run database migrations |
+
+| Command              | Description                     |
+| -------------------- | ------------------------------- |
+| `bun run db:push`    | Push schema changes to database |
+| `bun run db:studio`  | Open Prisma Studio GUI          |
+| `bun run db:seed`    | Seed database with sample data  |
+| `bun run db:migrate` | Run database migrations         |
 
 #### Individual App Development
+
 ```bash
 # Start specific app
 bun run api:dev        # API server (:3006)
@@ -165,14 +173,15 @@ bun run landlord:build # Build landlord portal
 ```
 
 #### Docker
-| Command | Description |
-|---------|-------------|
-| `bun run docker:up` | Start services (PostgreSQL, Redis) |
-| `bun run docker:dev` | Start development environment |
-| `bun run docker:down` | Stop Docker services |
-| `bun run docker:logs` | View service logs |
-| `bun run docker:build:api` | Build API Docker image |
-| `bun run docker:clean` | Clean Docker system |
+
+| Command                    | Description                        |
+| -------------------------- | ---------------------------------- |
+| `bun run docker:up`        | Start services (PostgreSQL, Redis) |
+| `bun run docker:dev`       | Start development environment      |
+| `bun run docker:down`      | Stop Docker services               |
+| `bun run docker:logs`      | View service logs                  |
+| `bun run docker:build:api` | Build API Docker image             |
+| `bun run docker:clean`     | Clean Docker system                |
 
 ---
 
@@ -182,21 +191,22 @@ bun run landlord:build # Build landlord portal
 
 The project uses **commitlint** with the following types:
 
-| Type | Description |
-|------|-------------|
-| `feat` | New feature |
-| `fix` | Bug fix |
-| `docs` | Documentation changes |
-| `style` | Code style (formatting, etc.) |
-| `refactor` | Code refactoring |
-| `perf` | Performance improvement |
-| `test` | Adding/updating tests |
-| `build` | Build system or dependencies |
-| `ci` | CI configuration |
-| `chore` | Maintenance tasks |
-| `revert` | Reverting a commit |
+| Type       | Description                   |
+| ---------- | ----------------------------- |
+| `feat`     | New feature                   |
+| `fix`      | Bug fix                       |
+| `docs`     | Documentation changes         |
+| `style`    | Code style (formatting, etc.) |
+| `refactor` | Code refactoring              |
+| `perf`     | Performance improvement       |
+| `test`     | Adding/updating tests         |
+| `build`    | Build system or dependencies  |
+| `ci`       | CI configuration              |
+| `chore`    | Maintenance tasks             |
+| `revert`   | Reverting a commit            |
 
 **Examples:**
+
 ```bash
 git commit -m "feat: add property bookmarking feature"
 git commit -m "fix: resolve booking date validation issue"
@@ -207,17 +217,18 @@ git commit -m "docs: update API endpoint documentation"
 
 Pre-commit hooks automatically run on staged files:
 
-| File Type | Actions |
-|-----------|---------|
-| `apps/**/*.{js,jsx,ts,tsx}` | ESLint fix + Prettier + git add |
-| `packages/**/*.{js,jsx,ts,tsx}` | ESLint fix + Prettier + git add |
-| `*.{js,cjs,mjs}` | Prettier + git add |
-| `*.{json,yaml,yml,md}` | Prettier + git add |
-| `*.{css,scss}` | Prettier + git add |
-| `*.prisma` | Prettier (Prisma plugin) + git add |
-| `**/*.{ts,tsx}` | TypeScript type check (runs once for all) |
+| File Type                       | Actions                                   |
+| ------------------------------- | ----------------------------------------- |
+| `apps/**/*.{js,jsx,ts,tsx}`     | ESLint fix + Prettier + git add           |
+| `packages/**/*.{js,jsx,ts,tsx}` | ESLint fix + Prettier + git add           |
+| `*.{js,cjs,mjs}`                | Prettier + git add                        |
+| `*.{json,yaml,yml,md}`          | Prettier + git add                        |
+| `*.{css,scss}`                  | Prettier + git add                        |
+| `*.prisma`                      | Prettier (Prisma plugin) + git add        |
+| `**/*.{ts,tsx}`                 | TypeScript type check (runs once for all) |
 
 ### ESLint Configuration
+
 - Extends: `eslint:recommended`
 - Parser: `@typescript-eslint/parser`
 - Environment: Node.js, ES2022, Browser
@@ -226,11 +237,13 @@ Pre-commit hooks automatically run on staged files:
 - Rules: `no-unused-vars` (warn with `_` pattern), `no-console` (warn only for warn/error), `@typescript-eslint/no-explicit-any` (warn)
 
 ### Prettier Configuration
+
 - Plugins: `prettier-plugin-prisma`, `prettier-plugin-tailwindcss`
 - Configured via `.prettierrc`
 - Settings: semicolons, double quotes, 2-space tabs, es5 trailing commas, 80 char width
 
 ### TypeScript Configuration
+
 - **Target**: ES2022
 - **Strict mode**: Enabled
 - **Module resolution**: `bundler`
@@ -245,6 +258,7 @@ Pre-commit hooks automatically run on staged files:
 ### GitHub Actions Workflows
 
 #### 1. CI Pipeline (`.github/workflows/ci.yml`)
+
 Triggered on push/PR to `main` and `develop`:
 
 1. **Lint** - ESLint validation
@@ -255,13 +269,17 @@ Triggered on push/PR to `main` and `develop`:
 6. **Deploy** - SSH deployment to production server (main branch only)
 
 #### 2. CodeQL (`.github/workflows/codeql.yml`)
+
 Security scanning for vulnerabilities.
 
 #### 3. GitHub Pages (`.github/workflows/github-pages.yml`)
+
 Documentation deployment.
 
 ### Dependabot
+
 Automated dependency updates for:
+
 - Root npm dependencies
 - Individual apps (admin, api)
 - Packages (database, auth, ui)
@@ -273,14 +291,15 @@ Automated dependency updates for:
 
 ### Multi-Phase Platform Design
 
-| Phase | Description | Status |
-|-------|-------------|--------|
-| **Phase 1** | Public Platform (Marketplace & Discovery) | Core |
-| **Phase 2** | Boarder Dashboard (Authenticated Users) | Core |
-| **Phase 3** | Landlord Portal (Multi-Tenant) | Core |
-| **Phase 4** | Admin Dashboard (Platform Management) | Core |
+| Phase       | Description                               | Status |
+| ----------- | ----------------------------------------- | ------ |
+| **Phase 1** | Public Platform (Marketplace & Discovery) | Core   |
+| **Phase 2** | Boarder Dashboard (Authenticated Users)   | Core   |
+| **Phase 3** | Landlord Portal (Multi-Tenant)            | Core   |
+| **Phase 4** | Admin Dashboard (Platform Management)     | Core   |
 
 ### Authentication Flow
+
 1. Authentication handled via `packages/auth/` (NextAuth.js v5 beta configuration)
 2. Auth endpoints served through `apps/server/` API routes
 3. Role-based redirect to appropriate dashboard after login
@@ -288,6 +307,7 @@ Automated dependency updates for:
 5. API enforces role-based access control via middleware
 
 ### tRPC/ORPC API Architecture
+
 - **Dual System**: Supports both tRPC v11 and ORPC v1
 - All apps communicate with API server via type-safe APIs
 - Type-safe end-to-end communication
@@ -305,7 +325,9 @@ Automated dependency updates for:
 - Middleware support: rate limiting, authentication, authorization
 
 ### Database Schema
+
 Key entities (PostgreSQL with Prisma ORM v7):
+
 - **Users**: Unified user table with role-based access (LANDLORD, BOARDER, ADMIN)
 - **LandlordProfile**: Landlord application and verification
 - **Properties**: Boarding house listings
@@ -319,6 +341,7 @@ Key entities (PostgreSQL with Prisma ORM v7):
 See `packages/database/prisma/schema.prisma` for full schema.
 
 ### Infrastructure
+
 - **Caching**: Redis for session management and rate limiting
 - **File Storage**: Support for Google Cloud Platform (GCP) buckets
 - **Email**: SMTP support for notifications
@@ -328,38 +351,39 @@ See `packages/database/prisma/schema.prisma` for full schema.
 
 ## Key Files Reference
 
-| File | Purpose |
-|------|---------|
-| `package.json` | Root workspace configuration & scripts |
-| `turbo.json` | Turborepo task configuration |
-| `tsconfig.json` | Base TypeScript configuration |
-| `.eslintrc.js` | ESLint configuration |
-| `.prettierrc` | Prettier configuration |
-| `commitlint.config.js` | Commit message validation rules |
-| `lint-staged.config.js` | Pre-commit hook configuration |
-| `.env.example` | Environment variables template |
-| `docker-compose.yml` | Local development services |
-| `docker-compose.production.yml` | Production deployment |
-| `docker-compose.dev.yml` | Development environment |
-| `nginx/nginx.conf` | Nginx reverse proxy configuration |
+| File                            | Purpose                                |
+| ------------------------------- | -------------------------------------- |
+| `package.json`                  | Root workspace configuration & scripts |
+| `turbo.json`                    | Turborepo task configuration           |
+| `tsconfig.json`                 | Base TypeScript configuration          |
+| `.eslintrc.js`                  | ESLint configuration                   |
+| `.prettierrc`                   | Prettier configuration                 |
+| `commitlint.config.js`          | Commit message validation rules        |
+| `lint-staged.config.js`         | Pre-commit hook configuration          |
+| `.env.example`                  | Environment variables template         |
+| `docker-compose.yml`            | Local development services             |
+| `docker-compose.production.yml` | Production deployment                  |
+| `docker-compose.dev.yml`        | Development environment                |
+| `nginx/nginx.conf`              | Nginx reverse proxy configuration      |
 
 ---
 
 ## Documentation
 
-| Document | Location |
-|----------|----------|
-| Development Guidelines | `docs/GUIDELINES.md` |
-| Presentation Info | `docs/PRESENTATION.md` |
-| Project README | `README.md` |
-| Apps README | `apps/README.md` |
-| Packages README | `packages/README.md` |
+| Document               | Location               |
+| ---------------------- | ---------------------- |
+| Development Guidelines | `docs/GUIDELINES.md`   |
+| Presentation Info      | `docs/PRESENTATION.md` |
+| Project README         | `README.md`            |
+| Apps README            | `apps/README.md`       |
+| Packages README        | `packages/README.md`   |
 
 ---
 
 ## Notes for AI Assistants
 
 ### Architecture Awareness
+
 - **Monorepo structure**: Changes may affect multiple apps/packages
 - **Type safety**: Always maintain TypeScript type integrity
 - **tRPC/ORPC patterns**: Follow existing router/procedure patterns
@@ -368,6 +392,7 @@ See `packages/database/prisma/schema.prisma` for full schema.
 - **Code style**: Match existing code conventions (naming, structure)
 
 ### Development Guidelines
+
 - **Testing**: Consider adding tests for new features using Vitest
 - **Documentation**: Update relevant docs when adding features
 - **Environment variables**: Check `turbo.json` for available global environment variables
@@ -377,6 +402,7 @@ See `packages/database/prisma/schema.prisma` for full schema.
 - **Styling**: Use Tailwind CSS 4.x with Tailwind Animate plugin
 
 ### API Development
+
 - **Module structure**: New API endpoints should be added to appropriate module in `packages/api/src/modules/`
 - **Middleware**: Use custom middleware for authentication, rate limiting, and authorization
 - **Validation**: Use Zod schemas from `packages/validation` for input validation
@@ -384,18 +410,21 @@ See `packages/database/prisma/schema.prisma` for full schema.
 - **Type safety**: Leverage tRPC/ORPC for end-to-end type safety
 
 ### Frontend Development
+
 - **Shared components**: Reusable components should go in `packages/shared/src/ui/`
 - **Feature-specific logic**: Domain logic should be in `packages/shared/src/features/`
 - **Layouts**: Shared layouts in `packages/shared/src/components/layouts/`
 - **Providers**: React context providers in `packages/shared/src/components/providers/`
 
 ### Database
+
 - **Schema changes**: Update `packages/database/prisma/schema.prisma`
 - **Migrations**: Use `bun run db:migrate` for production migrations
 - **Seeding**: Update `packages/database/prisma/seed.ts` for test data
 - **Client import**: Import from `@havenspace/database` for type-safe queries
 
 ### Deployment
+
 - **Docker**: Use provided Dockerfiles for each app
 - **Nginx**: Configure reverse proxy via `nginx/nginx.conf`
 - **SSL**: Certificates in `nginx/ssl/` directory

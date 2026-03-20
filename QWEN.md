@@ -6,11 +6,11 @@ Haven Space is a comprehensive **multi-tenant monorepo platform** for managing b
 
 ### Core User Roles
 
-| Role | Access Level | Status Required |
-|------|-------------|-----------------|
-| **Boarder** | Browse, book, message, pay | Active (no approval) |
-| **Landlord** | Manage listings, bookings, earnings | Requires admin approval |
-| **Admin** | Full platform oversight, user management | Admin role |
+| Role         | Access Level                             | Status Required         |
+| ------------ | ---------------------------------------- | ----------------------- |
+| **Boarder**  | Browse, book, message, pay               | Active (no approval)    |
+| **Landlord** | Manage listings, bookings, earnings      | Requires admin approval |
+| **Admin**    | Full platform oversight, user management | Admin role              |
 
 ### Technology Stack
 
@@ -90,26 +90,26 @@ bun run dev
 
 ### Development Commands
 
-| Command | Description |
-|---------|-------------|
-| `bun run dev` | Start all development servers (Turborepo) |
-| `bun run build` | Build all applications |
-| `bun run lint` | Run ESLint across all packages |
-| `bun run lint:fix` | Fix ESLint issues |
-| `bun run typecheck` | Run TypeScript type checking |
-| `bun run format` | Format code with Prettier |
-| `bun run format:check` | Check code formatting |
-| `bun run check:all` | Run lint + typecheck + format check |
-| `bun run clean` | Clean node_modules and build artifacts |
+| Command                | Description                               |
+| ---------------------- | ----------------------------------------- |
+| `bun run dev`          | Start all development servers (Turborepo) |
+| `bun run build`        | Build all applications                    |
+| `bun run lint`         | Run ESLint across all packages            |
+| `bun run lint:fix`     | Fix ESLint issues                         |
+| `bun run typecheck`    | Run TypeScript type checking              |
+| `bun run format`       | Format code with Prettier                 |
+| `bun run format:check` | Check code formatting                     |
+| `bun run check:all`    | Run lint + typecheck + format check       |
+| `bun run clean`        | Clean node_modules and build artifacts    |
 
 ### Database Commands
 
-| Command | Description |
-|---------|-------------|
-| `bun run db:push` | Push schema changes to database |
-| `bun run db:studio` | Open Prisma Studio GUI |
-| `bun run db:seed` | Seed database with sample data |
-| `bun run db:migrate` | Run database migrations |
+| Command              | Description                     |
+| -------------------- | ------------------------------- |
+| `bun run db:push`    | Push schema changes to database |
+| `bun run db:studio`  | Open Prisma Studio GUI          |
+| `bun run db:seed`    | Seed database with sample data  |
+| `bun run db:migrate` | Run database migrations         |
 
 ### Individual App Development
 
@@ -129,14 +129,14 @@ bun --filter @havenspace/api-server build
 
 ### Docker Commands
 
-| Command | Description |
-|---------|-------------|
-| `bun run docker:up` | Start services (PostgreSQL, Redis) |
-| `bun run docker:dev` | Start development environment |
-| `bun run docker:down` | Stop Docker services |
-| `bun run docker:logs` | View service logs |
-| `bun run docker:build:api` | Build API Docker image |
-| `bun run docker:clean` | Clean Docker system |
+| Command                    | Description                        |
+| -------------------------- | ---------------------------------- |
+| `bun run docker:up`        | Start services (PostgreSQL, Redis) |
+| `bun run docker:dev`       | Start development environment      |
+| `bun run docker:down`      | Stop Docker services               |
+| `bun run docker:logs`      | View service logs                  |
+| `bun run docker:build:api` | Build API Docker image             |
+| `bun run docker:clean`     | Clean Docker system                |
 
 ---
 
@@ -146,21 +146,22 @@ bun --filter @havenspace/api-server build
 
 The project uses **commitlint** with the following types:
 
-| Type | Description |
-|------|-------------|
-| `feat` | New feature |
-| `fix` | Bug fix |
-| `docs` | Documentation changes |
-| `style` | Code style (formatting, etc.) |
-| `refactor` | Code refactoring |
-| `perf` | Performance improvement |
-| `test` | Adding/updating tests |
-| `build` | Build system or dependencies |
-| `ci` | CI configuration |
-| `chore` | Maintenance tasks |
-| `revert` | Reverting a commit |
+| Type       | Description                   |
+| ---------- | ----------------------------- |
+| `feat`     | New feature                   |
+| `fix`      | Bug fix                       |
+| `docs`     | Documentation changes         |
+| `style`    | Code style (formatting, etc.) |
+| `refactor` | Code refactoring              |
+| `perf`     | Performance improvement       |
+| `test`     | Adding/updating tests         |
+| `build`    | Build system or dependencies  |
+| `ci`       | CI configuration              |
+| `chore`    | Maintenance tasks             |
+| `revert`   | Reverting a commit            |
 
 **Examples:**
+
 ```bash
 git commit -m "feat: add property bookmarking feature"
 git commit -m "fix: resolve booking date validation issue"
@@ -171,13 +172,13 @@ git commit -m "docs: update API endpoint documentation"
 
 Pre-commit hooks automatically run on staged files:
 
-| File Type | Actions |
-|-----------|---------|
-| `apps/**/*.{js,jsx,ts,tsx}` | ESLint fix + Prettier |
-| `packages/**/*.{js,jsx,ts,tsx}` | ESLint fix + Prettier |
-| `*.{json,yaml,yml,md}` | Prettier |
-| `*.prisma` | Prettier (Prisma plugin) |
-| `**/*.{ts,tsx}` | TypeScript type check |
+| File Type                       | Actions                  |
+| ------------------------------- | ------------------------ |
+| `apps/**/*.{js,jsx,ts,tsx}`     | ESLint fix + Prettier    |
+| `packages/**/*.{js,jsx,ts,tsx}` | ESLint fix + Prettier    |
+| `*.{json,yaml,yml,md}`          | Prettier                 |
+| `*.prisma`                      | Prettier (Prisma plugin) |
+| `**/*.{ts,tsx}`                 | TypeScript type check    |
 
 ### ESLint Configuration
 
@@ -214,6 +215,7 @@ Pre-commit hooks automatically run on staged files:
 ### GitHub Actions Workflows
 
 #### 1. CI Pipeline (`.github/workflows/ci.yml`)
+
 Triggered on push/PR to `main` and `develop`:
 
 1. **Lint** - ESLint validation
@@ -224,10 +226,13 @@ Triggered on push/PR to `main` and `develop`:
 6. **Deploy** - SSH deployment to production server (main branch only)
 
 #### 2. CodeQL (`.github/workflows/codeql.yml`)
+
 Security scanning for vulnerabilities.
 
 ### Dependabot
+
 Automated dependency updates for:
+
 - Root npm dependencies
 - Individual apps (admin, api)
 - Packages (database, auth, ui)
@@ -239,12 +244,12 @@ Automated dependency updates for:
 
 ### Multi-Phase Platform Design
 
-| Phase | Description | Status |
-|-------|-------------|--------|
-| **Phase 1** | Public Platform (Marketplace & Discovery) | Core |
-| **Phase 2** | Boarder Dashboard (Authenticated Users) | Core |
-| **Phase 3** | Landlord Portal (Multi-Tenant) | Core |
-| **Phase 4** | Admin Dashboard (Platform Management) | Core |
+| Phase       | Description                               | Status |
+| ----------- | ----------------------------------------- | ------ |
+| **Phase 1** | Public Platform (Marketplace & Discovery) | Core   |
+| **Phase 2** | Boarder Dashboard (Authenticated Users)   | Core   |
+| **Phase 3** | Landlord Portal (Multi-Tenant)            | Core   |
+| **Phase 4** | Admin Dashboard (Platform Management)     | Core   |
 
 ### Authentication Flow
 
@@ -265,48 +270,48 @@ Automated dependency updates for:
 
 Key entities defined in `packages/database/prisma/schema.prisma`:
 
-| Entity | Description |
-|--------|-------------|
-| `User` | Unified user table with roles (LANDLORD, BOARDER, ADMIN) |
-| `LandlordProfile` | Landlord-specific profile with verification status |
-| `Boarder` | Boarder-specific profile with room assignments |
-| `Property` | Boarding house listings with amenities and pricing |
-| `Room` | Individual rooms with capacity and status |
-| `Booking` | Reservation system with status tracking |
-| `Payment` | Transaction processing with status |
-| `UtilityReading` | Utility meter readings for billing |
-| `SavedListing` | User-saved properties |
-| `AuditLog` | Activity logging for admin actions |
-| `Setting` | Platform configuration key-value store |
+| Entity            | Description                                              |
+| ----------------- | -------------------------------------------------------- |
+| `User`            | Unified user table with roles (LANDLORD, BOARDER, ADMIN) |
+| `LandlordProfile` | Landlord-specific profile with verification status       |
+| `Boarder`         | Boarder-specific profile with room assignments           |
+| `Property`        | Boarding house listings with amenities and pricing       |
+| `Room`            | Individual rooms with capacity and status                |
+| `Booking`         | Reservation system with status tracking                  |
+| `Payment`         | Transaction processing with status                       |
+| `UtilityReading`  | Utility meter readings for billing                       |
+| `SavedListing`    | User-saved properties                                    |
+| `AuditLog`        | Activity logging for admin actions                       |
+| `Setting`         | Platform configuration key-value store                   |
 
 ---
 
 ## Key Files Reference
 
-| File | Purpose |
-|------|---------|
-| `package.json` | Root workspace configuration & scripts |
-| `turbo.json` | Turborepo task configuration |
-| `tsconfig.json` | Base TypeScript configuration |
-| `.env.example` | Environment variables template |
-| `docker-compose.yml` | Local development services |
-| `docker-compose.production.yml` | Production deployment |
-| `commitlint.config.js` | Commit message validation rules |
-| `lint-staged.config.js` | Pre-commit hook configuration |
-| `.eslintrc.js` | ESLint configuration |
-| `.prettierrc` | Prettier configuration |
+| File                            | Purpose                                |
+| ------------------------------- | -------------------------------------- |
+| `package.json`                  | Root workspace configuration & scripts |
+| `turbo.json`                    | Turborepo task configuration           |
+| `tsconfig.json`                 | Base TypeScript configuration          |
+| `.env.example`                  | Environment variables template         |
+| `docker-compose.yml`            | Local development services             |
+| `docker-compose.production.yml` | Production deployment                  |
+| `commitlint.config.js`          | Commit message validation rules        |
+| `lint-staged.config.js`         | Pre-commit hook configuration          |
+| `.eslintrc.js`                  | ESLint configuration                   |
+| `.prettierrc`                   | Prettier configuration                 |
 
 ---
 
 ## Documentation
 
-| Document | Location |
-|----------|----------|
-| Application Documentation | `docs/APPS.md` |
-| Presentation Guidelines | `docs/GUIDELINES.md` |
-| Presentation Deck | `docs/PRESENTATION.md` |
-| Apps Documentation | `apps/README.md` |
-| Packages Documentation | `packages/README.md` |
+| Document                  | Location               |
+| ------------------------- | ---------------------- |
+| Application Documentation | `docs/APPS.md`         |
+| Presentation Guidelines   | `docs/GUIDELINES.md`   |
+| Presentation Deck         | `docs/PRESENTATION.md` |
+| Apps Documentation        | `apps/README.md`       |
+| Packages Documentation    | `packages/README.md`   |
 
 ---
 

@@ -19,10 +19,12 @@ apps/
 ## 📱 Applications
 
 ### 🔐 Authentication App (`(auth)/`)
+
 **Port**: 3003  
 **Purpose**: Centralized authentication and user onboarding
 
 **Features**:
+
 - User registration and login
 - Role-based redirects
 - Account status handling (pending, suspended)
@@ -34,10 +36,12 @@ apps/
 ---
 
 ### 🌐 Public Platform (`(public)/`)
+
 **Port**: 3000  
 **Purpose**: Public marketplace and property discovery
 
 **Features**:
+
 - Browse boarding house listings
 - Advanced search and filtering
 - Interactive map with property locations
@@ -50,10 +54,12 @@ apps/
 ---
 
 ### 🏠 Boarder Dashboard (`boarder/`)
+
 **Port**: 3004  
 **Purpose**: Authenticated boarder experience
 
 **Features**:
+
 - Personal dashboard with booking overview
 - Browse and save properties
 - Request bookings and make payments
@@ -66,10 +72,12 @@ apps/
 ---
 
 ### 🏢 Landlord Portal (`landlord/`)
+
 **Port**: 3005  
 **Purpose**: Property management for approved landlords
 
 **Features**:
+
 - Property listing management
 - Booking request handling
 - Revenue tracking and analytics
@@ -82,10 +90,12 @@ apps/
 ---
 
 ### ⚙️ Admin Dashboard (`admin/`)
+
 **Port**: 3002  
 **Purpose**: Platform administration and oversight
 
 **Features**:
+
 - User and landlord management
 - Landlord application review
 - Content moderation
@@ -98,10 +108,12 @@ apps/
 ---
 
 ### 🔌 API Server (`api/`)
+
 **Port**: 3001
 **Purpose**: Backend API serving all applications
 
 **Features**:
+
 - tRPC API endpoints
 - Authentication middleware
 - Role-based access control
@@ -143,25 +155,28 @@ bun --filter @havenspace/admin build
 ## 🔗 Inter-App Communication
 
 ### API Communication
+
 All web applications communicate with the API server through tRPC:
 
 ```typescript
 // Example tRPC client usage
-import { api } from '@/lib/trpc'
+import { api } from "@/lib/trpc";
 
 const { data: properties } = api.property.list.useQuery({
   limit: 10,
-  filters: { location: 'Manila' }
-})
+  filters: { location: "Manila" },
+});
 ```
 
 ### Authentication Flow
+
 1. Users authenticate through the `(auth)` app
 2. Based on role and status, they're redirected to appropriate app
 3. Each app validates authentication and role permissions
 4. API enforces role-based access control
 
 ### Shared State
+
 - Authentication state managed by NextAuth.js
 - User preferences stored in database
 - Real-time updates via tRPC subscriptions
@@ -179,18 +194,21 @@ All applications share a consistent design system:
 ## 🔒 Security
 
 ### Authentication
+
 - NextAuth.js with multiple providers
 - JWT tokens with secure httpOnly cookies
 - Role-based access control (RBAC)
 - Session management and refresh
 
 ### Authorization
+
 - Route-level protection
 - API endpoint guards
 - Component-level access control
 - Tenant data isolation for landlords
 
 ### Data Protection
+
 - Input validation with Zod schemas
 - SQL injection prevention via Prisma
 - XSS protection with Content Security Policy
@@ -199,12 +217,14 @@ All applications share a consistent design system:
 ## 📊 Monitoring
 
 ### Development
+
 - Hot reload for all applications
 - TypeScript error reporting
 - ESLint and Prettier integration
 - Real-time log aggregation
 
 ### Production
+
 - Error boundary components
 - Performance monitoring
 - User analytics (privacy-compliant)
@@ -213,6 +233,7 @@ All applications share a consistent design system:
 ## 🧪 Testing
 
 Each application includes:
+
 - Unit tests for utilities and hooks
 - Component testing with React Testing Library
 - Integration tests for API endpoints
@@ -230,6 +251,7 @@ bun run test
 ## 📦 Deployment
 
 ### Individual Deployment
+
 Each application can be deployed independently:
 
 ```bash
@@ -239,6 +261,7 @@ bun --filter @havenspace/public build
 ```
 
 ### Monorepo Deployment
+
 Or deploy as a monorepo with shared infrastructure:
 
 ```bash
