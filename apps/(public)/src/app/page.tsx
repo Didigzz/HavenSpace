@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Suspense } from "react";
 import { Button } from "@havenspace/shared/ui";
 import {
   Search,
@@ -38,7 +39,9 @@ export default function HomePage() {
 
             {/* Search Bar */}
             <div className="mt-10 flex justify-center">
-              <SearchFilters compact />
+              <Suspense fallback={<div className="h-12 w-96 animate-pulse rounded-full bg-muted" />}>
+                <SearchFilters compact />
+              </Suspense>
             </div>
 
             {/* Quick Stats */}

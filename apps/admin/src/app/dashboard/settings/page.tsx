@@ -40,7 +40,7 @@ import { useSession } from "next-auth/react";
 import { getInitials } from "@/lib/utils";
 
 export default function SettingsPage() {
-  const { data: session } = useSession();
+  const { data: session } = useSession() || { data: null };
   const [isSaving, setIsSaving] = React.useState(false);
 
   const handleSave = () => {

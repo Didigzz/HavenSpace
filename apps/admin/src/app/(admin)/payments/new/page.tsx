@@ -1,7 +1,7 @@
 ﻿"use client";
 
 import * as React from "react";
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm, type Resolver } from "react-hook-form";
@@ -59,7 +59,7 @@ const paymentSchema = z.object({
 
 type PaymentFormData = z.infer<typeof paymentSchema>;
 
-export default function NewPaymentPage() {
+function NewPaymentContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { toast } = useToast();
@@ -504,5 +504,13 @@ export default function NewPaymentPage() {
         </div>
       </div>
     </form>
+  );
+}
+
+export default function NewPaymentPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <NewPaymentContent />
+    </Suspense>
   );
 }
