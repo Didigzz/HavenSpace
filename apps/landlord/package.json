@@ -12,7 +12,7 @@
   "dependencies": {
     "@havenspace/shared": "workspace:*",
     "@havenspace/validation": "workspace:*",
-    "@hookform/resolvers": "^5.2.2",
+    "@hookform/resolvers": "3.9.0",
     "@orpc/client": "^1.13.4",
     "@orpc/react": "^1.13.4",
     "@orpc/react-query": "^1.13.4",
@@ -40,7 +40,7 @@
     "next-auth": "5.0.0-beta.30",
     "next-themes": "^0.4.6",
     "react": "^18.3.1",
-    "react-dom": "^19.2.4",
+    "react-dom": "^18.3.1",
     "react-hook-form": "^7.48.2",
     "recharts": "^3.6.0",
     "superjson": "^2.2.6",
