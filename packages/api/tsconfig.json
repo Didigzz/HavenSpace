@@ -6,7 +6,7 @@
     "types": ["node"],
     "noEmit": true,
     "noUncheckedIndexedAccess": false,
-    "lib": ["ES2015", "ES2016", "ES2022", "DOM"],
+    "lib": ["ES2019", "DOM"],
     "target": "ES2022",
     "module": "ESNext",
     "moduleResolution": "bundler"
