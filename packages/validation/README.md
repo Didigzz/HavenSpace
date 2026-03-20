@@ -18,7 +18,7 @@ import { userSchemas, roomSchemas, ... } from '@havenspace/validation';
 ### Schema Validation
 
 ```typescript
-import { userSchemas } from '@havenspace/validation';
+import { userSchemas } from "@havenspace/validation";
 
 // Parse and validate
 const user = userSchemas.create.parse(inputData);
@@ -36,16 +36,16 @@ type CreateUserInput = z.infer<typeof userSchemas.create>;
 ### Common Schemas
 
 ```typescript
-import { commonSchemas } from '@havenspace/validation';
+import { commonSchemas } from "@havenspace/validation";
 
 // Email validation
-commonSchemas.email.parse('user@example.com');
+commonSchemas.email.parse("user@example.com");
 
 // Password validation (min 8 chars, 1 uppercase, 1 number)
-commonSchemas.password.parse('SecurePass123');
+commonSchemas.password.parse("SecurePass123");
 
 // Phone validation
-commonSchemas.phone.parse('+639171234567');
+commonSchemas.phone.parse("+639171234567");
 
 // Pagination
 commonSchemas.pagination.parse({ page: 1, limit: 10 });
@@ -56,19 +56,19 @@ commonSchemas.pagination.parse({ page: 1, limit: 10 });
 ### User Schemas
 
 ```typescript
-import { userSchemas } from '@havenspace/validation';
+import { userSchemas } from "@havenspace/validation";
 
-userSchemas.create;      // Create new user
-userSchemas.update;      // Update existing user
-userSchemas.login;       // Login credentials
-userSchemas.register;    // Registration data
+userSchemas.create; // Create new user
+userSchemas.update; // Update existing user
+userSchemas.login; // Login credentials
+userSchemas.register; // Registration data
 userSchemas.changePassword;
 ```
 
 ### Property Schemas
 
 ```typescript
-import { propertySchemas } from '@havenspace/validation';
+import { propertySchemas } from "@havenspace/validation";
 
 propertySchemas.create;
 propertySchemas.update;
@@ -79,7 +79,7 @@ propertySchemas.location;
 ### Room Schemas
 
 ```typescript
-import { roomSchemas } from '@havenspace/validation';
+import { roomSchemas } from "@havenspace/validation";
 
 roomSchemas.create;
 roomSchemas.update;
@@ -90,7 +90,7 @@ roomSchemas.amenities;
 ### Booking Schemas
 
 ```typescript
-import { bookingSchemas } from '@havenspace/validation';
+import { bookingSchemas } from "@havenspace/validation";
 
 bookingSchemas.create;
 bookingSchemas.update;
@@ -101,7 +101,7 @@ bookingSchemas.dateRange;
 ### Payment Schemas
 
 ```typescript
-import { paymentSchemas } from '@havenspace/validation';
+import { paymentSchemas } from "@havenspace/validation";
 
 paymentSchemas.create;
 paymentSchemas.update;
@@ -112,7 +112,7 @@ paymentSchemas.amount;
 ### Boarder Schemas
 
 ```typescript
-import { boarderSchemas } from '@havenspace/validation';
+import { boarderSchemas } from "@havenspace/validation";
 
 boarderSchemas.create;
 boarderSchemas.update;
@@ -124,7 +124,11 @@ boarderSchemas.emergencyContact;
 All schemas export inferred TypeScript types:
 
 ```typescript
-import { userSchemas, type UserCreateInput, type UserUpdateInput } from '@havenspace/validation';
+import {
+  userSchemas,
+  type UserCreateInput,
+  type UserUpdateInput,
+} from "@havenspace/validation";
 
 // Use inferred types
 const createUser = (data: UserCreateInput) => {
@@ -138,14 +142,14 @@ type LoginInput = z.infer<typeof userSchemas.login>;
 ## Custom Error Messages
 
 ```typescript
-import { userSchemas } from '@havenspace/validation';
+import { userSchemas } from "@havenspace/validation";
 
 try {
   userSchemas.create.parse(invalidData);
 } catch (error) {
   if (error instanceof z.ZodError) {
-    error.errors.forEach(err => {
-      console.log(`${err.path.join('.')}: ${err.message}`);
+    error.errors.forEach((err) => {
+      console.log(`${err.path.join(".")}: ${err.message}`);
     });
   }
 }
@@ -162,8 +166,8 @@ try {
 ## Schema Composition
 
 ```typescript
-import { z } from 'zod';
-import { commonSchemas } from '@havenspace/validation';
+import { z } from "zod";
+import { commonSchemas } from "@havenspace/validation";
 
 const customSchema = z.object({
   email: commonSchemas.email,
@@ -178,4 +182,3 @@ const customSchema = z.object({
 - `@havenspace/shared` - Shared validation utilities
 - `@havenspace/database` - Schema matches Prisma types
 - `@havenspace/ui` - Form validation with React Hook Form
-
