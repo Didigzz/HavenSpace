@@ -130,29 +130,29 @@ GET http://localhost:3006/api/health
 
 The API provides five types of procedures:
 
-| Procedure | Access Level | Description |
-|-----------|-------------|-------------|
-| `publicProcedure` | Anyone | No authentication required |
-| `protectedProcedure` | Authenticated users | Requires valid session |
-| `adminProcedure` | Admin role only | Requires ADMIN role |
-| `landlordProcedure` | Approved landlords | Requires LANDLORD role + APPROVED status |
-| `boarderProcedure` | Active boarders | Requires BOARDER role + non-SUSPENDED status |
+| Procedure            | Access Level        | Description                                  |
+| -------------------- | ------------------- | -------------------------------------------- |
+| `publicProcedure`    | Anyone              | No authentication required                   |
+| `protectedProcedure` | Authenticated users | Requires valid session                       |
+| `adminProcedure`     | Admin role only     | Requires ADMIN role                          |
+| `landlordProcedure`  | Approved landlords  | Requires LANDLORD role + APPROVED status     |
+| `boarderProcedure`   | Active boarders     | Requires BOARDER role + non-SUSPENDED status |
 
 ## Usage Example
 
 ### Client-side tRPC Call
 
 ```typescript
-import { api } from '@havenspace/api-client';
+import { api } from "@havenspace/api-client";
 
 // Public procedure
 const houses = await api.house.list.query();
 
 // Protected procedure
 const booking = await api.booking.create.mutate({
-  houseId: '123',
-  checkIn: '2026-04-01',
-  checkOut: '2026-04-07',
+  houseId: "123",
+  checkIn: "2026-04-01",
+  checkOut: "2026-04-07",
 });
 ```
 
@@ -162,8 +162,8 @@ const booking = await api.booking.create.mutate({
 
 ```typescript
 // packages/api/src/routers/example.ts
-import { createTRPCRouter, publicProcedure } from '@havenspace/api';
-import { z } from 'zod';
+import { createTRPCRouter, publicProcedure } from "@havenspace/api";
+import { z } from "zod";
 
 export const exampleRouter = createTRPCRouter({
   hello: publicProcedure
@@ -207,7 +207,7 @@ The API is configured for serverless deployment:
 All database operations go through Prisma:
 
 ```typescript
-import { db } from '@havenspace/database';
+import { db } from "@havenspace/database";
 
 const houses = await db.house.findMany();
 ```

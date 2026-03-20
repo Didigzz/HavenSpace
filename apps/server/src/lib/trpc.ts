@@ -89,109 +89,103 @@ export const protectedProcedure = t.procedure
 /**
  * Admin-only procedure
  */
-export const adminProcedure = t.procedure
-  .use(timingMiddleware)
-  .use(
-    t.middleware(async ({ ctx, next }) => {
-      if (!ctx.session?.user) {
-        throw new TRPCError({
-          code: "UNAUTHORIZED",
-          message: "You must be logged in to access this resource",
-        });
-      }
-
-      const user = ctx.session.user as { role: UserRole };
-      if (user.role !== "ADMIN") {
-        throw new TRPCError({
-          code: "FORBIDDEN",
-          message: "Only administrators can access this resource",
-        });
-      }
-
-      return next({
-        ctx: {
-          ...ctx,
-          session: ctx.session,
-        },
+export const adminProcedure = t.procedure.use(timingMiddleware).use(
+  t.middleware(async ({ ctx, next }) => {
+    if (!ctx.session?.user) {
+      throw new TRPCError({
+        code: "UNAUTHORIZED",
+        message: "You must be logged in to access this resource",
       });
-    })
-  );
+    }
+
+    const user = ctx.session.user as { role: UserRole };
+    if (user.role !== "ADMIN") {
+      throw new TRPCError({
+        code: "FORBIDDEN",
+        message: "Only administrators can access this resource",
+      });
+    }
+
+    return next({
+      ctx: {
+        ...ctx,
+        session: ctx.session,
+      },
+    });
+  })
+);
 
 /**
  * Landlord procedure (requires approved status)
  */
-export const landlordProcedure = t.procedure
-  .use(timingMiddleware)
-  .use(
-    t.middleware(async ({ ctx, next }) => {
-      if (!ctx.session?.user) {
-        throw new TRPCError({
-          code: "UNAUTHORIZED",
-          message: "You must be logged in to access this resource",
-        });
-      }
-
-      const user = ctx.session.user as { role: UserRole; status: UserStatus };
-      if (user.role !== "LANDLORD") {
-        throw new TRPCError({
-          code: "FORBIDDEN",
-          message: "Only landlords can access this resource",
-        });
-      }
-
-      if (user.status !== "APPROVED") {
-        throw new TRPCError({
-          code: "FORBIDDEN",
-          message: "Your landlord account is pending approval",
-        });
-      }
-
-      return next({
-        ctx: {
-          ...ctx,
-          session: ctx.session,
-        },
+export const landlordProcedure = t.procedure.use(timingMiddleware).use(
+  t.middleware(async ({ ctx, next }) => {
+    if (!ctx.session?.user) {
+      throw new TRPCError({
+        code: "UNAUTHORIZED",
+        message: "You must be logged in to access this resource",
       });
-    })
-  );
+    }
+
+    const user = ctx.session.user as { role: UserRole; status: UserStatus };
+    if (user.role !== "LANDLORD") {
+      throw new TRPCError({
+        code: "FORBIDDEN",
+        message: "Only landlords can access this resource",
+      });
+    }
+
+    if (user.status !== "APPROVED") {
+      throw new TRPCError({
+        code: "FORBIDDEN",
+        message: "Your landlord account is pending approval",
+      });
+    }
+
+    return next({
+      ctx: {
+        ...ctx,
+        session: ctx.session,
+      },
+    });
+  })
+);
 
 /**
  * Boarder procedure (requires non-suspended status)
  */
-export const boarderProcedure = t.procedure
-  .use(timingMiddleware)
-  .use(
-    t.middleware(async ({ ctx, next }) => {
-      if (!ctx.session?.user) {
-        throw new TRPCError({
-          code: "UNAUTHORIZED",
-          message: "You must be logged in to access this resource",
-        });
-      }
-
-      const user = ctx.session.user as { role: UserRole; status: UserStatus };
-      if (user.role !== "BOARDER") {
-        throw new TRPCError({
-          code: "FORBIDDEN",
-          message: "Only boarders can access this resource",
-        });
-      }
-
-      if (user.status === "SUSPENDED") {
-        throw new TRPCError({
-          code: "FORBIDDEN",
-          message: "Your account has been suspended",
-        });
-      }
-
-      return next({
-        ctx: {
-          ...ctx,
-          session: ctx.session,
-        },
+export const boarderProcedure = t.procedure.use(timingMiddleware).use(
+  t.middleware(async ({ ctx, next }) => {
+    if (!ctx.session?.user) {
+      throw new TRPCError({
+        code: "UNAUTHORIZED",
+        message: "You must be logged in to access this resource",
       });
-    })
-  );
+    }
+
+    const user = ctx.session.user as { role: UserRole; status: UserStatus };
+    if (user.role !== "BOARDER") {
+      throw new TRPCError({
+        code: "FORBIDDEN",
+        message: "Only boarders can access this resource",
+      });
+    }
+
+    if (user.status === "SUSPENDED") {
+      throw new TRPCError({
+        code: "FORBIDDEN",
+        message: "Your account has been suspended",
+      });
+    }
+
+    return next({
+      ctx: {
+        ...ctx,
+        session: ctx.session,
+      },
+    });
+  })
+);
 
 /**
  * Create the app router with role-specific procedures

@@ -5,9 +5,15 @@ export default function APIHome() {
       <p>This is the API server for the Haven Space platform.</p>
       <h2>Available Endpoints:</h2>
       <ul>
-        <li><code>POST /api/trpc/*</code> - tRPC API endpoints</li>
-        <li><code>GET /api/health</code> - Health check</li>
-        <li><code>POST /api/auth/*</code> - Authentication endpoints</li>
+        <li>
+          <code>POST /api/trpc/*</code> - tRPC API endpoints
+        </li>
+        <li>
+          <code>GET /api/health</code> - Health check
+        </li>
+        <li>
+          <code>POST /api/auth/*</code> - Authentication endpoints
+        </li>
       </ul>
     </div>
   );

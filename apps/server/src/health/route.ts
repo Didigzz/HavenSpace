@@ -1,7 +1,7 @@
-import { NextResponse } from 'next/server';
-import { db } from '@havenspace/database';
+import { NextResponse } from "next/server";
+import { db } from "@havenspace/database";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 /**
  * Health check endpoint for the API server
@@ -15,18 +15,18 @@ export async function GET() {
     urls: { api: string };
     database: { status: string; error: string | null };
   } = {
-    status: 'healthy',
+    status: "healthy",
     timestamp: new Date().toISOString(),
     app: {
-      name: '@havenspace/api-server',
-      version: process.env.npm_package_version || '1.0.0',
-      environment: process.env.NODE_ENV || 'development',
+      name: "@havenspace/api-server",
+      version: process.env.npm_package_version || "1.0.0",
+      environment: process.env.NODE_ENV || "development",
     },
     urls: {
-      api: process.env.API_URL || 'http://localhost:3001',
+      api: process.env.API_URL || "http://localhost:3001",
     },
     database: {
-      status: 'unknown',
+      status: "unknown",
       error: null,
     },
   };
@@ -34,11 +34,12 @@ export async function GET() {
   // Check database connectivity
   try {
     await db.$queryRaw`SELECT 1`;
-    healthStatus.database.status = 'connected';
+    healthStatus.database.status = "connected";
   } catch (error) {
-    healthStatus.status = 'unhealthy';
-    healthStatus.database.status = 'disconnected';
-    healthStatus.database.error = error instanceof Error ? error.message : 'Unknown error';
+    healthStatus.status = "unhealthy";
+    healthStatus.database.status = "disconnected";
+    healthStatus.database.error =
+      error instanceof Error ? error.message : "Unknown error";
   }
 
   return NextResponse.json(healthStatus);

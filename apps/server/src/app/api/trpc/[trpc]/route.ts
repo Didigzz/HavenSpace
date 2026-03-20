@@ -5,11 +5,11 @@ import { auth } from "@havenspace/auth/config";
 import type { HavenSession } from "@havenspace/api";
 
 // Allowed origins for CORS
-const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(',') || [
-  'http://localhost:3000',
-  'http://localhost:3002',
-  'http://localhost:3004',
-  'http://localhost:3005',
+const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(",") || [
+  "http://localhost:3000",
+  "http://localhost:3002",
+  "http://localhost:3004",
+  "http://localhost:3005",
 ];
 
 /**
@@ -25,17 +25,18 @@ function isAllowedOrigin(origin: string | undefined): boolean {
  */
 const handleOptions = (origin: string | undefined) => {
   if (!isAllowedOrigin(origin)) {
-    return new Response('Origin not allowed', { status: 403 });
+    return new Response("Origin not allowed", { status: 403 });
   }
 
   return new Response(null, {
     status: 204,
     headers: new Headers({
-      'Access-Control-Allow-Origin': origin || '',
-      'Access-Control-Allow-Credentials': 'true',
-      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-      'Access-Control-Allow-Headers': 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization',
-      'Access-Control-Max-Age': '86400',
+      "Access-Control-Allow-Origin": origin || "",
+      "Access-Control-Allow-Credentials": "true",
+      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+      "Access-Control-Allow-Headers":
+        "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization",
+      "Access-Control-Max-Age": "86400",
     }),
   });
 };
@@ -44,10 +45,10 @@ const handleOptions = (origin: string | undefined) => {
  * Handle tRPC requests with proper CORS and CSRF protection
  */
 const handler = async (req: Request) => {
-  const origin = req.headers.get('origin') ?? undefined;
+  const origin = req.headers.get("origin") ?? undefined;
 
   // Handle preflight requests
-  if (req.method === 'OPTIONS') {
+  if (req.method === "OPTIONS") {
     return handleOptions(origin);
   }
 

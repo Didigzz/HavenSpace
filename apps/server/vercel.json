@@ -1,1 +1,10 @@
-{"version": 2, "builds": [{"src": "src/api/index.ts", "use": "@vercel/node"}], "routes": [{"src": "/api/trpc/(.*)", "dest": "src/api/index.ts"}, {"src": "/api/auth/(.*)", "dest": "src/api/auth.ts"}, {"src": "/api/health", "dest": "src/api/health.ts"}], "env": {"NODE_ENV": "production"}}
+{
+  "version": 2,
+  "builds": [{ "src": "src/api/index.ts", "use": "@vercel/node" }],
+  "routes": [
+    { "src": "/api/trpc/(.*)", "dest": "src/api/index.ts" },
+    { "src": "/api/auth/(.*)", "dest": "src/api/auth.ts" },
+    { "src": "/api/health", "dest": "src/api/health.ts" }
+  ],
+  "env": { "NODE_ENV": "production" }
+}
