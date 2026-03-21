@@ -3,6 +3,6 @@
   "bunVersion": "1.1.0",
   "framework": "nextjs",
   "installCommand": "cd ../.. && bun install",
-  "buildCommand": "cd ../.. && bun run admin:build",
+  "buildCommand": "cd ../.. && bun turbo run build --filter=@havenspace/admin",
   "outputDirectory": "apps/admin/.next"
 }

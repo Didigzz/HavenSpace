@@ -3,6 +3,6 @@
   "bunVersion": "1.1.0",
   "framework": "nextjs",
   "installCommand": "cd ../.. && bun install",
-  "buildCommand": "cd ../.. && bun run boarder:build",
+  "buildCommand": "cd ../.. && bun turbo run build --filter=@havenspace/boarder",
   "outputDirectory": "apps/boarder/.next"
 }
