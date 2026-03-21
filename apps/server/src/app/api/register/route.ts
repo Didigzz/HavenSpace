@@ -46,7 +46,7 @@ export async function POST(request: Request) {
     const status = role === "BOARDER" ? "APPROVED" : "PENDING";
 
     // Create user with transaction to also create role-specific profile
-    const user = await db.$transaction(async (tx: typeof db) => {
+    const user = await db.$transaction(async (tx) => {
       const newUser = await tx.user.create({
         data: {
           name,
