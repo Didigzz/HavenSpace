@@ -21,6 +21,7 @@
   "packageManager": "bun@1.1.0",
   "private": true,
   "scripts": {
+    "postinstall": "bun run db:generate",
     "dev": "turbo run dev",
     "dev:full": "turbo run dev --filter=@havenspace/public --filter=@havenspace/api-server --filter=@havenspace/boarder --filter=@havenspace/landlord --filter=@havenspace/admin",
     "dev:boarder": "turbo run dev --filter=@havenspace/public --filter=@havenspace/api-server --filter=@havenspace/boarder",
@@ -43,6 +44,7 @@
     "format": "prettier --write \"**/*.{ts,tsx,md,json}\"",
     "format:check": "prettier --check \"**/*.{ts,tsx,md,json}\"",
     "clean": "turbo run clean && rm -rf node_modules",
+    "db:generate": "turbo run db:generate",
     "db:push": "turbo run db:push",
     "db:studio": "turbo run db:studio",
     "db:seed": "turbo run db:seed",

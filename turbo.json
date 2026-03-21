@@ -25,8 +25,12 @@
     "JWT_SECRET"
   ],
   "tasks": {
+    "db:generate": {
+      "cache": false,
+      "outputs": ["../../node_modules/.prisma/**"]
+    },
     "build": {
-      "dependsOn": ["^build"],
+      "dependsOn": ["^db:generate", "^build"],
       "outputs": [".next/**", "!.next/cache/**", "dist/**"]
     },
     "dev": {
@@ -64,9 +68,6 @@
       "cache": false
     },
     "db:migrate": {
-      "cache": false
-    },
-    "db:generate": {
       "cache": false
     }
   }

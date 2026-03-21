@@ -1,5 +1,27 @@
 import { PrismaClient } from "@prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
+import type {
+  Prisma,
+  Boarder,
+  Room,
+  Payment,
+  UtilityReading,
+  User,
+  LandlordProfile,
+  Property,
+  Booking,
+  SavedListing,
+  Account,
+  Session,
+  Setting,
+  UserRole,
+  UserStatus,
+  RoomStatus,
+  PaymentStatus,
+  PaymentType,
+  UtilityType,
+  BookingStatus,
+} from "@prisma/client";
 
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
@@ -60,4 +82,4 @@ export type {
   PaymentType,
   UtilityType,
   BookingStatus,
-} from "@prisma/client";
+};
