@@ -1,7 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "nextjs",
-  "installCommand": "cd ../.. && npm install",
-  "buildCommand": "cd ../.. && npx turbo run build --filter=@havenspace/boarder",
+  "installCommand": "npm install --workspace=@havenspace/boarder --workspace=@havenspace/shared --workspace=@havenspace/auth --workspace=@havenspace/database --workspace=@havenspace/validation",
+  "buildCommand": "npm run build:boarder",
   "outputDirectory": "apps/boarder/.next"
 }
