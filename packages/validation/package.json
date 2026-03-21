@@ -15,7 +15,7 @@
   "devDependencies": {
     "@havenspace/config": "workspace:*",
     "@types/node": "^20.10.0",
-    "eslint": "^8.57.1",
+    "eslint": "^10.1.0",
     "typescript": "^5.6.3"
   }
 }
